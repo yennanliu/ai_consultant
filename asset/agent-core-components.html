@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agent 核心元件與實施路線：MCP、Skill、Sandbox、Plugin - AI consultant</title>
+    <style>
+      :root {
+        /* Base44 Signature Palette */
+        --bg: #ffffff;
+        --fg: #000000;
+        --accent: #ff3e00; /* Contrast orange/red */
+        --muted: #666666;
+        --border: #000000;
+        --card-bg: #f9f9f9;
+        
+        /* Typography */
+        --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+        --sans: "Inter", system-ui, -apple-system, sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--sans);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* Borders & Grids - The Base44 Signature */
+      .b-bottom { border-bottom: 2px solid var(--border); }
+      .b-right { border-right: 2px solid var(--border); }
+      .b-all { border: 2px solid var(--border); }
+
+      /* Top Nav */
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        height: 80px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        padding: 0 24px;
+        font-family: var(--mono);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+        background: var(--fg);
+        color: var(--bg);
+        text-decoration: none;
+      }
+      .navlinks {
+        display: flex;
+        align-items: center;
+      }
+      .navlinks a {
+        padding: 0 20px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        font-family: var(--mono);
+        font-size: 14px;
+        text-decoration: none;
+        color: var(--fg);
+        border-left: 2px solid var(--border);
+        transition: background 0.2s;
+      }
+      .navlinks a:hover { background: #eee; }
+
+      /* Hero Section */
+      .hero {
+        padding: 80px 0;
+      }
+
+      h1 {
+        font-size: clamp(40px, 6vw, 84px);
+        line-height: 0.9;
+        margin: 0 0 32px;
+        letter-spacing: -3px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+      .mono-label {
+        font-family: var(--mono);
+        font-size: 13px;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        display: block;
+        color: var(--accent);
+      }
+
+      .post-meta {
+        font-family: var(--mono);
+        font-size: 14px;
+        color: var(--muted);
+        margin-bottom: 24px;
+      }
+
+      .post-content {
+        max-width: 800px;
+        font-size: 18px;
+        line-height: 1.8;
+        margin-bottom: 40px;
+      }
+
+      .back-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background: var(--fg);
+        color: var(--bg);
+        text-decoration: none;
+        font-family: var(--mono);
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 12px;
+        transition: transform 0.1s;
+      }
+      .back-link:hover { transform: translate(-2px, -2px); box-shadow: 2px 2px 0 var(--accent); }
+
+      footer {
+        padding: 60px 0;
+        background: var(--fg);
+        color: var(--bg);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      @media (max-width: 900px) {
+        .nav { height: auto; flex-direction: column; }
+        .navlinks { width: 100%; }
+        .navlinks a { flex: 1; border-left: none; border-top: 2px solid var(--border); padding: 15px; justify-content: center; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <header class="b-bottom">
+      <div class="wrap">
+        <div class="nav">
+          <a href="../index.html" class="brand">AI CONSULTANT</a>
+          <nav class="navlinks">
+            <a href="../index.html#services">SERVICES</a>
+            <a href="../service_mode.html">SERVICE MODES</a>
+            <a href="../success_stories.html">SUCCESS STORIES</a>
+            <a href="../team.html">TEAM</a>
+            <a href="../blog.html">BLOG</a>
+            <a href="../index.html#contact">CONTACT</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero b-bottom">
+        <div class="wrap">
+          <span class="mono-label">// AGENT SERIES - PART 3</span>
+          <h1>Agent 核心元件與實施路線</h1>
+          <div class="post-meta">2026-05-02</div>
+        </div>
+      </section>
+
+      <section class="wrap">
+        <div class="post-content">
+          <p>前兩篇建立了 Agent 的概念基礎（Chat vs Agent）與架構藍圖（六層模型）。現在的問題是：實際動手時，用什麼技術組件來實現？本文介紹 Agent 生態中的四大核心元件：MCP、Skill、Sandbox、Plugin，說明各自的作用、何時使用，以及整合方式。</p>
+          
+          <h2>四大核心元件速覽</h2>\n          <p><strong>MCP（Model Context Protocol）</strong> — 標準化的工具集成協議<br/>\n<strong>Skill</strong> — 可複用的能力單位（特定業務邏輯的封裝）<br/>\n<strong>Sandbox</strong> — 隔離執行環境（安全地運行程式碼）<br/>\n<strong>Plugin</strong> — 動態擴展機制（熱加載新能力）</p>\n          
+          <h2>MCP（Model Context Protocol）</h2>\n          
+          <p><strong>是什麼？</strong>MCP 是 Anthropic 提出的標準，定義了 AI 模型與外部工具的通信方式。類似於 API 規範，但針對 Agent 優化。</p>\n          
+          <p><strong>核心優勢：</strong><br/>\n• <strong>標準化</strong> — 不論工具是 Slack、SQL 資料庫還是內部系統，都用統一方式接入<br/>\n• <strong>互操作性</strong> — 不同 Agent 框架都能使用同一套工具<br/>\n• <strong>安全性</strong> — 內建權限、錯誤處理、日誌記錄<br/>\n• <strong>高效</strong> — 減少模型 token 消耗，比傳統 API 調用快 40-50%</p>\n          
+          <p><strong>何時使用？</strong>連接第三方服務或企業系統時。例如：<br/>\n• 集成 Salesforce CRM 查詢客戶資料<br/>\n• 連接 Slack API 發送通知<br/>\n• 訪問企業知識庫搜索文件</p>\n          
+          <p><strong>實施成本：</strong>每個工具接入需 4-8 小時開發，成本約 10-20 萬台幣。</p>\n          
+          <h2>Skill（技能）</h2>\n          
+          <p><strong>定義：</strong>Skill 是邏輯層面的能力單位，不是技術層面的 API。一個 Skill 通常包含多個工具調用步驟與業務規則。</p>\n          
+          <p><strong>Skill vs API 的區別：</strong><br/>\n【API】呼叫「查詢銷售額」函式，返回數字<br/>\n【Skill】「月度銷售分析」技能，自動查詢銷售額 → 對比前月 → 計算成長率 → 生成報告</p>\n          
+          <p><strong>Skill 的三層構成：</strong><br/>\n1. <strong>輸入定義</strong> — 例如，月份、產品線<br/>\n2. <strong>邏輯流程</strong> — 調用 API、處理資料、條件判斷<br/>\n3. <strong>輸出格式</strong> — 結構化報告、JSON、自然語言</p>\n          
+          <p><strong>建構 Skill 的最佳實踐：</strong><br/>\n• 一個 Skill = 一個業務目標，大小適中（不過度細化，也不過度龐大）<br/>\n• 使用 YAML 或代碼定義，便於版本控制與複用<br/>\n• 建立 Skill 庫，後續 Agent 可直接組合使用</p>\n          
+          <p><strong>成本効益：</strong>開發一個 Skill 需 1-2 週，但可被 5-10 個不同 Agent 重用。ROI 顯著。</p>\n          
+          <h2>Sandbox（沙箱環境）</h2>\n          
+          <p><strong>問題：</strong>Agent 有時需執行程式碼（Python、SQL）完成複雜計算。直接在生產環境執行很危險。</p>\n          
+          <p><strong>解決方案：</strong>Sandbox 提供隔離的執行環境，Agent 可安全地運行程式碼而不影響主系統。</p>\n          
+          <p><strong>Sandbox 的設計考量：</strong><br/>\n• <strong>資源限制</strong> — 限制 CPU、記憶體、執行時間，防止無限佔用<br/>\n• <strong>文件系統隔離</strong> — Agent 無法存取系統敏感檔案<br/>\n• <strong>網路隔離</strong> — 預先白名單允許的外部 URL<br/>\n• <strong>超時控制</strong> — 程式碼執行超過時限立即終止</p>\n          
+          <p><strong>實現方式：</strong><br/>\n• Docker 容器 — 最常見，實施相對簡單<br/>\n• VM 虛擬機 — 隔離度更高但資源消耗大<br/>\n• 雲端函式（AWS Lambda、Google Cloud Functions）— 無需自行維護基礎設施</p>\n          
+          <p><strong>應用場景：</strong><br/>\n• 資料分析與視覺化<br/>\n• 複雜的 SQL 查詢組裝<br/>\n• 機器學習推理<br/>\n• 臨時計算任務</p>\n          
+          <h2>Plugin（外掛）</h2>\n          
+          <p><strong>定義：</strong>Plugin 是動態擴展機制，讓 Agent 系統在運行時加載新的功能，無需重啟。</p>\n          
+          <p><strong>Plugin 與 Skill 的區別：</strong><br/>\n【Skill】靜態定義，部署時決定能力<br/>\n【Plugin】動態加載，可在執行時開啟或關閉特定功能</p>\n          
+          <p><strong>Plugin 的結構：</strong><br/>\n• 元數據 — 名稱、版本、依賴<br/>\n• 入口點 — 初始化與執行函式<br/>\n• 配置文件 — 可配置的參數</p>\n          
+          <p><strong>使用場景：</strong><br/>\n• A/B 測試 — 快速開關測試版本<br/>\n• 漸進式部署 — 向部分用戶推出新功能<br/>\n• 企業定製 — 不同客戶加載不同 Plugin</p>\n          
+          <h2>四大元件的集成方式</h2>\n          
+          <p><strong>典型的 Agent 工作流：</strong></p>\n          
+          <p>1️⃣ <strong>用戶提交任務</strong><br/>\n「幫我分析上季度銷售表現」</p>\n          
+          <p>2️⃣ <strong>Agent 選擇 Skill</strong><br/>\n識別需要「季度銷售分析」Skill</p>\n          
+          <p>3️⃣ <strong>Skill 調用 MCP 工具</strong><br/>\nSkill 透過 MCP 協議，遠端呼叫 CRM 系統查詢銷售資料</p>\n          
+          <p>4️⃣ <strong>數據進 Sandbox 處理</strong><br/>\nAgent 在 Sandbox 運行 Python 程式碼，進行統計分析與視覺化</p>\n          
+          <p>5️⃣ <strong>結果透過 Plugin 交付</strong><br/>\n報告透過 Email Plugin 發送，Dashboard Plugin 展示</p>\n          
+          <h2>實施路線圖（台灣企業適用）</h2>\n          
+          <p><strong>第 1 個月：建立基礎</strong><br/>\n• 評估現有系統，識別 3-5 個關鍵工具<br/>\n• 為每個工具設計 MCP 接入<br/>\n• 成本：$150 萬</p>\n          
+          <p><strong>第 2-3 個月：開發核心 Skill</strong><br/>\n• 設計 5-10 個業務 Skill（銷售分析、客服、流程審批等）<br/>\n• 搭建 Skill 庫與版本管理<br/>\n• 成本：$200 萬</p>\n          
+          <p><strong>第 4 個月：Sandbox + Plugin</strong><br/>\n• 搭建 Sandbox 環境（Docker + resource limits）<br/>\n• 設計 2-3 個關鍵 Plugin（通知、reporting、dashboard）<br/>\n• 成本：$150 萬</p>\n          
+          <p><strong>第 5-6 個月：生產驗證</strong><br/>\n• 小範圍上線（100 用戶），蒐集反饋<br/>\n• 監控與優化<br/>\n• 成本：$100 萬</p>\n          
+          <p><strong>總投資：$600 萬，6 個月從零到可用的 Agent 系統</strong></p>\n          
+          <h2>避免的常見陷阱</h2>\n          
+          <p><strong>陷阱 1：過度複雜的 Skill 設計</strong><br/>\n一個 Skill 試圖做太多事，導致難以維護。建議：一個 Skill = 單一明確的業務目標。</p>\n          
+          <p><strong>陷阱 2：Sandbox 配置不當</strong><br/>\nAgent 程式碼執行失敗或超時，整個工作流中斷。建議：設置明確的超時、重試與降級策略。</p>\n          
+          <p><strong>陷阱 3：Plugin 版本衝突</strong><br/>\n多個 Plugin 相互依賴，更新時容易出錯。建議：嚴格的版本管理與相容性測試。</p>\n          
+          <h2>結語</h2>\n          <p>MCP、Skill、Sandbox、Plugin 四大元件構成現代 Agent 系統的核心。從工具集成開始（MCP），到能力封裝（Skill），到安全執行（Sandbox），到動態擴展（Plugin），各層環環相扣。台灣企業採用這套模式，平均 6 個月投資 $600 萬，可建立生產級 Agent 系統，年度 ROI 通常在 200-300%。關鍵是堅持漸進式實施，避免一步到位的陷阱。</p>\n        </div>\n        <a href=\"../blog.html\" class=\"back-link\">← BACK TO BLOG</a>\n      </section>\n    </main>\n\n    <footer>\n      <div class=\"wrap\" style=\"display: flex; justify-content: space-between;\">\n        <span>© 2026 AI CONSULTANT</span>\n        <span>TW_SMB_AI_SOLUTIONS</span>\n      </div>\n    </footer>\n\n  </body>\n</html>\n
