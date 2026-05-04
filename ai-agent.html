@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI CRAFTSMAN | 企業 AI 數位工匠</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons (藉由 CDN 載入圖標) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700;900&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; scroll-behavior: smooth; }
+        .gradient-text {
+            background: linear-gradient(90deg, #34d399, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+
+    <!-- Navigation -->
+    <nav class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md fixed w-full z-50">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="cpu" class="text-emerald-400"></i>
+                <span class="font-bold text-xl tracking-tight">AI CRAFTSMAN <span class="text-emerald-500 text-sm">工匠系統</span></span>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-medium text-slate-400">
+                <a href="#solutions" class="hover:text-emerald-400 transition">解決方案</a>
+                <a href="#pricing" class="hover:text-emerald-400 transition">服務報價</a>
+                <a href="#about" class="hover:text-emerald-400 transition">技術背景</a>
+            </div>
+            <a href="#contact" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition">
+                預約診斷
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-6">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[600px] bg-emerald-900/10 blur-[120px] rounded-full -z-10"></div>
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-800 text-emerald-400 text-xs font-bold mb-8">
+                <i data-lucide="terminal" size="14"></i> 2026 企業轉型實戰方案
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black mb-8 leading-tight">
+                不談願景，只談效率 <br>
+                <span class="gradient-text">讓 AI 成為您的數位員工</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-400 mb-10 leading-relaxed">
+                前 Google / AWS 資深工程師親自操刀。無需更換現有系統，<br class="hidden md:block">
+                1 週內完成流程自動化，精準解決中小企業缺工與技術斷層痛點。
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="#contact" class="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-4 rounded-xl text-lg font-bold transition transform hover:scale-105">
+                    預約 1.5 小時專家診斷 <i data-lucide="arrow-right"></i>
+                </a>
+                <a href="#solutions" class="flex items-center justify-center gap-2 bg-slate-900 border border-slate-700 hover:bg-slate-800 text-white px-8 py-4 rounded-xl text-lg font-bold transition">
+                    觀看實戰案例
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="solutions" class="py-20 px-6 bg-slate-900/50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-16">為什麼選擇「工匠型」AI 導入？</h2>
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Before -->
+                <div class="p-8 rounded-2xl bg-slate-950 border border-red-900/30">
+                    <h3 class="text-red-400 font-bold text-xl mb-6 flex items-center gap-2">
+                        🔴 傳統人工模式 (Before)
+                    </h3>
+                    <ul class="space-y-4 text-slate-400">
+                        <li class="flex gap-3">❌ 老師傅經驗無法數位化，新人難接手</li>
+                        <li class="flex gap-3">❌ 手動輸入報單、發票，重複性高且易出錯</li>
+                        <li class="flex gap-3">❌ 報價單需等 3 天，客戶訂單流失</li>
+                        <li class="flex gap-3">❌ 資料堆積在 Excel 與 PDF，難以檢索</li>
+                    </ul>
+                </div>
+                <!-- After -->
+                <div class="p-8 rounded-2xl bg-emerald-950/20 border border-emerald-500/30">
+                    <h3 class="text-emerald-400 font-bold text-xl mb-6 flex items-center gap-2">
+                        🟢 AI 數位工匠 (After)
+                    </h3>
+                    <ul class="space-y-4 text-slate-200">
+                        <li class="flex gap-3 text-emerald-400 font-medium"><i data-lucide="check-circle-2" class="shrink-0"></i> 24/7 企業大腦，隨時回覆 SOP 與技術問題</li>
+                        <li class="flex gap-3 text-emerald-400 font-medium"><i data-lucide="check-circle-2" class="shrink-0"></i> AI 自動讀取 Invoice 與單據，秒速進系統</li>
+                        <li class="flex gap-3 text-emerald-400 font-medium"><i data-lucide="check-circle-2" class="shrink-0"></i> 一鍵自動報價模型，回覆速度提升 10 倍</li>
+                        <li class="flex gap-3 text-emerald-400 font-medium"><i data-lucide="check-circle-2" class="shrink-0"></i> 私有雲端 RAG 檢索，資料 100% 留存在內部</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="py-24 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 text-slate-300">
+                <h2 class="text-3xl font-bold mb-4">實戰工具箱</h2>
+                <p>我們不談理論，只交付會動的自動化系統</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 transition">
+                    <div class="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center text-emerald-400 mb-6">
+                        <i data-lucide="database"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">貿易報關自動化</h3>
+                    <p class="text-slate-400 text-sm">自動解析混亂格式的單據，精準配對 HS Code 並登錄系統。</p>
+                </div>
+                <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 transition">
+                    <div class="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center text-emerald-400 mb-6">
+                        <i data-lucide="zap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">傳產知識大腦</h3>
+                    <p class="text-slate-400 text-sm">將 20 年維修紀錄與師傅經驗轉化為隨時可問的 AI 助手。</p>
+                </div>
+                <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 transition">
+                    <div class="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center text-emerald-400 mb-6">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">專業文件處理</h3>
+                    <p class="text-slate-400 text-sm">法律合約、財報比對自動化，確保繁體中文理解 100% 準確。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-24 px-6 bg-emerald-600/5 border-y border-emerald-900/20">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">專業服務報價</h2>
+                <p class="text-slate-400">透明、模組化，讓每一分預算都花在刀口上</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Tier 1 -->
+                <div class="p-8 rounded-2xl bg-slate-950 border border-slate-800">
+                    <h3 class="text-lg font-medium mb-2">AI 流程門診</h3>
+                    <div class="text-3xl font-bold mb-6 italic text-emerald-400">NT$ 12,000 <span class="text-sm font-normal text-slate-500">/ 次</span></div>
+                    <ul class="space-y-3 text-sm text-slate-400 mb-8">
+                        <li>• 1.5 小時深度對談與實地察看</li>
+                        <li>• 找出企業最燒錢的 3 個環節</li>
+                        <li>• 產出落地建議與預期 ROI 報告</li>
+                    </ul>
+                    <button class="w-full py-3 rounded-lg border border-slate-700 hover:bg-slate-800 transition font-bold text-sm">預約診斷</button>
+                </div>
+                <!-- Tier 2 -->
+                <div class="p-8 rounded-2xl bg-slate-900 border-2 border-emerald-500 relative transform md:scale-105">
+                    <div class="absolute top-0 right-8 -translate-y-1/2 bg-emerald-500 text-white px-3 py-1 rounded-full text-xs font-bold italic shadow-lg">最快見效</div>
+                    <h3 class="text-lg font-medium mb-2">極速 POC 驗證</h3>
+                    <div class="text-3xl font-bold mb-6 italic text-emerald-400">NT$ 60,000 <span class="text-sm font-normal text-slate-500">/ 起</span></div>
+                    <ul class="space-y-3 text-sm text-slate-200 mb-8">
+                        <li>• 3-5 天內搭建核心功能原型</li>
+                        <li>• 現有系統無痛串接 (Make/n8n)</li>
+                        <li>• 含 1 小時員工導入培訓</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-lg bg-emerald-600 hover:bg-emerald-500 transition font-bold text-sm text-white shadow-xl">啟動實驗專案</button>
+                </div>
+                <!-- Tier 3 -->
+                <div class="p-8 rounded-2xl bg-slate-950 border border-slate-800">
+                    <h3 class="text-lg font-medium mb-2">Virtual CTO 陪跑</h3>
+                    <div class="text-3xl font-bold mb-6 italic text-emerald-400">NT$ 8,000 <span class="text-sm font-normal text-slate-500">/ hr</span></div>
+                    <ul class="space-y-3 text-sm text-slate-400 mb-8">
+                        <li>• 每月固定時數深度技術支援</li>
+                        <li>• 系統長期穩定維護與模型升級</li>
+                        <li>• 持續優化 AI 提示詞精準度</li>
+                    </ul>
+                    <button class="w-full py-3 rounded-lg border border-slate-700 hover:bg-slate-800 transition font-bold text-sm">洽談長期合約</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form (Simplified) -->
+    <section id="contact" class="py-24 px-6 max-w-2xl mx-auto">
+        <div class="bg-slate-900 p-10 rounded-3xl border border-slate-800 shadow-2xl">
+            <h2 class="text-3xl font-bold mb-8 text-center">開始您的數位升級</h2>
+            <form class="space-y-6">
+                <div>
+                    <label class="block text-sm font-bold mb-2 text-slate-400">產業類別</label>
+                    <select class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 outline-none focus:border-emerald-500">
+                        <option>貿易與報關</option>
+                        <option>中小型製造業</option>
+                        <option>法律/財稅服務</option>
+                        <option>室內設計/建築</option>
+                        <option>其他</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-2 text-slate-400">您最想解決的人工痛點？</label>
+                    <textarea class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 h-32 outline-none focus:border-emerald-500" placeholder="例如：報關單手打太慢、師傅技術沒人接班..."></textarea>
+                </div>
+                <button type="submit" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition">
+                    送出申請 (我將在 24 小時內聯繫您)
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-slate-900 text-center text-slate-500 text-sm">
+        <p class="mb-4">© 2026 AI Craftsman Studio. 由前 Google / AWS 資深工程師 Yen-Nan 帶領。</p>
+        <div class="flex justify-center gap-6">
+            <a href="#" class="hover:text-emerald-400 transition">LinkedIn</a>
+            <a href="#" class="hover:text-emerald-400 transition">服務條款</a>
+            <a href="#" class="hover:text-emerald-400 transition">隱私政策</a>
+        </div>
+    </footer>
+
+    <!-- Initialize Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
