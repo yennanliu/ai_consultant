@@ -5,6 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AI consultant - 台灣中小企業 AI 導入顧問</title>
     <link rel="stylesheet" href="linear.css">
+    <style>
+      .hero {
+        position: relative;
+        overflow: hidden;
+      }
+      #hero-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.4;
+      }
+      
+      /* Strategic Flow Viz */
+      .flow-container {
+        margin: var(--space-12) 0;
+        padding: var(--space-8);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--bg-alt);
+        position: relative;
+      }
+      .flow-steps {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--space-4);
+      }
+      .flow-step {
+        text-align: center;
+        flex: 1;
+      }
+      .flow-connector {
+        height: 1px;
+        background: var(--border-strong);
+        flex-grow: 1;
+        position: relative;
+        max-width: 60px;
+      }
+      .flow-connector::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: -3px;
+        border-left: 4px solid var(--border-strong);
+        border-top: 3px solid transparent;
+        border-bottom: 3px solid transparent;
+      }
+      
+      .stat-badge {
+        display: inline-block;
+        padding: 2px 6px;
+        border-radius: 4px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--text-muted);
+        margin-top: var(--space-2);
+      }
+
+      /* Entry Animation */
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade {
+        animation: fadeInUp 0.6s ease forwards;
+      }
+    </style>
   </head>
   <body>
 
@@ -27,14 +99,15 @@
 
     <main>
       <section class="hero b-bottom">
+        <canvas id="hero-canvas"></canvas>
         <div class="wrap">
           <div class="hero-content">
-            <span class="mono-label">// STRATEGY & IMPLEMENTATION</span>
-            <h1>讓 AI 成為企業<br>成長的實質動力</h1>
-            <p style="font-size: 18px; max-width: 600px;">
+            <span class="mono-label animate-fade">// STRATEGY & IMPLEMENTATION</span>
+            <h1 class="animate-fade" style="animation-delay: 0.1s;">讓 AI 成為企業<br>成長的實質動力</h1>
+            <p class="animate-fade" style="font-size: 18px; max-width: 600px; animation-delay: 0.2s;">
               專為台灣中小企業打造的 AI 導入顧問服務。從場景釐清到 POC 驗證，我們把複雜留在後台，把成果帶到前台。
             </p>
-            <div style="margin-top: var(--space-8);">
+            <div class="animate-fade" style="margin-top: var(--space-8); animation-delay: 0.3s;">
               <a href="#contact" class="btn btn-primary btn-lg">START DIAGNOSIS</a>
             </div>
           </div>
@@ -47,8 +120,37 @@
           <h2>服務範圍</h2>
           <p style="max-width: 760px; font-size: 18px; margin-bottom: var(--space-12);">
             服務涵蓋從策略到執行的完整 AI 導入流程，幫助中小企業把 AI 轉化成營運成長、效率提升與風險可控的實際成果。
-            我們同時聚焦商業價值、技術可行性與組織能力，讓每一步都能快速落地、穩健擴展。
           </p>
+          
+          <!-- Dynamic Flow Viz -->
+          <div class="flow-container">
+            <div class="flow-steps">
+              <div class="flow-step">
+                <span class="mono-label">STRATEGY</span>
+                <div style="font-size: 14px; font-weight: 600;">機會地圖</div>
+                <div class="stat-badge">ROI_ORIENTED</div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-step">
+                <span class="mono-label">DATA</span>
+                <div style="font-size: 14px; font-weight: 600;">治理與清理</div>
+                <div class="stat-badge">QUALITY_FIRST</div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-step">
+                <span class="mono-label">LOGIC</span>
+                <div style="font-size: 14px; font-weight: 600;">模型與系統</div>
+                <div class="stat-badge" style="color: var(--accent); border-color: var(--accent);">AI_AGENT</div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-step">
+                <span class="mono-label">RESULT</span>
+                <div style="font-size: 14px; font-weight: 600;">效率轉化</div>
+                <div class="stat-badge">BUSINESS_VALUE</div>
+              </div>
+            </div>
+          </div>
+
           <div class="card-grid">
             <div class="card">
               <span class="mono-label">01</span>
@@ -102,5 +204,72 @@
       </div>
     </footer>
 
+    <script>
+      // Subtle background animation: Moving grid with data nodes
+      const canvas = document.getElementById('hero-canvas');
+      const ctx = canvas.getContext('2d');
+      let width, height;
+
+      function resize() {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      const particles = [];
+      const particleCount = 40;
+      
+      for(let i=0; i<particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.2,
+          vy: (Math.random() - 0.5) * 0.2,
+          size: Math.random() * 2 + 1
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        
+        // Grid background
+        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--border').trim() || '#e4e4e7';
+        ctx.lineWidth = 0.5;
+        const spacing = 60;
+        const offset = (Date.now() / 100) % spacing;
+        
+        for(let x = -offset; x < width; x += spacing) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, height);
+          ctx.stroke();
+        }
+        for(let y = -offset; y < height; y += spacing) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(width, y);
+          ctx.stroke();
+        }
+
+        // Moving nodes
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-dim').trim() || '#a0a0ab';
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          if(p.x < 0) p.x = width;
+          if(p.x > width) p.x = 0;
+          if(p.y < 0) p.y = height;
+          if(p.y > height) p.y = 0;
+          
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        requestAnimationFrame(draw);
+      }
+      draw();
+    </script>
   </body>
 </html>
