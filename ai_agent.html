@@ -5,6 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI AGENT | 企業 AI 數位員工 - AI consultant</title>
     <link rel="stylesheet" href="linear.css">
+    <style>
+      .viz-box {
+        margin-top: var(--space-6);
+        padding-top: var(--space-6);
+        border-top: 1px solid var(--border);
+      }
+      
+      /* Efficiency Chart */
+      .eff-bar {
+        height: 6px;
+        background: var(--surface);
+        border-radius: var(--radius-sm);
+        margin-top: var(--space-2);
+        position: relative;
+        overflow: hidden;
+      }
+      .eff-fill {
+        height: 100%;
+        background: var(--accent);
+        border-radius: var(--radius-sm);
+      }
+      
+      /* Logic Diagram */
+      .logic-node {
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--mono);
+        font-size: 10px;
+        background: var(--bg);
+      }
+      .logic-arrow {
+        flex-grow: 1;
+        height: 1px;
+        background: var(--border);
+        position: relative;
+      }
+      .logic-arrow::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: -3px;
+        border-left: 4px solid var(--border);
+        border-top: 3px solid transparent;
+        border-bottom: 3px solid transparent;
+      }
+      
+      /* Roadmap */
+      .roadmap {
+        display: flex;
+        justify-content: space-between;
+        margin-top: var(--space-12);
+        position: relative;
+      }
+      .roadmap::before {
+        content: "";
+        position: absolute;
+        top: 12px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--border);
+        z-index: 0;
+      }
+      .roadmap-step {
+        text-align: center;
+        width: 20%;
+        position: relative;
+        z-index: 1;
+        background: var(--bg);
+      }
+      .step-dot {
+        width: 24px;
+        height: 24px;
+        border: 2px solid var(--accent);
+        background: var(--bg);
+        border-radius: 50%;
+        margin: 0 auto var(--space-4);
+      }
+    </style>
 </head>
 <body>
 
@@ -38,6 +122,35 @@
                     <a href="#contact" class="btn btn-primary btn-lg">預約 1.5 小時專家診斷</a>
                     <a href="#solutions" class="btn btn-secondary btn-lg">觀看實戰案例</a>
                 </div>
+                
+                <!-- Implementation Roadmap -->
+                <div class="roadmap">
+                  <div class="roadmap-step">
+                    <div class="step-dot"></div>
+                    <span class="mono-label">DAY 01</span>
+                    <div class="text-xs">場景診斷</div>
+                  </div>
+                  <div class="roadmap-step">
+                    <div class="step-dot"></div>
+                    <span class="mono-label">DAY 02-03</span>
+                    <div class="text-xs">邏輯建模</div>
+                  </div>
+                  <div class="roadmap-step">
+                    <div class="step-dot" style="background: var(--accent);"></div>
+                    <span class="mono-label">DAY 04-05</span>
+                    <div class="text-xs">系統整合</div>
+                  </div>
+                  <div class="roadmap-step">
+                    <div class="step-dot"></div>
+                    <span class="mono-label">DAY 06</span>
+                    <div class="text-xs">POC 驗證</div>
+                  </div>
+                  <div class="roadmap-step">
+                    <div class="step-dot"></div>
+                    <span class="mono-label">DAY 07</span>
+                    <div class="text-xs">正式上線</div>
+                  </div>
+                </div>
             </div>
         </section>
 
@@ -56,6 +169,11 @@
                             <li>報價單需等 3 天，客戶訂單流失</li>
                             <li>資料堆積在 Excel 與 PDF，難以檢索</li>
                         </ul>
+                        <div class="viz-box">
+                          <span class="mono-label" style="color: var(--text-dim);">PROCESS_TIME (MANUAL)</span>
+                          <div class="text-xs mb-1">~72 HOURS</div>
+                          <div class="eff-bar"><div class="eff-fill" style="width: 100%; background: #fca5a5;"></div></div>
+                        </div>
                     </div>
                     <!-- After -->
                     <div class="card" style="border-color: #6ee7b7; background: var(--bg);">
@@ -66,6 +184,11 @@
                             <li style="color: var(--text);">一鍵自動報價模型，回覆速度提升 10 倍</li>
                             <li style="color: var(--text);">私有雲端 RAG 檢索，資料 100% 留存在內部</li>
                         </ul>
+                        <div class="viz-box">
+                          <span class="mono-label">PROCESS_TIME (AI_AGENT)</span>
+                          <div class="text-xs mb-1" style="color: var(--accent);">~5 MINUTES</div>
+                          <div class="eff-bar"><div class="eff-fill" style="width: 5%;"></div></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -81,17 +204,38 @@
                     <div class="card">
                         <span class="mono-label">DATA</span>
                         <h3>貿易報關自動化</h3>
-                        <p class="text-sm">自動解析混亂格式的單據，精準配對 HS Code 並登錄系統。</p>
+                        <p class="text-sm mb-6">自動解析混亂格式的單據，精準配對 HS Code 並登錄系統。</p>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                          <div class="logic-node">PDF</div>
+                          <div class="logic-arrow"></div>
+                          <div class="logic-node" style="border-color: var(--accent);">AI</div>
+                          <div class="logic-arrow"></div>
+                          <div class="logic-node">ERP</div>
+                        </div>
                     </div>
                     <div class="card">
                         <span class="mono-label">KNOWLEDGE</span>
                         <h3>傳產知識大腦</h3>
-                        <p class="text-sm">將 20 年維修紀錄與師傅經驗轉化為隨時可問的 AI 助手。</p>
+                        <p class="text-sm mb-6">將 20 年維修紀錄與師傅經驗轉化為隨時可問的 AI 助手。</p>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                          <div class="logic-node">DOCS</div>
+                          <div class="logic-arrow"></div>
+                          <div class="logic-node" style="border-color: var(--accent);">RAG</div>
+                          <div class="logic-arrow"></div>
+                          <div class="logic-node">CHAT</div>
+                        </div>
                     </div>
                     <div class="card">
                         <span class="mono-label">DOCUMENT</span>
                         <h3>專業文件處理</h3>
-                        <p class="text-sm">法律合約、財報比對自動化，確保繁體中文理解 100% 準確。</p>
+                        <p class="text-sm mb-6">法律合約、財報比對自動化，確保繁體中文理解 100% 準確。</p>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                          <div class="logic-node">SCAN</div>
+                          <div class="logic-arrow"></div>
+                          <div class="logic-node" style="border-color: var(--accent);">LLM</div>
+                          <div class="logic-arrow"></div>
+                          <div class="logic-node">DIFF</div>
+                        </div>
                     </div>
                 </div>
             </div>
