@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  /* Light Mode Palette */
-  --bg: #ffffff;
-  --bg-alt: #fafafa;
-  --surface: #f4f4f5;
-  --text: #0f0f14;
-  --text-muted: #6b6b76;
-  --text-dim: #a0a0ab;
-  --border: #e4e4e7;
-  --border-strong: #d4d4d8;
+  /* Default: Dark Mode Palette */
+  --bg: #0f0f14;
+  --bg-alt: #16161c;
+  --surface: #1a1a20;
+  --text: #f4f4f5;
+  --text-muted: #a0a0ab;
+  --text-dim: #6b6b76;
+  --border: #27272a;
+  --border-strong: #3f3f46;
   --accent: #5e6ad2;
   --accent-hover: #4e5acb;
 
@@ -34,17 +34,16 @@
   --radius-lg: 8px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f0f14;
-    --bg-alt: #16161c;
-    --surface: #1a1a20;
-    --text: #f4f4f5;
-    --text-muted: #a0a0ab;
-    --text-dim: #6b6b76;
-    --border: #27272a;
-    --border-strong: #3f3f46;
-  }
+/* Light Mode Override */
+.theme-light {
+  --bg: #ffffff;
+  --bg-alt: #fafafa;
+  --surface: #f4f4f5;
+  --text: #0f0f14;
+  --text-muted: #6b6b76;
+  --text-dim: #a0a0ab;
+  --border: #e4e4e7;
+  --border-strong: #d4d4d8;
 }
 
 /* Base Reset */
@@ -61,6 +60,7 @@ body {
   font-family: var(--sans);
   line-height: 1.5;
   font-size: 14px;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .wrap {
@@ -121,6 +121,7 @@ header {
   top: 0;
   z-index: 100;
   border-bottom: 1px solid var(--border);
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .nav {
@@ -141,6 +142,7 @@ header {
 .navlinks {
   display: flex;
   gap: var(--space-6);
+  align-items: center;
 }
 
 .navlinks a {
@@ -206,6 +208,24 @@ header {
   font-size: 14px;
 }
 
+/* Theme Toggle Button */
+.theme-toggle {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  cursor: pointer;
+  color: var(--text);
+  transition: all 0.1s ease;
+}
+.theme-toggle:hover {
+  border-color: var(--border-strong);
+}
+
 /* Sections */
 section {
   padding: var(--space-16) 0;
@@ -229,7 +249,7 @@ section {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background: var(--bg-alt);
-  transition: border-color 0.1s ease;
+  transition: border-color 0.1s ease, background 0.2s ease;
   text-decoration: none;
   display: block;
   color: inherit;
@@ -291,6 +311,7 @@ footer {
   border-top: 1px solid var(--border);
   font-size: 12px;
   color: var(--text-dim);
+  transition: border-color 0.2s ease;
 }
 
 /* Utility */
