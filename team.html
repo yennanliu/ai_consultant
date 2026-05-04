@@ -4,159 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Team - AI consultant</title>
-    <style>
-      :root {
-        /* Base44 Signature Palette */
-        --bg: #ffffff;
-        --fg: #000000;
-        --accent: #ff3e00; /* Contrast orange/red */
-        --muted: #666666;
-        --border: #000000;
-        --card-bg: #f9f9f9;
-        
-        /* Typography */
-        --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
-        --sans: "Inter", system-ui, -apple-system, sans-serif;
-      }
-
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        background: var(--bg);
-        color: var(--fg);
-        font-family: var(--sans);
-        line-height: 1.5;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      .wrap {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
-      }
-
-      /* Borders & Grids - The Base44 Signature */
-      .b-bottom { border-bottom: 2px solid var(--border); }
-      .b-right { border-right: 2px solid var(--border); }
-      .b-all { border: 2px solid var(--border); }
-
-      /* Top Nav */
-      .nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: stretch;
-        height: 80px;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        padding: 0 24px;
-        font-family: var(--mono);
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: -0.5px;
-        background: var(--fg);
-        color: var(--bg);
-        text-decoration: none;
-      }
-      .navlinks {
-        display: flex;
-        align-items: center;
-      }
-      .navlinks a {
-        padding: 0 20px;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        font-family: var(--mono);
-        font-size: 14px;
-        text-decoration: none;
-        color: var(--fg);
-        border-left: 2px solid var(--border);
-        transition: background 0.2s;
-      }
-      .navlinks a:hover { background: #eee; }
-
-      /* Hero Section */
-      .hero {
-        padding: 80px 0;
-      }
-
-      h1 {
-        font-size: clamp(40px, 6vw, 84px);
-        line-height: 0.9;
-        margin: 0 0 32px;
-        letter-spacing: -3px;
-        font-weight: 800;
-        text-transform: uppercase;
-      }
-      .mono-label {
-        font-family: var(--mono);
-        font-size: 13px;
-        text-transform: uppercase;
-        margin-bottom: 16px;
-        display: block;
-        color: var(--accent);
-      }
-
-      /* Grid Sections */
-      .section-title {
-        padding: 24px;
-        font-family: var(--mono);
-        font-weight: 700;
-        background: var(--fg);
-        color: var(--bg);
-        display: inline-block;
-      }
-
-      .team-copy {
-        max-width: 760px;
-        margin: 24px 0 0;
-        font-size: 18px;
-        color: var(--muted);
-        line-height: 1.8;
-      }
-
-      .team-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 24px;
-        margin-top: 32px;
-      }
-      .team-card {
-        padding: 36px 28px;
-        border: 2px solid var(--border);
-        background: var(--card-bg);
-        min-height: 280px;
-      }
-      .team-card h3 {
-        font-family: var(--mono);
-        text-transform: uppercase;
-        margin-top: 0;
-      }
-      .team-card p {
-        margin: 0;
-        color: var(--muted);
-      }
-
-      footer {
-        padding: 60px 0;
-        background: var(--fg);
-        color: var(--bg);
-        font-family: var(--mono);
-        font-size: 12px;
-      }
-
-      @media (max-width: 900px) {
-        .nav { height: auto; flex-direction: column; }
-        .navlinks { width: 100%; }
-        .navlinks a { flex: 1; border-left: none; border-top: 2px solid var(--border); padding: 15px; justify-content: center; }
-      }
-    </style>
+    <link rel="stylesheet" href="linear.css">
   </head>
   <body>
 
-    <header class="b-bottom">
+    <header>
       <div class="wrap">
         <div class="nav">
           <a href="index.html" class="brand">AI CONSULTANT</a>
@@ -164,7 +16,7 @@
             <a href="index.html#services">SERVICES</a>
             <a href="service_mode.html">SERVICE MODES</a>
             <a href="success_stories.html">SUCCESS STORIES</a>
-            <a href="team.html">TEAM</a>
+            <a href="team.html" class="active">TEAM</a>
             <a href="blog.html">BLOG</a>
             <a href="ai_agent.html">AI AGENT</a>
             <a href="index.html#contact">CONTACT</a>
@@ -178,27 +30,29 @@
         <div class="wrap">
           <span class="mono-label">// OUR TEAM</span>
           <h1>專業團隊</h1>
-          <p style="max-width: 600px; font-size: 20px;">
+          <p style="max-width: 600px; font-size: 18px;">
             我們的核心團隊結合技術專長與商業洞察，確保每一個專案都能以最佳實務執行。
           </p>
         </div>
       </section>
 
-      <section class="wrap">
-        <div class="section-title">TEAM_MEMBERS</div>
-        <p class="team-copy">
-          團隊成員來自頂尖科技公司與新創企業，擁有豐富的 AI 系統開發與產品管理經驗，能夠從技術與商業雙重角度提供全方位支援。
-        </p>
-        <div class="team-grid">
-          <div class="team-card">
-            <span class="mono-label">J</span>
-            <h3>資深工程師</h3>
-            <p>前大型科技公司資深工程師，專精於 AI 系統、代理流程與雲端基礎設施。擅長技術設計、規劃與端到端開發，確保系統高效且可擴展。</p>
-          </div>
-          <div class="team-card">
-            <span class="mono-label">T</span>
-            <h3>資深產品負責人</h3>
-            <p>前領先科技新創公司資深產品負責人，具備深厚的產品理解與商業策略技能。擅長規劃、建置 MVP 以及運用現代工具與工作流程開發 AI 產品。</p>
+      <section>
+        <div class="wrap">
+          <span class="mono-label">TEAM_MEMBERS</span>
+          <p style="max-width: 760px; font-size: 18px; margin-bottom: var(--space-8);">
+            團隊成員來自頂尖科技公司與新創企業，擁有豐富的 AI 系統開發與產品管理經驗，能夠從技術與商業雙重角度提供全方位支援。
+          </p>
+          <div class="grid-2">
+            <div class="card" style="padding: var(--space-8);">
+              <span class="mono-label">J</span>
+              <h3>資深工程師</h3>
+              <p style="color: var(--text);">前大型科技公司資深工程師，專精於 AI 系統、代理流程與雲端基礎設施。擅長技術設計、規劃與端到端開發，確保系統高效且可擴展。</p>
+            </div>
+            <div class="card" style="padding: var(--space-8);">
+              <span class="mono-label">T</span>
+              <h3>資深產品負責人</h3>
+              <p style="color: var(--text);">前領先科技新創公司資深產品負責人，具備深厚的產品理解與商業策略技能。擅長規劃、建置 MVP 以及運用現代工具與工作流程開發 AI 產品。</p>
+            </div>
           </div>
         </div>
       </section>

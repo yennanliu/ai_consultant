@@ -4,178 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Blog - AI consultant</title>
-    <style>
-      :root {
-        /* Base44 Signature Palette */
-        --bg: #ffffff;
-        --fg: #000000;
-        --accent: #ff3e00; /* Contrast orange/red */
-        --muted: #666666;
-        --border: #000000;
-        --card-bg: #f9f9f9;
-        
-        /* Typography */
-        --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
-        --sans: "Inter", system-ui, -apple-system, sans-serif;
-      }
-
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        background: var(--bg);
-        color: var(--fg);
-        font-family: var(--sans);
-        line-height: 1.5;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      .wrap {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
-      }
-
-      /* Borders & Grids - The Base44 Signature */
-      .b-bottom { border-bottom: 2px solid var(--border); }
-      .b-right { border-right: 2px solid var(--border); }
-      .b-all { border: 2px solid var(--border); }
-
-      /* Top Nav */
-      .nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: stretch;
-        height: 80px;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        padding: 0 24px;
-        font-family: var(--mono);
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: -0.5px;
-        background: var(--fg);
-        color: var(--bg);
-        text-decoration: none;
-      }
-      .navlinks {
-        display: flex;
-        align-items: center;
-      }
-      .navlinks a {
-        padding: 0 20px;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        font-family: var(--mono);
-        font-size: 14px;
-        text-decoration: none;
-        color: var(--fg);
-        border-left: 2px solid var(--border);
-        transition: background 0.2s;
-      }
-      .navlinks a:hover { background: #eee; }
-
-      /* Hero Section */
-      .hero {
-        padding: 80px 0;
-      }
-
-      h1 {
-        font-size: clamp(40px, 6vw, 84px);
-        line-height: 0.9;
-        margin: 0 0 32px;
-        letter-spacing: -3px;
-        font-weight: 800;
-        text-transform: uppercase;
-      }
-      .mono-label {
-        font-family: var(--mono);
-        font-size: 13px;
-        text-transform: uppercase;
-        margin-bottom: 16px;
-        display: block;
-        color: var(--accent);
-      }
-
-      /* Grid Sections */
-      .section-title {
-        padding: 24px;
-        font-family: var(--mono);
-        font-weight: 700;
-        background: var(--fg);
-        color: var(--bg);
-        display: inline-block;
-      }
-
-      .blog-copy {
-        max-width: 760px;
-        margin: 24px 0 0;
-        font-size: 18px;
-        color: var(--muted);
-        line-height: 1.8;
-      }
-
-      .blog-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 24px;
-        margin-top: 32px;
-      }
-      .blog-card {
-        padding: 36px 28px;
-        border: 2px solid var(--border);
-        background: var(--card-bg);
-        min-height: 280px;
-      }
-      .blog-card h3 {
-        font-family: var(--mono);
-        text-transform: uppercase;
-        margin-top: 0;
-      }
-      .blog-card p {
-        margin: 0 0 16px;
-        color: var(--muted);
-      }
-      .blog-meta {
-        font-family: var(--mono);
-        font-size: 14px;
-        color: var(--muted);
-        margin-bottom: 12px;
-      }
-      .read-more {
-        display: inline-block;
-        padding: 10px 20px;
-        background: var(--fg);
-        color: var(--bg);
-        text-decoration: none;
-        font-family: var(--mono);
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 12px;
-        transition: transform 0.1s;
-      }
-      .read-more:hover { transform: translate(-2px, -2px); box-shadow: 2px 2px 0 var(--accent); }
-
-      footer {
-        padding: 60px 0;
-        background: var(--fg);
-        color: var(--bg);
-        font-family: var(--mono);
-        font-size: 12px;
-      }
-
-      @media (max-width: 900px) {
-        .nav { height: auto; flex-direction: column; }
-        .navlinks { width: 100%; }
-        .navlinks a { flex: 1; border-left: none; border-top: 2px solid var(--border); padding: 15px; justify-content: center; }
-      }
-    </style>
+    <link rel="stylesheet" href="linear.css">
   </head>
   <body>
 
-    <header class="b-bottom">
+    <header>
       <div class="wrap">
         <div class="nav">
           <a href="index.html" class="brand">AI CONSULTANT</a>
@@ -184,7 +17,7 @@
             <a href="service_mode.html">SERVICE MODES</a>
             <a href="success_stories.html">SUCCESS STORIES</a>
             <a href="team.html">TEAM</a>
-            <a href="blog.html">BLOG</a>
+            <a href="blog.html" class="active">BLOG</a>
             <a href="ai_agent.html">AI AGENT</a>
             <a href="index.html#contact">CONTACT</a>
           </nav>
@@ -197,88 +30,93 @@
         <div class="wrap">
           <span class="mono-label">// INSIGHTS & UPDATES</span>
           <h1>Blog</h1>
-          <p style="max-width: 600px; font-size: 20px;">
+          <p style="max-width: 600px; font-size: 18px;">
             分享 AI 導入的最新趨勢、實務經驗與業界洞察，幫助企業掌握變革先機。
           </p>
         </div>
       </section>
 
-      <section class="wrap">
-        <div class="section-title">LATEST_POSTS</div>
-        <p class="blog-copy">
-          我們定期更新 AI 相關的專業文章，從技術趨勢到商業應用，提供實用的見解與建議。
-        </p>
-        <div class="blog-grid">
+      <section>
+        <div class="wrap">
+          <span class="mono-label">LATEST_POSTS</span>
+          <p style="max-width: 760px; font-size: 18px; margin-bottom: var(--space-8);">
+            我們定期更新 AI 相關的專業文章，從技術趨勢到商業應用，提供實用的見解與建議。
+          </p>
           
-          <div class="blog-card">
-            <span class="mono-label">AI TRENDS</span>
-            <h3>2026 年 AI 趨勢預測</h3>
-            <div class="blog-meta">2026-04-27</div>
-            <p>探討生成式 AI、邊緣運算與企業應用等關鍵趨勢，分析對台灣中小企業的影響與機會。</p>
-            <a href="asset/ai-trends-2026.html" class="read-more">READ MORE</a>
-          </div>
+          <div class="card-grid">
+            
+            <a href="asset/ai-trends-2026.html" class="card">
+              <span class="mono-label">AI TRENDS</span>
+              <h3>2026 年 AI 趨勢預測</h3>
+              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-04-27</div>
+              <p>探討生成式 AI、邊緣運算與企業應用等關鍵趨勢，分析對台灣中小企業的影響與機會。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+            </a>
 
-          <div class="blog-card">
-            <span class="mono-label">CASE STUDY</span>
-            <h3>製造業 AI 導入實戰</h3>
-            <div class="blog-meta">2026-04-20</div>
-            <p>深入剖析紡織廠導入 AI 瑕疵檢測的完整流程，從需求分析到成效驗證的實務經驗分享。</p>
-            <a href="asset/manufacturing-ai-case-study.html" class="read-more">READ MORE</a>
-          </div>
+            <a href="asset/manufacturing-ai-case-study.html" class="card">
+              <span class="mono-label">CASE STUDY</span>
+              <h3>製造業 AI 導入實戰</h3>
+              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-04-20</div>
+              <p>深入剖析紡織廠導入 AI 瑕疵檢測的完整流程，從需求分析到成效驗證的實務經驗分享。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+            </a>
 
-          <div class="blog-card">
-            <span class="mono-label">STRATEGY</span>
-            <h3>中小企業 AI 策略指南</h3>
-            <div class="blog-meta">2026-04-15</div>
-            <p>為中小企業量身打造的 AI 導入策略框架，涵蓋資源評估、風險管理與階段性實施建議。</p>
-            <a href="asset/smb-ai-strategy-guide.html" class="read-more">READ MORE</a>
-          </div>
+            <a href="asset/smb-ai-strategy-guide.html" class="card">
+              <span class="mono-label">STRATEGY</span>
+              <h3>中小企業 AI 策略指南</h3>
+              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-04-15</div>
+              <p>為中小企業量身打造的 AI 導入策略框架，涵蓋資源評估、風險管理與階段性實施建議。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+            </a>
 
-          <div class="blog-card">
-            <span class="mono-label">TECHNICAL GUIDE</span>
-            <h3>企業私有 AI Agent 系統架構設計</h3>
-            <div class="blog-meta">2026-05-02</div>
-            <p>深入探討私有 Agent 系統的核心架構層級、關鍵設計決策與實施建議，幫助企業確立技術方向。</p>
-            <a href="asset/enterprise-private-agent-architecture.html" class="read-more">READ MORE</a>
-          </div>
+            <a href="asset/enterprise-private-agent-architecture.html" class="card">
+              <span class="mono-label">TECHNICAL GUIDE</span>
+              <h3>企業私有 AI Agent 系統架構設計</h3>
+              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
+              <p>深入探討私有 Agent 系統的核心架構層級、關鍵設計決策與實施建議，幫助企業確立技術方向。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+            </a>
 
-          <div class="blog-card">
-            <span class="mono-label">IMPLEMENTATION</span>
-            <h3>私有 Agent 部署策略與治理框架</h3>
-            <div class="blog-meta">2026-05-02</div>
-            <p>從分階段部署路線圖到治理框架的四大支柱，以及常見陷阱的應對策略，確保部署順利進行。</p>
-            <a href="asset/private-agent-deployment-strategy.html" class="read-more">READ MORE</a>
-          </div>
+            <a href="asset/private-agent-deployment-strategy.html" class="card">
+              <span class="mono-label">IMPLEMENTATION</span>
+              <h3>私有 Agent 部署策略與治理框架</h3>
+              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
+              <p>從分階段部署路線圖到治理框架的四大支柱，以及常見陷阱的應對策略，確保部署順利進行。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+            </a>
 
-          <div class="blog-card">
-            <span class="mono-label">SECURITY & GOVERNANCE</span>
-            <h3>私有 Agent 系統的安全與合規</h3>
-            <div class="blog-meta">2026-05-02</div>
-            <p>資料安全、隱私保護、系統可靠性與合規框架的完整分析，建立可信的企業級 Agent 系統。</p>
-            <a href="asset/private-agent-security-compliance.html" class="read-more">READ MORE</a>
-          </div>
-          <div class="blog-card">
-            <span class="mono-label">AGENT SERIES #1</span>
-            <h3>AI Chat vs AI Agent：為什麼不是同一件事</h3>
-            <div class="blog-meta">2026-05-02</div>
-            <p>從聊天工具到可委派的智能系統，清晰區分兩者本質、應用場景與選型決策框架。</p>
-            <a href="asset/agent-chat-vs-agent.html" class="read-more">READ MORE</a>
-          </div>
+            <a href="asset/private-agent-security-compliance.html" class="card">
+              <span class="mono-label">SECURITY & GOVERNANCE</span>
+              <h3>私有 Agent 系統的安全與合規</h3>
+              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
+              <p>資料安全、隱私保護、系統可靠性與合規框架的完整分析，建立可信的企業級 Agent 系統。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+            </a>
 
-          <div class="blog-card">
-            <span class="mono-label">AGENT SERIES #2</span>
-            <h3>Agent 六層架構：從模型到治理</h3>
-            <div class="blog-meta">2026-05-02</div>
-            <p>可靠 Agent 系統的藍圖，從基礎模型層到頂層治理層的分層設計與實施路線。</p>
-            <a href="asset/agent-six-layer-architecture.html" class="read-more">READ MORE</a>
-          </div>
+            <a href="asset/agent-chat-vs-agent.html" class="card">
+              <span class="mono-label">AGENT SERIES #1</span>
+              <h3>AI Chat vs AI Agent：為什麼不是同一件事</h3>
+              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
+              <p>從聊天工具到可委派的智能系統，清晰區分兩者本質、應用場景與選型決策框架。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+            </a>
 
-          <div class="blog-card">
-            <span class="mono-label">AGENT SERIES #3</span>
-            <h3>Agent 核心元件與實施路線</h3>
-            <div class="blog-meta">2026-05-02</div>
-            <p>MCP、Skill、Sandbox、Plugin 四大組件的作用、整合方式與 6 個月落地計畫。</p>
-            <a href="asset/agent-core-components.html" class="read-more">READ MORE</a>
+            <a href="asset/agent-six-layer-architecture.html" class="card">
+              <span class="mono-label">AGENT SERIES #2</span>
+              <h3>Agent 六層架構：從模型到治理</h3>
+              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
+              <p>可靠 Agent 系統的藍圖，從基礎模型層到頂層治理層的分層設計與實施路線。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+            </a>
+
+            <a href="asset/agent-core-components.html" class="card">
+              <span class="mono-label">AGENT SERIES #3</span>
+              <h3>Agent 核心元件與實施路線</h3>
+              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
+              <p>MCP、Skill、Sandbox、Plugin 四大組件的作用、整合方式與 6 個月落地計畫。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+            </a>
+
           </div>
         </div>
       </section>

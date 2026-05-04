@@ -4,147 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>製造業 AI 導入實戰 - AI consultant</title>
-    <style>
-      :root {
-        /* Base44 Signature Palette */
-        --bg: #ffffff;
-        --fg: #000000;
-        --accent: #ff3e00; /* Contrast orange/red */
-        --muted: #666666;
-        --border: #000000;
-        --card-bg: #f9f9f9;
-        
-        /* Typography */
-        --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
-        --sans: "Inter", system-ui, -apple-system, sans-serif;
-      }
-
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        background: var(--bg);
-        color: var(--fg);
-        font-family: var(--sans);
-        line-height: 1.5;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      .wrap {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
-      }
-
-      /* Borders & Grids - The Base44 Signature */
-      .b-bottom { border-bottom: 2px solid var(--border); }
-      .b-right { border-right: 2px solid var(--border); }
-      .b-all { border: 2px solid var(--border); }
-
-      /* Top Nav */
-      .nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: stretch;
-        height: 80px;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        padding: 0 24px;
-        font-family: var(--mono);
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: -0.5px;
-        background: var(--fg);
-        color: var(--bg);
-        text-decoration: none;
-      }
-      .navlinks {
-        display: flex;
-        align-items: center;
-      }
-      .navlinks a {
-        padding: 0 20px;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        font-family: var(--mono);
-        font-size: 14px;
-        text-decoration: none;
-        color: var(--fg);
-        border-left: 2px solid var(--border);
-        transition: background 0.2s;
-      }
-      .navlinks a:hover { background: #eee; }
-
-      /* Hero Section */
-      .hero {
-        padding: 80px 0;
-      }
-
-      h1 {
-        font-size: clamp(40px, 6vw, 84px);
-        line-height: 0.9;
-        margin: 0 0 32px;
-        letter-spacing: -3px;
-        font-weight: 800;
-        text-transform: uppercase;
-      }
-      .mono-label {
-        font-family: var(--mono);
-        font-size: 13px;
-        text-transform: uppercase;
-        margin-bottom: 16px;
-        display: block;
-        color: var(--accent);
-      }
-
-      .post-meta {
-        font-family: var(--mono);
-        font-size: 14px;
-        color: var(--muted);
-        margin-bottom: 24px;
-      }
-
-      .post-content {
-        max-width: 800px;
-        font-size: 18px;
-        line-height: 1.8;
-        margin-bottom: 40px;
-      }
-
-      .back-link {
-        display: inline-block;
-        padding: 10px 20px;
-        background: var(--fg);
-        color: var(--bg);
-        text-decoration: none;
-        font-family: var(--mono);
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 12px;
-        transition: transform 0.1s;
-      }
-      .back-link:hover { transform: translate(-2px, -2px); box-shadow: 2px 2px 0 var(--accent); }
-
-      footer {
-        padding: 60px 0;
-        background: var(--fg);
-        color: var(--bg);
-        font-family: var(--mono);
-        font-size: 12px;
-      }
-
-      @media (max-width: 900px) {
-        .nav { height: auto; flex-direction: column; }
-        .navlinks { width: 100%; }
-        .navlinks a { flex: 1; border-left: none; border-top: 2px solid var(--border); padding: 15px; justify-content: center; }
-      }
-    </style>
+    <link rel="stylesheet" href="../linear.css">
   </head>
   <body>
 
-    <header class="b-bottom">
+    <header>
       <div class="wrap">
         <div class="nav">
           <a href="../index.html" class="brand">AI CONSULTANT</a>
@@ -154,6 +18,7 @@
             <a href="../success_stories.html">SUCCESS STORIES</a>
             <a href="../team.html">TEAM</a>
             <a href="../blog.html">BLOG</a>
+            <a href="../ai_agent.html">AI AGENT</a>
             <a href="../index.html#contact">CONTACT</a>
           </nav>
         </div>
@@ -165,31 +30,74 @@
         <div class="wrap">
           <span class="mono-label">// CASE STUDY</span>
           <h1>製造業 AI 導入實戰</h1>
-          <div class="post-meta">2026-04-20</div>
+          <div class="text-xs" style="color: var(--text-dim);">2026-04-20</div>
         </div>
       </section>
 
-      <section class="wrap">
-        <div class="post-content">
-          <p>紡織業是台灣傳統製造業的重要支柱，年產值超過 1,500 億台幣，但面臨人力短缺與品質管控挑戰。根據業界調查，台灣紡織廠的品質人力成本年增 15%，同時消費者對品質要求持續提升。透過 AI 瑕疵檢測系統的導入，一家年營收 5 億的紡織廠成功轉型，為同業樹立標杆。</p>
+      <section>
+        <div class="wrap">
+          <div style="max-width: 800px;">
+            <p>紡織業是台灣傳統製造業的重要支柱，年產值超過 1,500 億台幣，但面臨人力短缺與品質管控挑戰。根據業界調查，台灣紡織廠的品質人力成本年增 15%，同時消費者對品質要求持續提升。透過 AI 瑕疵檢測系統的導入，一家年營收 5 億的紡織廠成功轉型，為同業樹立標杆。</p>
           
-          <h2>現狀分析：從問題到機會</h2>\n          <p>該廠主要生產高端服飾用布料，年產能 500 萬公尺，過去採用 100% 人工目檢。深入訪談發現：</p>\n          
-          <p>• 漏檢率高達 12%，因人員疲勞與注意力難以集中<br/>\n• 品質問題通常到客戶端才被發現，影響聲譽與退貨率<br/>\n• 品檢員缺乏 10 人，年度招聘困難，薪資競爭力下降<br/>\n• 無法對外提供「品質保證」數據，失去高端客戶機會</p>\n          
-          <p>這些痛點促使廠方決定導入 AI 瑕疵檢測系統，並選擇邊緣運算方案（現場部署，無需上雲）以保護客戶隱私。</p>\n          
-          <h2>技術方案設計與選型</h2>\n          <p><strong>架構決策過程：</strong></p>\n          <p>• 考慮方案 1：公有雲 API 調用 — 實時成本高，隱私風險，不符合需求<br/>\n• 考慮方案 2：自行開發深度學習模型 — 時間長（12+ 個月），成本高（500 萬以上）<br/>\n• 最終選擇：輕量化 CNN 架構（YOLOv5 改進版）+ 邊緣設備（NVIDIA Jetson）</p>\n          
-          <p><strong>技術棧：</strong> PyTorch 框架、OpenCV 視覺處理、TensorRT 推理優化、Docker 容器部署。</p>\n          
-          <h2>POC 驗證階段（8 週）</h2>\n          <p><strong>週 1-2：資料收集與標註</strong><br/>\n蒐集 5,000 張布料樣本圖像（正常與缺陷）。與品檢人員合作，精確標註 8 類常見缺陷（污漬、斷紗、浮毛等），建立高質量訓練資料集。</p>\n          
-          <p><strong>週 3-4：模型訓練與優化</strong><br/>\n使用遷移學習加速訓練（基於 ImageNet 預訓練模型），精度達 94% 後進行量化與剪枝以降低模型尺寸（從 200MB 降至 40MB），確保可在邊緣設備運行。</p>\n          
-          <p><strong>週 5-6：生產線集成與測試</strong><br/>\n搭建視覺採集系統（高速攝像頭 + 光學模組），整合推理引擎與工業控制系統。進行 100 小時連續運行測試，驗證穩定性與準確度。</p>\n          
-          <p><strong>週 7-8：效能驗證與比對</strong><br/>\n與人工目檢並行運行，對比結果。AI 漏檢率降至 2%（vs 人工 12%），誤檢率 1.5%，處理速度達 180 公尺/分鐘。</p>\n          
-          <h2>生產部署與運營效果</h2>\n          <p><strong>經濟效益（首年）：</strong></p>\n          <p>• 系統投資：300 萬台幣（包括軟硬體、集成、訓練）<br/>\n• 人力成本節省：480 萬台幣/年（裁減 5 名品檢員，薪資 80 萬/人）<br/>\n• 品質改善帶來的收入增長：800 萬台幣/年（客戶投訴減少 90%，高端客戶增加）<br/>\n• 首年淨收益：980 萬台幣，投資回收期 3.7 個月</p>\n          
-          <p><strong>非財務效益：</strong></p>\n          <p>• 品質數據可視化 — 客戶可查閱每批布料的 AI 檢測報告<br/>\n• 員工轉型 — 品檢人員轉為 AI 系統監督與異常處理<br/>\n• 競爭力提升 — 成為業界品質標杆，吸引高端客戶</p>\n          
-          <h2>關鍵成功因素與啟發</h2>\n          <p><strong>1. 從業務痛點出發，而非技術驅動</strong> — 該廠首先定義「降低漏檢率至 <3%」的業務目標，再反推技術方案，而非為了用 AI 而用 AI。</p>\n          
-          <p><strong>2. 選擇適合生產環境的架構</strong> — 邊緣部署避免了雲端延遲與網路依賴，符合 24/7 工業生產需求。同時保護了客戶敏感的布料設計資料。</p>\n          
-          <p><strong>3. 投資高質量訓練資料</strong> — 模型準確度的關鍵不在於算法複雜度，而在於資料質量。該廠花費 40% 的 POC 時間在資料標註上，確保覆蓋全部缺陷類型。</p>\n          
-          <p><strong>4. 漸進式變革管理</strong> — 並非一夜間裁減品檢人員，而是透過 POC 讓員工參與，逐步獲得信任，最後轉變為「AI 監督者」角色，減少變革阻力。</p>\n          
-          <p><strong>5. 建立持續改進機制</strong> — 部署後每月評估模型性能，定期標註新型缺陷樣本，持續微調模型。6 個月後準確度從 94% 提升至 97.5%。</p>\n        </div>
-        <a href="../blog.html" class="back-link">← BACK TO BLOG</a>
+          <h2>現狀分析：從問題到機會</h2>
+          <p>該廠主要生產高端服飾用布料，年產能 500 萬公尺，過去採用 100% 人工目檢。深入訪談發現：</p>
+          
+          <p>• 漏檢率高達 12%，因人員疲勞與注意力難以集中<br/>
+• 品質問題通常到客戶端才被發現，影響聲譽與退貨率<br/>
+• 品檢員缺乏 10 人，年度招聘困難，薪資競爭力下降<br/>
+• 無法對外提供「品質保證」數據，失去高端客戶機會</p>
+          
+          <p>這些痛點促使廠方決定導入 AI 瑕疵檢測系統，並選擇邊緣運算方案（現場部署，無需上雲）以保護客戶隱私。</p>
+          
+          <h2>技術方案設計與選型</h2>
+          <p><strong>架構決策過程：</strong></p>
+          <p>• 考慮方案 1：公有雲 API 調用 — 實時成本高，隱私風險，不符合需求<br/>
+• 考慮方案 2：自行開發深度學習模型 — 時間長（12+ 個月），成本高（500 萬以上）<br/>
+• 最終選擇：輕量化 CNN 架構（YOLOv5 改進版）+ 邊緣設備（NVIDIA Jetson）</p>
+          
+          <p><strong>技術棧：</strong> PyTorch 框架、OpenCV 視覺處理、TensorRT 推理優化、Docker 容器部署。</p>
+          
+          <h2>POC 驗證階段（8 週）</h2>
+          <p><strong>週 1-2：資料收集與標註</strong><br/>
+蒐集 5,000 張布料樣本圖像（正常與缺陷）。與品檢人員合作，精確標註 8 類常見缺陷（污漬、斷紗、浮毛等），建立高質量訓練資料集。</p>
+          
+          <p><strong>週 3-4：模型訓練與優化</strong><br/>
+使用遷移學習加速訓練（基於 ImageNet 預訓練模型），精度達 94% 後進行量化與剪枝以降低模型尺寸（從 200MB 降至 40MB），確保可在邊緣設備運行。</p>
+          
+          <p><strong>週 5-6：生產線集成與測試</strong><br/>
+搭建視覺採集系統（高速攝像頭 + 光學模組），整合推理引擎與工業控制系統。進行 100 小時連續運行測試，驗證穩定性與準確度。</p>
+          
+          <p><strong>週 7-8：效能驗證與比對</strong><br/>
+與人工目檢並行運行，對比結果。AI 漏檢率降至 2%（vs 人工 12%），誤檢率 1.5%，處理速度達 180 公尺/分鐘。</p>
+          
+          <h2>生產部署與運營效果</h2>
+          <p><strong>經濟效益（首年）：</strong></p>
+          
+          <p>• 系統投資：300 萬台幣（包括軟硬體、集成、訓練）<br/>
+• 人力成本節省：480 萬台幣/年（裁減 5 名品檢員，薪資 80 萬/人）<br/>
+• 品質改善帶來的收入增長：800 萬台幣/年（客戶投訴減少 90%，高端客戶增加）<br/>
+• 首年淨收益：980 萬台幣，投資回收期 3.7 個月</p>
+          
+          <p><strong>非財務效益：</strong></p>
+          
+          <p>• 品質數據可視化 — 客戶可查閱每批布料的 AI 檢測報告<br/>
+• 員工轉型 — 品檢人員轉為 AI 系統監督與異常處理<br/>
+• 競爭力提升 — 成為業界品質標杆，吸引高端客戶</p>
+          
+          <h2>關鍵成功因素與啟發</h2>
+          <p><strong>1. 從業務痛點出發，而非技術驅動</strong> — 該廠首先定義「降低漏檢率至 &lt; 3%」的業務目標，再反推技術方案，而非為了用 AI 而用 AI。</p>
+          
+          <p><strong>2. 選擇適合生產環境的架構</strong> — 邊緣部署避免了雲端延遲與網路依賴，符合 24/7 工業生產需求。同時保護了客戶敏感的布料設計資料。</p>
+          
+          <p><strong>3. 投資高質量訓練資料</strong> — 模型準確度的關鍵不在於算法複雜度，而在於資料質量。該廠花費 40% 的 POC 時間在資料標註上，確保覆蓋全部缺陷類型。</p>
+          
+          <p><strong>4. 漸進式變革管理</strong> — 並非一夜間裁減品檢人員，而是透過 POC 讓員工參與，逐步獲得信任，最後轉變為「AI 監督者」角色，減少變革阻力。</p>
+          
+          <p><strong>5. 建立持續改進機制</strong> — 部署後每月評估模型性能，定期標註新型缺陷樣本，持續微調模型。6 個月後準確度從 94% 提升至 97.5%。</p>
+
+            <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
+          </div>
+        </div>
       </section>
     </main>
 

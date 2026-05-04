@@ -4,172 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Service Modes - AI consultant</title>
-    <style>
-      :root {
-        /* Base44 Signature Palette */
-        --bg: #ffffff;
-        --fg: #000000;
-        --accent: #ff3e00; /* Contrast orange/red */
-        --muted: #666666;
-        --border: #000000;
-        --card-bg: #f9f9f9;
-        
-        /* Typography */
-        --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
-        --sans: "Inter", system-ui, -apple-system, sans-serif;
-      }
-
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        background: var(--bg);
-        color: var(--fg);
-        font-family: var(--sans);
-        line-height: 1.5;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      .wrap {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
-      }
-
-      /* Borders & Grids - The Base44 Signature */
-      .b-bottom { border-bottom: 2px solid var(--border); }
-      .b-right { border-right: 2px solid var(--border); }
-      .b-all { border: 2px solid var(--border); }
-
-      /* Top Nav */
-      .nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: stretch;
-        height: 80px;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        padding: 0 24px;
-        font-family: var(--mono);
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: -0.5px;
-        background: var(--fg);
-        color: var(--bg);
-        text-decoration: none;
-      }
-      .navlinks {
-        display: flex;
-        align-items: center;
-      }
-      .navlinks a {
-        padding: 0 20px;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        font-family: var(--mono);
-        font-size: 14px;
-        text-decoration: none;
-        color: var(--fg);
-        border-left: 2px solid var(--border);
-        transition: background 0.2s;
-      }
-      .navlinks a:hover { background: #eee; }
-
-      /* Hero Section */
-      .hero {
-        padding: 80px 0;
-      }
-
-      h1 {
-        font-size: clamp(40px, 6vw, 84px);
-        line-height: 0.9;
-        margin: 0 0 32px;
-        letter-spacing: -3px;
-        font-weight: 800;
-        text-transform: uppercase;
-      }
-      .mono-label {
-        font-family: var(--mono);
-        font-size: 13px;
-        text-transform: uppercase;
-        margin-bottom: 16px;
-        display: block;
-        color: var(--accent);
-      }
-
-      /* Grid Sections */
-      .section-title {
-        padding: 24px;
-        font-family: var(--mono);
-        font-weight: 700;
-        background: var(--fg);
-        color: var(--bg);
-        display: inline-block;
-      }
-
-      .service-copy {
-        max-width: 760px;
-        margin: 24px 0 0;
-        font-size: 18px;
-        color: var(--muted);
-        line-height: 1.8;
-      }
-
-      .feature-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 24px;
-        margin-top: 32px;
-      }
-      .feature-card {
-        padding: 36px 28px;
-        border: 2px solid var(--border);
-        background: var(--card-bg);
-        min-height: 280px;
-      }
-      .feature-card h3 {
-        font-family: var(--mono);
-        text-transform: uppercase;
-        margin-top: 0;
-      }
-      .feature-card p {
-        margin: 0 0 16px;
-        color: var(--muted);
-      }
-      .price {
-        font-family: var(--mono);
-        font-size: 20px;
-        font-weight: 700;
-        color: var(--accent);
-        margin-top: 16px;
-      }
-
-      footer {
-        padding: 60px 0;
-        background: var(--fg);
-        color: var(--bg);
-        font-family: var(--mono);
-        font-size: 12px;
-      }
-
-      @media (max-width: 900px) {
-        .nav { height: auto; flex-direction: column; }
-        .navlinks { width: 100%; }
-        .navlinks a { flex: 1; border-left: none; border-top: 2px solid var(--border); padding: 15px; justify-content: center; }
-      }
-    </style>
+    <link rel="stylesheet" href="linear.css">
   </head>
   <body>
 
-    <header class="b-bottom">
+    <header>
       <div class="wrap">
         <div class="nav">
           <a href="index.html" class="brand">AI CONSULTANT</a>
           <nav class="navlinks">
             <a href="index.html#services">SERVICES</a>
-            <a href="service_mode.html">SERVICE MODES</a>
+            <a href="service_mode.html" class="active">SERVICE MODES</a>
             <a href="success_stories.html">SUCCESS STORIES</a>
             <a href="team.html">TEAM</a>
             <a href="blog.html">BLOG</a>
@@ -185,72 +30,74 @@
         <div class="wrap">
           <span class="mono-label">// SERVICE MODES</span>
           <h1>專業服務模式</h1>
-          <p style="max-width: 600px; font-size: 20px;">
+          <p style="max-width: 600px; font-size: 18px;">
             我們提供靈活的服務組合，根據您的需求與預算量身打造。從單一諮詢到完整導入，每個階段都確保價值最大化。
           </p>
         </div>
       </section>
 
-      <section class="wrap">
-        <div class="section-title">SERVICE_PACKAGES</div>
-        <p class="service-copy">
-          以下為我們的標準服務模式與價格，涵蓋從策略規劃到實際執行的全方位支援。所有價格以新台幣計算，包含基本諮詢與文件交付。
-        </p>
-        <div class="feature-grid">
-          <div class="feature-card">
-            <span class="mono-label">01</span>
-            <h3>策略諮詢</h3>
-            <p>與管理層深度訪談，產出 AI 機會地圖與 ROI 分析。</p>
-            <ul style="padding-left: 20px; margin: 0;">
-              <li>2-3 次工作坊</li>
-              <li>完整機會評估報告</li>
-              <li>優先順序建議</li>
-            </ul>
-            <div class="price">NT$ 1,500 / 小時</div>
-          </div>
-          <div class="feature-card">
-            <span class="mono-label">02</span>
-            <h3>工具導入</h3>
-            <p>評估現有系統，選擇並配置最適合的 AI 工具與平台。</p>
-            <ul style="padding-left: 20px; margin: 0;">
-              <li>技術架構設計</li>
-              <li>供應商評估與合約協助</li>
-              <li>基礎設定與測試</li>
-            </ul>
-            <div class="price">NT$ 80,000 - 120,000</div>
-          </div>
-          <div class="feature-card">
-            <span class="mono-label">03</span>
-            <h3>POC 驗證</h3>
-            <p>快速建置原型，驗證商業假設與技術可行性。</p>
-            <ul style="padding-left: 20px; margin: 0;">
-              <li>4-6 週原型開發</li>
-              <li>成效測量與調整</li>
-              <li>擴展建議報告</li>
-            </ul>
-            <div class="price">NT$ 100,000 - 150,000</div>
-          </div>
-          <div class="feature-card">
-            <span class="mono-label">04</span>
-            <h3>資料治理</h3>
-            <p>建立資料品質標準與安全機制，確保 AI 應用可靠。</p>
-            <ul style="padding-left: 20px; margin: 0;">
-              <li>資料稽核與清理</li>
-              <li>存取權限設計</li>
-              <li>合規性評估</li>
-            </ul>
-            <div class="price">NT$ 60,000 - 90,000</div>
-          </div>
-          <div class="feature-card">
-            <span class="mono-label">05</span>
-            <h3>組織培訓</h3>
-            <p>協助團隊掌握 AI 實作技能與變革管理。</p>
-            <ul style="padding-left: 20px; margin: 0;">
-              <li>客製化訓練課程</li>
-              <li>變革管理指導</li>
-              <li>持續支援與諮詢</li>
-            </ul>
-            <div class="price">NT$ 40,000 - 70,000</div>
+      <section>
+        <div class="wrap">
+          <span class="mono-label">SERVICE_PACKAGES</span>
+          <p style="max-width: 760px; font-size: 18px; margin-bottom: var(--space-8);">
+            以下為我們的標準服務模式與價格，涵蓋從策略規劃到實際執行的全方位支援。所有價格以新台幣計算，包含基本諮詢與文件交付。
+          </p>
+          <div class="card-grid">
+            <div class="card">
+              <span class="mono-label">01</span>
+              <h3>策略諮詢</h3>
+              <p>與管理層深度訪談，產出 AI 機會地圖與 ROI 分析。</p>
+              <ul class="list-clean mb-4">
+                <li>2-3 次工作坊</li>
+                <li>完整機會評估報告</li>
+                <li>優先順序建議</li>
+              </ul>
+              <div style="font-weight: 600; color: var(--accent);">NT$ 1,500 / 小時</div>
+            </div>
+            <div class="card">
+              <span class="mono-label">02</span>
+              <h3>工具導入</h3>
+              <p>評估現有系統，選擇並配置最適合的 AI 工具與平台。</p>
+              <ul class="list-clean mb-4">
+                <li>技術架構設計</li>
+                <li>供應商評估與合約協助</li>
+                <li>基礎設定與測試</li>
+              </ul>
+              <div style="font-weight: 600; color: var(--accent);">NT$ 80,000 - 120,000</div>
+            </div>
+            <div class="card">
+              <span class="mono-label">03</span>
+              <h3>POC 驗證</h3>
+              <p>快速建置原型，驗證商業假設與技術可行性。</p>
+              <ul class="list-clean mb-4">
+                <li>4-6 週原型開發</li>
+                <li>成效測量與調整</li>
+                <li>擴展建議報告</li>
+              </ul>
+              <div style="font-weight: 600; color: var(--accent);">NT$ 100,000 - 150,000</div>
+            </div>
+            <div class="card">
+              <span class="mono-label">04</span>
+              <h3>資料治理</h3>
+              <p>建立資料品質標準與安全機制，確保 AI 應用可靠。</p>
+              <ul class="list-clean mb-4">
+                <li>資料稽核與清理</li>
+                <li>存取權限設計</li>
+                <li>合規性評估</li>
+              </ul>
+              <div style="font-weight: 600; color: var(--accent);">NT$ 60,000 - 90,000</div>
+            </div>
+            <div class="card">
+              <span class="mono-label">05</span>
+              <h3>組織培訓</h3>
+              <p>協助團隊掌握 AI 實作技能與變革管理。</p>
+              <ul class="list-clean mb-4">
+                <li>客製化訓練課程</li>
+                <li>變革管理指導</li>
+                <li>持續支援與諮詢</li>
+              </ul>
+              <div style="font-weight: 600; color: var(--accent);">NT$ 40,000 - 70,000</div>
+            </div>
           </div>
         </div>
       </section>

@@ -4,147 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>中小企業 AI 策略指南 - AI consultant</title>
-    <style>
-      :root {
-        /* Base44 Signature Palette */
-        --bg: #ffffff;
-        --fg: #000000;
-        --accent: #ff3e00; /* Contrast orange/red */
-        --muted: #666666;
-        --border: #000000;
-        --card-bg: #f9f9f9;
-        
-        /* Typography */
-        --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
-        --sans: "Inter", system-ui, -apple-system, sans-serif;
-      }
-
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        background: var(--bg);
-        color: var(--fg);
-        font-family: var(--sans);
-        line-height: 1.5;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      .wrap {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
-      }
-
-      /* Borders & Grids - The Base44 Signature */
-      .b-bottom { border-bottom: 2px solid var(--border); }
-      .b-right { border-right: 2px solid var(--border); }
-      .b-all { border: 2px solid var(--border); }
-
-      /* Top Nav */
-      .nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: stretch;
-        height: 80px;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        padding: 0 24px;
-        font-family: var(--mono);
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: -0.5px;
-        background: var(--fg);
-        color: var(--bg);
-        text-decoration: none;
-      }
-      .navlinks {
-        display: flex;
-        align-items: center;
-      }
-      .navlinks a {
-        padding: 0 20px;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        font-family: var(--mono);
-        font-size: 14px;
-        text-decoration: none;
-        color: var(--fg);
-        border-left: 2px solid var(--border);
-        transition: background 0.2s;
-      }
-      .navlinks a:hover { background: #eee; }
-
-      /* Hero Section */
-      .hero {
-        padding: 80px 0;
-      }
-
-      h1 {
-        font-size: clamp(40px, 6vw, 84px);
-        line-height: 0.9;
-        margin: 0 0 32px;
-        letter-spacing: -3px;
-        font-weight: 800;
-        text-transform: uppercase;
-      }
-      .mono-label {
-        font-family: var(--mono);
-        font-size: 13px;
-        text-transform: uppercase;
-        margin-bottom: 16px;
-        display: block;
-        color: var(--accent);
-      }
-
-      .post-meta {
-        font-family: var(--mono);
-        font-size: 14px;
-        color: var(--muted);
-        margin-bottom: 24px;
-      }
-
-      .post-content {
-        max-width: 800px;
-        font-size: 18px;
-        line-height: 1.8;
-        margin-bottom: 40px;
-      }
-
-      .back-link {
-        display: inline-block;
-        padding: 10px 20px;
-        background: var(--fg);
-        color: var(--bg);
-        text-decoration: none;
-        font-family: var(--mono);
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 12px;
-        transition: transform 0.1s;
-      }
-      .back-link:hover { transform: translate(-2px, -2px); box-shadow: 2px 2px 0 var(--accent); }
-
-      footer {
-        padding: 60px 0;
-        background: var(--fg);
-        color: var(--bg);
-        font-family: var(--mono);
-        font-size: 12px;
-      }
-
-      @media (max-width: 900px) {
-        .nav { height: auto; flex-direction: column; }
-        .navlinks { width: 100%; }
-        .navlinks a { flex: 1; border-left: none; border-top: 2px solid var(--border); padding: 15px; justify-content: center; }
-      }
-    </style>
+    <link rel="stylesheet" href="../linear.css">
   </head>
   <body>
 
-    <header class="b-bottom">
+    <header>
       <div class="wrap">
         <div class="nav">
           <a href="../index.html" class="brand">AI CONSULTANT</a>
@@ -154,6 +18,7 @@
             <a href="../success_stories.html">SUCCESS STORIES</a>
             <a href="../team.html">TEAM</a>
             <a href="../blog.html">BLOG</a>
+            <a href="../ai_agent.html">AI AGENT</a>
             <a href="../index.html#contact">CONTACT</a>
           </nav>
         </div>
@@ -165,37 +30,52 @@
         <div class="wrap">
           <span class="mono-label">// STRATEGY</span>
           <h1>中小企業 AI 策略指南</h1>
-          <div class="post-meta">2026-04-15</div>
+          <div class="text-xs" style="color: var(--text-dim);">2026-04-15</div>
         </div>
       </section>
 
-      <section class="wrap">
-        <div class="post-content">
-          <p>AI 不再是大企業的專利。根據台灣製造業聯合會 2025 年調查，有 58% 的中小企業認為 AI 是提升競爭力的重要工具，但僅 23% 真正啟動了導入專案。究其原因，不是技術障礙，而是缺乏清晰的戰略與實施路線。本指南提供實務導向的完整框架。</p>
+      <section>
+        <div class="wrap">
+          <div style="max-width: 800px;">
+            <p>AI 不再是大企業的專利。根據台灣製造業聯合會 2025 年調查，有 58% 的中小企業認為 AI 是提升競爭力的重要工具，但僅 23% 真正啟動了導入專案。究其原因，不是技術障礙，而是缺乏清晰的戰略與實施路線。本指南提供實務導向的完整框架。</p>
           
           <h2>第一步：資源與現狀評估</h2>
           <p><strong>資源盤點維度：</strong></p>
-          <p>• IT 基礎設施 — 現有系統是否支援資料整合？雲端或自有伺服器？<br/>\n• 資料品質 — 有哪些可用的業務資料？完整度如何？清潔度如何？<br/>\n• 人才儲備 — 是否有懂技術的人？員工對 AI 的接受度如何？<br/>\n• 財務預算 — 能承受的投資金額與回報期待？</p>
+          <p>• IT 基礎設施 — 現有系統是否支援資料整合？雲端或自有伺服器？<br/>
+• 資料品質 — 有哪些可用的業務資料？完整度如何？清潔度如何？<br/>
+• 人才儲備 — 是否有懂技術的人？員工對 AI 的接受度如何？<br/>
+• 財務預算 — 能承受的投資金額與回報期待？</p>
           
           <p>建議用「AI 準備度評估問卷」量化評分，判斷貴企業在 AI 導入上的成熟度等級（初級 0-30 分 | 中級 31-60 分 | 高級 61-100 分）。</p>
           
           <h2>第二步：機會識別與優先序排列</h2>
           <p><strong>識別「首選流程」的四個標準：</strong></p>
-          <p>✓ 高頻次 — 日均發生 >100 次的重複操作<br/>\n✓ 高成本 — 涉及人力密集或昂貴的決策<br/>\n✓ 資料豐富 — 有 1 年以上的歷史資料可用<br/>\n✓ 可量化 — ROI 能用具體指標衡量（成本、準確度、時間等）</p>
+          <p>✓ 高頻次 — 日均發生 &gt;100 次的重複操作<br/>
+✓ 高成本 — 涉及人力密集或昂貴的決策<br/>
+✓ 資料豐富 — 有 1 年以上的歷史資料可用<br/>
+✓ 可量化 — ROI 能用具體指標衡量（成本、準確度、時間等）</p>
           
           <p><strong>常見高 ROI 應用場景：</strong></p>
-          <p>製造業：品質檢測、故障預測、排程優化<br/>\n零售業：庫存預測、銷售預測、消費者行為分析<br/>\n服務業：客服自動化、文件處理、流程審批<br/>\n物流業：路線最佳化、異常檢測、需求預測</p>
+          <p>製造業：品質檢測、故障預測、排程優化<br/>
+零售業：庫存預測、銷售預測、消費者行為分析<br/>
+服務業：客服自動化、文件處理、流程審批<br/>
+物流業：路線最佳化、異常檢測、需求預測</p>
           
           <h2>第三步：MVP 導入的「4+1」階段實施法</h2>
-          <p><strong>階段 0：準備（4-8 週）</strong><br/>\n成立跨職能團隊（業務 + IT + 外部顧問）。完成資料評估、技術選型、成本預算。設定清晰的成功指標（baseline 與目標）。</p>
+          <p><strong>階段 0：準備（4-8 週）</strong><br/>
+成立跨職能團隊（業務 + IT + 外部顧問）。完成資料評估、技術選型、成本預算。設定清晰的成功指標（baseline 與目標）。</p>
           
-          <p><strong>階段 1：POC 試點（8-12 週）</strong><br/>\n實施小範圍試點（單一部門或流程）。目標是驗證技術可行性與商業假設，不求完美，只求快速驗證。記錄決策過程與結果數據。</p>
+          <p><strong>階段 1：POC 試點（8-12 週）</strong><br/>
+實施小範圍試點（單一部門或流程）。目標是驗證技術可行性與商業假設，不求完美，只求快速驗證。記錄決策過程與結果數據。</p>
           
-          <p><strong>階段 2：評估與決策（2-4 週）</strong><br/>\n客觀評估 POC 結果：是否達成預期目標？有哪些意外發現？ROI 是否正面？基於數據做出「繼續擴展」或「優化後再試」的決策。</p>
+          <p><strong>階段 2：評估與決策（2-4 週）</strong><br/>
+客觀評估 POC 結果：是否達成預期目標？有哪些意外發現？ROI 是否正面？基於數據做出「繼續擴展」或「優化後再試」的決策。</p>
           
-          <p><strong>階段 3：生產部署（4-8 週）</strong><br/>\n如果 POC 成功，投入優化生產級系統。包括可靠性強化、監控告警、員工培訓、文檔沉澱。</p>
+          <p><strong>階段 3：生產部署（4-8 週）</strong><br/>
+如果 POC 成功，投入優化生產級系統。包括可靠性強化、監控告警、員工培訓、文檔沉澱。</p>
           
-          <p><strong>「+1」：持續運營與迭代（長期）</strong><br/>\n部署不是終點，而是開始。每月評估效能指標，定期檢查是否有新的資料或使用場景需要納入，持續改進模型與流程。</p>
+          <p><strong>「+1」：持續運營與迭代（長期）</strong><br/>
+部署不是終點，而是開始。每月評估效能指標，定期檢查是否有新的資料或使用場景需要納入，持續改進模型與流程。</p>
           
           <h2>第四步：風險管理與組織變革</h2>
           <p><strong>資料治理：</strong> 建立明確的資料所有權與使用規範。誰負責資料質量？誰能存取敏感資料？如何保護客戶隱私？這些問題必須在上線前解決。</p>
@@ -206,26 +86,36 @@
           
           <h2>第五步：成效追蹤與擴展計畫</h2>
           <p><strong>建立「儀表板」監控以下指標：</strong></p>
-          <p>• 商業指標 — ROI、成本節省、收入增長<br/>\n• 技術指標 — 模型準確度、系統可用性、延遲<br/>\n• 人員指標 — 採納率、滿意度、培訓完成度<br/>\n• 質量指標 — 客戶投訴、缺陷率、交付周期</p>
+          <p>• 商業指標 — ROI、成本節省、收入增長<br/>
+• 技術指標 — 模型準確度、系統可用性、延遲<br/>
+• 人員指標 — 採納率、滿意度、培訓完成度<br/>
+• 質量指標 — 客戶投訴、缺陷率、交付周期</p>
           
           <p>每季度檢視儀表板數據，識別「什麼工作得好」「什麼需要改進」。根據成果，制定後續 6-12 個月的擴展計畫。</p>
           
           <h2>常見陷阱與應對</h2>
-          <p><strong>陷阱 1：期望過高，投資過大</strong><br/>\n許多中小企業一開始就投入 1,000 萬以上，期待快速回報。建議改為「小步快走」策略：第一個項目 200-500 萬，快速驗證；成功後再逐步擴展。</p>
+          <p><strong>陷阱 1：期望過高，投資過大</strong><br/>
+許多中小企業一開始就投入 1,000 萬以上，期待快速回報。建議改為「小步快走」策略：第一個項目 200-500 萬，快速驗證；成功後再逐步擴展。</p>
           
-          <p><strong>陷阱 2：忽視資料準備</strong><br/>\n「垃圾進，垃圾出」— 資料不乾淨，再強大的模型也幫不了。建議編列 30-40% 的時間與預算用於資料清理與標註。</p>
+          <p><strong>陷阱 2：忽視資料準備</strong><br/>
+「垃圾進，垃圾出」— 資料不乾淨，再強大的模型也幫不了。建議編列 30-40% 的時間與預算用於資料清理與標註。</p>
           
-          <p><strong>陷阱 3：過度依賴外部顧問</strong><br/>\n顧問幫助快速起步，但長期依賴會成為瓶頸與成本負擔。建議培養內部「AI PM」與「資料工程師」角色，逐步獨立運營。</p>
+          <p><strong>陷阱 3：過度依賴外部顧問</strong><br/>
+顧問幫助快速起步，但長期依賴會成為瓶頸與成本負擔。建議培養內部「AI PM」與「資料工程師」角色，逐步獨立運營。</p>
           
-          <p><strong>陷阱 4：導入後即放棄</strong><br/>\n許多專案在部署後因效果不如預期或故障而被放棄。模型會隨著新資料的到來而「漂移」，需要定期維護與優化。建議設立 KPI、建立問題反饋機制。</p>
+          <p><strong>陷阱 4：導入後即放棄</strong><br/>
+許多專案在呈現效果不如預期或故障後而被放棄。模型會隨著新資料的到來而「漂移」，需要定期維護與優化。建議設立 KPI、建立問題反饋機制。</p>
           
           <h2>中小企業 AI 導入的三個制勝要點</h2>
           <p><strong>1. 從小問題開始，做到極致</strong> — 不要一開始就做全公司系統，選擇最明確、最高 ROI 的單點應用，做到 95% 準確度，證明價值。</p>
           
           <p><strong>2. 建立「內部專家」，而非依賴顧問</strong> — 投資培訓，讓企業擁有獨立決策與迭代能力。這樣才能實現可持續的 AI 升級。</p>
           
-          <p><strong>3. 強調組織學習，不只是技術導入</strong> — AI 導入是文化與能力的轉變。鼓勵實驗、容許失敗、分享經驗，建立「學習型組織」。</p>\n        </div>
-        <a href="../blog.html" class="back-link">← BACK TO BLOG</a>
+          <p><strong>3. 強調組織學習，不只是技術導入</strong> — AI 導入是文化與能力的轉變。鼓勵實驗、容許失敗、分享經驗，建立「學習型組織」。</p>
+
+            <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
+          </div>
+        </div>
       </section>
     </main>
 
