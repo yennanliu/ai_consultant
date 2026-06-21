@@ -3,26 +3,28 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Result AI — 成果收費的 AI 前線部署公司</title>
-  <meta name="description" content="Result AI 是成果收費的 AI 前線部署公司。我們不賣顧問時數，只對結果收費——AI 上線、跑出成效，您才付費。" />
+  <title>PROOF — 成果收費的 AI 前線部署公司</title>
+  <meta name="description" content="PROOF 是成果收費的 AI 前線部署公司。我們不賣顧問時數，只對結果收費——AI 上線、跑出成效，您才付費。" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #07070b;
-      --bg-soft: #0d0d14;
-      --panel: rgba(255, 255, 255, 0.03);
-      --panel-strong: rgba(255, 255, 255, 0.06);
+      --bg: #040406;
+      --bg-soft: #08080f;
+      --panel: rgba(255, 255, 255, 0.035);
+      --panel-strong: rgba(255, 255, 255, 0.07);
       --border: rgba(255, 255, 255, 0.09);
-      --border-strong: rgba(255, 255, 255, 0.18);
+      --border-strong: rgba(124, 92, 255, 0.35);
       --text: #f4f5fb;
       --muted: #9b9caf;
       --dim: #5e5f72;
-      --lime: #c6ff3a;
-      --cyan: #38e8ff;
-      --violet: #9b6bff;
-      --pink: #ff5ca8;
+      --neon: #2af6ff;        /* electric cyan (primary) */
+      --cyan: #2af6ff;
+      --violet: #7c5cff;
+      --pink: #ff3df0;        /* neon magenta */
+      --neon-glow: 42, 246, 255;
+      --grad: linear-gradient(100deg, #2af6ff, #7c5cff 50%, #ff3df0);
       --sans: 'Sora', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
       --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
       --radius: 18px;
@@ -58,7 +60,7 @@
     }
     .a1 { width: 60vw; height: 60vw; background: var(--violet); top: -20vw; left: -10vw; animation: float1 18s ease-in-out infinite; }
     .a2 { width: 45vw; height: 45vw; background: var(--cyan); top: 10vh; right: -15vw; animation: float2 22s ease-in-out infinite; }
-    .a3 { width: 40vw; height: 40vw; background: var(--lime); bottom: -15vw; left: 20vw; opacity: 0.28; animation: float3 26s ease-in-out infinite; }
+    .a3 { width: 42vw; height: 42vw; background: var(--pink); bottom: -15vw; left: 20vw; opacity: 0.32; animation: float3 26s ease-in-out infinite; }
     @keyframes float1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(6vw, 4vh) scale(1.1); } }
     @keyframes float2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-5vw, 6vh) scale(1.15); } }
     @keyframes float3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(4vw, -5vh) scale(0.9); } }
@@ -84,8 +86,8 @@
     .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 800; letter-spacing: -0.01em; font-size: 18px; }
     .brand .dot {
       width: 11px; height: 11px; border-radius: 50%;
-      background: var(--lime);
-      box-shadow: 0 0 14px var(--lime);
+      background: var(--neon);
+      box-shadow: 0 0 14px var(--neon);
       animation: pulse 2.4s ease-in-out infinite;
     }
     @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.6); opacity: 0.6; } }
@@ -94,27 +96,29 @@
     .navlinks a:hover { color: var(--text); }
     .nav-cta {
       padding: 9px 18px; border-radius: 999px;
-      background: var(--lime); color: #07070b !important;
+      background: var(--grad); color: #040406 !important;
       font-weight: 700; font-size: 14px;
+      box-shadow: 0 0 18px rgba(42,246,255,0.25);
       transition: transform .15s, box-shadow .15s;
     }
-    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(198,255,58,0.35); }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 30px rgba(124,92,255,0.55); }
 
     /* Generic */
     .eyebrow {
       font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--lime);
+      text-transform: uppercase; color: var(--neon);
       display: inline-flex; align-items: center; gap: 8px;
     }
-    .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--lime); }
+    .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--neon); }
 
     section { padding: 120px 0; position: relative; }
     h1, h2, h3 { margin: 0; letter-spacing: -0.02em; font-weight: 800; line-height: 1.08; }
     .lead { color: var(--muted); font-size: 19px; max-width: 620px; }
 
     .gradient-text {
-      background: linear-gradient(100deg, var(--lime), var(--cyan) 55%, var(--violet));
+      background: var(--grad);
       -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 0 22px rgba(42,246,255,0.25));
     }
 
     /* Hero */
@@ -126,7 +130,7 @@
       font-size: 13px; color: var(--muted); margin-bottom: 30px;
       font-family: var(--mono);
     }
-    .hero-badge b { color: var(--lime); font-weight: 600; }
+    .hero-badge b { color: var(--neon); font-weight: 600; }
     .hero h1 { font-size: clamp(40px, 6.5vw, 78px); margin-bottom: 26px; }
     .hero .lead { font-size: 21px; max-width: 660px; margin-bottom: 40px; }
     .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
@@ -136,8 +140,8 @@
       text-decoration: none; cursor: pointer; border: 1px solid transparent;
       transition: transform .15s, box-shadow .15s, background .15s, border-color .15s;
     }
-    .btn-primary { background: var(--lime); color: #07070b; }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(198,255,58,0.32); }
+    .btn-primary { background: var(--grad); color: #040406; box-shadow: 0 0 22px rgba(42,246,255,0.3); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 44px rgba(124,92,255,0.5); }
     .btn-ghost { background: var(--panel); color: var(--text); border-color: var(--border-strong); }
     .btn-ghost:hover { border-color: var(--text); transform: translateY(-2px); }
 
@@ -163,14 +167,14 @@
     }
     .vs-card.them { opacity: 0.78; }
     .vs-card.us {
-      border-color: rgba(198,255,58,0.35);
-      background: linear-gradient(160deg, rgba(198,255,58,0.08), rgba(56,232,255,0.04));
-      box-shadow: 0 0 60px rgba(198,255,58,0.06) inset;
+      border-color: rgba(42,246,255,0.35);
+      background: linear-gradient(160deg, rgba(42,246,255,0.08), rgba(56,232,255,0.04));
+      box-shadow: 0 0 60px rgba(42,246,255,0.06) inset;
     }
     .vs-card h3 { font-size: 22px; margin-bottom: 8px; }
     .vs-tag { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
     .them .vs-tag { color: var(--dim); }
-    .us .vs-tag { color: var(--lime); }
+    .us .vs-tag { color: var(--neon); }
     .vs-list { list-style: none; padding: 0; margin: 24px 0 0; }
     .vs-list li { display: flex; gap: 12px; padding: 11px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: 15px; }
     .vs-list li:first-child { border-top: none; }
@@ -186,8 +190,8 @@
     }
     .step:hover { transform: translateY(-6px); border-color: var(--border-strong); background: var(--panel-strong); }
     .step .n {
-      font-family: var(--mono); font-size: 13px; color: var(--lime);
-      border: 1px solid rgba(198,255,58,0.3); border-radius: 8px;
+      font-family: var(--mono); font-size: 13px; color: var(--neon);
+      border: 1px solid rgba(42,246,255,0.3); border-radius: 8px;
       width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
       margin-bottom: 22px;
     }
@@ -203,7 +207,7 @@
     }
     .cap::before {
       content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--lime), var(--cyan)); opacity: 0; transition: opacity .2s;
+      background: linear-gradient(90deg, var(--neon), var(--cyan)); opacity: 0; transition: opacity .2s;
     }
     .cap:hover { transform: translateY(-5px); border-color: var(--border-strong); }
     .cap:hover::before { opacity: 1; }
@@ -214,7 +218,7 @@
     /* CTA */
     .cta-box {
       border-radius: 28px; padding: 72px 56px; text-align: center;
-      background: linear-gradient(135deg, rgba(155,107,255,0.14), rgba(56,232,255,0.10) 60%, rgba(198,255,58,0.12));
+      background: linear-gradient(135deg, rgba(155,107,255,0.14), rgba(56,232,255,0.10) 60%, rgba(42,246,255,0.12));
       border: 1px solid var(--border-strong); position: relative; overflow: hidden;
     }
     .cta-box h2 { font-size: clamp(30px, 4.5vw, 50px); margin-bottom: 18px; }
@@ -232,7 +236,7 @@
       display: flex; justify-content: space-between; align-items: center; gap: 16px;
     }
     summary::-webkit-details-marker { display: none; }
-    summary .chev { transition: transform .2s; color: var(--lime); font-size: 22px; line-height: 1; }
+    summary .chev { transition: transform .2s; color: var(--neon); font-size: 22px; line-height: 1; }
     details[open] summary .chev { transform: rotate(45deg); }
     details p { color: var(--muted); padding: 0 0 22px; margin: 0; font-size: 15.5px; }
 
@@ -244,7 +248,7 @@
     .foot-links { display: flex; gap: 50px; flex-wrap: wrap; }
     .foot-col h4 { font-size: 13px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 14px; font-family: var(--mono); font-weight: 500; }
     .foot-col a { display: block; color: var(--muted); text-decoration: none; font-size: 14px; margin-bottom: 9px; transition: color .15s; }
-    .foot-col a:hover { color: var(--lime); }
+    .foot-col a:hover { color: var(--neon); }
 
     /* Reveal on scroll */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
@@ -276,7 +280,7 @@
 
   <header>
     <div class="wrap nav">
-      <a href="#" class="brand"><span class="dot"></span>Result&nbsp;AI</a>
+      <a href="#" class="brand"><span class="dot"></span>PROOF</a>
       <nav class="navlinks">
         <a href="#model">收費模式</a>
         <a href="#process">部署流程</a>
@@ -297,7 +301,7 @@
           <span class="gradient-text">只對結果收費。</span>
         </h1>
         <p class="lead reveal">
-          Result AI 是成果收費的 AI 前線部署公司。我們把 AI 直接送進你的營運第一線——
+          PROOF 是成果收費的 AI 前線部署公司。我們把 AI 直接送進你的營運第一線——
           訂單、客服、報價、生產排程——讓它真的跑起來、跑出數字，你才付費。
         </p>
         <div class="hero-actions reveal">
@@ -347,13 +351,13 @@
             </ul>
           </div>
           <div class="vs-card us reveal">
-            <span class="vs-tag">◆ RESULT AI</span>
+            <span class="vs-tag">◆ PROOF</span>
             <h3>賣成果 / 賣前線部署</h3>
             <ul class="vs-list">
-              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#c6ff3a" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>前期零顧問費，先上線再談錢</li>
-              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#c6ff3a" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>交付的是真的在跑的 AI 系統</li>
-              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#c6ff3a" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>直接部署進你的營運第一線</li>
-              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#c6ff3a" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>依約定成果基準，分潤式收費</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2af6ff" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>前期零顧問費，先上線再談錢</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2af6ff" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>交付的是真的在跑的 AI 系統</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2af6ff" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>直接部署進你的營運第一線</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2af6ff" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>依約定成果基準，分潤式收費</li>
             </ul>
           </div>
         </div>
@@ -443,9 +447,9 @@
   <footer>
     <div class="wrap foot">
       <div>
-        <a href="#" class="brand"><span class="dot"></span>Result&nbsp;AI</a>
+        <a href="#" class="brand"><span class="dot"></span>PROOF</a>
         <small>成果收費的 AI 前線部署公司</small><br>
-        <small>© 2026 Result AI · TW_SMB_AI_DEPLOYMENT</small>
+        <small>© 2026 PROOF · TW_SMB_AI_DEPLOYMENT</small>
       </div>
       <div class="foot-links">
         <div class="foot-col">
