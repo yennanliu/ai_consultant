@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Result AI — 成果收費的 AI 前線部署公司</title>
+  <meta name="description" content="Result AI 是成果收費的 AI 前線部署公司。我們不賣顧問時數，只對結果收費——AI 上線、跑出成效，您才付費。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #07070b;
+      --bg-soft: #0d0d14;
+      --panel: rgba(255, 255, 255, 0.03);
+      --panel-strong: rgba(255, 255, 255, 0.06);
+      --border: rgba(255, 255, 255, 0.09);
+      --border-strong: rgba(255, 255, 255, 0.18);
+      --text: #f4f5fb;
+      --muted: #9b9caf;
+      --dim: #5e5f72;
+      --lime: #c6ff3a;
+      --cyan: #38e8ff;
+      --violet: #9b6bff;
+      --pink: #ff5ca8;
+      --sans: 'Sora', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.6;
+      font-size: 16px;
+      overflow-x: hidden;
+    }
+
+    /* Aurora / grain backdrop */
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+    }
+    .aurora {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(110px);
+      opacity: 0.5;
+      will-change: transform;
+    }
+    .a1 { width: 60vw; height: 60vw; background: var(--violet); top: -20vw; left: -10vw; animation: float1 18s ease-in-out infinite; }
+    .a2 { width: 45vw; height: 45vw; background: var(--cyan); top: 10vh; right: -15vw; animation: float2 22s ease-in-out infinite; }
+    .a3 { width: 40vw; height: 40vw; background: var(--lime); bottom: -15vw; left: 20vw; opacity: 0.28; animation: float3 26s ease-in-out infinite; }
+    @keyframes float1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(6vw, 4vh) scale(1.1); } }
+    @keyframes float2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-5vw, 6vh) scale(1.15); } }
+    @keyframes float3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(4vw, -5vh) scale(0.9); } }
+    .backdrop::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      mix-blend-mode: overlay;
+    }
+
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* Nav */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(14px);
+      background: rgba(7,7,11,0.55);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 800; letter-spacing: -0.01em; font-size: 18px; }
+    .brand .dot {
+      width: 11px; height: 11px; border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 14px var(--lime);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.6); opacity: 0.6; } }
+    .navlinks { display: flex; align-items: center; gap: 30px; }
+    .navlinks a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .15s; }
+    .navlinks a:hover { color: var(--text); }
+    .nav-cta {
+      padding: 9px 18px; border-radius: 999px;
+      background: var(--lime); color: #07070b !important;
+      font-weight: 700; font-size: 14px;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(198,255,58,0.35); }
+
+    /* Generic */
+    .eyebrow {
+      font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--lime);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--lime); }
+
+    section { padding: 120px 0; position: relative; }
+    h1, h2, h3 { margin: 0; letter-spacing: -0.02em; font-weight: 800; line-height: 1.08; }
+    .lead { color: var(--muted); font-size: 19px; max-width: 620px; }
+
+    .gradient-text {
+      background: linear-gradient(100deg, var(--lime), var(--cyan) 55%, var(--violet));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    /* Hero */
+    .hero { padding: 90px 0 110px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 7px 14px; border-radius: 999px;
+      border: 1px solid var(--border-strong); background: var(--panel);
+      font-size: 13px; color: var(--muted); margin-bottom: 30px;
+      font-family: var(--mono);
+    }
+    .hero-badge b { color: var(--lime); font-weight: 600; }
+    .hero h1 { font-size: clamp(40px, 6.5vw, 78px); margin-bottom: 26px; }
+    .hero .lead { font-size: 21px; max-width: 660px; margin-bottom: 40px; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 15px 26px; border-radius: 999px; font-weight: 700; font-size: 16px;
+      text-decoration: none; cursor: pointer; border: 1px solid transparent;
+      transition: transform .15s, box-shadow .15s, background .15s, border-color .15s;
+    }
+    .btn-primary { background: var(--lime); color: #07070b; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(198,255,58,0.32); }
+    .btn-ghost { background: var(--panel); color: var(--text); border-color: var(--border-strong); }
+    .btn-ghost:hover { border-color: var(--text); transform: translateY(-2px); }
+
+    /* Stats strip */
+    .stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+      margin-top: 80px; border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; background: var(--border);
+    }
+    .stat { background: var(--bg-soft); padding: 34px 26px; }
+    .stat .num { font-size: 44px; font-weight: 800; letter-spacing: -0.03em; font-family: var(--mono); }
+    .stat .lbl { color: var(--muted); font-size: 14px; margin-top: 6px; }
+
+    /* Section headers */
+    .sec-head { max-width: 720px; margin-bottom: 64px; }
+    .sec-head h2 { font-size: clamp(32px, 4.5vw, 52px); margin: 18px 0 18px; }
+
+    /* Pay-for-results model */
+    .model-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; align-items: stretch; }
+    .vs-card {
+      border-radius: var(--radius); padding: 38px; border: 1px solid var(--border);
+      background: var(--panel); position: relative; overflow: hidden;
+    }
+    .vs-card.them { opacity: 0.78; }
+    .vs-card.us {
+      border-color: rgba(198,255,58,0.35);
+      background: linear-gradient(160deg, rgba(198,255,58,0.08), rgba(56,232,255,0.04));
+      box-shadow: 0 0 60px rgba(198,255,58,0.06) inset;
+    }
+    .vs-card h3 { font-size: 22px; margin-bottom: 8px; }
+    .vs-tag { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
+    .them .vs-tag { color: var(--dim); }
+    .us .vs-tag { color: var(--lime); }
+    .vs-list { list-style: none; padding: 0; margin: 24px 0 0; }
+    .vs-list li { display: flex; gap: 12px; padding: 11px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: 15px; }
+    .vs-list li:first-child { border-top: none; }
+    .vs-list .ico { flex-shrink: 0; width: 20px; height: 20px; }
+    .us .vs-list li { color: var(--text); }
+
+    /* Process steps */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .step {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 30px 26px; background: var(--panel); position: relative;
+      transition: transform .2s, border-color .2s, background .2s;
+    }
+    .step:hover { transform: translateY(-6px); border-color: var(--border-strong); background: var(--panel-strong); }
+    .step .n {
+      font-family: var(--mono); font-size: 13px; color: var(--lime);
+      border: 1px solid rgba(198,255,58,0.3); border-radius: 8px;
+      width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 22px;
+    }
+    .step h3 { font-size: 19px; margin-bottom: 10px; }
+    .step p { color: var(--muted); font-size: 14.5px; margin: 0; }
+
+    /* Capability cards */
+    .cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .cap {
+      border: 1px solid var(--border); border-radius: var(--radius); padding: 32px;
+      background: var(--panel); transition: transform .2s, border-color .2s;
+      position: relative; overflow: hidden;
+    }
+    .cap::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--lime), var(--cyan)); opacity: 0; transition: opacity .2s;
+    }
+    .cap:hover { transform: translateY(-5px); border-color: var(--border-strong); }
+    .cap:hover::before { opacity: 1; }
+    .cap .emoji { font-size: 30px; margin-bottom: 18px; display: block; }
+    .cap h3 { font-size: 20px; margin-bottom: 10px; }
+    .cap p { color: var(--muted); font-size: 15px; margin: 0; }
+
+    /* CTA */
+    .cta-box {
+      border-radius: 28px; padding: 72px 56px; text-align: center;
+      background: linear-gradient(135deg, rgba(155,107,255,0.14), rgba(56,232,255,0.10) 60%, rgba(198,255,58,0.12));
+      border: 1px solid var(--border-strong); position: relative; overflow: hidden;
+    }
+    .cta-box h2 { font-size: clamp(30px, 4.5vw, 50px); margin-bottom: 18px; }
+    .cta-box p { color: var(--muted); font-size: 18px; max-width: 540px; margin: 0 auto 36px; }
+
+    /* FAQ */
+    .faq { max-width: 820px; margin: 0 auto; }
+    details {
+      border: 1px solid var(--border); border-radius: 14px; padding: 4px 24px;
+      margin-bottom: 14px; background: var(--panel); transition: border-color .2s;
+    }
+    details[open] { border-color: var(--border-strong); }
+    summary {
+      cursor: pointer; list-style: none; padding: 20px 0; font-weight: 600; font-size: 17px;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary .chev { transition: transform .2s; color: var(--lime); font-size: 22px; line-height: 1; }
+    details[open] summary .chev { transform: rotate(45deg); }
+    details p { color: var(--muted); padding: 0 0 22px; margin: 0; font-size: 15.5px; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 60px 0 50px; }
+    .foot { display: flex; justify-content: space-between; align-items: flex-start; gap: 30px; flex-wrap: wrap; }
+    .foot .brand { margin-bottom: 14px; }
+    .foot small { color: var(--dim); font-family: var(--mono); font-size: 12px; }
+    .foot-links { display: flex; gap: 50px; flex-wrap: wrap; }
+    .foot-col h4 { font-size: 13px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 14px; font-family: var(--mono); font-weight: 500; }
+    .foot-col a { display: block; color: var(--muted); text-decoration: none; font-size: 14px; margin-bottom: 9px; transition: color .15s; }
+    .foot-col a:hover { color: var(--lime); }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      .navlinks a:not(.nav-cta) { display: none; }
+      .stats, .steps { grid-template-columns: 1fr 1fr; }
+      .model-grid, .cap-grid { grid-template-columns: 1fr; }
+      section { padding: 80px 0; }
+      .cta-box { padding: 48px 26px; }
+    }
+    @media (max-width: 520px) {
+      .stats, .steps { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .aurora, .brand .dot { animation: none; }
+      .reveal { transition: none; opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="backdrop">
+    <div class="aurora a1"></div>
+    <div class="aurora a2"></div>
+    <div class="aurora a3"></div>
+  </div>
+
+  <header>
+    <div class="wrap nav">
+      <a href="#" class="brand"><span class="dot"></span>Result&nbsp;AI</a>
+      <nav class="navlinks">
+        <a href="#model">收費模式</a>
+        <a href="#process">部署流程</a>
+        <a href="#capability">能力範圍</a>
+        <a href="#faq">常見問題</a>
+        <a href="#contact" class="nav-cta">免費診斷 →</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-badge reveal">🟢 <b>成果收費</b>　— 沒有成效，不收費</div>
+        <h1 class="reveal">
+          我們不賣顧問時數，<br>
+          <span class="gradient-text">只對結果收費。</span>
+        </h1>
+        <p class="lead reveal">
+          Result AI 是成果收費的 AI 前線部署公司。我們把 AI 直接送進你的營運第一線——
+          訂單、客服、報價、生產排程——讓它真的跑起來、跑出數字，你才付費。
+        </p>
+        <div class="hero-actions reveal">
+          <a href="#contact" class="btn btn-primary">預約免費診斷 →</a>
+          <a href="#model" class="btn btn-ghost">看收費怎麼算</a>
+        </div>
+
+        <div class="stats reveal">
+          <div class="stat">
+            <div class="num gradient-text" data-count="0" data-to="100">0%</div>
+            <div class="lbl">成果收費，前期零顧問費</div>
+          </div>
+          <div class="stat">
+            <div class="num" data-count="0" data-to="14">0</div>
+            <div class="lbl">天內完成首版上線</div>
+          </div>
+          <div class="stat">
+            <div class="num" data-count="0" data-to="63">0%</div>
+            <div class="lbl">平均前線人力時間節省</div>
+          </div>
+          <div class="stat">
+            <div class="num" data-count="0" data-to="40">0+</div>
+            <div class="lbl">已部署的台灣中小企業</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODEL -->
+    <section id="model">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="eyebrow">PRICING_MODEL</span>
+          <h2>顧問賣的是<span class="gradient-text">時數</span>，<br>我們賣的是<span class="gradient-text">成果</span>。</h2>
+          <p class="lead">傳統 AI 顧問先收一大筆，做完投影片就走。我們把風險扛在自己身上——先上線、跑出成效，再依約定的成果基準收費。</p>
+        </div>
+
+        <div class="model-grid">
+          <div class="vs-card them reveal">
+            <span class="vs-tag">傳統 AI 顧問</span>
+            <h3>賣時數 / 賣報告</h3>
+            <ul class="vs-list">
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>前期高額顧問費，先付才開工</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>交付一份策略簡報就結案</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>POC 卡在實驗室，沒進生產線</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>成效好壞，與顧問無關</li>
+            </ul>
+          </div>
+          <div class="vs-card us reveal">
+            <span class="vs-tag">◆ RESULT AI</span>
+            <h3>賣成果 / 賣前線部署</h3>
+            <ul class="vs-list">
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#c6ff3a" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>前期零顧問費，先上線再談錢</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#c6ff3a" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>交付的是真的在跑的 AI 系統</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#c6ff3a" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>直接部署進你的營運第一線</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#c6ff3a" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>依約定成果基準，分潤式收費</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="eyebrow">DEPLOYMENT_FLOW</span>
+          <h2>從診斷到上線，<br><span class="gradient-text">14 天看到第一個數字。</span></h2>
+        </div>
+        <div class="steps">
+          <div class="step reveal">
+            <div class="n">01</div>
+            <h3>免費診斷</h3>
+            <p>盤點你的前線流程，找出 AI 最快能變現的那一個環節，並訂下可量測的成果基準。</p>
+          </div>
+          <div class="step reveal">
+            <div class="n">02</div>
+            <h3>前線部署</h3>
+            <p>不做沙盒實驗。我們把 AI 直接接進你現有的系統、表單與工具，兩週內上線首版。</p>
+          </div>
+          <div class="step reveal">
+            <div class="n">03</div>
+            <h3>跑出成效</h3>
+            <p>真實流量、真實訂單上驗證。即時儀表板追蹤節省的工時、轉換率與錯誤率。</p>
+          </div>
+          <div class="step reveal">
+            <div class="n">04</div>
+            <h3>達標收費</h3>
+            <p>達到約定成果才開始計費，依分潤或績效基準收款。沒成效，這一切免費。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAPABILITY -->
+    <section id="capability">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="eyebrow">WHERE_WE_DEPLOY</span>
+          <h2>我們把 AI 部署在<br><span class="gradient-text">最會痛、最能省的前線。</span></h2>
+        </div>
+        <div class="cap-grid">
+          <div class="cap reveal"><span class="emoji">📞</span><h3>智慧客服與分流</h3><p>自動回覆常見問題、判斷意圖並轉接，把客服第一線的重複工作砍掉一半以上。</p></div>
+          <div class="cap reveal"><span class="emoji">🧾</span><h3>報價與訂單處理</h3><p>從詢價信、LINE 訊息到 PDF 規格書，自動擷取、比對品項並產生報價草稿。</p></div>
+          <div class="cap reveal"><span class="emoji">🏭</span><h3>生產與排程優化</h3><p>結合歷史資料預測需求、優化排程與庫存，降低缺料停線與呆料積壓。</p></div>
+          <div class="cap reveal"><span class="emoji">🔍</span><h3>文件與知識檢索</h3><p>把分散的 SOP、合約與技術文件變成可問答的內部知識庫，新人上手更快。</p></div>
+          <div class="cap reveal"><span class="emoji">📊</span><h3>營運報表自動化</h3><p>自動彙整跨系統數據、產生日報週報與異常警示，主管不用再等人工整理。</p></div>
+          <div class="cap reveal"><span class="emoji">🤖</span><h3>客製 AI Agent</h3><p>針對你的業務流程打造專屬代理人，串接內部系統，端到端自動執行任務。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact">
+      <div class="wrap">
+        <div class="cta-box reveal">
+          <span class="eyebrow" style="justify-content:center;">START_HERE</span>
+          <h2 style="margin-top:18px;">先看到成果，<br><span class="gradient-text">再決定要不要付費。</span></h2>
+          <p>15 分鐘免費診斷，我們會告訴你哪個前線環節最適合導入 AI、預期能省下多少，以及成果怎麼計算。</p>
+          <a href="https://forms.gle/M1YHzT8V3wErZGNJ6" target="_blank" rel="noreferrer" class="btn btn-primary">預約免費診斷 →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" style="padding-top:0;">
+      <div class="wrap">
+        <div class="sec-head reveal" style="text-align:center; margin: 0 auto 56px;">
+          <span class="eyebrow" style="justify-content:center;">FAQ</span>
+          <h2 style="margin-top:18px;">常見問題</h2>
+        </div>
+        <div class="faq">
+          <details class="reveal" open><summary>「成果收費」到底怎麼算？<span class="chev">+</span></summary><p>在免費診斷階段，我們會和你共同訂下一個可量測的成果基準——例如客服回覆工時、報價產出速度、轉換率或錯誤率。系統上線並達到約定基準後，才依分潤或績效方式收費。沒達標，這段不收費。</p></details>
+          <details class="reveal"><summary>前期真的完全免費嗎？<span class="chev">+</span></summary><p>是的。診斷與首版部署不收顧問費，我們把風險扛在自己身上。只有當 AI 實際上線、跑出約定的成效之後，才開始計費。</p></details>
+          <details class="reveal"><summary>需要先把資料整理好嗎？<span class="chev">+</span></summary><p>不用。我們的部署流程本身就包含資料盤點與清理。你只要提供現有的系統與檔案，剩下的整合工作由我們處理。</p></details>
+          <details class="reveal"><summary>我們是傳統產業，也適用嗎？<span class="chev">+</span></summary><p>非常適合。我們專注台灣中小企業的前線場景——製造、貿易、服務業都有實際案例。越是重複、耗人力的流程，越能看到成效。</p></details>
+          <details class="reveal"><summary>會綁特定的雲端或工具嗎？<span class="chev">+</span></summary><p>不會。我們以你現有的系統為主進行串接，依場景選擇最合適、最可維運的方案，避免不必要的綁定與額外成本。</p></details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div>
+        <a href="#" class="brand"><span class="dot"></span>Result&nbsp;AI</a>
+        <small>成果收費的 AI 前線部署公司</small><br>
+        <small>© 2026 Result AI · TW_SMB_AI_DEPLOYMENT</small>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>公司</h4>
+          <a href="#model">收費模式</a>
+          <a href="#process">部署流程</a>
+          <a href="#capability">能力範圍</a>
+        </div>
+        <div class="foot-col">
+          <h4>開始</h4>
+          <a href="#contact">免費診斷</a>
+          <a href="#faq">常見問題</a>
+          <a href="https://forms.gle/M1YHzT8V3wErZGNJ6" target="_blank" rel="noreferrer">填寫問卷</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          e.target.style.transitionDelay = (e.target.dataset.delay || 0) + 'ms';
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      el.dataset.delay = (i % 4) * 70;
+      io.observe(el);
+    });
+
+    // Count-up stats
+    const fmt = (el, val) => {
+      const raw = el.getAttribute('data-from-text') || '';
+      const suffix = el.dataset.suffix || '';
+      el.textContent = Math.round(val) + suffix;
+    };
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const to = +el.dataset.to;
+        const base = el.textContent.trim();
+        const suffix = base.replace(/[0-9]/g, ''); // grabs %, +, etc.
+        let start = null;
+        const dur = 1300;
+        const tick = (t) => {
+          if (!start) start = t;
+          const p = Math.min((t - start) / dur, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(to * eased) + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        statObserver.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('[data-to]').forEach(el => statObserver.observe(el));
+  </script>
+</body>
+</html>
