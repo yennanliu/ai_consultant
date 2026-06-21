@@ -10,21 +10,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #040406;
-      --bg-soft: #08080f;
-      --panel: rgba(255, 255, 255, 0.035);
-      --panel-strong: rgba(255, 255, 255, 0.07);
-      --border: rgba(255, 255, 255, 0.09);
-      --border-strong: rgba(124, 92, 255, 0.35);
-      --text: #f4f5fb;
-      --muted: #9b9caf;
-      --dim: #5e5f72;
-      --neon: #2af6ff;        /* electric cyan (primary) */
-      --cyan: #2af6ff;
-      --violet: #7c5cff;
-      --pink: #ff3df0;        /* neon magenta */
-      --neon-glow: 42, 246, 255;
-      --grad: linear-gradient(100deg, #2af6ff, #7c5cff 50%, #ff3df0);
+      --bg: #000000;
+      --bg-soft: #0a0a0b;
+      --panel: rgba(255, 255, 255, 0.022);
+      --panel-strong: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.18);
+      --text: #f5f5f7;
+      --muted: #8e8e96;
+      --dim: #56565d;
+      --neon: #ffffff;        /* primary / active = stark white */
+      /* console-only data colors */
+      --cyan: #5ad1ff;
+      --violet: #b39bff;
+      --pink: #ff86c2;
+      --grad: linear-gradient(180deg, #ffffff 0%, #8a8a92 100%);  /* metallic */
       --sans: 'Sora', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
       --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
       --radius: 18px;
@@ -44,32 +44,37 @@
       overflow-x: hidden;
     }
 
-    /* Aurora / grain backdrop */
+    /* Black backdrop: technical grid + faint glow + grain */
     .backdrop {
       position: fixed;
       inset: 0;
       z-index: -2;
+      background: #000;
       overflow: hidden;
     }
-    .aurora {
+    .backdrop .grid {
       position: absolute;
-      border-radius: 50%;
-      filter: blur(110px);
-      opacity: 0.5;
-      will-change: transform;
+      inset: -2px;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+      background-size: 64px 64px;
+      -webkit-mask-image: radial-gradient(ellipse 75% 55% at 50% -5%, #000 5%, transparent 75%);
+      mask-image: radial-gradient(ellipse 75% 55% at 50% -5%, #000 5%, transparent 75%);
     }
-    .a1 { width: 60vw; height: 60vw; background: var(--violet); top: -20vw; left: -10vw; animation: float1 18s ease-in-out infinite; }
-    .a2 { width: 45vw; height: 45vw; background: var(--cyan); top: 10vh; right: -15vw; animation: float2 22s ease-in-out infinite; }
-    .a3 { width: 42vw; height: 42vw; background: var(--pink); bottom: -15vw; left: 20vw; opacity: 0.32; animation: float3 26s ease-in-out infinite; }
-    @keyframes float1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(6vw, 4vh) scale(1.1); } }
-    @keyframes float2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-5vw, 6vh) scale(1.15); } }
-    @keyframes float3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(4vw, -5vh) scale(0.9); } }
+    .backdrop .glow {
+      position: absolute;
+      top: -35%; left: 50%; transform: translateX(-50%);
+      width: 130vw; height: 90vh;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.07), transparent 62%);
+      pointer-events: none;
+    }
     .backdrop::after {
       content: "";
       position: absolute;
       inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-      opacity: 0.04;
+      opacity: 0.035;
       mix-blend-mode: overlay;
     }
 
@@ -79,7 +84,7 @@
     header {
       position: sticky; top: 0; z-index: 100;
       backdrop-filter: blur(14px);
-      background: rgba(7,7,11,0.55);
+      background: rgba(0,0,0,0.65);
       border-bottom: 1px solid var(--border);
     }
     .nav { display: flex; align-items: center; justify-content: space-between; height: 70px; }
@@ -96,20 +101,19 @@
     .navlinks a:hover { color: var(--text); }
     .nav-cta {
       padding: 9px 18px; border-radius: 999px;
-      background: var(--grad); color: #040406 !important;
+      background: #fff; color: #000 !important;
       font-weight: 700; font-size: 14px;
-      box-shadow: 0 0 18px rgba(42,246,255,0.25);
-      transition: transform .15s, box-shadow .15s;
+      transition: transform .15s, opacity .15s;
     }
-    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 30px rgba(124,92,255,0.55); }
+    .nav-cta:hover { transform: translateY(-1px); opacity: 0.88; }
 
     /* Generic */
     .eyebrow {
       font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--neon);
+      text-transform: uppercase; color: var(--muted);
       display: inline-flex; align-items: center; gap: 8px;
     }
-    .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--neon); }
+    .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--border-strong); }
 
     section { padding: 120px 0; position: relative; }
     h1, h2, h3 { margin: 0; letter-spacing: -0.02em; font-weight: 800; line-height: 1.08; }
@@ -118,7 +122,7 @@
     .gradient-text {
       background: var(--grad);
       -webkit-background-clip: text; background-clip: text; color: transparent;
-      filter: drop-shadow(0 0 22px rgba(42,246,255,0.25));
+      filter: drop-shadow(0 0 20px rgba(255,255,255,0.1));
     }
 
     /* Hero */
@@ -140,8 +144,8 @@
       text-decoration: none; cursor: pointer; border: 1px solid transparent;
       transition: transform .15s, box-shadow .15s, background .15s, border-color .15s;
     }
-    .btn-primary { background: var(--grad); color: #040406; box-shadow: 0 0 22px rgba(42,246,255,0.3); }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 44px rgba(124,92,255,0.5); }
+    .btn-primary { background: #fff; color: #000; }
+    .btn-primary:hover { transform: translateY(-2px); opacity: 0.88; }
     .btn-ghost { background: var(--panel); color: var(--text); border-color: var(--border-strong); }
     .btn-ghost:hover { border-color: var(--text); transform: translateY(-2px); }
 
@@ -167,9 +171,9 @@
     }
     .vs-card.them { opacity: 0.78; }
     .vs-card.us {
-      border-color: rgba(42,246,255,0.35);
-      background: linear-gradient(160deg, rgba(42,246,255,0.08), rgba(56,232,255,0.04));
-      box-shadow: 0 0 60px rgba(42,246,255,0.06) inset;
+      border-color: rgba(255,255,255,0.35);
+      background: linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      box-shadow: 0 0 60px rgba(255,255,255,0.06) inset;
     }
     .vs-card h3 { font-size: 22px; margin-bottom: 8px; }
     .vs-tag { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
@@ -191,7 +195,7 @@
     .step:hover { transform: translateY(-6px); border-color: var(--border-strong); background: var(--panel-strong); }
     .step .n {
       font-family: var(--mono); font-size: 13px; color: var(--neon);
-      border: 1px solid rgba(42,246,255,0.3); border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.3); border-radius: 8px;
       width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
       margin-bottom: 22px;
     }
@@ -207,7 +211,7 @@
     }
     .cap::before {
       content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--neon), var(--cyan)); opacity: 0; transition: opacity .2s;
+      background: linear-gradient(90deg, var(--neon), transparent); opacity: 0; transition: opacity .2s;
     }
     .cap:hover { transform: translateY(-5px); border-color: var(--border-strong); }
     .cap:hover::before { opacity: 1; }
@@ -228,7 +232,7 @@
     }
     .agent-rail .track::after {
       content: ""; position: absolute; inset: 0; border-radius: 2px;
-      background: linear-gradient(90deg, transparent, var(--neon), var(--violet), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), var(--neon), rgba(255,255,255,0.4), transparent);
       background-size: 28% 100%; background-repeat: no-repeat;
       animation: flow 4.5s linear infinite;
     }
@@ -242,8 +246,8 @@
     }
     .agent-node.active .ring {
       border-color: var(--neon); transform: scale(1.12);
-      background: rgba(42,246,255,0.1);
-      box-shadow: 0 0 0 5px rgba(42,246,255,0.08), 0 0 28px rgba(42,246,255,0.5);
+      background: rgba(255,255,255,0.1);
+      box-shadow: 0 0 0 5px rgba(255,255,255,0.08), 0 0 28px rgba(255,255,255,0.5);
     }
     .agent-node .tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); transition: color .4s; }
     .agent-node.active .tag { color: var(--neon); }
@@ -283,7 +287,9 @@
     /* CTA */
     .cta-box {
       border-radius: 28px; padding: 72px 56px; text-align: center;
-      background: linear-gradient(135deg, rgba(155,107,255,0.14), rgba(56,232,255,0.10) 60%, rgba(42,246,255,0.12));
+      background:
+        radial-gradient(ellipse 70% 120% at 50% 0%, rgba(255,255,255,0.08), transparent 70%),
+        var(--bg-soft);
       border: 1px solid var(--border-strong); position: relative; overflow: hidden;
     }
     .cta-box h2 { font-size: clamp(30px, 4.5vw, 50px); margin-bottom: 18px; }
@@ -334,16 +340,15 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .aurora, .brand .dot { animation: none; }
+      .brand .dot, .agent-rail .track::after { animation: none; }
       .reveal { transition: none; opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
   <div class="backdrop">
-    <div class="aurora a1"></div>
-    <div class="aurora a2"></div>
-    <div class="aurora a3"></div>
+    <div class="grid"></div>
+    <div class="glow"></div>
   </div>
 
   <header>
