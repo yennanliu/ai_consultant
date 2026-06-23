@@ -1,0 +1,733 @@
+<title>利潤健檢 AI — 蝦皮賣家獲利 Copilot</title>
+<style>
+  :root {
+    --ground: #ffffff;
+    --bg-alt: #fafafa;
+    --text: #0f0f14;
+    --text-muted: #6e6e78;
+    --border: #e5e5ea;
+    --green: #0acf83;
+    --orange: #f24e1e;
+    --purple: #a259ff;
+    --red: #ff7262;
+    --blue: #1abcfe;
+    --max-w: 1280px;
+    --gutter: 32px;
+    font-size: 16px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+    background: var(--ground);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+  /* ── NAV ── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: 64px;
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 var(--gutter); height: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 18px; font-weight: 800; letter-spacing: -0.3px; color: var(--text);
+  }
+  .nav-brand-badge {
+    font-size: 11px; font-weight: 700;
+    background: var(--orange); color: #fff;
+    padding: 3px 7px; border-radius: 6px;
+  }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-link { font-size: 14px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+  .nav-link:hover { color: var(--text); }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: inherit; font-size: 15px; font-weight: 600;
+    padding: 11px 22px; border-radius: 8px; cursor: pointer;
+    transition: all 0.15s; white-space: nowrap; text-decoration: none;
+  }
+  .btn-primary { background: var(--orange); color: #fff; box-shadow: 0 2px 8px rgba(242,78,30,0.28); }
+  .btn-primary:hover { background: #d83d10; box-shadow: 0 4px 16px rgba(242,78,30,0.38); transform: translateY(-1px); }
+  .btn-primary:focus-visible { outline: 3px solid rgba(242,78,30,0.5); outline-offset: 2px; }
+  .btn-lg { font-size: 17px; padding: 14px 28px; border-radius: 12px; box-shadow: 0 4px 16px rgba(242,78,30,0.3); }
+  .btn-lg:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(242,78,30,0.4); }
+  .btn-ghost { background: transparent; color: var(--text-muted); border: 1.5px solid var(--border); }
+  .btn-ghost:hover { border-color: #c0c0c8; color: var(--text); transform: translateY(-1px); }
+  .btn-ghost:focus-visible { outline: 3px solid rgba(110,110,120,0.3); outline-offset: 2px; }
+
+  /* ── PILLS ── */
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px;
+  }
+  .pill-orange { background: rgba(242,78,30,0.1); color: var(--orange); }
+  .pill-green  { background: rgba(10,207,131,0.12); color: #09a865; }
+  .pill-purple { background: rgba(162,89,255,0.12); color: #8040dd; }
+  .pill-blue   { background: rgba(27,188,254,0.12); color: #0890cc; }
+  .pill-red    { background: rgba(255,114,98,0.15); color: #d94030; }
+
+  .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
+
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.25; } }
+  .dot-pulse { animation: pulse 2s ease-in-out infinite; }
+
+  /* ── LAYOUT HELPERS ── */
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); }
+  .sec { padding: 96px 0; }
+  .sec-header { margin-bottom: 56px; }
+  .sec-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+  .sec-title { font-size: clamp(28px,3vw,40px); font-weight: 800; line-height: 1.2; letter-spacing: -0.3px; margin-bottom: 14px; }
+  .sec-desc { font-size: 17px; color: var(--text-muted); line-height: 1.75; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 128px var(--gutter) 80px;
+    max-width: var(--max-w); margin: 0 auto;
+    display: grid; grid-template-columns: 52% 1fr; gap: 64px; align-items: center;
+  }
+  .hero h1 {
+    font-size: clamp(34px,3.8vw,54px); font-weight: 800;
+    line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 22px;
+  }
+  .hero h1 .hl { color: var(--orange); }
+  .hero-sub { font-size: 18px; color: var(--text-muted); line-height: 1.75; max-width: 480px; margin-bottom: 36px; }
+  .hero-actions { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+  .hero-note { font-size: 13px; color: var(--text-muted); margin-bottom: 40px; }
+  .hero-note span { color: var(--green); margin-right: 4px; }
+  .hero-rule { border: none; border-top: 1px solid var(--border); margin-bottom: 32px; }
+  .hero-stats { display: flex; gap: 40px; }
+  .stat-val { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; line-height: 1; margin-bottom: 4px; }
+  .stat-lbl { font-size: 13px; color: var(--text-muted); }
+
+  /* ── DASHBOARD (scan demo) ── */
+  .dashboard {
+    background: var(--ground);
+    border-radius: 20px; border: 1px solid var(--border);
+    box-shadow: 0 24px 64px rgba(15,15,20,0.1), 0 4px 16px rgba(15,15,20,0.04);
+    overflow: hidden; position: relative;
+  }
+  .db-header {
+    padding: 14px 18px; border-bottom: 1px solid var(--border);
+    background: var(--bg-alt);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .db-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; }
+  .db-badge { font-size: 11px; font-weight: 700; color: var(--orange); background: rgba(242,78,30,0.1); padding: 3px 9px; border-radius: 999px; }
+
+  .sku-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .sku-table thead tr { background: var(--bg-alt); }
+  .sku-table th { padding: 9px 14px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); text-align: left; }
+  .sku-table td { padding: 11px 14px; border-bottom: 1px solid rgba(229,229,234,0.6); }
+  .sku-row { transition: background 0.35s ease; }
+  .sku-row.st-profitable { background: rgba(10,207,131,0.07); }
+  .sku-row.st-losing     { background: rgba(255,114,98,0.07); }
+  .sku-row.st-warning    { background: rgba(242,78,30,0.06); }
+  .sku-name { font-weight: 600; max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
+  .sku-sub  { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .num { font-family: "SF Mono","Cascadia Code","Consolas","Fira Mono",ui-monospace,monospace; font-size: 13px; font-weight: 600; }
+  .num-pos { color: #09a865; }
+  .num-neg { color: #d94030; }
+  .num-dim { color: var(--text-muted); }
+
+  .ai-tag {
+    display: inline-flex; align-items: center;
+    font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 999px;
+    opacity: 0; transform: scale(0.82);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    letter-spacing: 0.3px; white-space: nowrap;
+  }
+  .ai-tag.show { opacity: 1; transform: scale(1); }
+  .ai-tag-green  { background: rgba(10,207,131,0.15); color: #09a865; }
+  .ai-tag-red    { background: rgba(255,114,98,0.18); color: #d94030; }
+  .ai-tag-orange { background: rgba(242,78,30,0.13);  color: #c83c0e; }
+
+  .scan-beam {
+    position: absolute; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, transparent 5%, var(--green) 35%, var(--green) 65%, transparent 95%);
+    box-shadow: 0 0 12px rgba(10,207,131,0.5), 0 0 4px rgba(10,207,131,0.8);
+    pointer-events: none; opacity: 0; top: 56px;
+    transition: top 0.48s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease;
+    z-index: 10;
+  }
+  .scan-beam.live { opacity: 1; }
+
+  .db-footer {
+    padding: 10px 14px; border-top: 1px solid var(--border);
+    background: rgba(10,207,131,0.04);
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; color: #09a865;
+    opacity: 0; transition: opacity 0.3s ease;
+  }
+  .db-footer.show { opacity: 1; }
+
+  /* ── PROBLEM ── */
+  .sec-problem { background: rgba(242,78,30,0.05); }
+  .problem-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .problem-card {
+    background: var(--ground); border-radius: 16px; padding: 28px;
+    border: 1px solid var(--border); transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .problem-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(15,15,20,0.08); }
+  .problem-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 18px; }
+  .problem-card h3 { font-size: 19px; font-weight: 800; line-height: 1.3; margin-bottom: 10px; }
+  .problem-card p { font-size: 15px; color: var(--text-muted); line-height: 1.7; }
+  .problem-sting { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 13px; font-weight: 600; color: var(--orange); }
+
+  /* ── HOW ── */
+  .sec-how { background: var(--ground); }
+  .steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 40px; }
+  .step-badge {
+    width: 52px; height: 52px; border-radius: 14px;
+    font-size: 22px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 22px;
+  }
+  .sb-1 { background: rgba(242,78,30,0.1); color: var(--orange); }
+  .sb-2 { background: rgba(162,89,255,0.1); color: var(--purple); }
+  .sb-3 { background: rgba(10,207,131,0.1); color: var(--green); }
+  .step h3 { font-size: 20px; font-weight: 800; margin-bottom: 10px; line-height: 1.3; }
+  .step p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
+  .file-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .file-chip {
+    font-family: "SF Mono","Cascadia Code","Consolas",ui-monospace,monospace;
+    font-size: 11px; font-weight: 600; padding: 4px 10px;
+    border-radius: 6px; background: var(--bg-alt); border: 1px solid var(--border); color: var(--text-muted);
+  }
+
+  /* ── REPORT ── */
+  .sec-report { background: rgba(162,89,255,0.04); }
+  .report-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .report-card {
+    background: var(--ground); border-radius: 12px; padding: 22px;
+    border: 1px solid var(--border); transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .report-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(15,15,20,0.08); }
+  .report-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .report-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .report-card h3 { font-size: 15px; font-weight: 700; line-height: 1.3; }
+  .report-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 10px; border-radius: 8px; background: var(--bg-alt); margin-bottom: 5px; font-size: 13px;
+  }
+  .report-row:last-child { margin-bottom: 0; }
+  .rr-name { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; padding-right: 8px; }
+  .rr-val { font-family: "SF Mono","Cascadia Code","Consolas",ui-monospace,monospace; font-weight: 700; font-size: 12px; flex-shrink: 0; }
+
+  /* ── ACTION ── */
+  .sec-action { background: var(--ground); }
+  .action-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .action-copy h2 { font-size: clamp(28px,2.8vw,38px); font-weight: 800; line-height: 1.2; letter-spacing: -0.3px; margin-bottom: 16px; }
+  .action-copy p { font-size: 17px; color: var(--text-muted); line-height: 1.75; margin-bottom: 24px; }
+  .action-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .action-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 18px; border-radius: 12px;
+    border: 1px solid var(--border); background: var(--ground);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .action-item:hover { border-color: rgba(242,78,30,0.4); box-shadow: 0 4px 16px rgba(242,78,30,0.07); transform: translateX(4px); }
+  .action-emoji { font-size: 20px; flex-shrink: 0; margin-top: 1px; line-height: 1; }
+  .action-text strong { display: block; font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .action-text span { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ── CTA ── */
+  .sec-cta { background: rgba(27,188,254,0.06); text-align: center; }
+  .cta-inner { max-width: 600px; margin: 0 auto; }
+  .cta-inner h2 { font-size: clamp(30px,3.2vw,44px); font-weight: 800; line-height: 1.2; letter-spacing: -0.3px; margin-bottom: 16px; }
+  .cta-desc { font-size: 17px; color: var(--text-muted); line-height: 1.75; margin-bottom: 40px; }
+  .upload-area {
+    border: 2px dashed var(--border); border-radius: 20px;
+    padding: 44px 32px 36px; cursor: pointer;
+    transition: border-color 0.2s, background 0.2s; margin-bottom: 20px;
+  }
+  .upload-area:hover { border-color: rgba(242,78,30,0.5); background: rgba(242,78,30,0.02); }
+  .upload-area:focus-visible { outline: 3px solid rgba(242,78,30,0.4); outline-offset: 2px; }
+  .upload-icon { font-size: 44px; margin-bottom: 14px; display: block; }
+  .upload-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .upload-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+  .upload-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
+  .upload-chip {
+    font-family: "SF Mono","Cascadia Code","Consolas",ui-monospace,monospace;
+    font-size: 12px; font-weight: 600; padding: 5px 12px;
+    border-radius: 8px; background: var(--bg-alt); border: 1px solid var(--border); color: var(--text-muted);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .chip-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .cta-note { font-size: 14px; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 28px var(--gutter); max-width: var(--max-w); margin: 0 auto;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 14px; color: var(--text-muted);
+  }
+  .footer-brand { font-weight: 800; font-size: 15px; color: var(--text); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: var(--text-muted); transition: color 0.15s; }
+  .footer-links a:hover { color: var(--text); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding: 100px var(--gutter) 60px; gap: 48px; }
+    .problem-grid, .steps-grid, .report-grid { grid-template-columns: 1fr 1fr; }
+    .action-layout { grid-template-columns: 1fr; gap: 48px; }
+    .hero-stats { flex-wrap: wrap; gap: 24px; }
+  }
+  @media (max-width: 640px) {
+    :root { --gutter: 20px; }
+    .nav-links .nav-link { display: none; }
+    .problem-grid, .steps-grid, .report-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 30px; }
+    .sec { padding: 64px 0; }
+    .hero-actions { flex-wrap: wrap; }
+    .footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    .scan-beam { display: none; }
+    .ai-tag { opacity: 1; transform: scale(1); }
+  }
+</style>
+
+<!-- NAV -->
+<nav class="nav" role="navigation" aria-label="主選單">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand" aria-label="利潤健檢 AI">
+      利潤健檢
+      <span class="nav-brand-badge">AI</span>
+    </a>
+    <div class="nav-links">
+      <a href="#how" class="nav-link">如何使用</a>
+      <a href="#report" class="nav-link">報告內容</a>
+      <a href="#cta" class="btn btn-primary">免費健檢</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero" aria-labelledby="hero-h1">
+  <div class="hero">
+    <!-- copy -->
+    <div>
+      <div style="margin-bottom:24px;">
+        <span class="pill pill-orange">
+          <span class="dot" style="background:var(--orange);"></span>
+          蝦皮賣家 AI 獲利工具
+        </span>
+      </div>
+      <h1 id="hero-h1">你的蝦皮，<br>每週都在<span class="hl">漏錢</span>。<br>你知道漏在哪嗎？</h1>
+      <p class="hero-sub">上傳三份報表，五分鐘後 AI 告訴你哪個商品真在賺錢、哪個是<strong>假爆品</strong>、哪個廣告費打水漂——直接給你下週行動清單。</p>
+      <div class="hero-actions">
+        <a href="#cta" class="btn btn-primary btn-lg">立即上傳，免費健檢</a>
+        <a href="#report" class="btn btn-ghost btn-lg">看示範報告</a>
+      </div>
+      <p class="hero-note">
+        <span>✓</span> 不需安裝&ensp;
+        <span>✓</span> 不需串接 API&ensp;
+        <span>✓</span> 第一份報告免費
+      </p>
+      <hr class="hero-rule">
+      <div class="hero-stats">
+        <div>
+          <div class="stat-val" style="color:var(--orange);">-32%</div>
+          <div class="stat-lbl">平均廣告費浪費</div>
+        </div>
+        <div>
+          <div class="stat-val">91%</div>
+          <div class="stat-lbl">SKU 判斷準確率</div>
+        </div>
+        <div>
+          <div class="stat-val" style="color:var(--green);">5 分鐘</div>
+          <div class="stat-lbl">出完整報告</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- animated scan dashboard -->
+    <div class="dashboard" id="dash" aria-label="AI 掃描示範" role="img">
+      <div class="scan-beam" id="beam" aria-hidden="true"></div>
+      <div class="db-header">
+        <div class="db-title">
+          <span class="dot dot-pulse" style="background:var(--green);" aria-hidden="true"></span>
+          AI 健檢 — 本週 SKU 分析
+        </div>
+        <span class="db-badge" id="db-status">掃描中…</span>
+      </div>
+      <table class="sku-table" aria-label="SKU 分析結果">
+        <thead>
+          <tr>
+            <th scope="col">商品名稱</th>
+            <th scope="col">銷量</th>
+            <th scope="col">真實毛利</th>
+            <th scope="col">AI 判斷</th>
+          </tr>
+        </thead>
+        <tbody id="sku-body">
+          <tr class="sku-row" data-st="profitable">
+            <td><span class="sku-name">韓版OL西裝褲 XS-XXL</span><span class="sku-sub">服飾・女裝</span></td>
+            <td><span class="num">234</span></td>
+            <td><span class="num num-pos">+42%</span></td>
+            <td><span class="ai-tag ai-tag-green">最賺錢</span></td>
+          </tr>
+          <tr class="sku-row" data-st="losing">
+            <td><span class="sku-name">保濕面膜 10片/盒</span><span class="sku-sub">美妝保養</span></td>
+            <td><span class="num">891</span></td>
+            <td><span class="num num-neg">-8%</span></td>
+            <td><span class="ai-tag ai-tag-red">假爆品</span></td>
+          </tr>
+          <tr class="sku-row" data-st="losing">
+            <td><span class="sku-name">無線藍芽耳機 TWS</span><span class="sku-sub">3C 配件</span></td>
+            <td><span class="num">156</span></td>
+            <td><span class="num num-neg">-12%</span></td>
+            <td><span class="ai-tag ai-tag-orange">廣告虧損</span></td>
+          </tr>
+          <tr class="sku-row" data-st="profitable">
+            <td><span class="sku-name">棉麻寬鬆上衣</span><span class="sku-sub">服飾・女裝</span></td>
+            <td><span class="num">312</span></td>
+            <td><span class="num num-pos">+31%</span></td>
+            <td><span class="ai-tag ai-tag-green">獲利穩</span></td>
+          </tr>
+          <tr class="sku-row" data-st="warning">
+            <td><span class="sku-name">矽膠手機殼 多款</span><span class="sku-sub">3C 配件</span></td>
+            <td><span class="num">445</span></td>
+            <td><span class="num num-dim">+18%</span></td>
+            <td><span class="ai-tag ai-tag-orange">退貨高</span></td>
+          </tr>
+          <tr class="sku-row" data-st="profitable" style="border-bottom:none;">
+            <td><span class="sku-name">男款運動短褲</span><span class="sku-sub">服飾・男裝</span></td>
+            <td><span class="num">178</span></td>
+            <td><span class="num num-pos">+28%</span></td>
+            <td><span class="ai-tag ai-tag-green">優先補貨</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="db-footer" id="db-footer" aria-live="polite">
+        <span aria-hidden="true">✓</span>
+        分析完成：6 項商品・3 項行動建議已生成
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="sec sec-problem" id="problem" aria-labelledby="problem-h2">
+  <div class="container">
+    <div class="sec-header">
+      <p class="sec-eyebrow" style="color:var(--orange);">你是不是也遇到這些問題</p>
+      <h2 class="sec-title" id="problem-h2">月出千單，帳上卻沒錢</h2>
+      <p class="sec-desc" style="max-width:520px;">蝦皮後台顯示的收入，不是你真正賺到的錢。廣告費、退貨、折扣、耗材——每項都在吃利潤，但你不知道哪個最嚴重。</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon" style="background:rgba(242,78,30,0.1);">📉</div>
+        <h3>銷量不等於獲利</h3>
+        <p>爆品榜第一，折扣打到毛利剩 3%。廣告費、退貨成本、耗材全算進去，才發現根本在賠錢。</p>
+        <p class="problem-sting">蝦皮後台不告訴你這件事</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon" style="background:rgba(255,114,98,0.1);">🕳️</div>
+        <h3>廣告費是黑洞</h3>
+        <p>ROAS 1.2 看起來有賺，扣完折扣率和退貨率之後是 0.7。廣告後台不會幫你算這個。</p>
+        <p class="problem-sting">每個月白燒幾萬塊</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon" style="background:rgba(162,89,255,0.1);">🎲</div>
+        <h3>決策全靠直覺</h3>
+        <p>停哪個 SKU？補哪個貨？哪個圖要換？沒有按真實毛利做決策，就是在猜。</p>
+        <p class="problem-sting">老闆猜，員工跟著賠</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec sec-how" id="how" aria-labelledby="how-h2">
+  <div class="container">
+    <div class="sec-header">
+      <p class="sec-eyebrow" style="color:var(--purple);">三步驟，五分鐘出報告</p>
+      <h2 class="sec-title" id="how-h2">上傳就好，AI 幫你算清楚</h2>
+      <p class="sec-desc">不需要學任何工具。把三份你本來就有的報表傳上來，剩下的交給 AI。</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-badge sb-1">01</div>
+        <h3>上傳三份報表</h3>
+        <p>蝦皮賣場中心直接匯出，不需整理格式。AI 自動讀取所有欄位。</p>
+        <div class="file-chips">
+          <span class="file-chip">銷售報表.xlsx</span>
+          <span class="file-chip">成本表.xlsx</span>
+          <span class="file-chip">廣告資料.csv</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-badge sb-2">02</div>
+        <h3>AI 計算每個 SKU 真實毛利</h3>
+        <p>自動比對收入、廣告費、折扣優惠、退貨成本，算出你蝦皮後台從未顯示的數字。</p>
+      </div>
+      <div class="step">
+        <div class="step-badge sb-3">03</div>
+        <h3>拿到下週行動清單</h3>
+        <p>不是圖表，不是儀表板。是五件具體的事：哪個商品停賣、哪個補貨、哪個廣告關掉。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REPORT OUTPUT -->
+<section class="sec sec-report" id="report" aria-labelledby="report-h2">
+  <div class="container">
+    <div class="sec-header">
+      <p class="sec-eyebrow" style="color:var(--purple);">報告內容</p>
+      <h2 class="sec-title" id="report-h2">一份報告，六個你現在最需要的答案</h2>
+      <p class="sec-desc">不是數據堆積——是直接可以執行的決策依據。</p>
+    </div>
+    <div class="report-grid">
+      <div class="report-card">
+        <div class="report-head">
+          <div class="report-icon" style="background:rgba(10,207,131,0.1);">💰</div>
+          <h3>本週最賺錢 SKU</h3>
+        </div>
+        <div class="report-row"><span class="rr-name">韓版OL西裝褲</span><span class="rr-val" style="color:#09a865;">+42%</span></div>
+        <div class="report-row"><span class="rr-name">棉麻寬鬆上衣</span><span class="rr-val" style="color:#09a865;">+31%</span></div>
+        <div class="report-row"><span class="rr-name">男款運動短褲</span><span class="rr-val" style="color:#09a865;">+28%</span></div>
+      </div>
+      <div class="report-card">
+        <div class="report-head">
+          <div class="report-icon" style="background:rgba(255,114,98,0.12);">⚠️</div>
+          <h3>本週假爆品</h3>
+        </div>
+        <div class="report-row"><span class="rr-name">保濕面膜 10片/盒</span><span class="rr-val" style="color:#d94030;">-8%</span></div>
+        <div class="report-row"><span class="rr-name">韓版連帽衛衣</span><span class="rr-val" style="color:#d94030;">-5%</span></div>
+        <div class="report-row"><span class="rr-name" style="color:var(--text-muted);">+ 3 項未達損益平衡</span><span class="rr-val" style="color:var(--text-muted);">查看</span></div>
+      </div>
+      <div class="report-card">
+        <div class="report-head">
+          <div class="report-icon" style="background:rgba(242,78,30,0.1);">📢</div>
+          <h3>廣告吃掉利潤的商品</h3>
+        </div>
+        <div class="report-row"><span class="rr-name">無線藍芽耳機 TWS</span><span class="rr-val" style="color:#c83c0e;">ROAS 0.8</span></div>
+        <div class="report-row"><span class="rr-name">氣墊粉底液 SPF50</span><span class="rr-val" style="color:#c83c0e;">ROAS 0.9</span></div>
+        <div class="report-row"><span class="rr-name" style="color:var(--text-muted);">校正退貨率後 ROAS &lt; 1</span></div>
+      </div>
+      <div class="report-card">
+        <div class="report-head">
+          <div class="report-icon" style="background:rgba(255,114,98,0.1);">↩️</div>
+          <h3>退貨率異常商品</h3>
+        </div>
+        <div class="report-row"><span class="rr-name">矽膠手機殼 多款</span><span class="rr-val" style="color:#d94030;">23%</span></div>
+        <div class="report-row"><span class="rr-name">仿皮短靴 女款</span><span class="rr-val" style="color:#d94030;">19%</span></div>
+        <div class="report-row"><span class="rr-name" style="color:var(--text-muted);">行業平均退貨率</span><span class="rr-val" style="color:var(--text-muted);">8%</span></div>
+      </div>
+      <div class="report-card">
+        <div class="report-head">
+          <div class="report-icon" style="background:rgba(162,89,255,0.12);">🤖</div>
+          <h3>AI 建議清單</h3>
+        </div>
+        <div class="report-row">
+          <span class="rr-name">停賣無線藍芽耳機</span>
+          <span><span class="pill pill-red" style="font-size:10px;padding:2px 7px;">停賣</span></span>
+        </div>
+        <div class="report-row">
+          <span class="rr-name">韓版西裝褲提價 15%</span>
+          <span><span class="pill pill-green" style="font-size:10px;padding:2px 7px;">漲價</span></span>
+        </div>
+        <div class="report-row">
+          <span class="rr-name">手機殼換主圖測試</span>
+          <span><span class="pill pill-blue" style="font-size:10px;padding:2px 7px;">改圖</span></span>
+        </div>
+      </div>
+      <div class="report-card">
+        <div class="report-head">
+          <div class="report-icon" style="background:rgba(27,188,254,0.12);">📋</div>
+          <h3>下週五大優先任務</h3>
+        </div>
+        <div class="report-row"><span class="rr-name">① 關閉 2 個 ROAS &lt; 1 廣告組</span></div>
+        <div class="report-row"><span class="rr-name">② 補貨韓版西裝褲 M / L 碼</span></div>
+        <div class="report-row"><span class="rr-name">③ 停賣保濕面膜或調整定價</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTION VALUE PROP -->
+<section class="sec sec-action" id="action" aria-labelledby="action-h2">
+  <div class="container">
+    <div class="action-layout">
+      <div class="action-copy">
+        <p class="sec-eyebrow" style="color:var(--blue);">不是更多數據</p>
+        <h2 id="action-h2">AI 不給你看更多圖表，<br>給你<span style="color:var(--orange);">更少決策</span></h2>
+        <p>你不缺數據，你缺的是有人把數據翻譯成「這週你該做什麼」。具體、排好順序、可以直接交辦。</p>
+        <a href="#cta" class="btn btn-primary">開始試用</a>
+      </div>
+      <ul class="action-list" aria-label="AI 可生成的行動類型">
+        <li class="action-item">
+          <span class="action-emoji" aria-hidden="true">🛑</span>
+          <div class="action-text">
+            <strong>停賣真實虧損商品</strong>
+            <span>毛利率 &lt; 0% 且廣告費無法攤薄的 SKU，AI 直接點名</span>
+          </div>
+        </li>
+        <li class="action-item">
+          <span class="action-emoji" aria-hidden="true">💰</span>
+          <div class="action-text">
+            <strong>漲價供不應求的爆品</strong>
+            <span>高轉換率但毛利偏低，代表你可以提價而不影響銷量</span>
+          </div>
+        </li>
+        <li class="action-item">
+          <span class="action-emoji" aria-hidden="true">📦</span>
+          <div class="action-text">
+            <strong>補貨前三名優質商品</strong>
+            <span>毛利高、退貨低、廣告正報酬——這些才是值得補的</span>
+          </div>
+        </li>
+        <li class="action-item">
+          <span class="action-emoji" aria-hidden="true">🖼️</span>
+          <div class="action-text">
+            <strong>改圖高曝光低轉換商品</strong>
+            <span>廣告花了但點擊沒轉換，問題八成在主圖或標題</span>
+          </div>
+        </li>
+        <li class="action-item">
+          <span class="action-emoji" aria-hidden="true">🎁</span>
+          <div class="action-text">
+            <strong>改組合包降低退貨損失</strong>
+            <span>高退貨商品搭配低退貨商品打包，攤薄退貨成本</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sec sec-cta" id="cta" aria-labelledby="cta-h2">
+  <div class="container">
+    <div class="cta-inner">
+      <p class="sec-eyebrow" style="color:var(--blue);display:flex;align-items:center;justify-content:center;gap:8px;">
+        <span class="dot dot-pulse" style="background:var(--blue);" aria-hidden="true"></span>
+        今天就能拿到報告
+      </p>
+      <h2 id="cta-h2">你的蝦皮到底賺多少，<br>五分鐘後你就知道</h2>
+      <p class="cta-desc">不需安裝軟體，不需串接 API，不需學新工具。上傳 Excel，剩下的交給 AI。</p>
+      <div class="upload-area" tabindex="0" role="button" aria-label="上傳報表開始分析">
+        <span class="upload-icon" aria-hidden="true">📊</span>
+        <p class="upload-title">拖曳或點擊，上傳你的蝦皮報表</p>
+        <p class="upload-sub">支援 .xlsx、.csv，每份最大 10MB</p>
+        <div class="upload-chips">
+          <span class="upload-chip"><span class="chip-dot" style="background:var(--orange);"></span>銷售報表.xlsx</span>
+          <span class="upload-chip"><span class="chip-dot" style="background:var(--purple);"></span>商品成本表.xlsx</span>
+          <span class="upload-chip"><span class="chip-dot" style="background:var(--green);"></span>廣告折扣退貨.csv</span>
+        </div>
+      </div>
+      <div style="margin-bottom:14px;">
+        <a href="#" class="btn btn-primary btn-lg" style="display:inline-flex;min-width:360px;justify-content:center;">開始健檢 — 第一份報告免費</a>
+      </div>
+      <p class="cta-note">🔒 不需信用卡&ensp;·&ensp;資料不留存&ensp;·&ensp;報告只有你看得到</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer">
+    <span class="footer-brand">利潤健檢 AI</span>
+    <p>© 2025 AI 利潤健檢 Copilot</p>
+    <nav class="footer-links" aria-label="頁尾導覽">
+      <a href="#">隱私政策</a>
+      <a href="#">服務條款</a>
+      <a href="#">聯絡我們</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var beam = document.getElementById('beam');
+  var dash = document.getElementById('dash');
+  var status = document.getElementById('db-status');
+  var footer = document.getElementById('db-footer');
+  var rows = [].slice.call(document.querySelectorAll('.sku-row'));
+  if (!beam || !rows.length) return;
+
+  var ROW_MS = 680;
+  var END_PAUSE = 2800;
+  var timers = [];
+
+  function schedule(ms, fn) { timers.push(setTimeout(fn, ms)); }
+  function clearAll() { timers.forEach(clearTimeout); timers = []; }
+
+  function rowCenter(row) {
+    var dr = dash.getBoundingClientRect();
+    var rr = row.getBoundingClientRect();
+    return rr.top - dr.top + rr.height / 2;
+  }
+
+  function reset() {
+    rows.forEach(function (r) {
+      r.className = 'sku-row';
+      var t = r.querySelector('.ai-tag');
+      if (t) t.classList.remove('show');
+    });
+    footer.classList.remove('show');
+    status.textContent = '掃描中…';
+    beam.classList.remove('live');
+  }
+
+  function run() {
+    reset();
+    schedule(300, function () {
+      beam.style.top = (rowCenter(rows[0]) - 32) + 'px';
+      beam.classList.add('live');
+
+      rows.forEach(function (row, i) {
+        schedule(i * ROW_MS + 140, function () {
+          beam.style.top = rowCenter(row) + 'px';
+        });
+        schedule(i * ROW_MS + 480, function () {
+          row.classList.add('st-' + row.getAttribute('data-st'));
+          var t = row.querySelector('.ai-tag');
+          if (t) t.classList.add('show');
+        });
+      });
+
+      schedule(rows.length * ROW_MS + 260, function () {
+        beam.classList.remove('live');
+        status.textContent = '分析完成';
+        footer.classList.add('show');
+        schedule(END_PAUSE, function () { run(); });
+      });
+    });
+  }
+
+  schedule(900, run);
+
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () { clearAll(); schedule(120, run); }, 260);
+  });
+}());
+</script>
