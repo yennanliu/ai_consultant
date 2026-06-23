@@ -646,6 +646,12 @@
         <a href="#" class="btn btn-primary btn-lg" style="display:inline-flex;min-width:360px;justify-content:center;">開始健檢 — 第一份報告免費</a>
       </div>
       <p class="cta-note">🔒 不需信用卡&ensp;·&ensp;資料不留存&ensp;·&ensp;報告只有你看得到</p>
+      <div style="margin-top:32px;padding-top:28px;border-top:1px solid var(--border);">
+        <p style="font-size:14px;color:var(--text-muted);margin-bottom:12px;">還不確定效果？先用真實範例資料跑一次</p>
+        <button id="demo-open-btn" class="btn btn-ghost" style="font-size:15px;padding:12px 24px;gap:8px;">
+          <span aria-hidden="true">▶</span> 跑示範報告 — 看 AI 怎麼分析
+        </button>
+      </div>
     </div>
   </div>
 </section>
@@ -729,5 +735,418 @@
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () { clearAll(); schedule(120, run); }, 260);
   });
+}());
+</script>
+
+<!-- =====================================================
+     DEMO MODAL STYLES
+===================================================== -->
+<style>
+  #demo-modal {
+    display: none; position: fixed; inset: 0; z-index: 500;
+    background: rgba(10,10,16,0.82);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    align-items: center; justify-content: center; padding: 16px;
+  }
+  #demo-modal.open { display: flex; }
+
+  #demo-panel {
+    background: var(--ground); border-radius: 20px;
+    width: min(960px, 100%); max-height: 88vh;
+    display: flex; flex-direction: column;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.35);
+    overflow: hidden;
+  }
+
+  .dmo-topbar {
+    padding: 14px 20px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border); background: var(--bg-alt);
+  }
+  .dmo-topbar-left { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; }
+  .dmo-tag { font-size: 11px; font-weight: 700; background: var(--orange); color: #fff; padding: 3px 7px; border-radius: 6px; }
+  .dmo-period { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+  .dmo-close {
+    width: 32px; height: 32px; border-radius: 8px; border: none; background: none;
+    font-size: 20px; line-height: 1; color: var(--text-muted); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s; font-family: inherit;
+  }
+  .dmo-close:hover { background: var(--border); color: var(--text); }
+  .dmo-close:focus-visible { outline: 3px solid rgba(242,78,30,0.4); outline-offset: 2px; }
+
+  /* --- TERMINAL --- */
+  #dmo-terminal {
+    flex: 1; overflow-y: auto; background: #0d1117;
+    padding: 22px 24px; display: flex; flex-direction: column;
+  }
+  .term-line {
+    font-family: "SF Mono","Cascadia Code","Consolas","Fira Mono",ui-monospace,monospace;
+    font-size: 12.5px; line-height: 2; white-space: pre;
+    opacity: 0; animation: tIn 0.12s ease forwards;
+  }
+  @keyframes tIn { from { opacity:0; transform:translateX(-6px); } to { opacity:1; transform:translateX(0); } }
+  .tc-dim    { color: #30363d; }
+  .tc-white  { color: #e6edf3; }
+  .tc-green  { color: #3fb950; }
+  .tc-orange { color: #d29922; }
+  .tc-red    { color: #f85149; }
+  .tc-blue   { color: #79c0ff; }
+  .tc-muted  { color: #8b949e; }
+
+  .term-progress {
+    flex-shrink: 0; margin-top: 18px;
+    height: 3px; border-radius: 3px; background: #21262d; overflow: hidden;
+  }
+  #term-bar { height: 100%; background: #3fb950; width: 0; transition: width 0.18s linear; }
+
+  #term-view-btn {
+    align-self: flex-start; margin-top: 20px; flex-shrink: 0;
+    font-family: "SF Mono","Cascadia Code","Consolas",ui-monospace,monospace;
+    font-size: 13px; font-weight: 700; padding: 10px 22px; border-radius: 8px; border: none;
+    background: #3fb950; color: #0d1117; cursor: pointer;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  #term-view-btn.show { opacity: 1; }
+  #term-view-btn:hover { background: #4dd966; }
+
+  /* --- REPORT --- */
+  #dmo-report { flex: 1; overflow-y: auto; padding: 24px 26px 32px; display: none; }
+
+  .rpt-summary {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 24px;
+  }
+  .rpt-stat {
+    background: var(--bg-alt); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 16px;
+  }
+  .rpt-stat-val { font-size: 20px; font-weight: 800; line-height: 1; margin-bottom: 4px; letter-spacing: -0.5px; }
+  .rpt-stat-lbl { font-size: 11px; color: var(--text-muted); }
+
+  .rpt-section-hd { font-size: 15px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+
+  .rpt-table { width: 100%; border-collapse: collapse; margin-bottom: 28px; font-size: 13px; }
+  .rpt-table th {
+    padding: 8px 10px; text-align: left;
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+    color: var(--text-muted); border-bottom: 2px solid var(--border);
+  }
+  .rpt-table td { padding: 10px 10px; border-bottom: 1px solid rgba(229,229,234,0.5); vertical-align: middle; }
+  .rpt-row-star { background: rgba(10,207,131,0.05); }
+  .rpt-row-loss { background: rgba(255,114,98,0.05); }
+  .rpt-row-fake { background: rgba(242,78,30,0.04); }
+
+  .rpt-name  { font-weight: 600; font-size: 13px; }
+  .rpt-skuid { font-family: "SF Mono","Cascadia Code","Consolas",ui-monospace,monospace; font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+  .rpt-mono  { font-family: "SF Mono","Cascadia Code","Consolas",ui-monospace,monospace; font-size: 12px; font-weight: 700; }
+
+  .rpt-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 999px; white-space: nowrap;
+  }
+  .rb-star   { background: rgba(10,207,131,0.15); color: #09a865; }
+  .rb-good   { background: rgba(10,207,131,0.1);  color: #09a865; }
+  .rb-slow   { background: rgba(162,89,255,0.12); color: #8040dd; }
+  .rb-fake   { background: rgba(242,78,30,0.12);  color: #c83c0e; }
+  .rb-crisis { background: rgba(255,114,98,0.18); color: #d94030; }
+  .rb-adloss { background: rgba(242,78,30,0.12);  color: #c83c0e; }
+  .rb-waste  { background: rgba(255,114,98,0.18); color: #d94030; }
+
+  .rpt-bar-wrap { display: flex; align-items: center; gap: 8px; }
+  .rpt-bar-track { width: 48px; height: 4px; border-radius: 999px; background: var(--border); overflow: hidden; flex-shrink: 0; }
+  .rpt-bar-fill  { height: 100%; border-radius: 999px; }
+
+  .rpt-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .rpt-action-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border);
+  }
+  .rpt-action-num {
+    width: 26px; height: 26px; border-radius: 7px; flex-shrink: 0;
+    font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center;
+  }
+  .rpt-action-item strong { font-size: 14px; font-weight: 700; display: block; margin-bottom: 3px; }
+  .rpt-action-item p { font-size: 13px; color: var(--text-muted); line-height: 1.55; margin: 0; }
+
+  .rpt-foot { display: flex; justify-content: center; gap: 12px; }
+
+  @media (max-width: 640px) {
+    .rpt-summary { grid-template-columns: repeat(2,1fr); }
+    .rpt-table th:nth-child(3),
+    .rpt-table td:nth-child(3) { display: none; }
+  }
+</style>
+
+<!-- =====================================================
+     DEMO MODAL HTML
+===================================================== -->
+<div id="demo-modal" role="dialog" aria-modal="true" aria-labelledby="dmo-title">
+  <div id="demo-panel">
+    <!-- topbar -->
+    <div class="dmo-topbar">
+      <div class="dmo-topbar-left">
+        <span id="dmo-title">AI 利潤健檢報告</span>
+        <span class="dmo-tag">示範</span>
+        <span class="dmo-period">2024-01-15 ~ 2024-01-21</span>
+      </div>
+      <button class="dmo-close" id="demo-close-btn" aria-label="關閉報告">✕</button>
+    </div>
+
+    <!-- PHASE 1: terminal -->
+    <div id="dmo-terminal">
+      <div id="term-lines"></div>
+      <div class="term-progress"><div id="term-bar"></div></div>
+      <button id="term-view-btn">查看完整報告 →</button>
+    </div>
+
+    <!-- PHASE 2: report -->
+    <div id="dmo-report">
+      <!-- summary stats -->
+      <div class="rpt-summary">
+        <div class="rpt-stat">
+          <div class="rpt-stat-val">NT$26,965</div>
+          <div class="rpt-stat-lbl">本週總入帳</div>
+        </div>
+        <div class="rpt-stat">
+          <div class="rpt-stat-val" style="color:#09a865;">NT$8,041</div>
+          <div class="rpt-stat-lbl">扣除所有成本後淨利</div>
+        </div>
+        <div class="rpt-stat">
+          <div class="rpt-stat-val" style="color:#09a865;">6</div>
+          <div class="rpt-stat-lbl">獲利 SKU（毛利 &gt;50%）</div>
+        </div>
+        <div class="rpt-stat">
+          <div class="rpt-stat-val" style="color:#d94030;">3</div>
+          <div class="rpt-stat-lbl">虧損 SKU（需立即處理）</div>
+        </div>
+      </div>
+
+      <!-- SKU table -->
+      <p class="rpt-section-hd">📊 本週 SKU 獲利分析（所有成本已納入）</p>
+      <div style="overflow-x:auto;">
+        <table class="rpt-table" id="rpt-sku-table">
+          <thead>
+            <tr>
+              <th>商品名稱</th>
+              <th>銷量</th>
+              <th>實收入帳</th>
+              <th>真實淨利</th>
+              <th>毛利率</th>
+              <th>AI 判斷</th>
+            </tr>
+          </thead>
+          <tbody id="rpt-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- action list -->
+      <p class="rpt-section-hd">🎯 下週五大優先行動</p>
+      <div class="rpt-actions" id="rpt-actions"></div>
+
+      <div class="rpt-foot">
+        <button class="btn btn-ghost" id="demo-close-btn2">關閉報告</button>
+        <a href="#cta" class="btn btn-primary" id="demo-cta-link">上傳我自己的資料</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================
+     DEMO SCRIPT
+===================================================== -->
+<script>
+(function () {
+  // ── Pre-computed from sample CSVs ──────────────────
+  var SKU_RESULTS = [
+    { sku:'GLASS-IP15-2P', name:'iPhone15 玻璃保護貼(2入)', units:8,  revenue:2272,  cost:408,  ad:198,  retLoss:0,    net:1666,  margin:73.3,  status:'star'   },
+    { sku:'CHG-WL-15W',    name:'15W 無線充電盤(附線)',       units:5,  revenue:3230,  cost:950,  ad:120,  retLoss:0,    net:2160,  margin:66.9,  status:'star'   },
+    { sku:'LENS-CLIP-3IN1',name:'三合一夾式鏡頭組',          units:5,  revenue:1661,  cost:440,  ad:90,   retLoss:0,    net:1131,  margin:68.1,  status:'star'   },
+    { sku:'STAND-DESK-ADJ',name:'懶人手機支架桌面(可調)',    units:7,  revenue:2793,  cost:686,  ad:315,  retLoss:0,    net:1792,  margin:64.2,  status:'good'   },
+    { sku:'POWER-MAG-10K', name:'磁吸行動電源 10000mAh',     units:3,  revenue:4245,  cost:1689, ad:180,  retLoss:0,    net:2376,  margin:56.0,  status:'good'   },
+    { sku:'CASE-IP14-CLR', name:'iPhone14 透明保護殼',       units:4,  revenue:1064,  cost:292,  ad:210,  retLoss:0,    net:562,   margin:52.8,  status:'slow'   },
+    { sku:'CASE-IP15-BLK', name:'iPhone15 保護殼(黑框)',     units:18, revenue:2952,  cost:1530, ad:1260, retLoss:0,    net:162,   margin:5.5,   status:'fake'   },
+    { sku:'BT-EAR-A1-WHT', name:'A1 藍牙耳機(白)',           units:5,  revenue:6080,  cost:2150, ad:480,  retLoss:2070, net:-840,  margin:-13.8, status:'crisis', returnRate:60 },
+    { sku:'CABLE-MAG-2M',  name:'MagSafe 磁吸充電線 2M',     units:5,  revenue:2326,  cost:865,  ad:2100, retLoss:0,    net:-639,  margin:-27.5, status:'adloss' },
+    { sku:'BAG-WATER-L',   name:'防水手機袋L號',             units:2,  revenue:342,   cost:246,  ad:95,   retLoss:330,  net:-329,  margin:-96.2, status:'waste',  roas:0 }
+  ];
+  var ACTIONS = [
+    { n:1, crisis:true,  emoji:'🚨', title:'立即暫停 A1藍牙耳機 販售',
+      desc:'退貨率高達 60%（5筆中3筆退貨），退貨原因均為品質瑕疵。本週實際虧損 $840，繼續賣只會繼續賠，先下架處理品管問題。' },
+    { n:2, crisis:true,  emoji:'🚨', title:'關閉防水手機袋廣告',
+      desc:'本週廣告費 $95，帶來 0 筆成交，ROAS 0.0。廣告費完全浪費，建議立即暫停並重新評估商品主圖與定位。' },
+    { n:3, crisis:false, emoji:'⚠️', title:'iPhone15保護殼 取消免運 + 廣告預算砍半',
+      desc:'銷量最高（18件）但毛利只剩 5.5%（NT$162）。折扣補貼 $3,322 + 免運 $990 + 廣告 $1,260 是三大成本殺手，先停免運看轉換率。' },
+    { n:4, crisis:false, emoji:'💰', title:'擴大玻璃保護貼廣告預算',
+      desc:'ROAS 9.06、毛利率 73.3%，是本週最優質商品。現在廣告費只有 $198，有極大放大空間，建議逐步測試提高每日預算。' },
+    { n:5, crisis:false, emoji:'📦', title:'補充無線充電盤與行動電源庫存',
+      desc:'CHG-WL-15W 毛利 66.9%、POWER-MAG-10K 毛利 56.0%，廣告效率優良，是本週應主力推廣的 SKU，確認備貨充足。' }
+  ];
+
+  // ── Terminal line definitions ──────────────────────
+  function buildTermLines() {
+    var lines = [
+      { t:'AI 利潤健檢 v1.0  啟動', c:'tc-white' },
+      { t:'──────────────────────────────────────────────', c:'tc-dim' },
+      { t:'讀取資料檔案...', c:'tc-blue' },
+      { t:'  ✓  shopee_sales_report.csv   45 筆訂單   10 個 SKU', c:'tc-green' },
+      { t:'  ✓  product_cost.csv          10 項成本資料已匹配', c:'tc-green' },
+      { t:'  ✓  ads_discount_return.csv   廣告 + 折扣 + 退貨已整合', c:'tc-green' },
+      { t:'', c:'tc-dim' },
+      { t:'計算每個 SKU 真實毛利率（廣告費 + 退貨成本已納入）...', c:'tc-blue' }
+    ];
+    var statusLabel = { star:'最賺錢', good:'優質', slow:'滯銷庫存', fake:'⚠ 假爆品', crisis:'🚨 退貨危機', adloss:'🚨 廣告虧損', waste:'🚨 廣告無效' };
+    SKU_RESULTS.forEach(function (s) {
+      var sign  = s.net >= 0 ? '+' : '';
+      var netStr = sign + 'NT$' + Math.abs(s.net).toLocaleString();
+      var mStr  = (s.margin >= 0 ? '+' : '') + s.margin.toFixed(1) + '%';
+      var label = statusLabel[s.status] || '';
+      var indicator = (s.status === 'star' || s.status === 'good') ? '✓' : (s.status === 'fake' ? '⚠' : '✗');
+      var padSku = (s.sku + '            ').slice(0, 16);
+      var padNet = (netStr + '              ').slice(0, 14);
+      var padM   = (mStr  + '         ').slice(0, 9);
+      var cls = (s.net >= 0) ? (s.status === 'fake' ? 'tc-orange' : 'tc-green') : 'tc-red';
+      lines.push({ t:'  ' + indicator + '  ' + padSku + '  ' + padNet + '  ' + padM + '  ' + label, c: cls });
+    });
+    lines.push({ t:'', c:'tc-dim' });
+    lines.push({ t:'生成行動建議清單...  ✓', c:'tc-green' });
+    lines.push({ t:'──────────────────────────────────────────────', c:'tc-dim' });
+    lines.push({ t:'報告已完成。', c:'tc-white' });
+    return lines;
+  }
+
+  // ── DOM refs ────────────────────────────────────────
+  var modal    = document.getElementById('demo-modal');
+  var terminal = document.getElementById('dmo-terminal');
+  var report   = document.getElementById('dmo-report');
+  var termBox  = document.getElementById('term-lines');
+  var bar      = document.getElementById('term-bar');
+  var viewBtn  = document.getElementById('term-view-btn');
+  var openBtn  = document.getElementById('demo-open-btn');
+  var closeBtn = document.getElementById('demo-close-btn');
+  var closeBtn2= document.getElementById('demo-close-btn2');
+  var ctaLink  = document.getElementById('demo-cta-link');
+
+  var demoTimers = [];
+  function dAfter(ms, fn) { demoTimers.push(setTimeout(fn, ms)); }
+  function dClearAll() { demoTimers.forEach(clearTimeout); demoTimers = []; }
+
+  // ── Build report DOM ────────────────────────────────
+  function buildReport() {
+    var tbody = document.getElementById('rpt-tbody');
+    var statusCfg = {
+      star:   { cls:'rpt-row-star', badge:'rb-star',   label:'⭐ 最賺錢' },
+      good:   { cls:'rpt-row-star', badge:'rb-good',   label:'✓ 優質' },
+      slow:   { cls:'',             badge:'rb-slow',   label:'庫存滯銷' },
+      fake:   { cls:'rpt-row-fake', badge:'rb-fake',   label:'⚠ 假爆品' },
+      crisis: { cls:'rpt-row-loss', badge:'rb-crisis', label:'🚨 退貨危機' },
+      adloss: { cls:'rpt-row-loss', badge:'rb-adloss', label:'🚨 廣告虧損' },
+      waste:  { cls:'rpt-row-loss', badge:'rb-waste',  label:'🚨 廣告無效' }
+    };
+    SKU_RESULTS.forEach(function (s) {
+      var cfg = statusCfg[s.status] || { cls:'', badge:'rb-good', label:'' };
+      var netColor = s.net >= 0 ? '#09a865' : '#d94030';
+      var mColor   = s.margin >= 0 ? '#09a865' : '#d94030';
+      var barPct   = Math.min(Math.abs(s.margin), 100);
+      var barColor = s.margin >= 0 ? '#0acf83' : '#ff7262';
+      var tr = document.createElement('tr');
+      tr.className = cfg.cls;
+      tr.innerHTML =
+        '<td><div class="rpt-name">' + s.name + '</div><div class="rpt-skuid">' + s.sku + '</div></td>' +
+        '<td class="rpt-mono">' + s.units + '</td>' +
+        '<td class="rpt-mono">NT$' + s.revenue.toLocaleString() + '</td>' +
+        '<td class="rpt-mono" style="color:' + netColor + ';">' + (s.net >= 0 ? '+' : '') + 'NT$' + Math.abs(s.net).toLocaleString() + '</td>' +
+        '<td><div class="rpt-bar-wrap"><div class="rpt-bar-track"><div class="rpt-bar-fill" style="width:' + barPct + '%;background:' + barColor + ';"></div></div>' +
+        '<span class="rpt-mono" style="color:' + mColor + ';">' + (s.margin >= 0 ? '+' : '') + s.margin.toFixed(1) + '%</span></div></td>' +
+        '<td><span class="rpt-badge ' + cfg.badge + '">' + cfg.label + '</span></td>';
+      tbody.appendChild(tr);
+    });
+
+    var actContainer = document.getElementById('rpt-actions');
+    ACTIONS.forEach(function (a) {
+      var bgCol = a.crisis ? 'rgba(255,114,98,0.08)' : (a.n <= 3 ? 'rgba(242,78,30,0.05)' : 'rgba(10,207,131,0.05)');
+      var numBg = a.crisis ? 'rgba(255,114,98,0.15)' : (a.n <= 3 ? 'rgba(242,78,30,0.12)' : 'rgba(10,207,131,0.12)');
+      var numC  = a.crisis ? '#d94030' : (a.n <= 3 ? '#c83c0e' : '#09a865');
+      var div = document.createElement('div');
+      div.className = 'rpt-action-item';
+      div.style.background = bgCol;
+      div.style.borderColor = a.crisis ? 'rgba(255,114,98,0.25)' : (a.n <= 3 ? 'rgba(242,78,30,0.18)' : 'rgba(10,207,131,0.2)');
+      div.innerHTML =
+        '<div class="rpt-action-num" style="background:' + numBg + ';color:' + numC + ';">' + a.n + '</div>' +
+        '<div><strong>' + a.emoji + ' ' + a.title + '</strong><p>' + a.desc + '</p></div>';
+      actContainer.appendChild(div);
+    });
+  }
+
+  // ── Run terminal animation ──────────────────────────
+  function runTerminal() {
+    termBox.innerHTML = '';
+    bar.style.width = '0%';
+    viewBtn.classList.remove('show');
+
+    var lines = buildTermLines();
+    var total = lines.length;
+    var delays = [];
+    var t = 0;
+    lines.forEach(function (line, i) {
+      var gap = i < 8 ? 210 : (i < 8 + SKU_RESULTS.length ? 190 : 230);
+      delays.push(t);
+      t += gap;
+    });
+
+    lines.forEach(function (line, i) {
+      dAfter(delays[i], function () {
+        var el = document.createElement('div');
+        el.className = 'term-line ' + line.c;
+        el.textContent = line.t;
+        termBox.appendChild(el);
+        terminal.scrollTop = terminal.scrollHeight;
+        bar.style.width = Math.round((i + 1) / total * 100) + '%';
+      });
+    });
+
+    dAfter(t + 200, function () {
+      viewBtn.classList.add('show');
+      terminal.scrollTop = terminal.scrollHeight;
+    });
+  }
+
+  // ── Open / close ────────────────────────────────────
+  function openModal() {
+    terminal.style.display = 'flex';
+    report.style.display   = 'none';
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    runTerminal();
+  }
+
+  function closeModal() {
+    dClearAll();
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function showReport() {
+    terminal.style.display = 'none';
+    report.style.display   = 'block';
+    report.scrollTop = 0;
+  }
+
+  // ── Wire events ─────────────────────────────────────
+  if (openBtn)   openBtn.addEventListener('click', openModal);
+  if (closeBtn)  closeBtn.addEventListener('click', closeModal);
+  if (closeBtn2) closeBtn2.addEventListener('click', closeModal);
+  if (viewBtn)   viewBtn.addEventListener('click', showReport);
+  if (ctaLink)   ctaLink.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+
+  // Build report DOM once on load
+  buildReport();
 }());
 </script>
