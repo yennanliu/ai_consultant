@@ -972,15 +972,23 @@
   .rpt-stat-val { font-size: 20px; font-weight: 800; line-height: 1; margin-bottom: 4px; letter-spacing: -0.5px; }
   .rpt-stat-lbl { font-size: 11px; color: var(--text-muted); }
 
-  .rpt-section-hd { font-size: 15px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .rpt-section-hd {
+    font-size: 10.5px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
+    color: var(--text-muted); margin: 0 0 14px;
+    padding-left: 11px; border-left: 2.5px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .rpt-section-hd-accent { border-left-color: var(--orange); }
 
   .rpt-table { width: 100%; border-collapse: collapse; margin-bottom: 28px; font-size: 13px; }
   .rpt-table th {
-    padding: 8px 10px; text-align: left;
-    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+    padding: 9px 10px; text-align: left;
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.9px;
     color: var(--text-muted); border-bottom: 2px solid var(--border);
+    white-space: nowrap;
   }
   .rpt-table td { padding: 10px 10px; border-bottom: 1px solid rgba(229,229,234,0.5); vertical-align: middle; }
+  .rpt-table tbody tr:hover { background: rgba(15,15,30,0.025); }
   .rpt-row-star { background: rgba(10,207,131,0.05); }
   .rpt-row-loss { background: rgba(255,114,98,0.05); }
   .rpt-row-fake { background: rgba(242,78,30,0.04); }
@@ -1005,17 +1013,28 @@
   .rpt-bar-track { width: 48px; height: 4px; border-radius: 999px; background: var(--border); overflow: hidden; flex-shrink: 0; }
   .rpt-bar-fill  { height: 100%; border-radius: 999px; }
 
-  .rpt-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .rpt-actions { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
   .rpt-action-item {
-    display: flex; gap: 12px; align-items: flex-start;
-    padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border);
+    display: flex; gap: 13px; align-items: flex-start;
+    padding: 14px 16px; border-radius: 12px;
+    border: 1px solid var(--border); border-left-width: 3px;
   }
+  .rpt-ai-critical { border-left-color: #d94030; background: rgba(217,64,48,0.03); }
+  .rpt-ai-warning  { border-left-color: #c83c0e; background: rgba(200,60,14,0.025); }
+  .rpt-ai-positive { border-left-color: #0acf83; background: rgba(10,207,131,0.03); }
   .rpt-action-num {
     width: 26px; height: 26px; border-radius: 7px; flex-shrink: 0;
     font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center;
   }
-  .rpt-action-item strong { font-size: 14px; font-weight: 700; display: block; margin-bottom: 3px; }
-  .rpt-action-item p { font-size: 13px; color: var(--text-muted); line-height: 1.55; margin: 0; }
+  .rpt-action-item strong { font-size: 13.5px; font-weight: 700; display: block; margin-bottom: 4px; line-height: 1.3; }
+  .rpt-action-item p { font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin: 0; }
+  .rpt-priority-tag {
+    font-size: 9.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 4px; flex-shrink: 0; white-space: nowrap; margin-top: 1px;
+  }
+  .rpt-pt-critical { background: rgba(217,64,48,0.11); color: #c83030; }
+  .rpt-pt-warning  { background: rgba(200,60,14,0.10); color: #b83a0e; }
+  .rpt-pt-positive { background: rgba(10,207,131,0.13); color: #09a865; }
 
   .rpt-foot { display: flex; justify-content: center; gap: 12px; }
 
@@ -1053,26 +1072,26 @@
     <div id="dmo-report">
       <!-- summary stats -->
       <div class="rpt-summary">
-        <div class="rpt-stat">
+        <div class="rpt-stat" style="border-top:2.5px solid var(--border);">
           <div class="rpt-stat-val">NT$26,965</div>
           <div class="rpt-stat-lbl">本週總入帳</div>
         </div>
-        <div class="rpt-stat">
+        <div class="rpt-stat" style="border-top:2.5px solid #0acf83;">
           <div class="rpt-stat-val" style="color:#09a865;">NT$8,041</div>
           <div class="rpt-stat-lbl">扣除所有成本後淨利</div>
         </div>
-        <div class="rpt-stat">
+        <div class="rpt-stat" style="border-top:2.5px solid #0acf83;">
           <div class="rpt-stat-val" style="color:#09a865;">6</div>
           <div class="rpt-stat-lbl">獲利 SKU（毛利 &gt;50%）</div>
         </div>
-        <div class="rpt-stat">
+        <div class="rpt-stat" style="border-top:2.5px solid #d94030;">
           <div class="rpt-stat-val" style="color:#d94030;">3</div>
           <div class="rpt-stat-lbl">虧損 SKU（需立即處理）</div>
         </div>
       </div>
 
       <!-- SKU table -->
-      <p class="rpt-section-hd">📊 本週 SKU 獲利分析（所有成本已納入）</p>
+      <p class="rpt-section-hd">本週 SKU 獲利分析 <span style="font-weight:500;text-transform:none;letter-spacing:0;font-size:11px;opacity:0.7;">（廣告費・退貨損失・折扣補貼全部計入）</span></p>
       <div style="overflow-x:auto;">
         <table class="rpt-table" id="rpt-sku-table">
           <thead>
@@ -1090,7 +1109,7 @@
       </div>
 
       <!-- action list -->
-      <p class="rpt-section-hd">🎯 下週五大優先行動</p>
+      <p class="rpt-section-hd rpt-section-hd-accent">下週五大優先行動</p>
       <div class="rpt-actions" id="rpt-actions"></div>
 
       <div class="rpt-foot">
@@ -1120,47 +1139,50 @@
     { sku:'BAG-WATER-L',   name:'防水手機袋L號',             units:2,  revenue:342,   cost:246,  ad:95,   retLoss:330,  net:-329,  margin:-96.2, status:'waste',  roas:0 }
   ];
   var ACTIONS = [
-    { n:1, crisis:true,  emoji:'🚨', title:'立即暫停 A1藍牙耳機 販售',
-      desc:'退貨率高達 60%（5筆中3筆退貨），退貨原因均為品質瑕疵。本週實際虧損 $840，繼續賣只會繼續賠，先下架處理品管問題。' },
-    { n:2, crisis:true,  emoji:'🚨', title:'關閉防水手機袋廣告',
-      desc:'本週廣告費 $95，帶來 0 筆成交，ROAS 0.0。廣告費完全浪費，建議立即暫停並重新評估商品主圖與定位。' },
-    { n:3, crisis:false, emoji:'⚠️', title:'iPhone15保護殼 取消免運 + 廣告預算砍半',
-      desc:'銷量最高（18件）但毛利只剩 5.5%（NT$162）。折扣補貼 $3,322 + 免運 $990 + 廣告 $1,260 是三大成本殺手，先停免運看轉換率。' },
-    { n:4, crisis:false, emoji:'💰', title:'擴大玻璃保護貼廣告預算',
-      desc:'ROAS 9.06、毛利率 73.3%，是本週最優質商品。現在廣告費只有 $198，有極大放大空間，建議逐步測試提高每日預算。' },
-    { n:5, crisis:false, emoji:'📦', title:'補充無線充電盤與行動電源庫存',
-      desc:'CHG-WL-15W 毛利 66.9%、POWER-MAG-10K 毛利 56.0%，廣告效率優良，是本週應主力推廣的 SKU，確認備貨充足。' }
+    { n:1, level:'critical', tag:'立即處理', title:'暫停 A1 藍牙耳機販售',
+      desc:'退貨率高達 60%（5 筆中 3 筆退貨），退貨原因均為品質瑕疵。本週實際虧損 NT$840，繼續販售只會持續虧損，建議先下架並處理品管問題。' },
+    { n:2, level:'critical', tag:'立即處理', title:'關閉防水手機袋廣告',
+      desc:'本週廣告費 NT$95，帶來 0 筆成交，ROAS 0.0。廣告費完全無效，建議立即暫停廣告並重新評估商品主圖與市場定位。' },
+    { n:3, level:'warning',  tag:'本週執行', title:'iPhone15 保護殼  —  取消免運・廣告預算砍半',
+      desc:'銷量最高（18 件）但毛利只剩 5.5%（NT$162）。折扣補貼 NT$3,322＋免運 NT$990＋廣告 NT$1,260 為三大成本殺手，建議先停免運觀察轉換率。' },
+    { n:4, level:'positive', tag:'擴大規模', title:'增加玻璃保護貼廣告預算',
+      desc:'ROAS 9.06、毛利率 73.3%，本週最高效益商品。目前廣告費僅 NT$198，具備大幅放大空間，建議逐步提高每日預算測試量級上限。' },
+    { n:5, level:'positive', tag:'備貨補倉', title:'補充無線充電盤・行動電源庫存',
+      desc:'CHG-WL-15W 毛利 66.9%、POWER-MAG-10K 毛利 56.0%，廣告效率優良，是本週最值得主力推廣的 SKU，請確認庫存備貨充足。' }
   ];
 
   // ── Terminal line definitions ──────────────────────
   function buildTermLines() {
     var lines = [
-      { t:'AI 利潤健檢 v1.0  啟動', c:'tc-white' },
-      { t:'──────────────────────────────────────────────', c:'tc-dim' },
-      { t:'讀取資料檔案...', c:'tc-blue' },
-      { t:'  ✓  shopee_sales_report.csv   45 筆訂單   10 個 SKU', c:'tc-green' },
-      { t:'  ✓  product_cost.csv          10 項成本資料已匹配', c:'tc-green' },
-      { t:'  ✓  ads_discount_return.csv   廣告 + 折扣 + 退貨已整合', c:'tc-green' },
+      { t:'利潤健檢 AI  v1.0.0  ─── 分析引擎就緒', c:'tc-white' },
       { t:'', c:'tc-dim' },
-      { t:'計算每個 SKU 真實毛利率（廣告費 + 退貨成本已納入）...', c:'tc-blue' }
+      { t:'[1/3]  驗證並讀取資料來源', c:'tc-blue' },
+      { t:'  ✓  shopee_sales_report.csv      45 筆訂單   10 個 SKU', c:'tc-green' },
+      { t:'  ✓  product_cost.csv             10 項商品成本已比對', c:'tc-green' },
+      { t:'  ✓  ads_discount_return.csv      廣告・折扣・退貨已整合', c:'tc-green' },
+      { t:'', c:'tc-dim' },
+      { t:'[2/3]  計算真實毛利率（含廣告費・退貨損失・折扣補貼）', c:'tc-blue' }
     ];
-    var statusLabel = { star:'最賺錢', good:'優質', slow:'滯銷庫存', fake:'⚠ 假爆品', crisis:'🚨 退貨危機', adloss:'🚨 廣告虧損', waste:'🚨 廣告無效' };
+    var statusLabel = { star:'最賺錢', good:'優質', slow:'滯銷', fake:'假爆品', crisis:'退貨危機', adloss:'廣告虧損', waste:'廣告無效' };
     SKU_RESULTS.forEach(function (s) {
       var sign  = s.net >= 0 ? '+' : '';
       var netStr = sign + 'NT$' + Math.abs(s.net).toLocaleString();
       var mStr  = (s.margin >= 0 ? '+' : '') + s.margin.toFixed(1) + '%';
       var label = statusLabel[s.status] || '';
-      var indicator = (s.status === 'star' || s.status === 'good') ? '✓' : (s.status === 'fake' ? '⚠' : '✗');
-      var padSku = (s.sku + '            ').slice(0, 16);
+      var good = s.status === 'star' || s.status === 'good';
+      var warn = s.status === 'fake' || s.status === 'slow';
+      var indicator = good ? ' OK ' : (warn ? 'WARN' : 'FAIL');
+      var padSku = (s.sku + '                ').slice(0, 16);
       var padNet = (netStr + '              ').slice(0, 14);
       var padM   = (mStr  + '         ').slice(0, 9);
       var cls = (s.net >= 0) ? (s.status === 'fake' ? 'tc-orange' : 'tc-green') : 'tc-red';
-      lines.push({ t:'  ' + indicator + '  ' + padSku + '  ' + padNet + '  ' + padM + '  ' + label, c: cls });
+      lines.push({ t:'  [' + indicator + ']  ' + padSku + '  ' + padNet + '  ' + padM + '  ' + label, c: cls });
     });
     lines.push({ t:'', c:'tc-dim' });
-    lines.push({ t:'生成行動建議清單...  ✓', c:'tc-green' });
-    lines.push({ t:'──────────────────────────────────────────────', c:'tc-dim' });
-    lines.push({ t:'報告已完成。', c:'tc-white' });
+    lines.push({ t:'[3/3]  生成行動優先清單', c:'tc-blue' });
+    lines.push({ t:'  ✓  5 項行動建議已依優先順序排列', c:'tc-green' });
+    lines.push({ t:'', c:'tc-dim' });
+    lines.push({ t:'分析完成  ─  10 個 SKU・5 項行動建議・報告已生成', c:'tc-white' });
     return lines;
   }
 
@@ -1184,13 +1206,13 @@
   function buildReport() {
     var tbody = document.getElementById('rpt-tbody');
     var statusCfg = {
-      star:   { cls:'rpt-row-star', badge:'rb-star',   label:'⭐ 最賺錢' },
-      good:   { cls:'rpt-row-star', badge:'rb-good',   label:'✓ 優質' },
-      slow:   { cls:'',             badge:'rb-slow',   label:'庫存滯銷' },
-      fake:   { cls:'rpt-row-fake', badge:'rb-fake',   label:'⚠ 假爆品' },
-      crisis: { cls:'rpt-row-loss', badge:'rb-crisis', label:'🚨 退貨危機' },
-      adloss: { cls:'rpt-row-loss', badge:'rb-adloss', label:'🚨 廣告虧損' },
-      waste:  { cls:'rpt-row-loss', badge:'rb-waste',  label:'🚨 廣告無效' }
+      star:   { cls:'rpt-row-star', badge:'rb-star',   label:'最賺錢' },
+      good:   { cls:'rpt-row-star', badge:'rb-good',   label:'優質' },
+      slow:   { cls:'',             badge:'rb-slow',   label:'滯銷庫存' },
+      fake:   { cls:'rpt-row-fake', badge:'rb-fake',   label:'假爆品' },
+      crisis: { cls:'rpt-row-loss', badge:'rb-crisis', label:'退貨危機' },
+      adloss: { cls:'rpt-row-loss', badge:'rb-adloss', label:'廣告虧損' },
+      waste:  { cls:'rpt-row-loss', badge:'rb-waste',  label:'廣告無效' }
     };
     SKU_RESULTS.forEach(function (s) {
       var cfg = statusCfg[s.status] || { cls:'', badge:'rb-good', label:'' };
@@ -1212,17 +1234,24 @@
     });
 
     var actContainer = document.getElementById('rpt-actions');
+    var levelCfg = {
+      critical: { itemCls:'rpt-ai-critical', tagCls:'rpt-pt-critical', numBg:'rgba(217,64,48,0.10)', numColor:'#d94030' },
+      warning:  { itemCls:'rpt-ai-warning',  tagCls:'rpt-pt-warning',  numBg:'rgba(200,60,14,0.09)', numColor:'#b83a0e' },
+      positive: { itemCls:'rpt-ai-positive', tagCls:'rpt-pt-positive', numBg:'rgba(10,207,131,0.11)', numColor:'#09a865' }
+    };
     ACTIONS.forEach(function (a) {
-      var bgCol = a.crisis ? 'rgba(255,114,98,0.08)' : (a.n <= 3 ? 'rgba(242,78,30,0.05)' : 'rgba(10,207,131,0.05)');
-      var numBg = a.crisis ? 'rgba(255,114,98,0.15)' : (a.n <= 3 ? 'rgba(242,78,30,0.12)' : 'rgba(10,207,131,0.12)');
-      var numC  = a.crisis ? '#d94030' : (a.n <= 3 ? '#c83c0e' : '#09a865');
+      var lc = levelCfg[a.level] || levelCfg.warning;
       var div = document.createElement('div');
-      div.className = 'rpt-action-item';
-      div.style.background = bgCol;
-      div.style.borderColor = a.crisis ? 'rgba(255,114,98,0.25)' : (a.n <= 3 ? 'rgba(242,78,30,0.18)' : 'rgba(10,207,131,0.2)');
+      div.className = 'rpt-action-item ' + lc.itemCls;
       div.innerHTML =
-        '<div class="rpt-action-num" style="background:' + numBg + ';color:' + numC + ';">' + a.n + '</div>' +
-        '<div><strong>' + a.emoji + ' ' + a.title + '</strong><p>' + a.desc + '</p></div>';
+        '<div class="rpt-action-num" style="background:' + lc.numBg + ';color:' + lc.numColor + ';">' + a.n + '</div>' +
+        '<div style="flex:1;min-width:0;">' +
+          '<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:5px;">' +
+            '<strong>' + a.title + '</strong>' +
+            '<span class="rpt-priority-tag ' + lc.tagCls + '">' + a.tag + '</span>' +
+          '</div>' +
+          '<p>' + a.desc + '</p>' +
+        '</div>';
       actContainer.appendChild(div);
     });
   }
