@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小小帶我魯 — 躺平導師計畫</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cream:       #FFF8F0;
+            --card-bg:     #FFFFFF;
+            --coral:       #FF7F5C;
+            --coral-light: #FFEEE8;
+            --coral-dark:  #E8623B;
+            --sun:         #FFD166;
+            --sun-light:   #FFF8DC;
+            --sage:        #6DBE8C;
+            --sage-light:  #E8F6EE;
+            --lavender:    #A78BFA;
+            --lav-light:   #F0EBFF;
+            --sky:         #5BC0EB;
+            --sky-light:   #E8F6FF;
+            --pink:        #FF9BC1;
+            --pink-light:  #FFECF4;
+            --text:        #3A3A3A;
+            --text-soft:   #7A7A7A;
+            --border:      #F0E6DC;
+            --shadow:      0 4px 20px rgba(255,127,92,0.12);
+            --radius:      20px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--cream);
+            color: var(--text);
+            font-family: 'Noto Sans TC', 'Nunito', sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ── Shared helpers ───────────────────────────────── */
+        .container { max-width: 960px; margin: 0 auto; }
+
+        .section-eyebrow {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--coral);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-eyebrow::before {
+            content: '';
+            display: inline-block;
+            width: 24px; height: 2px;
+            background: var(--coral);
+            border-radius: 2px;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 900;
+            color: var(--text);
+            line-height: 1.2;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-sub {
+            font-size: 1rem;
+            color: var(--text-soft);
+            margin-bottom: 40px;
+            max-width: 560px;
+        }
+
+        .wave-divider { width: 100%; overflow: hidden; line-height: 0; margin: -2px 0; }
+        .wave-divider svg { display: block; width: 100%; }
+
+        /* ── FLOATING BADGE (top-right) ───────────────────── */
+        .float-badge {
+            position: fixed;
+            bottom: 28px;
+            right: 24px;
+            z-index: 999;
+            background: var(--coral);
+            color: #fff;
+            border-radius: 50%;
+            width: 68px; height: 68px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            font-size: 0.62rem;
+            font-weight: 800;
+            text-align: center;
+            line-height: 1.25;
+            box-shadow: 0 6px 24px rgba(255,127,92,0.45);
+            cursor: pointer;
+            animation: pulse-badge 2.5s ease-in-out infinite;
+            text-decoration: none;
+        }
+        .float-badge:hover { background: var(--coral-dark); transform: scale(1.08); color: #fff; text-decoration: none; }
+        .float-badge .badge-emoji { font-size: 1.3rem; margin-bottom: 2px; }
+        @keyframes pulse-badge {
+            0%, 100% { box-shadow: 0 6px 24px rgba(255,127,92,0.45); }
+            50% { box-shadow: 0 6px 32px rgba(255,127,92,0.7), 0 0 0 8px rgba(255,127,92,0.15); }
+        }
+
+        /* ── HERO ─────────────────────────────────────────── */
+        .hero {
+            background: linear-gradient(160deg, #FFF0E6 0%, #FFEEDD 50%, #FFF8F0 100%);
+            padding: 80px 24px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 420px; height: 420px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,209,102,0.28) 0%, transparent 70%);
+            top: -160px; right: -100px;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 320px; height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,127,92,0.15) 0%, transparent 70%);
+            bottom: -100px; left: -80px;
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--sun-light);
+            color: #B8860B;
+            border: 1.5px solid var(--sun);
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            padding: 6px 18px;
+            margin-bottom: 28px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.6rem, 8vw, 5rem);
+            font-weight: 900;
+            line-height: 1.12;
+            color: var(--coral);
+            letter-spacing: -1px;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero h1 .wave-text {
+            display: inline-block;
+            animation: wave-float 3s ease-in-out infinite;
+        }
+        .hero h1 .wave-text:nth-child(2) { animation-delay: 0.15s; }
+        .hero h1 .wave-text:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes wave-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-7px); }
+        }
+
+        .hero-tagline {
+            font-size: clamp(1rem, 3vw, 1.22rem);
+            color: var(--text-soft);
+            max-width: 520px;
+            margin: 0 auto 36px;
+            position: relative; z-index: 1;
+        }
+        .hero-tagline strong { color: var(--coral); }
+
+        .hero-emoji-row {
+            font-size: 2.2rem;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            animation: sway 4s ease-in-out infinite;
+            display: block;
+        }
+        @keyframes sway {
+            0%, 100% { transform: rotate(-1deg); }
+            50% { transform: rotate(1deg); }
+        }
+
+        /* urgency bar */
+        .urgency-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--coral-light);
+            border: 1.5px solid var(--coral);
+            border-radius: 100px;
+            padding: 8px 22px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--coral-dark);
+            margin-top: 8px;
+            position: relative; z-index: 1;
+        }
+        .urgency-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--coral);
+            animation: dot-pulse 1.4s ease-in-out infinite;
+        }
+        @keyframes dot-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.7); }
+        }
+
+        /* ── SOCIAL PROOF TICKER ──────────────────────────── */
+        .ticker-wrap {
+            background: var(--coral);
+            color: #fff;
+            padding: 12px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .ticker-inner {
+            display: inline-block;
+            animation: ticker 28s linear infinite;
+        }
+        .ticker-inner span {
+            display: inline-block;
+            padding: 0 40px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .ticker-inner span::after {
+            content: '✦';
+            margin-left: 40px;
+            opacity: 0.6;
+        }
+        @keyframes ticker {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ── MANIFESTO ────────────────────────────────────── */
+        .manifesto-section {
+            background: var(--card-bg);
+            padding: 80px 24px;
+        }
+        .manifesto-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .manifesto-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            background: var(--cream);
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 22px;
+            font-size: 1.02rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .manifesto-list li:hover {
+            transform: translateX(6px);
+            box-shadow: var(--shadow);
+        }
+        .manifesto-list .bullet { font-size: 1.4rem; flex-shrink: 0; margin-top: 1px; }
+
+        /* ── MENTORS ──────────────────────────────────────── */
+        .mentors-section {
+            background: linear-gradient(180deg, #FFF8F0 0%, #FFF0E6 100%);
+            padding: 80px 24px;
+        }
+        .mentors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 22px;
+            margin-top: 16px;
+        }
+        .mentor-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 32px 26px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+            border: 1.5px solid var(--border);
+            transition: transform 0.25s, box-shadow 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+        .mentor-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+        .mentor-card:nth-child(1)::before { background: linear-gradient(90deg,#FF7F5C,#FFD166); }
+        .mentor-card:nth-child(2)::before { background: linear-gradient(90deg,#FFD166,#6DBE8C); }
+        .mentor-card:nth-child(3)::before { background: linear-gradient(90deg,#6DBE8C,#A78BFA); }
+        .mentor-card:nth-child(4)::before { background: linear-gradient(90deg,#A78BFA,#5BC0EB); }
+        .mentor-card:nth-child(5)::before { background: linear-gradient(90deg,#5BC0EB,#FF9BC1); }
+        .mentor-card:nth-child(6)::before { background: linear-gradient(90deg,#FF9BC1,#FF7F5C); }
+        .mentor-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 14px 40px rgba(0,0,0,0.1);
+        }
+        .mentor-emoji { font-size: 3.2rem; display: block; margin-bottom: 14px; }
+        .mentor-name { font-size: 1.2rem; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+        .mentor-title { font-size: 0.8rem; font-weight: 600; color: var(--coral); margin-bottom: 14px; letter-spacing: 0.3px; }
+        .mentor-quote {
+            font-size: 0.92rem;
+            color: var(--text-soft);
+            line-height: 1.75;
+            border-left: 3px solid var(--border);
+            padding-left: 13px;
+            font-style: italic;
+        }
+        /* "New" badge */
+        .mentor-new {
+            position: absolute;
+            top: 14px; right: 14px;
+            background: var(--sun);
+            color: #7A5800;
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 3px 9px;
+            border-radius: 100px;
+        }
+
+        /* ── PROGRAMS ─────────────────────────────────────── */
+        .programs-section {
+            background: var(--card-bg);
+            padding: 80px 24px;
+        }
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+            margin-top: 16px;
+        }
+        .program-card {
+            border-radius: var(--radius);
+            padding: 36px 28px 32px;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s, box-shadow 0.25s;
+            cursor: default;
+        }
+        .program-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 44px rgba(0,0,0,0.1);
+        }
+        .program-card.coral-card  { background: var(--coral-light);  border-color: rgba(255,127,92,0.25); }
+        .program-card.sun-card    { background: var(--sun-light);    border-color: rgba(255,209,102,0.35); }
+        .program-card.sage-card   { background: var(--sage-light);   border-color: rgba(109,190,140,0.3); }
+        .program-card.lav-card    { background: var(--lav-light);    border-color: rgba(167,139,250,0.3); }
+
+        .program-card.popular::after {
+            content: '⭐ 最受歡迎';
+            position: absolute;
+            top: 18px; right: -28px;
+            background: var(--coral);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            padding: 5px 36px;
+            transform: rotate(40deg);
+        }
+
+        .program-icon { font-size: 2.8rem; margin-bottom: 16px; display: block; }
+        .program-name { font-size: 1.2rem; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+        .program-tagline { font-size: 0.82rem; font-weight: 600; margin-bottom: 16px; }
+        .program-card.coral-card .program-tagline { color: var(--coral-dark); }
+        .program-card.sun-card   .program-tagline { color: #9A7000; }
+        .program-card.sage-card  .program-tagline { color: #3A8C5C; }
+        .program-card.lav-card   .program-tagline { color: #6D4FD4; }
+
+        .program-desc { font-size: 0.92rem; color: var(--text-soft); line-height: 1.75; margin-bottom: 24px; }
+
+        .program-perks {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+        .program-perks li {
+            font-size: 0.88rem;
+            color: var(--text);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .program-perks li::before {
+            content: '✓';
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .program-card.coral-card .program-perks li::before { color: var(--coral); }
+        .program-card.sun-card   .program-perks li::before { color: #B8860B; }
+        .program-card.sage-card  .program-perks li::before { color: var(--sage); }
+        .program-card.lav-card   .program-perks li::before { color: var(--lavender); }
+
+        .program-price { font-size: 1.5rem; font-weight: 900; color: var(--text); margin-bottom: 16px; }
+        .program-price .price-unit { font-size: 0.82rem; font-weight: 500; color: var(--text-soft); margin-left: 4px; }
+        .program-price .price-free { color: var(--sage); }
+
+        .program-btn {
+            display: block;
+            text-align: center;
+            padding: 12px 20px;
+            border-radius: 100px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        .program-card.coral-card .program-btn { background: var(--coral); color: #fff; }
+        .program-card.sun-card   .program-btn { background: var(--sun); color: #5A3800; }
+        .program-card.sage-card  .program-btn { background: var(--sage); color: #fff; }
+        .program-card.lav-card   .program-btn { background: var(--lavender); color: #fff; }
+        .program-btn:hover { transform: scale(1.04); box-shadow: 0 6px 20px rgba(0,0,0,0.15); text-decoration: none; }
+
+        /* ── METRICS ──────────────────────────────────────── */
+        .metrics-section {
+            background: linear-gradient(180deg, #FFF8F0 0%, #FFF0E6 100%);
+            padding: 80px 24px;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 16px;
+        }
+        .metric-card {
+            border-radius: var(--radius);
+            padding: 30px 22px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .metric-card:hover { transform: translateY(-4px); }
+        .metric-card:nth-child(1) { background: var(--coral-light); }
+        .metric-card:nth-child(2) { background: var(--sun-light); }
+        .metric-card:nth-child(3) { background: var(--sage-light); }
+        .metric-card:nth-child(4) { background: var(--lav-light); }
+        .metric-card:nth-child(5) { background: var(--sky-light); }
+        .metric-card:nth-child(6) { background: var(--pink-light); }
+        .metric-value {
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        .metric-card:nth-child(1) .metric-value { color: var(--coral); }
+        .metric-card:nth-child(2) .metric-value { color: #C89A00; }
+        .metric-card:nth-child(3) .metric-value { color: var(--sage); }
+        .metric-card:nth-child(4) .metric-value { color: var(--lavender); }
+        .metric-card:nth-child(5) .metric-value { color: var(--sky); }
+        .metric-card:nth-child(6) .metric-value { color: var(--pink); }
+        .metric-label { font-size: 0.88rem; font-weight: 600; color: var(--text-soft); }
+
+        /* ── TESTIMONIALS ─────────────────────────────────── */
+        .testimonials-section {
+            background: var(--card-bg);
+            padding: 80px 24px;
+        }
+        .testimonials-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 16px;
+        }
+        .testimonial-card {
+            background: var(--cream);
+            border-radius: var(--radius);
+            padding: 32px 36px;
+            border: 1.5px solid var(--border);
+            max-width: 680px;
+            position: relative;
+            transition: transform 0.2s;
+        }
+        .testimonial-card:hover { transform: translateX(6px); }
+        .testimonial-card:nth-child(even) { align-self: flex-end; }
+        .testimonial-card::before {
+            content: '\201C';
+            position: absolute;
+            top: 14px; left: 22px;
+            font-size: 5rem;
+            line-height: 1;
+            color: var(--coral-light);
+            font-family: Georgia, serif;
+            pointer-events: none;
+        }
+        .testimonial-header {
+            font-weight: 800;
+            font-size: 0.92rem;
+            color: var(--coral);
+            margin-bottom: 10px;
+            padding-top: 6px;
+        }
+        .testimonial-text { font-size: 0.98rem; color: var(--text); line-height: 1.85; }
+
+        /* ── CONTACT ──────────────────────────────────────── */
+        .contact-section {
+            background: linear-gradient(160deg, #FFF0E6 0%, #FFF8F0 100%);
+            padding: 80px 24px;
+        }
+        .contact-card {
+            background: var(--card-bg);
+            border-radius: 28px;
+            padding: 56px 48px;
+            box-shadow: 0 8px 48px rgba(255,127,92,0.1);
+            border: 1.5px solid var(--border);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+            align-items: start;
+        }
+        @media (max-width: 720px) {
+            .contact-card { grid-template-columns: 1fr; gap: 36px; padding: 36px 28px; }
+        }
+
+        .contact-info h3 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 14px;
+            letter-spacing: -0.4px;
+        }
+        .contact-info p {
+            font-size: 0.97rem;
+            color: var(--text-soft);
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+        .contact-channels {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .contact-channels li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+        .channel-icon {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .channel-icon.coral  { background: var(--coral-light); }
+        .channel-icon.sun    { background: var(--sun-light); }
+        .channel-icon.sage   { background: var(--sage-light); }
+        .channel-icon.lav    { background: var(--lav-light); }
+        .channel-label { font-weight: 600; color: var(--text); }
+        .channel-value { font-size: 0.85rem; color: var(--text-soft); }
+
+        /* form */
+        .contact-form { display: flex; flex-direction: column; gap: 16px; }
+        .contact-form label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+            display: block;
+        }
+        .contact-form input,
+        .contact-form select,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-family: 'Noto Sans TC', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text);
+            background: var(--cream);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .contact-form input:focus,
+        .contact-form select:focus,
+        .contact-form textarea:focus {
+            border-color: var(--coral);
+            box-shadow: 0 0 0 3px rgba(255,127,92,0.12);
+        }
+        .contact-form textarea { resize: vertical; min-height: 110px; }
+        .contact-form .submit-btn {
+            background: var(--coral);
+            color: #fff;
+            font-weight: 800;
+            font-size: 1rem;
+            padding: 14px 32px;
+            border-radius: 100px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            align-self: flex-start;
+            letter-spacing: 0.3px;
+        }
+        .contact-form .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(255,127,92,0.35);
+        }
+        .form-note {
+            font-size: 0.78rem;
+            color: var(--text-soft);
+            margin-top: -6px;
+        }
+
+        /* ── CTA SECTION ──────────────────────────────────── */
+        .cta-section {
+            background: linear-gradient(135deg, var(--coral) 0%, #FF9472 100%);
+            padding: 80px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section::before {
+            content: '🛌';
+            position: absolute;
+            font-size: 14rem;
+            opacity: 0.06;
+            top: -30px; right: -30px;
+            pointer-events: none;
+        }
+        .cta-section h2 {
+            font-size: clamp(2rem, 6vw, 3.2rem);
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+        .cta-section p {
+            font-size: 1.08rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+        .cta-btn-group { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+        .cta-btn-white {
+            display: inline-block;
+            background: #fff;
+            color: var(--coral);
+            font-weight: 800;
+            font-size: 1rem;
+            padding: 16px 36px;
+            border-radius: 100px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+        }
+        .cta-btn-white:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 14px 36px rgba(0,0,0,0.2);
+            color: var(--coral); text-decoration: none;
+        }
+        .cta-btn-outline {
+            display: inline-block;
+            background: transparent;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 15px 32px;
+            border-radius: 100px;
+            border: 2px solid rgba(255,255,255,0.7);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .cta-btn-outline:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: #fff;
+            color: #fff; text-decoration: none;
+            transform: translateY(-3px);
+        }
+
+        /* ── FOOTER ───────────────────────────────────────── */
+        footer {
+            background: var(--text);
+            color: rgba(255,255,255,0.5);
+            padding: 40px 24px;
+            text-align: center;
+            font-size: 0.88rem;
+        }
+        footer a { color: var(--sun); text-decoration: none; font-weight: 600; }
+        footer a:hover { color: #fff; }
+        footer p + p { margin-top: 10px; }
+
+        /* ── RESPONSIVE ───────────────────────────────────── */
+        @media (max-width: 600px) {
+            .testimonial-card:nth-child(even) { align-self: auto; }
+            .hero h1 { letter-spacing: -0.5px; }
+            .program-card.popular::after { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating CTA button -->
+    <a href="#contact" class="float-badge">
+        <span class="badge-emoji">💬</span>
+        立即<br>報名
+    </a>
+
+    <!-- ── HERO ──────────────────────────────────────── -->
+    <section class="hero">
+        <div class="hero-badge">✨ 2026 年度招募 · 名額有限（其實無限）</div>
+        <span class="hero-emoji-row">🛌 ☕ 🐱 🍜 🎮 🌿 📺</span>
+        <h1>
+            <span class="wave-text">小</span><span class="wave-text">小</span><span class="wave-text">帶我魯</span>
+        </h1>
+        <p class="hero-tagline">
+            全台灣最有溫度的 <strong>躺平導師計畫</strong><br>
+            讓你從「努力但痛苦」進化為「剛好就好，但很快樂」✨
+        </p>
+        <div class="urgency-bar">
+            <span class="urgency-dot"></span>
+            現在已有 3,847 人在躺平路上 &nbsp;—&nbsp; 你還在等什麼？
+        </div>
+    </section>
+
+    <!-- ticker -->
+    <div class="ticker-wrap">
+        <div class="ticker-inner">
+            <span>王小魯：「準時下班改變了我的人生」</span>
+            <span>李躺平：「策略性放鬆，真的有效」</span>
+            <span>陳咸魚：「夠用就好，但好好享受」</span>
+            <span>張休息：「午覺三次，一天不累」</span>
+            <span>林貓系：「貓不需要交代，我也不用」</span>
+            <span>黃外賣：「叫外賣是美德，不是懶惰」</span>
+            <!-- duplicate for seamless loop -->
+            <span>王小魯：「準時下班改變了我的人生」</span>
+            <span>李躺平：「策略性放鬆，真的有效」</span>
+            <span>陳咸魚：「夠用就好，但好好享受」</span>
+            <span>張休息：「午覺三次，一天不累」</span>
+            <span>林貓系：「貓不需要交代，我也不用」</span>
+            <span>黃外賣：「叫外賣是美德，不是懶惰」</span>
+        </div>
+    </div>
+
+    <!-- wave -->
+    <div class="wave-divider" style="background:#FF7F5C;">
+        <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#FFFFFF"/>
+        </svg>
+    </div>
+
+    <!-- ── MANIFESTO ───────────────────────────────────── -->
+    <section class="manifesto-section">
+        <div class="container">
+            <div class="section-eyebrow">我們的核心價值觀</div>
+            <h2 class="section-title">反成功宣言 📜</h2>
+            <p class="section-sub">這不是放棄，這是一種清醒的人生選擇。</p>
+            <ul class="manifesto-list">
+                <li><span class="bullet">⏰</span><span>我們不追求「財富自由」，我們追求<strong>「時間自由」</strong>——因為錢可以再賺，但下午三點的陽光不等人。</span></li>
+                <li><span class="bullet">🚪</span><span>我們不要「升職加薪」，我們要<strong>「準時下班」</strong>——下班鈴聲，是世界上最美妙的音樂。</span></li>
+                <li><span class="bullet">🐱</span><span>我們不崇拜「狼性文化」，我們擁抱<strong>「貓系人生」</strong>——貓不需要向任何人交代牠的生活態度。</span></li>
+                <li><span class="bullet">🌿</span><span>我們拒絕「內卷」，我們選擇<strong>「外躺」</strong>——躺下來，才能看見天空有多寬廣。</span></li>
+                <li><span class="bullet">💛</span><span>成功不是唯一的路，<strong>舒適才是最大的幸福</strong>——「夠用就好」不是放棄，是一種清醒的選擇。</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- wave -->
+    <div class="wave-divider" style="background:#FFFFFF;">
+        <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0,20 C360,60 1080,0 1440,40 L1440,60 L0,60 Z" fill="#FFF8F0"/>
+        </svg>
+    </div>
+
+    <!-- ── MENTORS ─────────────────────────────────────── -->
+    <section class="mentors-section">
+        <div class="container">
+            <div class="section-eyebrow">頂尖師資陣容</div>
+            <h2 class="section-title">認識你的導師們 👋</h2>
+            <p class="section-sub">每位導師都是各自領域的躺平頂尖高手，均通過嚴格的「什麼都不做」認證。</p>
+
+            <div class="mentors-grid">
+                <div class="mentor-card">
+                    <span class="mentor-emoji">🛌</span>
+                    <div class="mentor-name">小睡怡情</div>
+                    <div class="mentor-title">午睡權威 ｜ 前996逃兵</div>
+                    <p class="mentor-quote">「一天不睡三次午覺，我就渾身不對勁。工作是暫時的，但睡眠是永恆的。」</p>
+                </div>
+
+                <div class="mentor-card">
+                    <span class="mentor-emoji">🍜</span>
+                    <div class="mentor-name">泡麵大師</div>
+                    <div class="mentor-title">速食哲學家 ｜ 烹飪極簡主義者</div>
+                    <p class="mentor-quote">「為什麼要花一小時做飯？三分鐘泡麵不香嗎？把時間留給 Netflix 才是王道。」</p>
+                </div>
+
+                <div class="mentor-card">
+                    <span class="mentor-emoji">🎮</span>
+                    <div class="mentor-name">遊戲人生</div>
+                    <div class="mentor-title">職業玩家 ｜ 會議逃避專家</div>
+                    <p class="mentor-quote">「別人開會的時候，我已經通關三款遊戲了。人生苦短，何必浪費在 PPT 上？」</p>
+                </div>
+
+                <div class="mentor-card">
+                    <span class="mentor-new">New</span>
+                    <span class="mentor-emoji">🚿</span>
+                    <div class="mentor-name">划水達人</div>
+                    <div class="mentor-title">高效摸魚顧問 ｜ 開會裝忙博士</div>
+                    <p class="mentor-quote">「開著電腦螢幕，耳機戴著，桌上放一杯咖啡，其實我在睡覺。這叫策略性在線。」</p>
+                </div>
+
+                <div class="mentor-card">
+                    <span class="mentor-new">New</span>
+                    <span class="mentor-emoji">📅</span>
+                    <div class="mentor-name">請假大師</div>
+                    <div class="mentor-title">事假病假連假三冠王 ｜ HR的噩夢</div>
+                    <p class="mentor-quote">「年假從來不是留著的，是要用完的。我把請假當作一種生活藝術在練習。」</p>
+                </div>
+
+                <div class="mentor-card">
+                    <span class="mentor-new">New</span>
+                    <span class="mentor-emoji">🛵</span>
+                    <div class="mentor-name">外賣神人</div>
+                    <div class="mentor-title">叫外賣哲學家 ｜ 廚房零造訪紀錄保持人</div>
+                    <p class="mentor-quote">「廚房是我家最遠的地方。外賣不只是懶惰，是對在家時間的尊重與保護。」</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- wave -->
+    <div class="wave-divider" style="background:#FFF0E6;">
+        <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#FFFFFF"/>
+        </svg>
+    </div>
+
+    <!-- ── PROGRAMS ────────────────────────────────────── -->
+    <section class="programs-section">
+        <div class="container">
+            <div class="section-eyebrow">加入方式</div>
+            <h2 class="section-title">選一個最適合你的方案 🎯</h2>
+            <p class="section-sub">不管你是躺平新手還是資深咸魚，我們都有合適的方案等你。</p>
+
+            <div class="programs-grid">
+
+                <!-- Free chat -->
+                <div class="program-card coral-card">
+                    <span class="program-icon">💬</span>
+                    <div class="program-name">躺平快問快答</div>
+                    <div class="program-tagline">30 分鐘免費諮詢</div>
+                    <p class="program-desc">不確定自己適不適合躺平？先聊聊！我們會幫你診斷你目前的「焦慮指數」，量身推薦你的躺平起點。</p>
+                    <ul class="program-perks">
+                        <li>一對一線上快速諮詢</li>
+                        <li>免費躺平潛力評估</li>
+                        <li>贈送《準時下班生存手冊》</li>
+                    </ul>
+                    <div class="program-price"><span class="price-free">免費</span></div>
+                    <a href="#contact" class="program-btn">馬上預約 →</a>
+                </div>
+
+                <!-- 1-on-1 coach -->
+                <div class="program-card sun-card popular">
+                    <span class="program-icon">🧘</span>
+                    <div class="program-name">躺平一對一教練</div>
+                    <div class="program-tagline">每週陪你練習放鬆</div>
+                    <p class="program-desc">每週一次、每次 45 分鐘，由你的專屬躺平教練，帶你突破「努力慣了」的舊習慣，建立真正可持續的鬆弛感。</p>
+                    <ul class="program-perks">
+                        <li>專屬教練每週一對一</li>
+                        <li>客製化「少做清單」</li>
+                        <li>緊急加班求救熱線</li>
+                        <li>月底躺平進度回顧</li>
+                    </ul>
+                    <div class="program-price">$1,200 <span class="price-unit">/ 月</span></div>
+                    <a href="#contact" class="program-btn">我要躺平 →</a>
+                </div>
+
+                <!-- Group workshop -->
+                <div class="program-card sage-card">
+                    <span class="program-icon">🌿</span>
+                    <div class="program-name">躺平大師班</div>
+                    <div class="program-tagline">每月一次 · 線上工作坊</div>
+                    <p class="program-desc">與同樣在追求「剛好就好」的夥伴們一起上課，學習午覺技巧、請假話術、划水心法等實用技能。</p>
+                    <ul class="program-perks">
+                        <li>每月主題工作坊（2 小時）</li>
+                        <li>躺平社群頻道存取</li>
+                        <li>歷期錄影無限回放</li>
+                        <li>夥伴互助躺平小組</li>
+                    </ul>
+                    <div class="program-price">$399 <span class="price-unit">/ 月</span></div>
+                    <a href="#contact" class="program-btn">加入社群 →</a>
+                </div>
+
+                <!-- Premium membership -->
+                <div class="program-card lav-card">
+                    <span class="program-icon">👑</span>
+                    <div class="program-name">躺平無限暢飲</div>
+                    <div class="program-tagline">年度 VIP 會員</div>
+                    <p class="program-desc">集所有方案於一身。你什麼都不用做，我們幫你安排好一整年的躺平計畫。躺平界的頭等艙。</p>
+                    <ul class="program-perks">
+                        <li>以上全部方案無限使用</li>
+                        <li>緊急躺平 24 小時支援</li>
+                        <li>年度躺平成就徽章</li>
+                        <li>專屬「我在休息」自動回覆模板</li>
+                    </ul>
+                    <div class="program-price">$3,888 <span class="price-unit">/ 年</span></div>
+                    <a href="#contact" class="program-btn">成為 VIP →</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ── METRICS ─────────────────────────────────────── -->
+    <section class="metrics-section">
+        <div class="container">
+            <div class="section-eyebrow">數據會說話</div>
+            <h2 class="section-title">真正重要的指標 📊</h2>
+            <p class="section-sub">這些數字，比你的季度 KPI 更有意義。</p>
+            <div class="metrics-grid">
+                <div class="metric-card"><div class="metric-value">147%</div><div class="metric-label">睡眠時間增長率</div></div>
+                <div class="metric-card"><div class="metric-value">0</div><div class="metric-label">無意義會議參與數</div></div>
+                <div class="metric-card"><div class="metric-value">365</div><div class="metric-label">每年「我不想」天數</div></div>
+                <div class="metric-card"><div class="metric-value">100%</div><div class="metric-label">準時下班達成率</div></div>
+                <div class="metric-card"><div class="metric-value">∞</div><div class="metric-label">心靈平靜指數</div></div>
+                <div class="metric-card"><div class="metric-value">−50%</div><div class="metric-label">焦慮值降低</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- wave -->
+    <div class="wave-divider" style="background:#FFF0E6;">
+        <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0,40 C480,0 960,60 1440,20 L1440,60 L0,60 Z" fill="#FFFFFF"/>
+        </svg>
+    </div>
+
+    <!-- ── TESTIMONIALS ──────────────────────────────────── -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-eyebrow">真實學員回饋</div>
+            <h2 class="section-title">他們說⋯⋯ 💬</h2>
+            <p class="section-sub">都是真人真事，只是名字換了（為了保護他們的工作）。</p>
+            <div class="testimonials-stack">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">王小魯 ／ 前金融業社畜 · 現在：準時下班達人</div>
+                    <p class="testimonial-text">以前每天加班到晚上十點，現在準時下班追劇。同事問我為什麼不積極一點，我說：我很積極啊，積極地保護自己的下班時間。感謝小小導師讓我重新找回生活。🌙</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">李躺平 ／ 科技業倖存者 · 現在：策略性放鬆師</div>
+                    <p class="testimonial-text">之前主管總說我「態度消極」，現在我學會了「策略性放鬆」。不是我不努力，是我選擇把力氣用在對的地方——比如找到最舒服的沙發角度。🛋️</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">陳咸魚 ／ 前過勞自由工作者 · 現在：快樂及格組</div>
+                    <p class="testimonial-text">小小導師教會我最重要的一課：「夠用就好」。不用成為人生勝利組，當個人生及格組也很棒。現在每天工作四小時，其他時間做自己喜歡的事。🐟✨</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">張休息 ／ 前業務主管 · 現在：午覺三次的快樂人</div>
+                    <p class="testimonial-text">我以前覺得休息是一種罪惡感，加入後才發現：休息不是偷懶，是讓自己繼續存在的必要條件。現在我每天午休兩次，業績反而更好了（我也不懂為什麼）。😂</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- wave -->
+    <div class="wave-divider" style="background:#FFFFFF;">
+        <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0,20 C360,60 1080,0 1440,40 L1440,60 L0,60 Z" fill="#FFF0E6"/>
+        </svg>
+    </div>
+
+    <!-- ── CONTACT ─────────────────────────────────────── -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-eyebrow">聯絡我們</div>
+            <h2 class="section-title">準備好了嗎？ 來聊聊 👋</h2>
+            <p class="section-sub">不管你現在有多焦慮、多累，我們都很歡迎你。填完就可以繼續躺了。</p>
+
+            <div class="contact-card">
+                <!-- Left: info -->
+                <div class="contact-info">
+                    <h3>我們很好說話，<br>真的。😌</h3>
+                    <p>
+                        不需要準備什麼，不需要表現得很積極，<br>
+                        只要告訴我們你有多累，<br>
+                        我們就知道怎麼幫你了。
+                    </p>
+                    <ul class="contact-channels">
+                        <li>
+                            <div class="channel-icon coral">💌</div>
+                            <div>
+                                <div class="channel-label">Email</div>
+                                <div class="channel-value">hello@tangping.dev（假的，但真誠）</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="channel-icon sun">📱</div>
+                            <div>
+                                <div class="channel-label">Line 官方帳號</div>
+                                <div class="channel-value">@tangping_master</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="channel-icon sage">🐦</div>
+                            <div>
+                                <div class="channel-label">Instagram</div>
+                                <div class="channel-value">@tang.ping.life</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="channel-icon lav">💬</div>
+                            <div>
+                                <div class="channel-label">Discord 社群</div>
+                                <div class="channel-value">進來就可以不說話，我們不介意</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right: form -->
+                <form class="contact-form" onsubmit="handleSubmit(event)">
+                    <div>
+                        <label for="name">你叫什麼（或者你的躺平藝名）</label>
+                        <input type="text" id="name" placeholder="例如：小小咸魚、快樂廢物..." required>
+                    </div>
+                    <div>
+                        <label for="email">Email（我們保證不發雞湯）</label>
+                        <input type="email" id="email" placeholder="your@email.com" required>
+                    </div>
+                    <div>
+                        <label for="program">你對哪個方案有興趣？</label>
+                        <select id="program">
+                            <option value="">— 選一個，隨便選都可以 —</option>
+                            <option value="free">💬 躺平快問快答（免費）</option>
+                            <option value="coach">🧘 躺平一對一教練</option>
+                            <option value="group">🌿 躺平大師班</option>
+                            <option value="vip">👑 躺平無限暢飲 VIP</option>
+                            <option value="idk">我還不知道，想先聊</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="msg">你現在有多累？（說出來會好一點）</label>
+                        <textarea id="msg" placeholder="例如：我已經三個月沒準時下班了、我不記得上次午睡是什麼時候..."></textarea>
+                    </div>
+                    <p class="form-note">⚡ 我們會在 24-48 小時內回覆（我們也要休息的）</p>
+                    <button type="submit" class="submit-btn">送出，然後去躺一下 🛌</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CTA ────────────────────────────────────────── -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>你已經很累了，<br>讓我們來陪你躺吧 🛌</h2>
+            <p>別再追那些虛無的 KPI 了。加入我們，一起過「夠用就好，但很快樂」的人生。</p>
+            <div class="cta-btn-group">
+                <a href="#contact" class="cta-btn-white">免費預約快問快答</a>
+                <a href="#programs" class="cta-btn-outline">看看所有方案</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FOOTER ─────────────────────────────────────── -->
+    <footer>
+        <p>© 2026 小小帶我魯 ｜ 本站拒絕雞湯，只提供躺平指南</p>
+        <p><a href="index.html">← 回到正經的作品集</a></p>
+    </footer>
+
+    <script>
+        // Form submit handler
+        function handleSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value || '你';
+            const btn = e.target.querySelector('.submit-btn');
+            btn.textContent = '✅ 收到了！去躺吧～';
+            btn.style.background = '#6DBE8C';
+            btn.disabled = true;
+            setTimeout(() => {
+                alert(`謝謝你，${name}！\n\n我們收到你的訊息了。\n請先去躺一下，我們會在 24-48 小時內聯絡你。🛌✨`);
+            }, 300);
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // CTA programs link fix
+        document.querySelectorAll('a[href="#programs"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector('.programs-section').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
