@@ -9,8 +9,11 @@
 2. MVP plan
 3. MVP sys design
 
+## Sites
+
+- https://brothersupport.github.io/ai_consultant/shopee/landing
+- https://brothersupport.github.io/ai_consultant/noboby/nobody
 
 ## Ref
 
 - https://github.com/garrytan/gstack
-- https://brothersupport.github.io/ai_consultant/shopee/landing
