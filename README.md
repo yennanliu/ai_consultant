@@ -13,3 +13,4 @@
 ## Ref
 
 - https://github.com/garrytan/gstack
+- https://brothersupport.github.io/ai_consultant/shopee/landing
