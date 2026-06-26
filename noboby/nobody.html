@@ -718,6 +718,105 @@
             .hero h1 { letter-spacing: -0.5px; }
             .program-card.popular::after { display: none; }
         }
+
+        /* ── PLAY ZONE (interactive) ──────────────────────── */
+        .play-section { background: var(--card-bg); padding: 80px 24px; }
+        .play-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 16px;
+        }
+        @media (max-width: 720px) { .play-grid { grid-template-columns: 1fr; } }
+        .play-card {
+            background: var(--cream);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px 28px;
+            position: relative;
+            overflow: hidden;
+        }
+        .play-card.full { grid-column: 1 / -1; }
+        .play-card-eyebrow {
+            font-size: 0.7rem; font-weight: 800; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--coral); margin-bottom: 6px;
+        }
+        .play-card h3 { font-size: 1.35rem; font-weight: 900; color: var(--text); margin-bottom: 6px; letter-spacing: -0.3px; }
+        .play-card .play-desc { font-size: 0.9rem; color: var(--text-soft); margin-bottom: 20px; }
+
+        .play-btn {
+            background: var(--coral); color: #fff; border: none; cursor: pointer;
+            font-family: inherit; font-weight: 800; font-size: 0.95rem;
+            padding: 12px 26px; border-radius: 100px;
+            transition: transform .2s, box-shadow .2s;
+        }
+        .play-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,127,92,.35); }
+        .play-btn.ghost { background: #fff; color: var(--coral); border: 2px solid var(--coral-light); }
+
+        /* Quiz */
+        .quiz-progress { font-size: .78rem; font-weight: 700; color: var(--text-soft); margin-bottom: 10px; }
+        .quiz-question { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 16px; min-height: 2.6em; }
+        .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+        .quiz-opt {
+            text-align: left; background: #fff; border: 1.5px solid var(--border);
+            border-radius: 14px; padding: 12px 16px; font-family: inherit; font-size: .92rem;
+            color: var(--text); cursor: pointer; transition: all .15s;
+        }
+        .quiz-opt:hover { border-color: var(--coral); background: var(--coral-light); transform: translateX(4px); }
+        .quiz-result { text-align: center; }
+        .quiz-result .rank-emoji { font-size: 4rem; display: block; margin-bottom: 8px; animation: wave-float 3s ease-in-out infinite; }
+        .quiz-result .rank-name { font-size: 1.6rem; font-weight: 900; color: var(--coral); margin-bottom: 8px; }
+        .quiz-result .rank-desc { font-size: .95rem; color: var(--text-soft); margin-bottom: 8px; }
+        .quiz-result .rank-bar { height: 10px; border-radius: 100px; background: var(--border); overflow: hidden; margin: 18px 0 6px; }
+        .quiz-result .rank-bar > span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--coral), var(--sun)); border-radius: 100px; transition: width 1s ease; }
+        .quiz-result .rank-score { font-size: .78rem; color: var(--text-soft); margin-bottom: 20px; }
+        .quiz-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+        /* Fortune */
+        .fortune-paper {
+            background: #fff; border: 2px dashed var(--coral); border-radius: 16px;
+            padding: 24px 20px; text-align: center; margin-bottom: 20px; min-height: 150px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .fortune-paper .f-emoji { font-size: 2.6rem; margin-bottom: 10px; }
+        .fortune-paper .f-title { font-size: 1.2rem; font-weight: 900; color: var(--coral); margin-bottom: 12px; }
+        .fortune-paper .f-line { font-size: .95rem; color: var(--text); }
+        .fortune-paper .f-line b { color: var(--sage); }
+        .fortune-paper .f-line.bad b { color: var(--coral-dark); }
+        .fortune-empty { color: var(--text-soft); font-size: .9rem; }
+
+        /* Game promo (links to game.html) */
+        .game-promo {
+            display: block; text-decoration: none; color: inherit;
+            background: linear-gradient(135deg, #FFF8DC 0%, #FFEEE8 100%);
+            border-color: rgba(255,127,92,0.25);
+            transition: transform .25s, box-shadow .25s;
+        }
+        .game-promo:hover { transform: translateY(-5px); box-shadow: 0 16px 44px rgba(255,127,92,0.18); }
+        .game-promo-cta {
+            display: inline-block; background: var(--coral); color: #fff;
+            font-weight: 800; font-size: .95rem; padding: 12px 28px; border-radius: 100px;
+            transition: transform .2s;
+        }
+        .game-promo:hover .game-promo-cta { transform: scale(1.05); }
+        .game-promo-emojis {
+            font-size: 2rem; letter-spacing: 10px; margin-top: 22px; text-align: center; opacity: .85;
+            animation: sway 4s ease-in-out infinite;
+        }
+
+        /* Easter egg rain + toasts */
+        .rain-emoji { position: fixed; top: -50px; z-index: 9998; pointer-events: none; animation: rain-fall linear forwards; }
+        @keyframes rain-fall { to { transform: translateY(110vh) rotate(360deg); } }
+        .calm-toast, .scroll-toast {
+            position: fixed; left: 50%; transform: translateX(-50%);
+            background: var(--text); color: #fff; padding: 14px 26px; border-radius: 100px;
+            font-weight: 700; font-size: .92rem; z-index: 9999; box-shadow: 0 8px 30px rgba(0,0,0,.25);
+            opacity: 0; transition: opacity .4s, bottom .4s; bottom: 10px; white-space: nowrap;
+        }
+        .scroll-toast.show { opacity: 1; bottom: 40px; }
+        .calm-toast { top: 28%; bottom: auto; }
+        .calm-toast.show { opacity: 1; }
+        .float-badge.tired { animation: none; background: var(--lavender); box-shadow: 0 6px 24px rgba(167,139,250,.45); }
     </style>
 </head>
 <body>
@@ -987,6 +1086,54 @@
     <!-- wave -->
     <div class="wave-divider" style="background:#FFFFFF;">
         <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#FFF8F0"/>
+        </svg>
+    </div>
+
+    <!-- ── PLAY ZONE ───────────────────────────────────── -->
+    <section class="play-section" style="background:var(--cream);">
+        <div class="container">
+            <div class="section-eyebrow">放鬆一下，玩玩看</div>
+            <h2 class="section-title">躺平互動專區 🎪</h2>
+            <p class="section-sub">測指數、抽支籤、接住午覺——反正都不用很努力。</p>
+
+            <div class="play-grid">
+
+                <!-- Quiz (#1) -->
+                <div class="play-card" id="quizCard">
+                    <div class="play-card-eyebrow">測驗 · QUIZ</div>
+                    <h3>你的躺平指數有多高？🧘</h3>
+                    <p class="play-desc">5 題快速診斷，測出你的躺平段位。</p>
+                    <div id="quizBody"></div>
+                </div>
+
+                <!-- Fortune (#6) -->
+                <div class="play-card" id="fortuneCard">
+                    <div class="play-card-eyebrow">占卜 · FORTUNE</div>
+                    <h3>今日躺平籤 🥠</h3>
+                    <p class="play-desc">看看今天的你，宜什麼、忌什麼。</p>
+                    <div class="fortune-paper" id="fortunePaper">
+                        <span class="fortune-empty">點下面的按鈕，抽一支今日籤 👇</span>
+                    </div>
+                    <button class="play-btn" onclick="drawFortune()">抽今日躺平籤</button>
+                </div>
+
+                <!-- Catch game (#7) — full game lives on its own page -->
+                <a class="play-card full game-promo" href="game.html">
+                    <div class="play-card-eyebrow">小遊戲 · GAME</div>
+                    <h3>接住午覺大作戰 🛌</h3>
+                    <p class="play-desc">移動枕頭接住 🛌☕🍜🐱、搶金色午覺 🌟、吃道具 💤🧲🍀，閃開砸下來的工作 📊📧。連擊加倍、難度漸增、還會記錄你的最佳成績——專屬的全螢幕躺平小遊戲。</p>
+                    <span class="game-promo-cta">開始遊戲 →</span>
+                    <div class="game-promo-emojis">🛌 ☕ 🐱 🌟 💤 🧲 🍀</div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- wave -->
+    <div class="wave-divider" style="background:var(--cream);">
+        <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
             <path d="M0,20 C360,60 1080,0 1440,40 L1440,60 L0,60 Z" fill="#FFF0E6"/>
         </svg>
     </div>
@@ -1121,6 +1268,154 @@
                 document.querySelector('.programs-section').scrollIntoView({ behavior: 'smooth' });
             });
         });
+
+        /* ════════════════════════════════════════════════════
+           #1 躺平指數測驗 (Lying-Flat Quiz)
+        ════════════════════════════════════════════════════ */
+        const QUIZ = [
+            { q: '你上次「準時下班」是什麼時候？', a: [['今天！這是我的神聖儀式', 3], ['上週應該有吧', 2], ['有點不太記得了', 1], ['不好意思，「下班」是什麼？', 0]] },
+            { q: '週末的你，會想到工作嗎？', a: [['工作？我不認識這個人', 3], ['偶爾啦，但我會把念頭趕走', 2], ['常常想，還有點焦慮', 1], ['我週末也在加班 🥲', 0]] },
+            { q: '看到同事拼命加班，你會？', a: [['幫他加油，然後繼續躺我的', 3], ['默默欣賞，與我無關', 2], ['有點愧疚，是不是該努力點', 1], ['被激勵到，我也要更拚！', 0]] },
+            { q: '你心目中的完美午休是？', a: [['睡到自然醒，而且睡三次', 3], ['一場紮實的午覺', 2], ['滑手機放空就好', 1], ['邊吃便當邊回訊息', 0]] },
+            { q: '聽到「夠用就好」這句話，你？', a: [['這是我的人生信仰 🙏', 3], ['蠻有道理的耶', 2], ['聽起來有點像藉口', 1], ['不行，人要追求卓越！', 0]] },
+        ];
+        const RANKS = [
+            { min: 12, emoji: '🧘', name: '躺平宗師', desc: '你已得道。建議開班授徒，普渡天下社畜。' },
+            { min: 8,  emoji: '🐟', name: '資深咸魚', desc: '鹹得剛剛好，繼續保持這份從容。' },
+            { min: 4,  emoji: '🐣', name: '躺平新手', desc: '還有救——我是說，還有很大的放鬆空間。' },
+            { min: 0,  emoji: '🔥', name: '重度卷王', desc: '危險！偵測到過勞傾向，請立即預約急救諮詢。' },
+        ];
+        let quizIdx = 0, quizScore = 0;
+
+        function renderQuiz() {
+            const q = QUIZ[quizIdx];
+            const opts = q.a.map(o => `<button class="quiz-opt" onclick="answerQuiz(${o[1]})">${o[0]}</button>`).join('');
+            document.getElementById('quizBody').innerHTML =
+                `<div class="quiz-progress">第 ${quizIdx + 1} / ${QUIZ.length} 題</div>
+                 <div class="quiz-question">${q.q}</div>
+                 <div class="quiz-options">${opts}</div>`;
+        }
+        function answerQuiz(points) {
+            quizScore += points;
+            quizIdx++;
+            if (quizIdx >= QUIZ.length) showQuizResult();
+            else renderQuiz();
+        }
+        function showQuizResult() {
+            const r = RANKS.find(x => quizScore >= x.min);
+            const pct = Math.round(quizScore / 15 * 100);
+            document.getElementById('quizBody').innerHTML =
+                `<div class="quiz-result">
+                    <span class="rank-emoji">${r.emoji}</span>
+                    <div class="rank-name">${r.name}</div>
+                    <div class="rank-desc">${r.desc}</div>
+                    <div class="rank-bar"><span></span></div>
+                    <div class="rank-score">躺平指數 ${pct}%（得分 ${quizScore} / 15）</div>
+                    <div class="quiz-actions">
+                        <button class="play-btn ghost" onclick="restartQuiz()">再測一次</button>
+                        <a href="#contact" class="play-btn" style="text-decoration:none;display:inline-block;">預約躺平諮詢 →</a>
+                    </div>
+                 </div>`;
+            setTimeout(() => { const bar = document.querySelector('.rank-bar > span'); if (bar) bar.style.width = pct + '%'; }, 60);
+        }
+        function restartQuiz() { quizIdx = 0; quizScore = 0; renderQuiz(); }
+        renderQuiz();
+
+        /* ════════════════════════════════════════════════════
+           #6 今日躺平籤 (Daily Fortune)
+        ════════════════════════════════════════════════════ */
+        const FORTUNES = [
+            { e: '🛌', yi: '睡到自然醒',       ji: '設鬧鐘' },
+            { e: '🍜', yi: '叫外送',           ji: '踏進廚房' },
+            { e: '📵', yi: '已讀不回',         ji: '秒回訊息' },
+            { e: '☕', yi: '喝咖啡發呆',       ji: '排滿行程' },
+            { e: '🐱', yi: '學貓伸個懶腰',     ji: '勉強自己' },
+            { e: '🚪', yi: '準時下班',         ji: '主動加班' },
+            { e: '🌿', yi: '曬太陽放空',       ji: '回想 KPI' },
+            { e: '📺', yi: '追劇追到天亮',     ji: '檢討人生' },
+            { e: '🧦', yi: '整天穿睡衣',       ji: '換上正式服裝' },
+            { e: '🥱', yi: '光明正大打哈欠',   ji: '假裝很忙' },
+            { e: '🛋️', yi: '與沙發合而為一',   ji: '起身做家事' },
+            { e: '🎮', yi: '打電動充電',       ji: '開無意義的會' },
+        ];
+        function drawFortune() {
+            const f = FORTUNES[Math.floor(Math.random() * FORTUNES.length)];
+            document.getElementById('fortunePaper').innerHTML =
+                `<div class="f-emoji">${f.e}</div>
+                 <div class="f-title">今日宜躺平</div>
+                 <div class="f-line">宜：<b>${f.yi}</b></div>
+                 <div class="f-line bad">忌：<b>${f.ji}</b></div>`;
+        }
+
+        /* ════════════════════════════════════════════════════
+           toasts
+        ════════════════════════════════════════════════════ */
+        function showToast(cls, msg, life) {
+            const t = document.createElement('div');
+            t.className = cls; t.textContent = msg;
+            document.body.appendChild(t);
+            requestAnimationFrame(() => t.classList.add('show'));
+            setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 500); }, life);
+        }
+
+        /* ════════════════════════════════════════════════════
+           #4 滾動疲勞系統 (Scroll Fatigue)
+        ════════════════════════════════════════════════════ */
+        (function () {
+            const badge = document.querySelector('.float-badge');
+            let tired = false, toastShown = false;
+            window.addEventListener('scroll', () => {
+                const max = document.body.scrollHeight - window.innerHeight;
+                const ratio = max > 0 ? window.scrollY / max : 0;
+                if (ratio > 0.6 && !tired) {
+                    tired = true; badge.classList.add('tired');
+                    badge.innerHTML = '<span class="badge-emoji">🥱</span>休息<br>一下';
+                } else if (ratio <= 0.6 && tired) {
+                    tired = false; badge.classList.remove('tired');
+                    badge.innerHTML = '<span class="badge-emoji">💬</span>立即<br>報名';
+                }
+                if (ratio > 0.9 && !toastShown) {
+                    toastShown = true;
+                    showToast('scroll-toast', '滑這麼久不累嗎？休息一下啦 🛌', 4000);
+                }
+            }, { passive: true });
+        })();
+
+        /* ════════════════════════════════════════════════════
+           #5 拒絕努力彩蛋 (Easter Egg: too much effort detected)
+        ════════════════════════════════════════════════════ */
+        (function () {
+            let clicks = [], egg = false;
+            const RAIN = ['🛌', '☕', '🐱', '🌿', '😴', '🛋️', '🥱'];
+            const seq = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // Konami
+            let ki = 0;
+            document.addEventListener('keydown', e => {
+                if (e.keyCode === seq[ki]) { ki++; if (ki === seq.length) { ki = 0; triggerEgg(); } }
+                else { ki = (e.keyCode === seq[0]) ? 1 : 0; }
+            });
+            document.addEventListener('click', () => {
+                const t = Date.now();
+                clicks.push(t);
+                clicks = clicks.filter(x => t - x < 2500);
+                if (clicks.length >= 8) { clicks = []; triggerEgg(); }
+            });
+            function triggerEgg() {
+                if (egg) return; egg = true; setTimeout(() => egg = false, 6000);
+                for (let i = 0; i < 42; i++) {
+                    const s = document.createElement('div');
+                    s.className = 'rain-emoji';
+                    s.textContent = RAIN[Math.floor(Math.random() * RAIN.length)];
+                    s.style.left = (Math.random() * 100) + 'vw';
+                    s.style.fontSize = (1.4 + Math.random() * 2) + 'rem';
+                    const dur = 3 + Math.random() * 3;
+                    s.style.animationDuration = dur + 's';
+                    s.style.animationDelay = (Math.random() * 0.8) + 's';
+                    document.body.appendChild(s);
+                    setTimeout(() => s.remove(), (dur + 1.2) * 1000);
+                }
+                showToast('calm-toast', '偵測到過度努力！🚨 請立刻躺平 😌', 3500);
+            }
+        })();
     </script>
 </body>
 </html>
