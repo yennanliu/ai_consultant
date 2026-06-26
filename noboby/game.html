@@ -47,59 +47,120 @@
         #hudMult.hot { color:var(--coral); animation: mult-pop .3s ease; }
         @keyframes mult-pop { 0%{transform:scale(1.4);} 100%{transform:scale(1);} }
 
-        /* stage / scene */
+        /* stage / office scene */
         .stage { position:relative; width:100%; max-width:920px; }
         .scene {
-            position:relative; width:100%; min-height:380px; border-radius:var(--radius);
+            position:relative; width:100%; min-height:440px; border-radius:var(--radius);
             border:2px solid var(--border); overflow:hidden;
-            background: linear-gradient(180deg,#EAF4FF 0%, #F3F8FF 45%, #FBEFE6 100%);
-            transition: background .25s, box-shadow .25s;
+            background: linear-gradient(180deg,#F6ECDF 0%, #F3E7D6 55%, #EFE0CD 100%);
+            transition: box-shadow .25s;
         }
-        .scene.safe   { box-shadow: inset 0 0 0 4px rgba(109,190,140,.55); }
-        .scene.danger { box-shadow: inset 0 0 0 5px rgba(239,83,80,.75); background: linear-gradient(180deg,#FFE3E0 0%, #FFEDEA 50%, #FBEFE6 100%); }
-        .scene.cover  { box-shadow: inset 0 0 0 4px rgba(167,139,250,.6); }
+        .scene.safe   { box-shadow: inset 0 0 0 4px rgba(109,190,140,.5); }
+        .scene.cover  { box-shadow: inset 0 0 0 4px rgba(91,192,235,.55); }
+        .scene.danger { box-shadow: inset 0 0 0 6px rgba(239,83,80,.8); }
+        .scene.danger::after {
+            content:''; position:absolute; inset:0; pointer-events:none; z-index:4;
+            background: radial-gradient(circle at 50% 86%, rgba(239,83,80,.3), transparent 46%);
+            animation: dpulse .6s ease-in-out infinite;
+        }
+        @keyframes dpulse { 50%{ opacity:.5; } }
 
-        /* boss */
-        .boss { position:absolute; top:16px; left:50%; transform:translateX(-50%); text-align:center; width:200px; }
-        .boss-emoji { font-size:3.4rem; line-height:1; transition: transform .25s; display:inline-block; }
-        .boss.turn .boss-emoji { animation: wiggle .4s ease-in-out infinite; }
-        @keyframes wiggle { 0%,100%{transform:rotate(-8deg);} 50%{transform:rotate(8deg);} }
-        .boss.watch .boss-emoji { transform: scale(1.15); }
-        .boss-status {
-            margin-top:6px; font-size:.82rem; font-weight:800; padding:4px 14px; border-radius:100px;
-            display:inline-block; background:var(--sage-light); color:#2f7a4f;
+        /* window + skyline */
+        .window {
+            position:absolute; top:14px; left:5%; right:5%; height:23%;
+            background: linear-gradient(180deg,#B9E4FF 0%, #DCF2FF 100%);
+            border:4px solid #fff; border-radius:10px; overflow:hidden; z-index:1;
+            box-shadow:0 4px 14px rgba(0,0,0,.08);
         }
-        .boss.turn .boss-status  { background:var(--sun-light); color:#9A7000; }
-        .boss.watch .boss-status { background:#FFD9D7; color:#C62828; animation: blink .5s steps(2) infinite; }
+        .window .sun { position:absolute; top:14%; right:9%; width:34px; height:34px; border-radius:50%; background:radial-gradient(circle,#FFE17A,#FFD166); box-shadow:0 0 22px rgba(255,209,102,.8); }
+        .skyline { position:absolute; bottom:0; left:0; right:0; height:62%; display:flex; align-items:flex-end; gap:4px; padding:0 8px; }
+        .skyline i {
+            flex:1; border-radius:3px 3px 0 0; background-color:#A6BED2;
+            background-image: radial-gradient(rgba(255,255,255,.4) 1px, transparent 1px);
+            background-size:8px 8px;
+        }
+        .window-bar { position:absolute; top:0; bottom:0; left:50%; width:4px; background:#fff; transform:translateX(-50%); }
+
+        /* wall decor */
+        .clock { position:absolute; top:9%; left:8%; font-size:1.7rem; z-index:1; }
+        .poster {
+            position:absolute; top:8%; right:8%; z-index:1; text-align:center;
+            background:#fff; border:3px solid var(--sun); border-radius:8px; padding:4px 9px; font-size:1.2rem; line-height:1;
+            box-shadow:0 3px 8px rgba(0,0,0,.08); transform:rotate(-3deg);
+        }
+        .poster small { display:block; font-size:.5rem; font-weight:800; color:var(--coral); margin-top:2px; }
+
+        /* coworkers in cubicles (decor) */
+        .cubicles { position:absolute; left:0; right:0; bottom:40%; display:flex; justify-content:space-around; padding:0 7%; z-index:2; }
+        .cube { display:flex; flex-direction:column; align-items:center; }
+        .cube .co { font-size:1.7rem; animation: cobob 1.4s ease-in-out infinite; }
+        .cube .co.c2 { animation-delay:.4s; } .cube .co.c3 { animation-delay:.8s; } .cube .co.c4 { animation-delay:1.1s; }
+        .cube .partition { width:54px; height:10px; background:#C9B49B; border-radius:4px 4px 0 0; margin-top:-3px; }
+        @keyframes cobob { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-3px);} }
+
+        /* floor / carpet */
+        .floor {
+            position:absolute; left:0; right:0; bottom:0; height:30%; z-index:2; overflow:hidden;
+            background: linear-gradient(180deg,#D8C6B0 0%, #CDB89E 100%);
+            border-top:3px solid #B89D7F;
+        }
+        .floor::before { content:''; position:absolute; inset:0; background-image: repeating-linear-gradient(90deg, rgba(255,255,255,.16) 0 2px, transparent 2px 64px); }
+
+        /* boss (patrols / walks) */
+        .boss { position:absolute; bottom:21%; left:50%; z-index:3; text-align:center; }
+        .boss-emoji { font-size:3rem; line-height:1; display:inline-block; transition: transform .12s; }
+        .boss-sprite { display:inline-block; }
+        .boss.walking .boss-sprite { animation: walkbob .42s ease-in-out infinite; }
+        @keyframes walkbob { 0%,100%{ transform:translateY(0) rotate(-4deg);} 50%{ transform:translateY(-5px) rotate(4deg);} }
+        .boss-shadow { width:42px; height:9px; border-radius:50%; background:rgba(0,0,0,.16); margin:-2px auto 0; filter:blur(2px); }
+        .alert { position:absolute; bottom:104%; left:50%; transform:translateX(-50%); font-size:1.3rem; font-weight:900; min-height:1.3rem; }
+
+        /* status banner (stationary) */
+        .boss-status {
+            position:absolute; top:10px; left:50%; transform:translateX(-50%); z-index:6;
+            font-size:.84rem; font-weight:800; padding:5px 16px; border-radius:100px;
+            background:var(--sage-light); color:#2f7a4f; box-shadow:0 3px 10px rgba(0,0,0,.1); white-space:nowrap;
+        }
+        .scene.s-turn  .boss-status { background:var(--sun-light); color:#9A7000; }
+        .scene.s-watch .boss-status { background:#FFD9D7; color:#C62828; animation: blink .5s steps(2) infinite; }
         @keyframes blink { 50%{opacity:.55;} }
+
         .bubble {
             position:absolute; background:#fff; border:1.5px solid var(--border); border-radius:14px;
-            padding:5px 12px; font-size:.82rem; font-weight:700; white-space:nowrap;
-            box-shadow:0 4px 12px rgba(0,0,0,.08);
+            padding:4px 11px; font-size:.8rem; font-weight:700; white-space:nowrap;
+            box-shadow:0 4px 12px rgba(0,0,0,.1); z-index:7;
         }
-        .boss-bubble { top:6px; left:calc(50% + 54px); }
+        .boss-bubble { bottom:108%; left:50%; transform:translateX(-50%); }
 
-        /* player */
-        .player { position:absolute; bottom:14px; left:50%; transform:translateX(-50%); text-align:center; width:220px; }
-        .player-emoji { font-size:4.2rem; line-height:1; transition: transform .15s; display:inline-block; }
-        .player.slack .player-emoji { transform: translateY(6px) rotate(-6deg); }
-        .player.caught .player-emoji { animation: panic .25s ease-in-out infinite; }
+        /* player (foreground) */
+        .player { position:absolute; bottom:10px; left:50%; transform:translateX(-50%); z-index:5; text-align:center; }
+        .player-emoji { font-size:4.4rem; line-height:1; display:inline-block; transition: transform .15s; }
+        .player.slack .player-emoji { transform: translateY(7px) rotate(-7deg); }
+        .player.caught .player-emoji { animation: panic .22s ease-in-out infinite; }
         @keyframes panic { 0%,100%{transform:translateX(-3px);} 50%{transform:translateX(3px);} }
-        .desk { font-size:2rem; margin-top:-6px; }
-        .player-bubble { bottom:84px; left:calc(50% + 40px); }
+        .player-desk { font-size:2.6rem; margin-top:-10px; }
+        .player-bubble { bottom:104%; left:50%; transform:translateX(-50%); }
 
         /* floating texts */
         .floaty { position:absolute; font-weight:900; font-size:1.1rem; pointer-events:none; animation: floatUp 1.1s ease-out forwards; z-index:5; }
         @keyframes floatUp { from{ opacity:1; transform:translateY(0);} to{ opacity:0; transform:translateY(-46px);} }
 
-        /* powerups */
-        .powerup {
-            position:absolute; font-size:2.3rem; cursor:pointer; z-index:6;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,.2)); animation: pBob 1.2s ease-in-out infinite;
+        /* abilities (camouflage moves) */
+        .abilities { width:100%; max-width:920px; margin-top:14px; display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+        .ability {
+            position:relative; overflow:hidden; border:1.5px solid var(--border); background:#fff;
+            border-radius:16px; padding:11px 8px 9px; cursor:pointer; font-family:inherit; color:var(--text);
+            display:flex; flex-direction:column; align-items:center; gap:3px; transition:transform .1s, box-shadow .15s;
+            touch-action:none;
         }
-        @keyframes pBob { 0%,100%{transform:translateY(0) rotate(-6deg);} 50%{transform:translateY(-8px) rotate(6deg);} }
-        .powerup.grabbed { animation: pGrab .2s forwards; }
-        @keyframes pGrab { to{ transform:scale(1.8); opacity:0; } }
+        .ability:hover { box-shadow:0 6px 18px rgba(0,0,0,.08); }
+        .ability:active { transform:scale(.97); }
+        .ability .ab-emoji { font-size:1.7rem; line-height:1; }
+        .ability .ab-label { font-size:.82rem; font-weight:800; }
+        .ability .ab-key { font-size:.6rem; font-weight:700; color:var(--text-soft); background:var(--cream); border:1px solid var(--border); border-radius:6px; padding:1px 7px; }
+        .ability.cooling { color:var(--text-soft); }
+        .ability.active-now { border-color:var(--sky); box-shadow:0 0 0 3px rgba(91,192,235,.3); }
+        .ability .ab-cd { position:absolute; left:0; bottom:0; width:100%; height:0; background:rgba(120,120,120,.28); pointer-events:none; }
 
         /* bars */
         .bars { width:100%; max-width:920px; margin-top:12px; display:flex; flex-direction:column; gap:8px; }
@@ -181,15 +242,42 @@
 
     <div class="stage">
         <div class="scene" id="scene">
-            <div class="boss" id="boss">
-                <div class="bubble boss-bubble" id="bossBubble">🎵</div>
-                <div class="boss-emoji" id="bossEmoji">🧑‍💼</div>
-                <div class="boss-status" id="bossStatus">大大在工作中…</div>
+            <!-- window + skyline -->
+            <div class="window">
+                <div class="sun"></div>
+                <div class="skyline">
+                    <i style="height:50%"></i><i style="height:76%"></i><i style="height:38%"></i>
+                    <i style="height:88%"></i><i style="height:58%"></i><i style="height:70%"></i>
+                    <i style="height:44%"></i><i style="height:82%"></i><i style="height:54%"></i><i style="height:66%"></i>
+                </div>
+                <div class="window-bar"></div>
             </div>
+            <!-- wall decor -->
+            <div class="clock" id="clock">🕘</div>
+            <div class="poster">📈<small>再撐一下</small></div>
+            <!-- coworkers -->
+            <div class="cubicles">
+                <div class="cube"><span class="co">🧑‍💻</span><span class="partition"></span></div>
+                <div class="cube"><span class="co c2">👩‍💻</span><span class="partition"></span></div>
+                <div class="cube"><span class="co c3">🧑‍💻</span><span class="partition"></span></div>
+                <div class="cube"><span class="co c4">👨‍💻</span><span class="partition"></span></div>
+            </div>
+            <!-- floor / carpet -->
+            <div class="floor"></div>
+            <!-- boss (walks around) -->
+            <div class="boss" id="boss">
+                <div class="alert" id="bossAlert"></div>
+                <div class="bubble boss-bubble" id="bossBubble">🎵</div>
+                <div class="boss-emoji" id="bossEmoji"><span class="boss-sprite" id="bossSprite">🚶</span></div>
+                <div class="boss-shadow"></div>
+            </div>
+            <!-- stationary status banner -->
+            <div class="boss-status" id="bossStatus">🟢 大大在巡視…</div>
+            <!-- player desk (foreground) -->
             <div class="player" id="player">
-                <div class="bubble player-bubble hidden" id="playerBubble" style="display:none;"></div>
+                <div class="bubble player-bubble" id="playerBubble" style="display:none;"></div>
                 <div class="player-emoji" id="playerEmoji">🧑‍💻</div>
-                <div class="desk">🖥️</div>
+                <div class="player-desk">🖥️</div>
             </div>
         </div>
 
@@ -197,13 +285,12 @@
         <div class="overlay" id="startOverlay">
             <span class="big-emoji">🤫</span>
             <h2>準備好偷懶了嗎？</h2>
-            <p><b>按住</b>下方按鈕（或空白鍵）來躺平放鬆、累積放鬆值。但是——大大會不定時回頭！看到 🟡 警告就快放手假裝認真，被 🔴 抓到還在躺，疑心值就會飆高。撐 60 秒，放鬆值越高越強。</p>
+            <p><b>按住</b>下方大按鈕（或空白鍵）來躺平放鬆、累積放鬆值。大大會不定時回頭——看到 🟡 警告就放手裝忙，被 🔴 抓到還在躺疑心值會飆高。危機時就用三招辦公室偽裝術脫身！撐 60 秒，放鬆值越高越強。</p>
             <div class="legend">
-                <span>🟢 安全：盡情躺平</span>
-                <span>🟡 大大要回頭了</span>
-                <span>🔴 在看你！快裝忙</span>
-                <span>🎧🪴 隱身</span>
-                <span>☕ 放鬆加速</span>
+                <span>📞 講電話：邊摸邊裝忙</span>
+                <span>✍️ 抄筆記：急降疑心</span>
+                <span>🚶 茶水間：落跑重置</span>
+                <span>🟡 警告 · 🔴 在看你</span>
             </div>
             <button class="play-btn" onclick="game.start()">開始摸魚 🚀</button>
         </div>
@@ -244,8 +331,23 @@
 
     <button class="slack-btn" id="slackBtn">按住來躺平 🛌</button>
 
+    <div class="abilities" id="abilities">
+        <button class="ability" id="abCall">
+            <span class="ab-emoji">📞</span><span class="ab-label">假裝講電話</span><span class="ab-key">C</span>
+            <span class="ab-cd"></span>
+        </button>
+        <button class="ability" id="abNote">
+            <span class="ab-emoji">✍️</span><span class="ab-label">假裝抄筆記</span><span class="ab-key">X</span>
+            <span class="ab-cd"></span>
+        </button>
+        <button class="ability" id="abPantry">
+            <span class="ab-emoji">🚶</span><span class="ab-label">去茶水間</span><span class="ab-key">V</span>
+            <span class="ab-cd"></span>
+        </button>
+    </div>
+
     <div class="footrow">
-        <span class="hint">🎮 躺平：按住按鈕 / 空白鍵 &nbsp;·&nbsp; 暫停：P &nbsp;·&nbsp; 點 🎧☕ 撿道具</span>
+        <span class="hint">🎮 躺平：按住 / 空白鍵 &nbsp;·&nbsp; 偽裝：📞C ✍️X 🚶V &nbsp;·&nbsp; 暫停：P</span>
         <button class="icon-btn" id="muteBtn" onclick="game.toggleMute()">🔊 音效</button>
     </div>
 
@@ -253,12 +355,20 @@
     const game = (function () {
         const $ = id => document.getElementById(id);
         const scene = $('scene'), boss = $('boss'), player = $('player');
-        const bossEmoji = $('bossEmoji'), bossStatus = $('bossStatus'), bossBubble = $('bossBubble');
+        const bossEmoji = $('bossEmoji'), bossSprite = $('bossSprite'), bossStatus = $('bossStatus'), bossBubble = $('bossBubble'), bossAlert = $('bossAlert');
+        const clockEl = $('clock');
         const playerEmoji = $('playerEmoji'), playerBubble = $('playerBubble');
+        const CLOCKS = ['🕘', '🕙', '🕚', '🕛', '🕐', '🕑', '🕒'];
         const slackBtn = $('slackBtn');
+        const abCall = $('abCall'), abNote = $('abNote'), abPantry = $('abPantry');
         const BEST_KEY = 'tangping_office_best';
         let best = +(localStorage.getItem(BEST_KEY) || 0);
         const GOAL = 220;
+
+        // ability tuning (ms)
+        const CALL_DUR = 3600, CD_CALL = 8500;
+        const AWAY_DUR = 3400, CD_PANTRY = 12000;
+        const CD_NOTE = 5000, NOTE_FLASH = 700, NOTE_DROP = 38;
 
         const now = () => (window.performance && performance.now) ? performance.now() : Date.now();
         const lerp = (a, b, t) => a + (b - a) * t;
@@ -266,10 +376,9 @@
 
         let relax, suspicion, combo, bestCombo, comboTime, mult;
         let timeLeft, elapsed, dur;
-        let bossState, bossTimer;
-        let coverUntil, coffeeUntil;
-        let slacking, running, paused, caught, raf, lastT, countdownT, powerTimer, zzzTimer, multHot;
-        let powerups;
+        let bossState, bossTimer, bossX, bossTarget, bossFacing;
+        let callUntil, callCdUntil, awayUntil, awayCdUntil, noteCdUntil, noteFlashUntil;
+        let slacking, running, paused, raf, lastT, countdownT, zzzTimer, multHot;
 
         /* ---------- audio ---------- */
         let actx = null, muted = false;
@@ -304,37 +413,70 @@
         slackBtn.addEventListener('pointercancel', () => setSlack(false));
         slackBtn.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('keydown', e => {
-            if (e.code === 'Space') { e.preventDefault(); ensureAudio(); setSlack(true); }
-            if (e.key === 'p' || e.key === 'P') togglePause();
+            if (e.repeat) return;
+            if (e.code === 'Space') { e.preventDefault(); ensureAudio(); setSlack(true); return; }
+            const k = e.key.toLowerCase();
+            if (k === 'p') togglePause();
+            else if (k === 'c') fakeCall();
+            else if (k === 'x') takeNote();
+            else if (k === 'v') goPantry();
         });
         document.addEventListener('keyup', e => { if (e.code === 'Space') setSlack(false); });
+        function bindAbility(btn, fn) {
+            btn.addEventListener('pointerdown', e => { e.preventDefault(); ensureAudio(); fn(); });
+        }
+        bindAbility(abCall, () => fakeCall());
+        bindAbility(abNote, () => takeNote());
+        bindAbility(abPantry, () => goPantry());
 
         /* ---------- boss FSM ---------- */
         const BOSS_WORK = ['🎵', '💻', '📊', '☕', '專心中'];
         const BOSS_WATCH = ['在幹嘛？', '認真點！', '我看到了喔', '👀', '在摸魚？'];
         function setBoss(state) {
             bossState = state;
-            boss.classList.remove('work', 'turn', 'watch');
-            boss.classList.add(state);
+            boss.classList.toggle('walking', state === 'work');
+            scene.classList.remove('s-turn', 's-watch');
             const f = elapsed / dur;
             if (state === 'work') {
-                bossEmoji.textContent = '🧑‍💼';
-                bossStatus.textContent = '大大在工作中…';
+                bossSprite.textContent = '🚶';
+                bossAlert.textContent = '';
+                bossStatus.textContent = '🟢 大大在巡視…';
                 bossBubble.textContent = BOSS_WORK[Math.floor(Math.random() * BOSS_WORK.length)];
+                bossTarget = rand(12, 88);
                 bossTimer = rand(lerp(1500, 700, f), lerp(3600, 1600, f));
             } else if (state === 'turn') {
-                bossEmoji.textContent = '🤔';
-                bossStatus.textContent = '⚠️ 大大好像要回頭了…';
+                scene.classList.add('s-turn');
+                bossSprite.textContent = '🧍';
+                bossAlert.textContent = '❓';
+                bossStatus.textContent = '🟡 大大停下腳步…要回頭了！';
                 bossBubble.textContent = '咦？';
+                bossTarget = 50; // start drifting toward the player
                 bossTimer = lerp(950, 460, f);
                 sfx.turn();
             } else { // watch
-                bossEmoji.textContent = '🧐';
-                bossStatus.textContent = '🔴 大大正在看你！！';
+                scene.classList.add('s-watch');
+                bossSprite.textContent = '🧐';
+                bossAlert.textContent = '❗';
+                bossStatus.textContent = '🔴 大大走過來盯著你！！';
                 bossBubble.textContent = BOSS_WATCH[Math.floor(Math.random() * BOSS_WATCH.length)];
+                bossTarget = 50;
                 bossTimer = rand(lerp(1100, 1300, f), lerp(2200, 2900, f));
                 sfx.watch();
             }
+        }
+        function moveBoss(dt, f) {
+            const speed = (bossState === 'work') ? lerp(12, 22, f) : 7.5; // % per second
+            const d = bossTarget - bossX;
+            const step = speed * dt / 1000;
+            if (Math.abs(d) <= step) bossX = bossTarget; else bossX += Math.sign(d) * step;
+            if (bossState === 'work') {
+                if (Math.abs(bossTarget - bossX) < 0.8) bossTarget = rand(10, 90);
+                if (Math.abs(d) > 0.2) bossFacing = d < 0 ? -1 : 1;
+                bossEmoji.style.transform = 'scaleX(' + bossFacing + ')';
+            } else {
+                bossEmoji.style.transform = 'scale(1.12)'; // face the player
+            }
+            boss.style.left = bossX + '%';
         }
         function advanceBoss() {
             if (bossState === 'work') setBoss('turn');
@@ -344,32 +486,31 @@
             } else setBoss('work');
         }
 
-        /* ---------- powerups ---------- */
-        const POWER_TYPES = [
-            { e: '🎧', k: 'cover', msg: '耳機罩頂！躺平也不會被發現 🤫' },
-            { e: '🪴', k: 'cover', msg: '盆栽擋住視線！安全躺平 🌿' },
-            { e: '☕', k: 'coffee', msg: '咖啡因爆發！放鬆加速 ⚡' },
-        ];
-        function spawnPower() {
-            const t = POWER_TYPES[Math.floor(Math.random() * POWER_TYPES.length)];
-            const el = document.createElement('div');
-            el.className = 'powerup'; el.textContent = t.e;
-            el.style.left = rand(10, 80) + '%';
-            el.style.top = rand(34, 58) + '%';
-            scene.appendChild(el);
-            const p = { el, t, life: 5500 };
-            el.addEventListener('pointerdown', ev => { ev.stopPropagation(); ev.preventDefault(); grabPower(p); });
-            powerups.push(p);
-        }
-        function grabPower(p) {
-            if (p.dead) return; p.dead = true;
+        /* ---------- camouflage abilities ---------- */
+        const CALL_LINES = ['📞「嗯嗯，這份報表我看一下…」', '📞「對對，我馬上處理～」', '📞「好的好的，沒問題！」'];
+        function fakeCall() {
             const t = now();
-            if (p.t.k === 'cover') coverUntil = t + 6000;
-            else { coffeeUntil = t + 6000; relax += 6; }
+            if (!running || paused || t < callCdUntil) return;
+            callUntil = t + CALL_DUR; callCdUntil = t + CD_CALL;
             sfx.power();
-            toast(p.t.msg);
-            p.el.classList.add('grabbed');
-            setTimeout(() => p.el.remove(), 220);
+            toast(CALL_LINES[Math.floor(Math.random() * CALL_LINES.length)] + '（其實在摸魚）');
+        }
+        function takeNote() {
+            const t = now();
+            if (!running || paused || t < noteCdUntil) return;
+            suspicion = Math.max(0, suspicion - NOTE_DROP);
+            noteCdUntil = t + CD_NOTE; noteFlashUntil = t + NOTE_FLASH;
+            sfx.combo();
+            floaty('-疑心', '#3A8C5C', null, 50);
+            toast('✍️ 抓起筆猛抄，大大以為你超認真');
+        }
+        function goPantry() {
+            const t = now();
+            if (!running || paused || t < awayCdUntil) return;
+            awayUntil = t + AWAY_DUR; awayCdUntil = t + CD_PANTRY;
+            setBoss('work'); // boss finds empty seat, attention resets
+            sfx.power();
+            toast('🚶 溜去茶水間，大大撲了個空 🍵');
         }
 
         /* ---------- floaty text ---------- */
@@ -392,36 +533,43 @@
             countdownT += dt;
             if (countdownT >= 1000) { countdownT -= 1000; timeLeft--; if (timeLeft <= 0) { timeLeft = 0; return end(true); } }
 
-            // boss timing
+            // boss timing + walking
             bossTimer -= dt;
             if (bossTimer <= 0) advanceBoss();
+            moveBoss(dt, elapsed / dur);
+            clockEl.textContent = CLOCKS[Math.min(CLOCKS.length - 1, Math.floor((60 - timeLeft) / 9))];
 
-            const cover = t < coverUntil;
-            const coffee = t < coffeeUntil;
-            const danger = bossState === 'watch' && !cover;
-            const risky = bossState === 'turn' && !cover;
+            const onCall = t < callUntil;
+            const away = t < awayUntil;
+            const shielded = onCall || away;
+            const danger = bossState === 'watch' && !shielded;
+            const risky = bossState === 'turn' && !shielded;
 
             // scene mood
-            scene.classList.toggle('cover', cover && slacking);
-            scene.classList.toggle('safe', !cover && slacking && bossState === 'work');
+            scene.classList.toggle('cover', shielded);
+            scene.classList.toggle('safe', !shielded && slacking && bossState === 'work');
             scene.classList.toggle('danger', slacking && danger);
 
             const f = elapsed / dur;
             const suspRate = lerp(42, 78, f);
 
-            if (slacking && !danger) {
-                // relaxing!
+            if (away) {
+                // at the pantry: suspicion drains, but no relaxing happens
+                suspicion = Math.max(0, suspicion - 40 * dt / 1000);
+                comboTime = 0; combo = 0; mult = 1;
+                zzzTimer += dt;
+                if (zzzTimer > 500) { zzzTimer = 0; floaty('🍵', '#5BC0EB'); }
+            } else if (slacking && !danger) {
+                // relaxing (safe, or shielded by a fake call)
                 if (!risky) comboTime += dt;
                 mult = Math.min(5, 1 + Math.floor(comboTime / 2500));
-                const newMult = mult;
-                const rate = 6 * mult * (coffee ? 1.7 : 1) * (risky ? 0.5 : 1);
+                const rate = 6 * mult * (onCall ? 0.55 : 1) * (risky ? 0.5 : 1);
                 relax += rate * dt / 1000;
-                if (risky) suspicion += suspRate * 0.3 * dt / 1000;
+                if (risky && !onCall) suspicion += suspRate * 0.3 * dt / 1000;
                 combo = Math.floor(comboTime / 1000);
                 bestCombo = Math.max(bestCombo, combo);
-                // zzz
                 zzzTimer += dt;
-                if (zzzTimer > 420) { zzzTimer = 0; floaty(cover ? '😎' : '💤', cover ? '#A78BFA' : '#6DBE8C'); }
+                if (zzzTimer > 420) { zzzTimer = 0; floaty(onCall ? '😏' : '💤', onCall ? '#5BC0EB' : '#6DBE8C'); }
             } else if (slacking && danger) {
                 suspicion += suspRate * dt / 1000;
                 comboTime = 0; combo = 0;
@@ -431,35 +579,26 @@
             } else {
                 // looking busy
                 comboTime = 0; combo = 0;
-                suspicion -= 22 * dt / 1000;
-                if (suspicion < 0) suspicion = 0;
+                suspicion = Math.max(0, suspicion - 22 * dt / 1000);
             }
 
             // multiplier flash
             if (mult !== lastMult) { if (mult > lastMult) { multHot = 1; sfx.combo(); } lastMult = mult; }
 
-            // powerups drift / expire
-            powerTimer -= dt;
-            if (powerTimer <= 0) { spawnPower(); powerTimer = rand(4500, 8000); }
-            for (let i = powerups.length - 1; i >= 0; i--) {
-                const p = powerups[i];
-                if (p.dead) { powerups.splice(i, 1); continue; }
-                p.life -= dt;
-                if (p.life <= 0) { p.el.remove(); powerups.splice(i, 1); }
-            }
-
-            renderScene(cover, danger, risky);
-            updateHUD();
+            renderScene(t, danger);
+            updateHUD(t);
             if (running) raf = requestAnimationFrame(loop);
         }
         let lastMult = 1;
 
-        function renderScene(cover, danger, risky) {
-            // player look
-            player.classList.toggle('slack', slacking && !danger);
+        function renderScene(t, danger) {
+            const onCall = t < callUntil, away = t < awayUntil, note = t < noteFlashUntil;
+            player.classList.toggle('slack', slacking && !danger && !away);
             player.classList.toggle('caught', slacking && danger);
-            if (!slacking) { playerEmoji.textContent = '🧑‍💻'; showPlayerBubble(''); }
-            else if (cover) { playerEmoji.textContent = '😎'; showPlayerBubble('🎧 聽不到～'); }
+            if (away) { playerEmoji.textContent = '🚶'; showPlayerBubble('🍵 茶水間放空'); }
+            else if (onCall) { playerEmoji.textContent = '😏'; showPlayerBubble('📞 嗯嗯…好的'); }
+            else if (note) { playerEmoji.textContent = '✍️'; showPlayerBubble('✍️ 超認真der'); }
+            else if (!slacking) { playerEmoji.textContent = '🧑‍💻'; showPlayerBubble(''); }
             else if (danger) { playerEmoji.textContent = '😰'; showPlayerBubble('😱 慘了！'); }
             else { playerEmoji.textContent = '😴'; showPlayerBubble('😌 好爽～'); }
         }
@@ -468,7 +607,14 @@
             playerBubble.style.display = 'block'; playerBubble.textContent = txt;
         }
 
-        function updateHUD() {
+        function cooldownBtn(btn, cdUntil, cdLen, activeUntil, t) {
+            const frac = Math.max(0, Math.min(1, (cdUntil - t) / cdLen));
+            btn.querySelector('.ab-cd').style.height = (frac * 100) + '%';
+            btn.classList.toggle('cooling', frac > 0);
+            btn.classList.toggle('active-now', activeUntil != null && t < activeUntil);
+        }
+
+        function updateHUD(t) {
             $('hudScore').textContent = Math.floor(relax);
             $('hudCombo').textContent = combo;
             $('hudTime').textContent = timeLeft;
@@ -478,23 +624,28 @@
             else if (mult === 1) m.classList.remove('hot');
             $('relaxBar').style.width = Math.min(100, relax / GOAL * 100) + '%';
             $('suspBar').style.width = Math.max(0, Math.min(100, suspicion)) + '%';
+            cooldownBtn(abCall, callCdUntil, CD_CALL, callUntil, t);
+            cooldownBtn(abNote, noteCdUntil, CD_NOTE, null, t);
+            cooldownBtn(abPantry, awayCdUntil, CD_PANTRY, awayUntil, t);
         }
 
         /* ---------- start / end / pause ---------- */
         function start() {
             ensureAudio();
-            (powerups || []).forEach(p => p.el && p.el.remove());
-            powerups = [];
             relax = 0; suspicion = 0; combo = 0; bestCombo = 0; comboTime = 0; mult = 1; lastMult = 1;
             timeLeft = 60; elapsed = 0; dur = 60000;
-            coverUntil = 0; coffeeUntil = 0;
-            slacking = false; running = true; paused = false; caught = false;
-            countdownT = 0; powerTimer = 3000; zzzTimer = 0; multHot = 0;
+            callUntil = 0; callCdUntil = 0; awayUntil = 0; awayCdUntil = 0; noteCdUntil = 0; noteFlashUntil = 0;
+            slacking = false; running = true; paused = false;
+            countdownT = 0; zzzTimer = 0; multHot = 0;
             slackBtn.classList.remove('held'); slackBtn.textContent = '按住來躺平 🛌';
-            scene.classList.remove('safe', 'danger', 'cover');
+            scene.classList.remove('safe', 'danger', 'cover', 's-turn', 's-watch');
+            [abCall, abNote, abPantry].forEach(b => { b.classList.remove('cooling', 'active-now'); b.querySelector('.ab-cd').style.height = '0%'; });
             $('startOverlay').classList.add('hidden');
             $('overOverlay').classList.add('hidden');
             $('pauseOverlay').classList.add('hidden');
+            bossX = rand(25, 75); bossTarget = bossX; bossFacing = 1;
+            boss.style.left = bossX + '%';
+            clockEl.textContent = CLOCKS[0];
             setBoss('work');
             lastT = now();
             cancelAnimationFrame(raf);
@@ -504,8 +655,10 @@
         function end(survived) {
             running = false; slacking = false; cancelAnimationFrame(raf);
             slackBtn.classList.remove('held'); slackBtn.textContent = '按住來躺平 🛌';
-            scene.classList.remove('safe', 'danger', 'cover');
+            scene.classList.remove('safe', 'danger', 'cover', 's-turn', 's-watch');
+            boss.classList.remove('walking');
             player.classList.remove('slack', 'caught');
+            [abCall, abNote, abPantry].forEach(b => b.classList.remove('cooling', 'active-now'));
             if (!survived) sfx.caught();
             const score = Math.floor(relax);
             if (score > best) { best = score; localStorage.setItem(BEST_KEY, best); }
