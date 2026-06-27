@@ -10,24 +10,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #000000;
-      --bg-soft: #0a0a0b;
-      --panel: rgba(255, 255, 255, 0.022);
-      --panel-strong: rgba(255, 255, 255, 0.05);
-      --border: rgba(255, 255, 255, 0.08);
-      --border-strong: rgba(255, 255, 255, 0.18);
-      --text: #f5f5f7;
-      --muted: #8e8e96;
-      --dim: #56565d;
-      --neon: #ffffff;        /* primary / active = stark white */
+      --bg: #ffffff;
+      --bg-soft: #f9fafb;
+      --panel: #ffffff;
+      --panel-strong: #f3f4f6;
+      --border: #e5e7eb;
+      --border-strong: #d1d5db;
+      --text: #111827;
+      --muted: #6b7280;
+      --dim: #9ca3af;
+      --neon: #2563eb;        /* primary / active = blue accent */
+      --neon-hover: #1d4ed8;
+      --tint: #eff6ff;
       /* console-only data colors */
-      --cyan: #5ad1ff;
-      --violet: #b39bff;
-      --pink: #ff86c2;
-      --grad: linear-gradient(180deg, #ffffff 0%, #8a8a92 100%);  /* metallic */
-      --sans: 'Sora', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+      --cyan: #0891b2;
+      --violet: #7c3aed;
+      --pink: #db2777;
+      --grad: linear-gradient(180deg, #1d4ed8 0%, #2563eb 100%);  /* blue */
+      --sans: 'Sora', 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
       --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
-      --radius: 18px;
+      --radius: 14px;
     }
 
     * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -42,22 +44,23 @@
       line-height: 1.6;
       font-size: 16px;
       overflow-x: hidden;
+      font-variant-numeric: tabular-nums;
     }
 
-    /* Black backdrop: technical grid + faint glow + grain */
+    /* Light backdrop: technical grid + faint blue glow */
     .backdrop {
       position: fixed;
       inset: 0;
       z-index: -2;
-      background: #000;
+      background: var(--bg);
       overflow: hidden;
     }
     .backdrop .grid {
       position: absolute;
       inset: -2px;
       background-image:
-        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+        linear-gradient(rgba(17,24,39,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(17,24,39,0.05) 1px, transparent 1px);
       background-size: 64px 64px;
       -webkit-mask-image: radial-gradient(ellipse 75% 55% at 50% -5%, #000 5%, transparent 75%);
       mask-image: radial-gradient(ellipse 75% 55% at 50% -5%, #000 5%, transparent 75%);
@@ -66,16 +69,8 @@
       position: absolute;
       top: -35%; left: 50%; transform: translateX(-50%);
       width: 130vw; height: 90vh;
-      background: radial-gradient(ellipse at center, rgba(255,255,255,0.07), transparent 62%);
+      background: radial-gradient(ellipse at center, rgba(37,99,235,0.06), transparent 62%);
       pointer-events: none;
-    }
-    .backdrop::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-      opacity: 0.035;
-      mix-blend-mode: overlay;
     }
 
     .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
@@ -83,8 +78,8 @@
     /* Nav */
     header {
       position: sticky; top: 0; z-index: 100;
-      backdrop-filter: blur(14px);
-      background: rgba(0,0,0,0.65);
+      backdrop-filter: saturate(180%) blur(14px);
+      background: rgba(255,255,255,0.72);
       border-bottom: 1px solid var(--border);
     }
     .nav { display: flex; align-items: center; justify-content: space-between; height: 70px; }
@@ -101,11 +96,11 @@
     .navlinks a:hover { color: var(--text); }
     .nav-cta {
       padding: 9px 18px; border-radius: 999px;
-      background: #fff; color: #000 !important;
+      background: var(--neon); color: #fff !important;
       font-weight: 700; font-size: 14px;
-      transition: transform .15s, opacity .15s;
+      transition: transform .15s, background .15s;
     }
-    .nav-cta:hover { transform: translateY(-1px); opacity: 0.88; }
+    .nav-cta:hover { transform: translateY(-1px); background: var(--neon-hover); }
 
     /* Generic */
     .eyebrow {
@@ -122,7 +117,6 @@
     .gradient-text {
       background: var(--grad);
       -webkit-background-clip: text; background-clip: text; color: transparent;
-      filter: drop-shadow(0 0 20px rgba(255,255,255,0.1));
     }
 
     /* Hero */
@@ -144,8 +138,8 @@
       text-decoration: none; cursor: pointer; border: 1px solid transparent;
       transition: transform .15s, box-shadow .15s, background .15s, border-color .15s;
     }
-    .btn-primary { background: #fff; color: #000; }
-    .btn-primary:hover { transform: translateY(-2px); opacity: 0.88; }
+    .btn-primary { background: var(--neon); color: #fff; }
+    .btn-primary:hover { transform: translateY(-2px); background: var(--neon-hover); }
     .btn-ghost { background: var(--panel); color: var(--text); border-color: var(--border-strong); }
     .btn-ghost:hover { border-color: var(--text); transform: translateY(-2px); }
 
@@ -171,9 +165,9 @@
     }
     .vs-card.them { opacity: 0.78; }
     .vs-card.us {
-      border-color: rgba(255,255,255,0.35);
-      background: linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
-      box-shadow: 0 0 60px rgba(255,255,255,0.06) inset;
+      border-color: var(--neon);
+      background: var(--tint);
+      box-shadow: var(--shadow-md, 0 4px 16px rgba(17,24,39,0.08));
     }
     .vs-card h3 { font-size: 22px; margin-bottom: 8px; }
     .vs-tag { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
@@ -195,7 +189,7 @@
     .step:hover { transform: translateY(-6px); border-color: var(--border-strong); background: var(--panel-strong); }
     .step .n {
       font-family: var(--mono); font-size: 13px; color: var(--neon);
-      border: 1px solid rgba(255,255,255,0.3); border-radius: 8px;
+      border: 1px solid var(--neon); border-radius: 8px;
       width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
       margin-bottom: 22px;
     }
@@ -232,7 +226,7 @@
     }
     .agent-rail .track::after {
       content: ""; position: absolute; inset: 0; border-radius: 2px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), var(--neon), rgba(255,255,255,0.4), transparent);
+      background: linear-gradient(90deg, transparent, rgba(37,99,235,0.35), var(--neon), rgba(37,99,235,0.35), transparent);
       background-size: 28% 100%; background-repeat: no-repeat;
       animation: flow 4.5s linear infinite;
     }
@@ -246,8 +240,8 @@
     }
     .agent-node.active .ring {
       border-color: var(--neon); transform: scale(1.12);
-      background: rgba(255,255,255,0.1);
-      box-shadow: 0 0 0 5px rgba(255,255,255,0.08), 0 0 28px rgba(255,255,255,0.5);
+      background: var(--tint);
+      box-shadow: 0 0 0 5px rgba(37,99,235,0.12), 0 0 24px rgba(37,99,235,0.35);
     }
     .agent-node .tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); transition: color .4s; }
     .agent-node.active .tag { color: var(--neon); }
@@ -255,10 +249,10 @@
     .agent-node p { font-size: 12.5px; color: var(--muted); margin: 0; line-height: 1.45; }
 
     /* Console */
-    .console { border: 1px solid var(--border); border-radius: var(--radius); background: #060609; overflow: hidden; }
-    .console-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--panel); }
+    .console { border: 1px solid var(--border-strong); border-radius: var(--radius); background: #0b0f17; overflow: hidden; box-shadow: var(--shadow-md, 0 4px 16px rgba(17,24,39,0.08)); }
+    .console-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); }
     .console-bar .cdot { width: 11px; height: 11px; border-radius: 50%; }
-    .console-bar .t { margin-left: 8px; font-family: var(--mono); font-size: 12px; color: var(--dim); }
+    .console-bar .t { margin-left: 8px; font-family: var(--mono); font-size: 12px; color: #6b7484; }
     .console-body { padding: 20px 22px; font-family: var(--mono); font-size: 13px; line-height: 1.95; min-height: 268px; }
     .log-line { display: flex; gap: 10px; opacity: 0; transform: translateY(4px); animation: logIn .35s ease forwards; }
     @keyframes logIn { to { opacity: 1; transform: none; } }
@@ -288,7 +282,7 @@
     .cta-box {
       border-radius: 28px; padding: 72px 56px; text-align: center;
       background:
-        radial-gradient(ellipse 70% 120% at 50% 0%, rgba(255,255,255,0.08), transparent 70%),
+        radial-gradient(ellipse 70% 120% at 50% 0%, rgba(37,99,235,0.08), transparent 70%),
         var(--bg-soft);
       border: 1px solid var(--border-strong); position: relative; overflow: hidden;
     }
@@ -428,10 +422,10 @@
             <span class="vs-tag">◆ PROOF</span>
             <h3>賣成果 / 賣前線部署</h3>
             <ul class="vs-list">
-              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2af6ff" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>前期零顧問費，先上線再談錢</li>
-              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2af6ff" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>交付的是真的在跑的 AI 系統</li>
-              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2af6ff" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>直接部署進你的營運第一線</li>
-              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2af6ff" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>依約定成果基準，分潤式收費</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>前期零顧問費，先上線再談錢</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>交付的是真的在跑的 AI 系統</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>直接部署進你的營運第一線</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>依約定成果基準，分潤式收費</li>
             </ul>
           </div>
         </div>
