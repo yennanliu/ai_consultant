@@ -557,7 +557,7 @@
           <span class="eyebrow" style="justify-content:center;">START_HERE</span>
           <h2 style="margin-top:18px;">先看到成果，<br><span class="gradient-text">再決定要不要付費。</span></h2>
           <p>15 分鐘免費診斷，我們會告訴你哪個前線環節最適合導入 AI、預期能省下多少，以及成果怎麼計算。</p>
-          <a href="#" class="btn btn-primary js-lead" target="_blank" rel="noreferrer">預約免費診斷 →</a>
+          <a href="https://forms.gle/M1YHzT8V3wErZGNJ6" target="_blank" rel="noreferrer" class="btn btn-primary">預約免費診斷 →</a>
         </div>
       </div>
     </section>
@@ -598,28 +598,13 @@
           <h4>開始</h4>
           <a href="#contact">免費診斷</a>
           <a href="#faq">常見問題</a>
-          <a href="#" class="js-lead" target="_blank" rel="noreferrer">建立諮詢單</a>
+          <a href="https://forms.gle/M1YHzT8V3wErZGNJ6" target="_blank" rel="noreferrer">填寫問卷</a>
         </div>
       </div>
     </div>
   </footer>
 
   <script>
-    // Contact links → prefilled GitHub issue (template body the visitor completes)
-    (function () {
-      const repo = 'BrotherSupport/ai_consultant';
-      const title = 'AI 前線部署諮詢';
-      const body = [
-        '（請補充以下資訊，方便我們快速了解你的需求）', '',
-        '### 產業類別', '', '### 公司名稱', '', '### 聯絡 Email / 電話', '', '### 想解決的痛點 / 想看到的成果', '',
-        '---', '_由 PROOF 網站建立_'
-      ].join('\n');
-      const p = new URLSearchParams({ title: title, body: body });
-      p.set('labels', 'lead');
-      const url = 'https://github.com/' + repo + '/issues/new?' + p.toString();
-      document.querySelectorAll('.js-lead').forEach(function (a) { a.setAttribute('href', url); });
-    })();
-
     // Scroll reveal
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
