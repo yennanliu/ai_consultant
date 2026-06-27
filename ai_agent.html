@@ -295,10 +295,10 @@
                     <span class="mono-label">GET_STARTED</span>
                     <h2 style="font-size: 30px; margin-bottom: var(--space-4);">開始你的數位升級</h2>
                     <p class="mb-8">留下需求，我們將在 24 小時內聯繫你，安排一次免費的初步診斷。</p>
-                    <form style="display: flex; flex-direction: column; gap: var(--space-6);" onsubmit="return false;">
+                    <form id="lead-form" style="display: flex; flex-direction: column; gap: var(--space-6);">
                         <div>
-                            <label class="mono-label">產業類別</label>
-                            <select>
+                            <label class="mono-label" for="lf-industry">產業類別</label>
+                            <select id="lf-industry">
                                 <option>貿易與報關</option>
                                 <option>中小型製造業</option>
                                 <option>連鎖零售 / 餐飲</option>
@@ -307,11 +307,22 @@
                                 <option>其他</option>
                             </select>
                         </div>
-                        <div>
-                            <label class="mono-label">你最想解決的人工痛點？</label>
-                            <textarea rows="4" placeholder="例如：報關單手打太慢、師傅技術沒人接班、LINE 客服回不完..."></textarea>
+                        <div class="grid-2" style="gap: var(--space-4);">
+                            <div>
+                                <label class="mono-label" for="lf-company">公司名稱</label>
+                                <input id="lf-company" placeholder="選填" />
+                            </div>
+                            <div>
+                                <label class="mono-label" for="lf-contact">聯絡 Email / 電話</label>
+                                <input id="lf-contact" placeholder="方便我們回覆" />
+                            </div>
                         </div>
-                        <a href="https://forms.gle/M1YHzT8V3wErZGNJ6" target="_blank" rel="noreferrer" class="btn btn-primary btn-lg" style="width: 100%;">送出申請（24 小時內聯繫你）→</a>
+                        <div>
+                            <label class="mono-label" for="lf-pain">你最想解決的人工痛點？</label>
+                            <textarea id="lf-pain" rows="4" placeholder="例如：報關單手打太慢、師傅技術沒人接班、LINE 客服回不完..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">送出需求 →</button>
+                        <p class="text-xs" style="color: var(--text-dim); margin: 0; text-align: center;">送出後會開啟 GitHub 頁面，確認內容後點「Submit new issue」即可（需 GitHub 帳號）。</p>
                     </form>
                 </div>
             </div>
@@ -349,6 +360,34 @@
         moonIcon.style.display = isDark ? 'none' : 'block';
         sunIcon.style.display = isDark ? 'block' : 'none';
       });
+
+      /* Contact form → GitHub issue (prefilled) */
+      var GH_REPO = 'BrotherSupport/ai_consultant';
+      function ghIssueUrl(title, body, labels) {
+        var p = new URLSearchParams({ title: title, body: body });
+        if (labels) p.set('labels', labels);
+        return 'https://github.com/' + GH_REPO + '/issues/new?' + p.toString();
+      }
+      var leadForm = document.getElementById('lead-form');
+      if (leadForm) {
+        leadForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var industry = document.getElementById('lf-industry').value;
+          var company = document.getElementById('lf-company').value.trim();
+          var contact = document.getElementById('lf-contact').value.trim();
+          var pain = document.getElementById('lf-pain').value.trim();
+          var title = 'AI 導入諮詢 · ' + (company || industry);
+          var body = [
+            '### 來源頁面', 'AI AGENT', '',
+            '### 產業類別', industry, '',
+            '### 公司名稱', company || '（未填）', '',
+            '### 聯絡方式', contact || '（未填）', '',
+            '### 想解決的痛點', pain || '（未填）', '',
+            '---', '_由 ai-consultant 網站自動產生_'
+          ].join('\n');
+          window.open(ghIssueUrl(title, body, 'lead'), '_blank', 'noopener');
+        });
+      }
 
       /* Scroll reveal */
       var __io = new IntersectionObserver(function (es) {

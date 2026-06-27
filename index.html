@@ -226,8 +226,29 @@
           <div class="cta-box reveal">
             <span class="mono-label" style="justify-content:center;">START_HERE</span>
             <h2 style="margin-top:14px;">先看到成果，<br><span class="gradient-text">再決定要不要前進</span></h2>
-            <p class="lead mx-auto" style="max-width:560px; margin-bottom: var(--space-8);">15 分鐘免費診斷，我們會告訴你哪個前線環節最適合導入 AI Agent、預期能省下多少。</p>
-            <a href="https://forms.gle/M1YHzT8V3wErZGNJ6" target="_blank" rel="noreferrer" class="btn btn-primary btn-lg">前往問卷，預約診斷 →</a>
+            <p class="lead mx-auto" style="max-width:560px; margin-bottom: var(--space-8);">填寫簡單幾欄，我們會在 24 小時內聯繫你，安排 15 分鐘免費診斷。</p>
+            <form id="lead-form" style="max-width:560px; margin:0 auto; text-align:left; display:flex; flex-direction:column; gap:var(--space-4);">
+              <div class="grid-2" style="gap:var(--space-4);">
+                <div>
+                  <label class="mono-label" for="lf-industry">產業類別</label>
+                  <select id="lf-industry"><option>貿易與報關</option><option>中小型製造業</option><option>連鎖零售 / 餐飲</option><option>法律 / 財稅服務</option><option>室內設計 / 建築</option><option>其他</option></select>
+                </div>
+                <div>
+                  <label class="mono-label" for="lf-company">公司名稱</label>
+                  <input id="lf-company" placeholder="選填" />
+                </div>
+              </div>
+              <div>
+                <label class="mono-label" for="lf-contact">聯絡 Email / 電話</label>
+                <input id="lf-contact" placeholder="方便我們回覆" />
+              </div>
+              <div>
+                <label class="mono-label" for="lf-pain">想解決的痛點</label>
+                <textarea id="lf-pain" rows="3" placeholder="例如：報價太慢、客服回不完、資料找不到..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">送出需求 →</button>
+              <p class="text-xs" style="color:var(--text-dim); margin:0; text-align:center;">送出後會開啟 GitHub 頁面，確認內容後點「Submit new issue」即可（需 GitHub 帳號）。</p>
+            </form>
           </div>
         </div>
       </section>
@@ -257,6 +278,34 @@
         moonIcon.style.display = isDark ? 'none' : 'block';
         sunIcon.style.display = isDark ? 'block' : 'none';
       });
+
+      /* Contact form → GitHub issue (prefilled) */
+      const GH_REPO = 'BrotherSupport/ai_consultant';
+      function ghIssueUrl(title, body, labels) {
+        const p = new URLSearchParams({ title, body });
+        if (labels) p.set('labels', labels);
+        return 'https://github.com/' + GH_REPO + '/issues/new?' + p.toString();
+      }
+      const leadForm = document.getElementById('lead-form');
+      if (leadForm) {
+        leadForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const industry = document.getElementById('lf-industry').value;
+          const company = document.getElementById('lf-company').value.trim();
+          const contact = document.getElementById('lf-contact').value.trim();
+          const pain = document.getElementById('lf-pain').value.trim();
+          const title = 'AI 導入諮詢 · ' + (company || industry);
+          const body = [
+            '### 來源頁面', 'HOME', '',
+            '### 產業類別', industry, '',
+            '### 公司名稱', company || '（未填）', '',
+            '### 聯絡方式', contact || '（未填）', '',
+            '### 想解決的痛點', pain || '（未填）', '',
+            '---', '_由 ai-consultant 網站自動產生_'
+          ].join('\n');
+          window.open(ghIssueUrl(title, body, 'lead'), '_blank', 'noopener');
+        });
+      }
 
       /* Scroll reveal */
       const io = new IntersectionObserver((entries) => {
