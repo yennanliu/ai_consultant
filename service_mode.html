@@ -31,6 +31,7 @@
 
     <main>
       <section class="hero b-bottom">
+        <div class="aurora"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
         <div class="wrap">
           <span class="mono-label">// SERVICE MODES</span>
           <h1>專業服務模式</h1>
@@ -47,7 +48,7 @@
             以下為我們的標準服務模式與價格，涵蓋從策略規劃到實際執行的全方位支援。所有價格以新台幣計算，包含基本諮詢與文件交付。
           </p>
           <div class="card-grid">
-            <div class="card">
+            <div class="card reveal">
               <span class="mono-label">01</span>
               <h3>策略諮詢</h3>
               <p>與管理層深度訪談，產出 AI 機會地圖與 ROI 分析。</p>
@@ -58,7 +59,7 @@
               </ul>
               <div style="font-weight: 600; color: var(--accent);">NT$ 1,500 / 小時</div>
             </div>
-            <div class="card">
+            <div class="card reveal">
               <span class="mono-label">02</span>
               <h3>工具導入</h3>
               <p>評估現有系統，選擇並配置最適合的 AI 工具與平台。</p>
@@ -69,7 +70,7 @@
               </ul>
               <div style="font-weight: 600; color: var(--accent);">NT$ 80,000 - 120,000</div>
             </div>
-            <div class="card">
+            <div class="card reveal">
               <span class="mono-label">03</span>
               <h3>POC 驗證</h3>
               <p>快速建置原型，驗證商業假設與技術可行性。</p>
@@ -80,7 +81,7 @@
               </ul>
               <div style="font-weight: 600; color: var(--accent);">NT$ 100,000 - 150,000</div>
             </div>
-            <div class="card">
+            <div class="card reveal">
               <span class="mono-label">04</span>
               <h3>資料治理</h3>
               <p>建立資料品質標準與安全機制，確保 AI 應用可靠。</p>
@@ -91,7 +92,7 @@
               </ul>
               <div style="font-weight: 600; color: var(--accent);">NT$ 60,000 - 90,000</div>
             </div>
-            <div class="card">
+            <div class="card reveal">
               <span class="mono-label">05</span>
               <h3>組織培訓</h3>
               <p>協助團隊掌握 AI 實作技能與變革管理。</p>
@@ -136,6 +137,8 @@
         moonIcon.style.display = isDark ? 'none' : 'block';
         sunIcon.style.display = isDark ? 'block' : 'none';
       });
+      var __io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");__io.unobserve(e.target);}});},{threshold:0.12});
+      document.querySelectorAll(".reveal").forEach(function(el,i){el.style.transitionDelay=(i%4)*80+"ms";__io.observe(el);});
     </script>
   </body>
 </html>

@@ -31,6 +31,7 @@
 
     <main>
       <section class="hero b-bottom">
+        <div class="aurora"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
         <div class="wrap">
           <span class="mono-label">// OUR TEAM</span>
           <h1>專業團隊</h1>
@@ -47,12 +48,12 @@
             團隊成員來自頂尖科技公司與新創企業，擁有豐富的 AI 系統開發與產品管理經驗，能夠從技術與商業雙重角度提供全方位支援。
           </p>
           <div class="grid-2">
-            <div class="card" style="padding: var(--space-8);">
+            <div class="card reveal" style="padding: var(--space-8);">
               <span class="mono-label">J</span>
               <h3>資深工程師</h3>
               <p style="color: var(--text);">前大型科技公司資深工程師，專精於 AI 系統、代理流程與雲端基礎設施。擅長技術設計、規劃與端到端開發，確保系統高效且可擴展。</p>
             </div>
-            <div class="card" style="padding: var(--space-8);">
+            <div class="card reveal" style="padding: var(--space-8);">
               <span class="mono-label">T</span>
               <h3>資深產品負責人</h3>
               <p style="color: var(--text);">前領先科技新創公司資深產品負責人，具備深厚的產品理解與商業策略技能。擅長規劃、建置 MVP 以及運用現代工具與工作流程開發 AI 產品。</p>
@@ -91,6 +92,8 @@
         moonIcon.style.display = isDark ? 'none' : 'block';
         sunIcon.style.display = isDark ? 'block' : 'none';
       });
+      var __io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");__io.unobserve(e.target);}});},{threshold:0.12});
+      document.querySelectorAll(".reveal").forEach(function(el,i){el.style.transitionDelay=(i%4)*80+"ms";__io.observe(el);});
     </script>
   </body>
 </html>

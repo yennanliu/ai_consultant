@@ -31,6 +31,7 @@
 
     <main>
       <section class="hero b-bottom">
+        <div class="aurora"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
         <div class="wrap">
           <span class="mono-label">// INSIGHTS & UPDATES</span>
           <h1>Blog</h1>
@@ -49,7 +50,7 @@
           
           <div class="card-grid">
             
-            <a href="asset/ai-trends-2026.html" class="card">
+            <a href="asset/ai-trends-2026.html" class="card reveal">
               <span class="mono-label">AI TRENDS</span>
               <h3>2026 年 AI 趨勢預測</h3>
               <div class="text-xs mb-4" style="color: var(--text-dim);">2026-04-27</div>
@@ -57,7 +58,7 @@
               <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
             </a>
 
-            <a href="asset/manufacturing-ai-case-study.html" class="card">
+            <a href="asset/manufacturing-ai-case-study.html" class="card reveal">
               <span class="mono-label">CASE STUDY</span>
               <h3>製造業 AI 導入實戰</h3>
               <div class="text-xs mb-4" style="color: var(--text-dim);">2026-04-20</div>
@@ -65,7 +66,7 @@
               <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
             </a>
 
-            <a href="asset/smb-ai-strategy-guide.html" class="card">
+            <a href="asset/smb-ai-strategy-guide.html" class="card reveal">
               <span class="mono-label">STRATEGY</span>
               <h3>中小企業 AI 策略指南</h3>
               <div class="text-xs mb-4" style="color: var(--text-dim);">2026-04-15</div>
@@ -73,7 +74,7 @@
               <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
             </a>
 
-            <a href="asset/enterprise-private-agent-architecture.html" class="card">
+            <a href="asset/enterprise-private-agent-architecture.html" class="card reveal">
               <span class="mono-label">TECHNICAL GUIDE</span>
               <h3>企業私有 AI Agent 系統架構設計</h3>
               <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
@@ -81,7 +82,7 @@
               <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
             </a>
 
-            <a href="asset/private-agent-deployment-strategy.html" class="card">
+            <a href="asset/private-agent-deployment-strategy.html" class="card reveal">
               <span class="mono-label">IMPLEMENTATION</span>
               <h3>私有 Agent 部署策略與治理框架</h3>
               <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
@@ -89,7 +90,7 @@
               <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
             </a>
 
-            <a href="asset/private-agent-security-compliance.html" class="card">
+            <a href="asset/private-agent-security-compliance.html" class="card reveal">
               <span class="mono-label">SECURITY & GOVERNANCE</span>
               <h3>私有 Agent 系統的安全與合規</h3>
               <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
@@ -97,7 +98,7 @@
               <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
             </a>
 
-            <a href="asset/agent-chat-vs-agent.html" class="card">
+            <a href="asset/agent-chat-vs-agent.html" class="card reveal">
               <span class="mono-label">AGENT SERIES #1</span>
               <h3>AI Chat vs AI Agent：為什麼不是同一件事</h3>
               <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
@@ -105,7 +106,7 @@
               <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
             </a>
 
-            <a href="asset/agent-six-layer-architecture.html" class="card">
+            <a href="asset/agent-six-layer-architecture.html" class="card reveal">
               <span class="mono-label">AGENT SERIES #2</span>
               <h3>Agent 六層架構：從模型到治理</h3>
               <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
@@ -113,7 +114,7 @@
               <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
             </a>
 
-            <a href="asset/agent-core-components.html" class="card">
+            <a href="asset/agent-core-components.html" class="card reveal">
               <span class="mono-label">AGENT SERIES #3</span>
               <h3>Agent 核心元件與實施路線</h3>
               <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
@@ -155,6 +156,8 @@
         moonIcon.style.display = isDark ? 'none' : 'block';
         sunIcon.style.display = isDark ? 'block' : 'none';
       });
+      var __io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");__io.unobserve(e.target);}});},{threshold:0.12});
+      document.querySelectorAll(".reveal").forEach(function(el,i){el.style.transitionDelay=(i%4)*80+"ms";__io.observe(el);});
     </script>
   </body>
 </html>

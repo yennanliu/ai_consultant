@@ -3,80 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AI consultant - 台灣中小企業 AI 導入顧問</title>
+    <title>AI consultant — 讓 AI Agent 成為企業的數位員工</title>
+    <meta name="description" content="專為台灣中小企業打造的 agentic AI 導入顧問。會感知、規劃、執行、自我修正的 AI Agent，直接部署到你的營運第一線。" />
     <link rel="stylesheet" href="linear.css">
-    <style>
-      .hero {
-        position: relative;
-        overflow: hidden;
-      }
-      #hero-canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        opacity: 0.4;
-      }
-      
-      /* Strategic Flow Viz */
-      .flow-container {
-        margin: var(--space-12) 0;
-        padding: var(--space-8);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-lg);
-        background: var(--bg-alt);
-        position: relative;
-      }
-      .flow-steps {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: var(--space-4);
-      }
-      .flow-step {
-        text-align: center;
-        flex: 1;
-      }
-      .flow-connector {
-        height: 1px;
-        background: var(--border-strong);
-        flex-grow: 1;
-        position: relative;
-        max-width: 60px;
-      }
-      .flow-connector::after {
-        content: "";
-        position: absolute;
-        right: 0;
-        top: -3px;
-        border-left: 4px solid var(--border-strong);
-        border-top: 3px solid transparent;
-        border-bottom: 3px solid transparent;
-      }
-      
-      .stat-badge {
-        display: inline-block;
-        padding: 2px 6px;
-        border-radius: 4px;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        font-family: var(--mono);
-        font-size: 10px;
-        color: var(--text-muted);
-        margin-top: var(--space-2);
-      }
-
-      /* Entry Animation */
-      @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      .animate-fade {
-        animation: fadeInUp 0.6s ease forwards;
-      }
-    </style>
   </head>
   <body>
 
@@ -85,13 +14,13 @@
         <div class="nav">
           <a href="index.html" class="brand">AI CONSULTANT</a>
           <nav class="navlinks">
+            <a href="#agentic">AGENTIC</a>
             <a href="#services">SERVICES</a>
-            <a href="service_mode.html">SERVICE MODES</a>
-            <a href="success_stories.html">SUCCESS STORIES</a>
-            <a href="team.html">TEAM</a>
-            <a href="blog.html">BLOG</a>
+            <a href="service_mode.html">MODES</a>
+            <a href="success_stories.html">STORIES</a>
             <a href="ai_agent.html">AI AGENT</a>
-            <a href="#contact">CONTACT</a>
+            <a href="blog.html">BLOG</a>
+            <a href="#contact" class="btn btn-primary" style="height:38px;padding:8px 18px;font-size:14px;">免費診斷 →</a>
             <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
@@ -102,201 +31,285 @@
     </header>
 
     <main>
-      <section class="hero b-bottom">
-        <canvas id="hero-canvas"></canvas>
+      <!-- HERO -->
+      <section class="hero">
+        <div class="aurora"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
         <div class="wrap">
-          <div class="hero-content">
-            <span class="mono-label animate-fade">// STRATEGY & IMPLEMENTATION</span>
-            <h1 class="animate-fade" style="animation-delay: 0.1s;">讓 AI 成為企業<br>成長的實質動力</h1>
-            <p class="animate-fade" style="font-size: 18px; max-width: 600px; animation-delay: 0.2s;">
-              專為台灣中小企業打造的 AI 導入顧問服務。從場景釐清到 POC 驗證，我們把複雜留在後台，把成果帶到前台。
+          <div class="reveal" style="max-width: 880px;">
+            <span class="hero-badge"><span class="dot"></span>AGENTIC AI · 為台灣中小企業而生</span>
+            <h1>讓 AI Agent 成為<br>企業的<span class="gradient-text">數位員工</span></h1>
+            <p class="lead" style="max-width: 660px;">
+              不是問一句答一句的聊天機器人，而是會<b style="color:var(--text)">感知、規劃、動手、自我檢查</b>再交付的 AI Agent。我們把它直接部署到你的營運第一線——讓它真的跑起來、跑出數字。
             </p>
-            <div class="animate-fade" style="margin-top: var(--space-8); animation-delay: 0.3s;">
-              <a href="#contact" class="btn btn-primary btn-lg">START DIAGNOSIS</a>
+            <div style="display:flex; gap: var(--space-4); flex-wrap:wrap; margin-top: var(--space-8);">
+              <a href="#contact" class="btn btn-primary btn-lg">預約免費診斷 →</a>
+              <a href="#agentic" class="btn btn-secondary btn-lg">看 Agent 怎麼運作</a>
             </div>
+          </div>
+
+          <!-- Animated stat counters -->
+          <div class="stat-grid reveal" style="margin-top: var(--space-16);">
+            <div class="stat"><div class="num" data-to="14" data-suffix=" 天">0</div><div class="lbl">完成首版 Agent 上線</div></div>
+            <div class="stat"><div class="num" data-to="63" data-suffix="%">0</div><div class="lbl">平均前線人力時間節省</div></div>
+            <div class="stat"><div class="num" data-to="40" data-suffix="+">0</div><div class="lbl">已導入的台灣中小企業</div></div>
+            <div class="stat"><div class="num" data-to="24" data-suffix="/7">0</div><div class="lbl">Agent 全年無休運作</div></div>
           </div>
         </div>
       </section>
 
-      <section id="services" class="b-bottom">
+      <!-- TRUST MARQUEE -->
+      <section class="b-top b-bottom" style="padding: var(--space-12) 0;">
+        <div class="wrap center" style="margin-bottom: var(--space-8);">
+          <span class="mono-label" style="justify-content:center;">DEPLOYED_ACROSS</span>
+        </div>
+        <div class="marquee">
+          <div class="marquee-track">
+            <span class="marquee-item">製造 · 瑕疵檢測</span><span class="marquee-item">貿易 · 報關自動化</span>
+            <span class="marquee-item">零售 · 智慧客服</span><span class="marquee-item">物流 · 路徑優化</span>
+            <span class="marquee-item">法律 · 合約比對</span><span class="marquee-item">財稅 · 報表生成</span>
+            <span class="marquee-item">製造 · 瑕疵檢測</span><span class="marquee-item">貿易 · 報關自動化</span>
+            <span class="marquee-item">零售 · 智慧客服</span><span class="marquee-item">物流 · 路徑優化</span>
+            <span class="marquee-item">法律 · 合約比對</span><span class="marquee-item">財稅 · 報表生成</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- AGENTIC SHOWCASE -->
+      <section id="agentic">
         <div class="wrap">
-          <span class="mono-label">SERVICE_SCOPE</span>
-          <h2>服務範圍</h2>
-          <p style="max-width: 760px; font-size: 18px; margin-bottom: var(--space-12);">
-            服務涵蓋從策略到執行的完整 AI 導入流程，幫助中小企業把 AI 轉化成營運成長、效率提升與風險可控的實際成果。
-          </p>
-          
-          <!-- Dynamic Flow Viz -->
-          <div class="flow-container">
-            <div class="flow-steps">
-              <div class="flow-step">
-                <span class="mono-label">STRATEGY</span>
-                <div style="font-size: 14px; font-weight: 600;">機會地圖</div>
-                <div class="stat-badge">ROI_ORIENTED</div>
-              </div>
-              <div class="flow-connector"></div>
-              <div class="flow-step">
-                <span class="mono-label">DATA</span>
-                <div style="font-size: 14px; font-weight: 600;">治理與清理</div>
-                <div class="stat-badge">QUALITY_FIRST</div>
-              </div>
-              <div class="flow-connector"></div>
-              <div class="flow-step">
-                <span class="mono-label">LOGIC</span>
-                <div style="font-size: 14px; font-weight: 600;">模型與系統</div>
-                <div class="stat-badge" style="color: var(--accent); border-color: var(--accent);">AI_AGENT</div>
-              </div>
-              <div class="flow-connector"></div>
-              <div class="flow-step">
-                <span class="mono-label">RESULT</span>
-                <div style="font-size: 14px; font-weight: 600;">效率轉化</div>
-                <div class="stat-badge">BUSINESS_VALUE</div>
-              </div>
-            </div>
+          <div class="section-head reveal">
+            <span class="mono-label">AGENTIC_SYSTEM</span>
+            <h2>會<span class="gradient-text">自己跑完整個任務</span>的 AI。</h2>
+            <p class="lead">我們部署的 Agent 遵循一套自主工作流：感知 → 規劃 → 執行 → 驗證 → 交付。它把人從重複決策裡解放出來，只在關鍵節點請你確認。下方是一個報價任務的即時執行紀錄。</p>
           </div>
 
-          <div class="card-grid">
-            <div class="card">
-              <span class="mono-label">01</span>
-              <h3>策略諮詢</h3>
-              <p>與管理層共構 AI 機會地圖、價值假設與投資回報，確保技術與營運目標一致。</p>
+          <!-- Live orchestration rail -->
+          <div class="agent-rail reveal">
+            <div class="track"></div>
+            <div class="agent-node" data-stage="0"><div class="ring">👁️</div><div class="tag">Perceive</div><h4>感知</h4><p>讀取郵件、訊息、表單與系統事件</p></div>
+            <div class="agent-node" data-stage="1"><div class="ring">🧭</div><div class="tag">Plan</div><h4>規劃</h4><p>拆解任務、排定步驟與所需工具</p></div>
+            <div class="agent-node" data-stage="2"><div class="ring">🛠️</div><div class="tag">Act</div><h4>執行</h4><p>呼叫 API、查資料庫、操作系統</p></div>
+            <div class="agent-node" data-stage="3"><div class="ring">🔁</div><div class="tag">Reflect</div><h4>驗證</h4><p>檢查結果、發現錯誤就自我修正</p></div>
+            <div class="agent-node" data-stage="4"><div class="ring">📤</div><div class="tag">Deliver</div><h4>交付</h4><p>產出成果，必要時交人工確認</p></div>
+          </div>
+
+          <!-- Live console -->
+          <div class="console reveal" style="margin-top: var(--space-6);">
+            <div class="console-bar">
+              <span class="cdot" style="background:#ff5f56"></span>
+              <span class="cdot" style="background:#ffbd2e"></span>
+              <span class="cdot" style="background:#27c93f"></span>
+              <span class="t">ai-consultant-agent · 即時執行紀錄</span>
             </div>
-            <div class="card">
-              <span class="mono-label">02</span>
-              <h3>工具導入</h3>
-              <p>評估現有系統與成本，選擇符合規模、風險與可維運性的最佳方案。</p>
-            </div>
-            <div class="card">
-              <span class="mono-label">03</span>
-              <h3>POC 驗證</h3>
-              <p>以小範圍原型驗證商業假設，快速調整流程與技術架構，降低落地風險。</p>
-            </div>
-            <div class="card">
-              <span class="mono-label">04</span>
-              <h3>資料治理</h3>
-              <p>建立資料品質、存取與安全標準，讓 AI 以信賴資料為基礎產生真正可用的洞察。</p>
-            </div>
-            <div class="card">
-              <span class="mono-label">05</span>
-              <h3>組織培訓</h3>
-              <p>協助團隊掌握實作要點與變革節奏，打造可持續的 AI 能力與內部推進力。</p>
-            </div>
+            <div class="console-body" id="agent-log"></div>
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top: var(--space-6);" class="reveal">
+            <span class="pill"><span class="pdot"></span>自主拆解與規劃任務</span>
+            <span class="pill"><span class="pdot"></span>呼叫工具與內部系統</span>
+            <span class="pill"><span class="pdot"></span>長短期記憶與情境</span>
+            <span class="pill"><span class="pdot"></span>自我檢查與修正</span>
+            <span class="pill"><span class="pdot"></span>關鍵節點真人接手</span>
           </div>
         </div>
       </section>
 
+      <!-- SERVICES -->
+      <section id="services" class="b-top">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <span class="mono-label">SERVICE_SCOPE</span>
+            <h2>從策略到執行的<br>完整 AI 導入流程</h2>
+            <p class="lead">幫助中小企業把 AI 轉化成營運成長、效率提升與風險可控的實際成果。</p>
+          </div>
+          <div class="card-grid">
+            <div class="card reveal"><div class="card-icon">🧭</div><span class="mono-label">01</span><h3>策略諮詢</h3><p>與管理層共構 AI 機會地圖、價值假設與投資回報，確保技術與營運目標一致。</p></div>
+            <div class="card reveal"><div class="card-icon">🧩</div><span class="mono-label">02</span><h3>工具導入</h3><p>評估現有系統與成本，選擇符合規模、風險與可維運性的最佳方案。</p></div>
+            <div class="card reveal"><div class="card-icon">🧪</div><span class="mono-label">03</span><h3>POC 驗證</h3><p>以小範圍原型驗證商業假設，快速調整流程與技術架構，降低落地風險。</p></div>
+            <div class="card reveal"><div class="card-icon">🗄️</div><span class="mono-label">04</span><h3>資料治理</h3><p>建立資料品質、存取與安全標準，讓 AI 以信賴資料為基礎產生真正可用的洞察。</p></div>
+            <div class="card reveal"><div class="card-icon">🎓</div><span class="mono-label">05</span><h3>組織培訓</h3><p>協助團隊掌握實作要點與變革節奏，打造可持續的 AI 能力與內部推進力。</p></div>
+            <div class="card reveal"><div class="card-icon">🤖</div><span class="mono-label">06</span><h3>客製 Agent</h3><p>針對你的業務流程打造專屬 AI 代理人，串接內部系統，端到端自動執行任務。</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WHERE WE DEPLOY -->
+      <section class="b-top">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <span class="mono-label">WHERE_WE_DEPLOY</span>
+            <h2>部署在<span class="gradient-text">最會痛、最能省</span>的前線</h2>
+          </div>
+          <div class="grid-3">
+            <div class="card reveal"><div class="card-icon">📞</div><h3>智慧客服與分流</h3><p>自動回覆常見問題、判斷意圖並轉接，把客服第一線的重複工作砍掉一半以上。</p></div>
+            <div class="card reveal"><div class="card-icon">🧾</div><h3>報價與訂單處理</h3><p>從詢價信、LINE 訊息到 PDF 規格書，自動擷取、比對品項並產生報價草稿。</p></div>
+            <div class="card reveal"><div class="card-icon">🏭</div><h3>生產與排程優化</h3><p>結合歷史資料預測需求、優化排程與庫存，降低缺料停線與呆料積壓。</p></div>
+            <div class="card reveal"><div class="card-icon">🔍</div><h3>文件與知識檢索</h3><p>把分散的 SOP、合約與技術文件變成可問答的內部知識庫，新人上手更快。</p></div>
+            <div class="card reveal"><div class="card-icon">📊</div><h3>營運報表自動化</h3><p>自動彙整跨系統數據、產生日報週報與異常警示，主管不用再等人工整理。</p></div>
+            <div class="card reveal"><div class="card-icon">⚙️</div><h3>端到端流程自動化</h3><p>把跨部門、跨系統的長流程交給 Agent 串起來，全程留下可稽核的執行紀錄。</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROCESS -->
+      <section class="b-top">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <span class="mono-label">DEPLOYMENT_FLOW</span>
+            <h2>從診斷到上線，<br><span class="gradient-text">14 天看到第一個數字</span></h2>
+          </div>
+          <div class="grid-4">
+            <div class="card reveal"><span class="mono-label">DAY 01</span><h3>場景診斷</h3><p>盤點前線流程，找出 AI 最快能變現的環節，訂下可量測的成果基準。</p></div>
+            <div class="card reveal"><span class="mono-label">DAY 02–05</span><h3>邏輯建模</h3><p>設計 Agent 工作流、串接資料與工具，建立可運行的核心原型。</p></div>
+            <div class="card reveal"><span class="mono-label">DAY 06–12</span><h3>系統整合</h3><p>接進你現有的系統與表單，在真實流量上反覆驗證與調校。</p></div>
+            <div class="card reveal"><span class="mono-label">DAY 13–14</span><h3>正式上線</h3><p>即時儀表板追蹤節省工時、轉換率與錯誤率，達標即放大。</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- IMPACT STATS -->
+      <section class="b-top">
+        <div class="wrap">
+          <div class="section-head reveal center mx-auto">
+            <span class="mono-label" style="justify-content:center;">MEASURED_IMPACT</span>
+            <h2>數字說話</h2>
+          </div>
+          <div class="stat-grid reveal">
+            <div class="stat"><div class="num" data-to="40" data-suffix="%">0</div><div class="lbl">平均人力成本下降</div></div>
+            <div class="stat"><div class="num" data-to="70" data-suffix="%">0</div><div class="lbl">客服自動回覆率</div></div>
+            <div class="stat"><div class="num" data-to="10" data-suffix="×">0</div><div class="lbl">報價回覆速度提升</div></div>
+            <div class="stat"><div class="num" data-to="100" data-suffix="%">0</div><div class="lbl">資料留存於企業內部</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="b-top">
+        <div class="wrap-narrow">
+          <div class="section-head reveal center mx-auto">
+            <span class="mono-label" style="justify-content:center;">FAQ</span>
+            <h2>常見問題</h2>
+          </div>
+          <div class="reveal">
+            <details open><summary>Agent 和一般聊天機器人差在哪？<span class="chev">+</span></summary><p>聊天機器人問一句答一句；Agent 會主動拆解任務、呼叫工具與系統、檢查自己的結果並修正，直到任務完成，只在關鍵節點請你確認。</p></details>
+            <details><summary>需要先把資料整理好嗎？<span class="chev">+</span></summary><p>不用。我們的導入流程本身就包含資料盤點與清理，你只要提供現有的系統與檔案，整合工作由我們處理。</p></details>
+            <details><summary>會綁定特定雲端或工具嗎？<span class="chev">+</span></summary><p>不會。我們以你現有的系統為主進行串接，依場景選擇最合適、最可維運的方案，避免不必要的綁定與成本。</p></details>
+            <details><summary>資料安全與隱私如何保障？<span class="chev">+</span></summary><p>可採私有部署與企業內部 RAG 檢索，敏感資料 100% 留存在內部，並建立存取權限與稽核紀錄。</p></details>
+            <details><summary>我們是傳統產業，也適用嗎？<span class="chev">+</span></summary><p>非常適合。越是重複、耗人力的流程，越能看到成效——製造、貿易、零售、物流都有實際案例。</p></details>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
       <section id="contact">
         <div class="wrap">
-          <div class="grid-2 b-all" style="overflow: hidden;">
-            <div style="padding: var(--space-12); background: var(--bg-alt);">
-              <span class="mono-label">// CONTACT_US</span>
-              <h2 style="margin-bottom: var(--space-4);">預約免費<br>初步診斷</h2>
-              <p>請填寫問卷，讓我們快速掌握您的需求。</p>
-            </div>
-            <div style="padding: var(--space-12); display: flex; align-items: center; justify-content: center; background: var(--bg);">
-              <a href="https://forms.gle/M1YHzT8V3wErZGNJ6" target="_blank" rel="noreferrer" class="btn btn-primary btn-lg" style="width: 100%;">前往問卷</a>
-            </div>
+          <div class="cta-box reveal">
+            <div class="aurora"><span class="blob b1"></span><span class="blob b2"></span></div>
+            <span class="mono-label" style="justify-content:center;">START_HERE</span>
+            <h2 style="margin-top:14px;">先看到成果，<br><span class="gradient-text">再決定要不要前進</span></h2>
+            <p class="lead mx-auto" style="max-width:560px; margin-bottom: var(--space-8);">15 分鐘免費診斷，我們會告訴你哪個前線環節最適合導入 AI Agent、預期能省下多少。</p>
+            <a href="https://forms.gle/M1YHzT8V3wErZGNJ6" target="_blank" rel="noreferrer" class="btn btn-primary btn-lg">前往問卷，預約診斷 →</a>
           </div>
         </div>
       </section>
     </main>
 
     <footer>
-      <div class="wrap" style="display: flex; justify-content: space-between;">
+      <div class="wrap" style="display: flex; justify-content: space-between; flex-wrap:wrap; gap: var(--space-4);">
         <span>© 2026 AI CONSULTANT</span>
-        <span>TW_SMB_AI_SOLUTIONS</span>
+        <span>TW_SMB_AGENTIC_AI</span>
       </div>
     </footer>
 
     <script>
-      // Subtle background animation: Moving grid with data nodes
-      const canvas = document.getElementById('hero-canvas');
-      const ctx = canvas.getContext('2d');
-      let width, height;
-
-      function resize() {
-        width = canvas.width = canvas.offsetWidth;
-        height = canvas.height = canvas.offsetHeight;
-      }
-      window.addEventListener('resize', resize);
-      resize();
-
-      const particles = [];
-      const particleCount = 40;
-      
-      for(let i=0; i<particleCount; i++) {
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.2,
-          vy: (Math.random() - 0.5) * 0.2,
-          size: Math.random() * 2 + 1
-        });
-      }
-
-      function draw() {
-        ctx.clearRect(0, 0, width, height);
-        
-        // Grid background
-        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--border').trim() || '#e4e4e7';
-        ctx.lineWidth = 0.5;
-        const spacing = 60;
-        const offset = (Date.now() / 100) % spacing;
-        
-        for(let x = -offset; x < width; x += spacing) {
-          ctx.beginPath();
-          ctx.moveTo(x, 0);
-          ctx.lineTo(x, height);
-          ctx.stroke();
-        }
-        for(let y = -offset; y < height; y += spacing) {
-          ctx.beginPath();
-          ctx.moveTo(0, y);
-          ctx.lineTo(width, y);
-          ctx.stroke();
-        }
-
-        // Moving nodes
-        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-dim').trim() || '#a0a0ab';
-        particles.forEach(p => {
-          p.x += p.vx;
-          p.y += p.vy;
-          if(p.x < 0) p.x = width;
-          if(p.x > width) p.x = 0;
-          if(p.y < 0) p.y = height;
-          if(p.y > height) p.y = 0;
-          
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fill();
-        });
-
-        requestAnimationFrame(draw);
-      }
-      draw();
-    </script>
-    <script>
+      /* Theme toggle (light default) */
       const themeToggle = document.getElementById('theme-toggle');
       const moonIcon = themeToggle.querySelector('.moon');
       const sunIcon = themeToggle.querySelector('.sun');
       const htmlElement = document.documentElement;
-
-      // Check for saved theme preference
-      const currentTheme = localStorage.getItem('theme');
-      if (currentTheme === 'dark') {
+      if (localStorage.getItem('theme') === 'dark') {
         htmlElement.classList.add('theme-dark');
-        moonIcon.style.display = 'none';
-        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none'; sunIcon.style.display = 'block';
       }
-
       themeToggle.addEventListener('click', () => {
         htmlElement.classList.toggle('theme-dark');
         const isDark = htmlElement.classList.contains('theme-dark');
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        
         moonIcon.style.display = isDark ? 'none' : 'block';
         sunIcon.style.display = isDark ? 'block' : 'none';
       });
+
+      /* Scroll reveal */
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 4) * 80 + 'ms'; io.observe(el); });
+
+      /* Count-up stats */
+      const statObserver = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const el = e.target, to = +el.dataset.to, suffix = el.dataset.suffix || '';
+          let start = null; const dur = 1400;
+          const tick = (t) => {
+            if (!start) start = t;
+            const p = Math.min((t - start) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(to * eased) + suffix;
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+          statObserver.unobserve(el);
+        });
+      }, { threshold: 0.5 });
+      document.querySelectorAll('[data-to]').forEach(el => statObserver.observe(el));
+
+      /* Agentic loop: rail highlight + live console */
+      (function () {
+        const logEl = document.getElementById('agent-log');
+        const section = document.getElementById('agentic');
+        const nodes = Array.from(document.querySelectorAll('.agent-node'));
+        if (!logEl || !section || !nodes.length) return;
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const stages = [
+          { cls: 'perceive', label: '感知', msg: '收到新詢價郵件，解析附件規格書 spec.pdf' },
+          { cls: 'plan',     label: '規劃', msg: '拆解任務：擷取品項 → 比對庫存 → 計算報價' },
+          { cls: 'act',      label: '執行', msg: 'inventory.search() ✓  pricing.calc() ✓  crm.lookup() ✓' },
+          { cls: 'reflect',  label: '驗證', msg: '交叉檢查毛利率 32% ≥ 門檻，數量與單位無誤' },
+          { cls: 'deliver',  label: '交付', msg: '產生報價單 PDF，草稿已送出待主管確認' },
+        ];
+        let ticket = 4821;
+        const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+        const ts = (i) => '+' + ((1.84 + i * 0.47)).toFixed(2) + 's';
+        const line = (html, extra) => {
+          const div = document.createElement('div');
+          div.className = 'log-line' + (extra ? ' ' + extra : '');
+          div.innerHTML = html; logEl.appendChild(div); logEl.scrollTop = logEl.scrollHeight;
+        };
+        const setActive = (idx) => nodes.forEach((n, i) => n.classList.toggle('active', i === idx));
+        async function runCycle() {
+          logEl.innerHTML = '';
+          line('<span class="ts">$</span><span class="msg">ai-consultant-agent 監聽中… ticket #' + ticket + ' 觸發</span>');
+          await sleep(700);
+          for (let i = 0; i < stages.length; i++) {
+            const s = stages[i]; setActive(i);
+            line('<span class="ts">' + ts(i) + '</span><span class="b ' + s.cls + '">[' + s.label + ']</span><span class="msg">' + s.msg + '</span>');
+            await sleep(1150);
+          }
+          nodes.forEach(n => n.classList.remove('active'));
+          line('<span class="ts">' + ts(5) + '</span><span class="msg">✓ 任務完成 · 用時 2.4s · 0 次人工介入</span><span class="cursor"></span>', 'done');
+          await sleep(2600); ticket++;
+        }
+        let running = false;
+        async function loop() {
+          if (running) return; running = true;
+          if (reduce) { await runCycle(); nodes.forEach(n => n.classList.remove('active')); return; }
+          while (true) { await runCycle(); }
+        }
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if (e.isIntersecting) { loop(); obs.disconnect(); } });
+        }, { threshold: 0.2 });
+        obs.observe(section);
+      })();
     </script>
   </body>
 </html>

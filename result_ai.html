@@ -19,14 +19,14 @@
       --text: #111827;
       --muted: #6b7280;
       --dim: #9ca3af;
-      --neon: #2563eb;        /* primary / active = blue accent */
-      --neon-hover: #1d4ed8;
-      --tint: #eff6ff;
+      --neon: #7c3aed;        /* primary / active = electric violet */
+      --neon-hover: #6d28d9;
+      --tint: #f3f0ff;
       /* console-only data colors */
       --cyan: #0891b2;
       --violet: #7c3aed;
       --pink: #db2777;
-      --grad: linear-gradient(180deg, #1d4ed8 0%, #2563eb 100%);  /* blue */
+      --grad: linear-gradient(120deg, #8b5cf6 0%, #6366f1 42%, #06b6d4 100%);  /* violet → cyan */
       --sans: 'Sora', 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
       --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
       --radius: 14px;
@@ -69,7 +69,7 @@
       position: absolute;
       top: -35%; left: 50%; transform: translateX(-50%);
       width: 130vw; height: 90vh;
-      background: radial-gradient(ellipse at center, rgba(37,99,235,0.06), transparent 62%);
+      background: radial-gradient(ellipse at center, rgba(124,58,237,0.06), transparent 62%);
       pointer-events: none;
     }
 
@@ -226,7 +226,7 @@
     }
     .agent-rail .track::after {
       content: ""; position: absolute; inset: 0; border-radius: 2px;
-      background: linear-gradient(90deg, transparent, rgba(37,99,235,0.35), var(--neon), rgba(37,99,235,0.35), transparent);
+      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.35), var(--neon), rgba(124,58,237,0.35), transparent);
       background-size: 28% 100%; background-repeat: no-repeat;
       animation: flow 4.5s linear infinite;
     }
@@ -241,7 +241,7 @@
     .agent-node.active .ring {
       border-color: var(--neon); transform: scale(1.12);
       background: var(--tint);
-      box-shadow: 0 0 0 5px rgba(37,99,235,0.12), 0 0 24px rgba(37,99,235,0.35);
+      box-shadow: 0 0 0 5px rgba(124,58,237,0.12), 0 0 24px rgba(124,58,237,0.35);
     }
     .agent-node .tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); transition: color .4s; }
     .agent-node.active .tag { color: var(--neon); }
@@ -282,7 +282,7 @@
     .cta-box {
       border-radius: 28px; padding: 72px 56px; text-align: center;
       background:
-        radial-gradient(ellipse 70% 120% at 50% 0%, rgba(37,99,235,0.08), transparent 70%),
+        radial-gradient(ellipse 70% 120% at 50% 0%, rgba(124,58,237,0.08), transparent 70%),
         var(--bg-soft);
       border: 1px solid var(--border-strong); position: relative; overflow: hidden;
     }
@@ -422,10 +422,10 @@
             <span class="vs-tag">◆ PROOF</span>
             <h3>賣成果 / 賣前線部署</h3>
             <ul class="vs-list">
-              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>前期零顧問費，先上線再談錢</li>
-              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>交付的是真的在跑的 AI 系統</li>
-              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>直接部署進你的營運第一線</li>
-              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>依約定成果基準，分潤式收費</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>前期零顧問費，先上線再談錢</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>交付的是真的在跑的 AI 系統</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>直接部署進你的營運第一線</li>
+              <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>依約定成果基準，分潤式收費</li>
             </ul>
           </div>
         </div>

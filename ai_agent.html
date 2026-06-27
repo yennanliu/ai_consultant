@@ -116,6 +116,7 @@
     <main>
         <!-- Hero Section -->
         <section class="hero b-bottom">
+        <div class="aurora"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
             <div class="wrap">
                 <span class="mono-label">// 2026 企業轉型實戰方案</span>
                 <h1>不談願景，只談效率 <br>讓 AI 成為您的數位員工</h1>
@@ -165,7 +166,7 @@
                 <h2 class="mb-8">為什麼選擇「工匠型」AI 導入？</h2>
                 <div class="grid-2">
                     <!-- Before -->
-                    <div class="card" style="border-color: var(--loss);">
+                    <div class="card reveal" style="border-color: var(--loss);">
                         <h3 style="color: var(--loss); font-size: 18px; margin-bottom: var(--space-4);">🔴 傳統人工模式 (Before)</h3>
                         <ul class="list-clean">
                             <li>老師傅經驗無法數位化，新人難接手</li>
@@ -180,7 +181,7 @@
                         </div>
                     </div>
                     <!-- After -->
-                    <div class="card" style="border-color: var(--gain); background: var(--accent-tint);">
+                    <div class="card reveal" style="border-color: var(--gain); background: var(--accent-tint);">
                         <h3 style="color: var(--gain); font-size: 18px; margin-bottom: var(--space-4);">🟢 AI 數位工匠 (After)</h3>
                         <ul class="list-clean">
                             <li style="color: var(--text);">24/7 企業大腦，隨時回覆 SOP 與技術問題</li>
@@ -205,7 +206,7 @@
                 <h2>實戰工具箱</h2>
                 <p class="mb-8">我們不談理論，只交付會動的自動化系統</p>
                 <div class="grid-3">
-                    <div class="card">
+                    <div class="card reveal">
                         <span class="mono-label">DATA</span>
                         <h3>貿易報關自動化</h3>
                         <p class="text-sm mb-6">自動解析混亂格式的單據，精準配對 HS Code 並登錄系統。</p>
@@ -217,7 +218,7 @@
                           <div class="logic-node">ERP</div>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card reveal">
                         <span class="mono-label">KNOWLEDGE</span>
                         <h3>傳產知識大腦</h3>
                         <p class="text-sm mb-6">將 20 年維修紀錄與師傅經驗轉化為隨時可問的 AI 助手。</p>
@@ -229,7 +230,7 @@
                           <div class="logic-node">CHAT</div>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card reveal">
                         <span class="mono-label">DOCUMENT</span>
                         <h3>專業文件處理</h3>
                         <p class="text-sm mb-6">法律合約、財報比對自動化，確保繁體中文理解 100% 準確。</p>
@@ -253,7 +254,7 @@
                 <p class="mb-12">透明、模組化，讓每一分預算都花在刀口上</p>
                 <div class="grid-3">
                     <!-- Tier 1 -->
-                    <div class="card">
+                    <div class="card reveal">
                         <h4 class="text-sm mb-2">AI 流程門診</h4>
                         <div style="font-size: 28px; font-weight: 600; margin-bottom: var(--space-6); color: var(--accent);">NT$ 12,000 <span style="font-size: 13px; font-weight: 400; color: var(--text-dim);">/ 次</span></div>
                         <ul class="list-clean mb-8">
@@ -264,7 +265,7 @@
                         <a href="#contact" class="btn btn-secondary" style="width: 100%;">預約診斷</a>
                     </div>
                     <!-- Tier 2 -->
-                    <div class="card" style="border-color: var(--accent); position: relative;">
+                    <div class="card reveal" style="border-color: var(--accent); position: relative;">
                         <div style="position: absolute; top: -12px; right: 12px; background: var(--accent); color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">最快見效</div>
                         <h4 class="text-sm mb-2">極速 POC 驗證</h4>
                         <div style="font-size: 28px; font-weight: 600; margin-bottom: var(--space-6); color: var(--accent);">NT$ 60,000 <span style="font-size: 13px; font-weight: 400; color: var(--text-dim);">/ 起</span></div>
@@ -276,7 +277,7 @@
                         <a href="#contact" class="btn btn-primary" style="width: 100%;">啟動實驗專案</a>
                     </div>
                     <!-- Tier 3 -->
-                    <div class="card">
+                    <div class="card reveal">
                         <h4 class="text-sm mb-2">Virtual CTO 陪跑</h4>
                         <div style="font-size: 28px; font-weight: 600; margin-bottom: var(--space-6); color: var(--accent);">NT$ 8,000 <span style="font-size: 13px; font-weight: 400; color: var(--text-dim);">/ hr</span></div>
                         <ul class="list-clean mb-8">
@@ -293,7 +294,7 @@
         <!-- Contact Form -->
         <section id="contact">
             <div class="wrap" style="max-width: 600px;">
-                <div class="card">
+                <div class="card reveal">
                     <span class="mono-label">// GET_STARTED</span>
                     <h2 style="font-size: 28px; margin-bottom: var(--space-8);">開始您的數位升級</h2>
                     <form style="display: flex; flex-direction: column; gap: var(--space-6);">
@@ -354,6 +355,8 @@
         moonIcon.style.display = isDark ? 'none' : 'block';
         sunIcon.style.display = isDark ? 'block' : 'none';
       });
+      var __io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");__io.unobserve(e.target);}});},{threshold:0.12});
+      document.querySelectorAll(".reveal").forEach(function(el,i){el.style.transitionDelay=(i%4)*80+"ms";__io.observe(el);});
     </script>
 </body>
 </html>
