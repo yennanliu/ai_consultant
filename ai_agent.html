@@ -296,6 +296,7 @@
                     <h2 style="font-size: 30px; margin-bottom: var(--space-4);">開始你的數位升級</h2>
                     <p class="mb-8">留下需求，我們將在 24 小時內聯繫你，安排一次免費的初步診斷。</p>
                     <form id="lead-form" style="display: flex; flex-direction: column; gap: var(--space-6);">
+                        <div style="position:absolute; left:-9999px;" aria-hidden="true"><label>Website<input id="lf-website" tabindex="-1" autocomplete="off" /></label></div>
                         <div>
                             <label class="mono-label" for="lf-industry">產業類別</label>
                             <select id="lf-industry">
@@ -322,7 +323,8 @@
                             <textarea id="lf-pain" rows="4" placeholder="例如：報關單手打太慢、師傅技術沒人接班、LINE 客服回不完..."></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">送出需求 →</button>
-                        <p class="text-xs" style="color: var(--text-dim); margin: 0; text-align: center;">送出後會開啟 GitHub 頁面，確認內容後點「Submit new issue」即可（需 GitHub 帳號）。</p>
+                        <p id="lead-status" class="text-xs" style="display:none; margin: 0; text-align: center;"></p>
+                        <p class="text-xs" style="color: var(--text-dim); margin: 0; text-align: center;">我們會在 24 小時內主動聯繫你。</p>
                     </form>
                 </div>
             </div>
@@ -361,8 +363,11 @@
         sunIcon.style.display = isDark ? 'block' : 'none';
       });
 
-      /* Contact form → GitHub issue (prefilled) */
+      /* Contact form → GitHub issue.
+         If WORKER_URL is set, POST to the Cloudflare Worker (no login for the
+         visitor). Otherwise fall back to opening a prefilled issue page. */
       var GH_REPO = 'BrotherSupport/ai_consultant';
+      var WORKER_URL = ''; // ← paste your Cloudflare Worker URL here, e.g. https://ai-consultant-lead.xxx.workers.dev
       function ghIssueUrl(title, body, labels) {
         var p = new URLSearchParams({ title: title, body: body });
         if (labels) p.set('labels', labels);
@@ -372,20 +377,48 @@
       if (leadForm) {
         leadForm.addEventListener('submit', function (e) {
           e.preventDefault();
-          var industry = document.getElementById('lf-industry').value;
-          var company = document.getElementById('lf-company').value.trim();
-          var contact = document.getElementById('lf-contact').value.trim();
-          var pain = document.getElementById('lf-pain').value.trim();
-          var title = 'AI 導入諮詢 · ' + (company || industry);
+          var data = {
+            industry: document.getElementById('lf-industry').value,
+            company: document.getElementById('lf-company').value.trim(),
+            contact: document.getElementById('lf-contact').value.trim(),
+            pain: document.getElementById('lf-pain').value.trim(),
+            website: (document.getElementById('lf-website') || {}).value || '',
+            source: 'AI AGENT'
+          };
+          var title = 'AI 導入諮詢 · ' + (data.company || data.industry);
           var body = [
-            '### 來源頁面', 'AI AGENT', '',
-            '### 產業類別', industry, '',
-            '### 公司名稱', company || '（未填）', '',
-            '### 聯絡方式', contact || '（未填）', '',
-            '### 想解決的痛點', pain || '（未填）', '',
+            '### 來源頁面', data.source, '',
+            '### 產業類別', data.industry, '',
+            '### 公司名稱', data.company || '（未填）', '',
+            '### 聯絡方式', data.contact || '（未填）', '',
+            '### 想解決的痛點', data.pain || '（未填）', '',
             '---', '_由 ai-consultant 網站自動產生_'
           ].join('\n');
-          window.open(ghIssueUrl(title, body, 'lead'), '_blank', 'noopener');
+
+          if (!WORKER_URL) { // fallback: prefilled issue (requires GitHub login)
+            window.open(ghIssueUrl(title, body, 'lead'), '_blank', 'noopener');
+            return;
+          }
+
+          var btn = leadForm.querySelector('button[type=submit]');
+          var status = document.getElementById('lead-status');
+          var orig = btn.textContent;
+          btn.disabled = true; btn.textContent = '送出中…';
+          if (status) status.style.display = 'none';
+          fetch(WORKER_URL, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data)
+          }).then(function (res) {
+            return res.json().catch(function () { return {}; }).then(function (out) {
+              if (!res.ok || !out.ok) throw new Error(out.error || ('HTTP ' + res.status));
+              leadForm.innerHTML = '<div style="text-align:center; padding:var(--space-8) 0;"><div style="font-size:44px;">✅</div><h3 style="margin-top:var(--space-4);">已收到你的需求</h3><p style="margin:0;">我們會在 24 小時內主動與你聯繫。</p></div>';
+            });
+          }).catch(function (err) {
+            btn.disabled = false; btn.textContent = orig;
+            if (status) {
+              status.style.display = 'block'; status.style.color = 'var(--loss)';
+              status.innerHTML = '送出失敗，請稍後再試，或<a href="' + ghIssueUrl(title, body, 'lead') + '" target="_blank" rel="noopener">改用 GitHub 建立查詢單</a>。';
+            }
+          });
         });
       }
 
