@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>自動化工具選型指南 - AI consultant</title>
+    <link rel="stylesheet" href="../linear.css">
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <div class="nav">
+          <a href="../index.html" class="brand">AI CONSULTANT</a>
+          <nav class="navlinks">
+            <a href="../index.html#services">SERVICES</a>
+            <a href="../service_mode.html">SERVICE MODES</a>
+            <a href="../success_stories.html">SUCCESS STORIES</a>
+            <a href="../team.html">TEAM</a>
+            <a href="../blog.html">BLOG</a>
+            <a href="../ai_agent.html">AI AGENT</a>
+            <a href="../index.html#contact">CONTACT</a>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero b-bottom">
+        <div class="wrap">
+          <span class="mono-label">TOOLS · 閱讀約 7 分鐘</span>
+          <h1>n8n、Make 還是自建？<br>自動化工具選型指南</h1>
+          <div class="text-xs" style="color: var(--text-dim);">2026-05-05</div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <div style="max-width: 800px;">
+            <p>當你決定要自動化某個流程，下一個問題就是：用現成工具還是自己開發？選錯不只浪費錢，還會在半年後綁手綁腳。本文用三個面向幫你做決策。</p>
+
+            <h2>三種主流路線</h2>
+            <p>• <strong>低程式碼平台（Make、Zapier）</strong> — 上手最快，適合標準化的串接（如表單 → 試算表 → 通知）。按執行量計費，量大時成本會明顯上升。<br/>
+• <strong>開源自架（n8n）</strong> — 可自行部署、資料留在內部，彈性高、長期成本低，但需要一點技術維運能力。<br/>
+• <strong>完全自建</strong> — 最大彈性與整合深度，適合核心競爭流程，但開發與維護成本最高。</p>
+
+            <h2>面向一：資料敏感度</h2>
+            <p>若流程會碰到個資、財務或營業機密，優先考慮可自架的方案（n8n 或自建），避免敏感資料流經第三方雲端。一般的行銷或通知流程，則用雲端 SaaS 即可。</p>
+
+            <h2>面向二：流程的「變動頻率」</h2>
+            <p>越穩定、越標準的流程，越適合現成工具；越是公司獨有、會頻繁調整的核心流程，越值得投資自建或半自建，換取長期彈性。</p>
+
+            <h2>面向三：規模與成本曲線</h2>
+            <p>SaaS 平台前期便宜、後期隨用量變貴；自架方案前期需投入、但邊際成本趨近於零。估算 12～24 個月的總成本，而不是只看第一個月。</p>
+
+            <h2>我們的實務原則：混合而非二選一</h2>
+            <p>最務實的答案通常是組合拳——用 n8n / Make 快速串起周邊流程，把真正產生競爭力的核心邏輯（如客製 Agent、決策模型）自建並掌握在手裡。先用現成工具跑出成效，再針對瓶頸逐步自建，是風險最低的路徑。</p>
+
+            <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap" style="display: flex; justify-content: space-between;">
+        <span>© 2026 AI CONSULTANT</span>
+        <span>TW_SMB_AI_SOLUTIONS</span>
+      </div>
+    </footer>
+
+    <script>
+      const themeToggle = document.getElementById('theme-toggle');
+      const moonIcon = themeToggle.querySelector('.moon');
+      const sunIcon = themeToggle.querySelector('.sun');
+      const htmlElement = document.documentElement;
+      if (localStorage.getItem('theme') === 'dark') {
+        htmlElement.classList.add('theme-dark');
+        moonIcon.style.display = 'none'; sunIcon.style.display = 'block';
+      }
+      themeToggle.addEventListener('click', () => {
+        htmlElement.classList.toggle('theme-dark');
+        const isDark = htmlElement.classList.contains('theme-dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        moonIcon.style.display = isDark ? 'none' : 'block';
+        sunIcon.style.display = isDark ? 'block' : 'none';
+      });
+    </script>
+  </body>
+</html>

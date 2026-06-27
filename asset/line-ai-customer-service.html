@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LINE × AI Agent 客服自動化實戰 - AI consultant</title>
+    <link rel="stylesheet" href="../linear.css">
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <div class="nav">
+          <a href="../index.html" class="brand">AI CONSULTANT</a>
+          <nav class="navlinks">
+            <a href="../index.html#services">SERVICES</a>
+            <a href="../service_mode.html">SERVICE MODES</a>
+            <a href="../success_stories.html">SUCCESS STORIES</a>
+            <a href="../team.html">TEAM</a>
+            <a href="../blog.html">BLOG</a>
+            <a href="../ai_agent.html">AI AGENT</a>
+            <a href="../index.html#contact">CONTACT</a>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero b-bottom">
+        <div class="wrap">
+          <span class="mono-label">CASE STUDY · 閱讀約 6 分鐘</span>
+          <h1>LINE 官方帳號 × AI Agent：<br>零售客服自動化實戰</h1>
+          <div class="text-xs" style="color: var(--text-dim);">2026-05-08</div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <div style="max-width: 800px;">
+            <p>在台灣，LINE 幾乎是中小企業與顧客溝通的主戰場。但人工客服的痛點顯而易見：下班沒人回、重複問題回到手軟、訂單與退換貨散落在對話裡。本文拆解我們如何用 AI Agent 把 LINE 客服變成 24/7 的自動戰力。</p>
+
+            <h2>痛點：對話量爆炸，但八成是重複問題</h2>
+            <p>一家連鎖飲品品牌，旺季每天湧入上千則 LINE 訊息，其中約 80% 是「營業時間、門市地址、訂單進度、會員點數」等重複問題。三位客服每天被淹沒，真正需要人處理的客訴反而被延誤。</p>
+
+            <h2>解法：一個會查系統、會判斷的 Agent</h2>
+            <p>我們部署的不是制式關鍵字機器人，而是一個 agentic 客服：</p>
+            <p>• <strong>理解意圖</strong> — 用 LLM 判斷顧客想做什麼，而非比對關鍵字<br/>
+• <strong>呼叫系統</strong> — 自動查訂單系統、庫存與會員資料庫回覆即時資訊<br/>
+• <strong>安全交接</strong> — 遇到客訴、退款等敏感情境，自動轉真人並附上對話摘要<br/>
+• <strong>持續學習</strong> — 把新的問答沉澱進知識庫，越用越準</p>
+
+            <h2>導入流程：兩週上線首版</h2>
+            <p>第 1 週盤點歷史對話與常見問題、串接訂單與會員 API；第 2 週在真實流量上灰度測試、調整交接門檻，隨即正式上線。整個過程不更換品牌既有的 LINE 官方帳號。</p>
+
+            <h2>成效：自動回覆 70%、客服更專注</h2>
+            <p>上線後，AI 自動處理約 70% 的訊息，平均回應時間從數十分鐘降到數秒，客服團隊得以專注在高價值的客訴與熟客經營，顧客滿意度同步提升。</p>
+
+            <h2>關鍵心得</h2>
+            <p>成功的客服自動化，重點不在「擋掉多少人力」，而在「把對的問題交給對的對象」。讓 AI 處理可預測的事，讓人處理需要溫度與判斷的事——這才是可持續的分工。</p>
+
+            <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap" style="display: flex; justify-content: space-between;">
+        <span>© 2026 AI CONSULTANT</span>
+        <span>TW_SMB_AI_SOLUTIONS</span>
+      </div>
+    </footer>
+
+    <script>
+      const themeToggle = document.getElementById('theme-toggle');
+      const moonIcon = themeToggle.querySelector('.moon');
+      const sunIcon = themeToggle.querySelector('.sun');
+      const htmlElement = document.documentElement;
+      if (localStorage.getItem('theme') === 'dark') {
+        htmlElement.classList.add('theme-dark');
+        moonIcon.style.display = 'none'; sunIcon.style.display = 'block';
+      }
+      themeToggle.addEventListener('click', () => {
+        htmlElement.classList.toggle('theme-dark');
+        const isDark = htmlElement.classList.contains('theme-dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        moonIcon.style.display = isDark ? 'none' : 'block';
+        sunIcon.style.display = isDark ? 'block' : 'none';
+      });
+    </script>
+  </body>
+</html>

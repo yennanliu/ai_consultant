@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI 導入的 ROI 怎麼算？ - AI consultant</title>
+    <link rel="stylesheet" href="../linear.css">
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <div class="nav">
+          <a href="../index.html" class="brand">AI CONSULTANT</a>
+          <nav class="navlinks">
+            <a href="../index.html#services">SERVICES</a>
+            <a href="../service_mode.html">SERVICE MODES</a>
+            <a href="../success_stories.html">SUCCESS STORIES</a>
+            <a href="../team.html">TEAM</a>
+            <a href="../blog.html">BLOG</a>
+            <a href="../ai_agent.html">AI AGENT</a>
+            <a href="../index.html#contact">CONTACT</a>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero b-bottom">
+        <div class="wrap">
+          <span class="mono-label">STRATEGY · 閱讀約 7 分鐘</span>
+          <h1>AI 導入的 ROI 怎麼算？<br>三個月回本的評估框架</h1>
+          <div class="text-xs" style="color: var(--text-dim);">2026-05-18</div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <div style="max-width: 800px;">
+            <p>「導入 AI 到底划不划算？」這是每位中小企業主在簽約前最關心的問題。本文提供一套不需財務背景也能套用的 ROI 評估框架，幫你在投入前就估出回收期。</p>
+
+            <h2>第一步：把「省下的時間」換算成錢</h2>
+            <p>AI 最直接的效益來自取代重複性人工。計算方式很單純：</p>
+            <p><strong>每月節省金額 = 每月處理筆數 × 每筆節省分鐘 × 每分鐘人力成本</strong></p>
+            <p>舉例：一家貿易商每月處理 800 張報關單，每張原本要 15 分鐘、導入後只需 2 分鐘，節省 13 分鐘。以人力成本每分鐘 5 元計算，每月即省下 800 × 13 × 5 = 52,000 元。</p>
+
+            <h2>第二步：加上「看不見」的隱性效益</h2>
+            <p>除了直接工時，這些常被忽略的效益往往更可觀：</p>
+            <p>• 錯誤成本下降 — 報價錯誤、漏檢、誤判一次的代價<br/>
+• 機會成本 — 報價從 3 天縮短到 1 小時，搶回流失的訂單<br/>
+• 員工留任 — 把人從枯燥工作中釋放，降低離職與招募成本<br/>
+• 24/7 產能 — 不需加班費的全年無休處理能力</p>
+
+            <h2>第三步：估算總持有成本（TCO）</h2>
+            <p>別只看開發費。完整成本包含：一次性導入費、每月模型/API 費用、維運與調校、以及內部學習成本。把這些加總，才是真實的投入。</p>
+
+            <h2>第四步：算出回收期</h2>
+            <p><strong>回收期（月）= 總導入成本 ÷ 每月淨效益</strong></p>
+            <p>以上述貿易商為例，若導入成本 18 萬、每月淨效益 5 萬，回收期約 3.6 個月。一般而言，聚焦在高頻、高重複的前線流程，6 個月內回本是合理目標。</p>
+
+            <h2>實務建議：先做一個會回本的 POC</h2>
+            <p>與其一次大規模導入，不如先選一個「最痛、最能量化」的環節做 POC，用真實數據驗證 ROI 假設，再決定是否擴大。這也是我們「先看成效，再決定前進」的核心理念。</p>
+
+            <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap" style="display: flex; justify-content: space-between;">
+        <span>© 2026 AI CONSULTANT</span>
+        <span>TW_SMB_AI_SOLUTIONS</span>
+      </div>
+    </footer>
+
+    <script>
+      const themeToggle = document.getElementById('theme-toggle');
+      const moonIcon = themeToggle.querySelector('.moon');
+      const sunIcon = themeToggle.querySelector('.sun');
+      const htmlElement = document.documentElement;
+      if (localStorage.getItem('theme') === 'dark') {
+        htmlElement.classList.add('theme-dark');
+        moonIcon.style.display = 'none'; sunIcon.style.display = 'block';
+      }
+      themeToggle.addEventListener('click', () => {
+        htmlElement.classList.toggle('theme-dark');
+        const isDark = htmlElement.classList.contains('theme-dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        moonIcon.style.display = isDark ? 'none' : 'block';
+        sunIcon.style.display = isDark ? 'block' : 'none';
+      });
+    </script>
+  </body>
+</html>

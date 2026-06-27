@@ -5,6 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Blog - AI consultant</title>
     <link rel="stylesheet" href="linear.css">
+    <style>
+      /* Category filter */
+      .filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: var(--space-12); }
+      .fbtn {
+        font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; cursor: pointer;
+        padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border-strong);
+        background: var(--bg); color: var(--text-muted); transition: all 0.15s ease;
+      }
+      .fbtn:hover { border-color: var(--accent); color: var(--text); }
+      .fbtn.active { background: var(--grad); border-color: transparent; color: #fff; }
+
+      /* Featured post */
+      .featured { position: relative; display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--space-8); align-items: center; padding: var(--space-12); margin-bottom: var(--space-16); overflow: hidden; }
+      .featured .tagrow { display: flex; gap: 10px; align-items: center; margin-bottom: var(--space-4); }
+      .featured h2 { font-size: clamp(26px, 3vw, 38px); margin-bottom: var(--space-4); }
+      .featured .meta { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+      .featured-art { position: relative; aspect-ratio: 4/3; border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--bg); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+      .featured-art .glyph { font-size: 92px; filter: grayscale(0.1); animation: floaty 6s ease-in-out infinite; }
+      @keyframes floaty { 0%,100% { transform: translateY(-6px); } 50% { transform: translateY(6px); } }
+      @media (max-width: 820px) { .featured { grid-template-columns: 1fr; } .featured-art { display: none; } }
+
+      .post-meta { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-dim); margin-bottom: var(--space-4); }
+      .post-meta .dotsep { width: 3px; height: 3px; border-radius: 50%; background: var(--text-dim); }
+      .card.hide { display: none; }
+    </style>
   </head>
   <body>
 
@@ -31,98 +56,150 @@
 
     <main>
       <section class="hero b-bottom">
-        <div class="aurora"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
         <div class="wrap">
-          <span class="mono-label">// INSIGHTS & UPDATES</span>
+          <span class="mono-label">INSIGHTS &amp; UPDATES</span>
           <h1>Blog</h1>
-          <p style="max-width: 600px; font-size: 18px;">
-            分享 AI 導入的最新趨勢、實務經驗與業界洞察，幫助企業掌握變革先機。
+          <p class="lead" style="max-width: 600px;">
+            分享 AI 導入的最新趨勢、實務經驗與業界洞察，幫助企業掌握變革先機。從策略到落地，從 ROI 到資安，這裡是台灣中小企業的 AI 知識庫。
           </p>
         </div>
       </section>
 
       <section>
         <div class="wrap">
-          <span class="mono-label">LATEST_POSTS</span>
-          <p style="max-width: 760px; font-size: 18px; margin-bottom: var(--space-8);">
-            我們定期更新 AI 相關的專業文章，從技術趨勢到商業應用，提供實用的見解與建議。
-          </p>
-          
-          <div class="card-grid">
-            
-            <a href="asset/ai-trends-2026.html" class="card reveal">
-              <span class="mono-label">AI TRENDS</span>
-              <h3>2026 年 AI 趨勢預測</h3>
-              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-04-27</div>
-              <p>探討生成式 AI、邊緣運算與企業應用等關鍵趨勢，分析對台灣中小企業的影響與機會。</p>
-              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
-            </a>
+          <!-- Featured -->
+          <a href="asset/ai-trends-2026.html" class="card featured reveal">
+            <div>
+              <div class="tagrow">
+                <span class="badge badge-accent">FEATURED</span>
+                <span class="mono-label" style="margin: 0;">AI TRENDS</span>
+              </div>
+              <h2>2026 年 AI 趨勢預測</h2>
+              <p>從生成式 AI 的企業化、邊緣運算與私有化部署，到 AI Agent 的規模化落地——這篇報告拆解 2026 年最值得台灣中小企業關注的三大趨勢與切入機會。</p>
+              <div class="meta">
+                <span class="btn btn-primary" style="height:40px;">READ FEATURED →</span>
+                <span class="post-meta" style="margin:0;">2026-04-27<span class="dotsep"></span>閱讀約 8 分鐘</span>
+              </div>
+            </div>
+            <div class="featured-art"><span class="glyph">🛰️</span></div>
+          </a>
 
-            <a href="asset/manufacturing-ai-case-study.html" class="card reveal">
-              <span class="mono-label">CASE STUDY</span>
-              <h3>製造業 AI 導入實戰</h3>
-              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-04-20</div>
-              <p>深入剖析紡織廠導入 AI 瑕疵檢測的完整流程，從需求分析到成效驗證的實務經驗分享。</p>
-              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
-            </a>
+          <!-- Filters -->
+          <div class="reveal">
+            <span class="mono-label">LATEST_POSTS</span>
+          </div>
+          <div class="filters reveal" id="filters">
+            <button class="fbtn active" data-cat="all">全部</button>
+            <button class="fbtn" data-cat="trends">趨勢</button>
+            <button class="fbtn" data-cat="strategy">策略</button>
+            <button class="fbtn" data-cat="case">案例</button>
+            <button class="fbtn" data-cat="agent">Agent 系列</button>
+            <button class="fbtn" data-cat="security">安全治理</button>
+            <button class="fbtn" data-cat="data">資料</button>
+            <button class="fbtn" data-cat="tools">工具</button>
+          </div>
 
-            <a href="asset/smb-ai-strategy-guide.html" class="card reveal">
+          <div class="card-grid" id="postgrid">
+
+            <a href="asset/ai-roi-calculation.html" class="card reveal" data-cat="strategy">
               <span class="mono-label">STRATEGY</span>
-              <h3>中小企業 AI 策略指南</h3>
-              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-04-15</div>
-              <p>為中小企業量身打造的 AI 導入策略框架，涵蓋資源評估、風險管理與階段性實施建議。</p>
-              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+              <h3>AI 導入的 ROI 怎麼算？</h3>
+              <div class="post-meta">2026-05-18<span class="dotsep"></span>7 分鐘</div>
+              <p>不需財務背景也能套用的回報評估框架，從省下的工時到隱性效益，估出你的回收期。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/enterprise-private-agent-architecture.html" class="card reveal">
-              <span class="mono-label">TECHNICAL GUIDE</span>
-              <h3>企業私有 AI Agent 系統架構設計</h3>
-              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
-              <p>深入探討私有 Agent 系統的核心架構層級、關鍵設計決策與實施建議，幫助企業確立技術方向。</p>
-              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+            <a href="asset/data-governance-first-step.html" class="card reveal" data-cat="data">
+              <span class="mono-label">DATA</span>
+              <h3>別再用 Excel 管資料</h3>
+              <div class="post-meta">2026-05-12<span class="dotsep"></span>6 分鐘</div>
+              <p>AI 成效七成取決於資料品質。用最務實的方式，跨出中小企業資料治理的第一步。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/private-agent-deployment-strategy.html" class="card reveal">
-              <span class="mono-label">IMPLEMENTATION</span>
-              <h3>私有 Agent 部署策略與治理框架</h3>
-              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
-              <p>從分階段部署路線圖到治理框架的四大支柱，以及常見陷阱的應對策略，確保部署順利進行。</p>
-              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+            <a href="asset/line-ai-customer-service.html" class="card reveal" data-cat="case">
+              <span class="mono-label">CASE STUDY</span>
+              <h3>LINE × AI Agent 客服實戰</h3>
+              <div class="post-meta">2026-05-08<span class="dotsep"></span>6 分鐘</div>
+              <p>把 LINE 官方帳號變成 24/7 自動戰力，自動回覆 70%，客服更專注在高價值客訴。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/private-agent-security-compliance.html" class="card reveal">
-              <span class="mono-label">SECURITY & GOVERNANCE</span>
-              <h3>私有 Agent 系統的安全與合規</h3>
-              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
-              <p>資料安全、隱私保護、系統可靠性與合規框架的完整分析，建立可信的企業級 Agent 系統。</p>
-              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+            <a href="asset/automation-tool-selection.html" class="card reveal" data-cat="tools">
+              <span class="mono-label">TOOLS</span>
+              <h3>n8n、Make 還是自建？</h3>
+              <div class="post-meta">2026-05-05<span class="dotsep"></span>7 分鐘</div>
+              <p>從資料敏感度、變動頻率到成本曲線，三個面向幫你做對自動化工具選型決策。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/agent-chat-vs-agent.html" class="card reveal">
+            <a href="asset/agent-chat-vs-agent.html" class="card reveal" data-cat="agent">
               <span class="mono-label">AGENT SERIES #1</span>
-              <h3>AI Chat vs AI Agent：為什麼不是同一件事</h3>
-              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
+              <h3>AI Chat vs AI Agent</h3>
+              <div class="post-meta">2026-05-02<span class="dotsep"></span>5 分鐘</div>
               <p>從聊天工具到可委派的智能系統，清晰區分兩者本質、應用場景與選型決策框架。</p>
-              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/agent-six-layer-architecture.html" class="card reveal">
+            <a href="asset/agent-six-layer-architecture.html" class="card reveal" data-cat="agent">
               <span class="mono-label">AGENT SERIES #2</span>
-              <h3>Agent 六層架構：從模型到治理</h3>
-              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
+              <h3>Agent 六層架構</h3>
+              <div class="post-meta">2026-05-02<span class="dotsep"></span>7 分鐘</div>
               <p>可靠 Agent 系統的藍圖，從基礎模型層到頂層治理層的分層設計與實施路線。</p>
-              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/agent-core-components.html" class="card reveal">
+            <a href="asset/agent-core-components.html" class="card reveal" data-cat="agent">
               <span class="mono-label">AGENT SERIES #3</span>
               <h3>Agent 核心元件與實施路線</h3>
-              <div class="text-xs mb-4" style="color: var(--text-dim);">2026-05-02</div>
+              <div class="post-meta">2026-05-02<span class="dotsep"></span>6 分鐘</div>
               <p>MCP、Skill、Sandbox、Plugin 四大組件的作用、整合方式與 6 個月落地計畫。</p>
-              <span class="btn btn-ghost" style="padding: 0;">READ MORE</span>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
+            </a>
+
+            <a href="asset/enterprise-private-agent-architecture.html" class="card reveal" data-cat="agent">
+              <span class="mono-label">TECHNICAL GUIDE</span>
+              <h3>企業私有 AI Agent 架構設計</h3>
+              <div class="post-meta">2026-05-02<span class="dotsep"></span>9 分鐘</div>
+              <p>深入探討私有 Agent 系統的核心架構層級、關鍵設計決策與實施建議。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
+            </a>
+
+            <a href="asset/private-agent-deployment-strategy.html" class="card reveal" data-cat="agent">
+              <span class="mono-label">IMPLEMENTATION</span>
+              <h3>私有 Agent 部署策略與治理</h3>
+              <div class="post-meta">2026-05-02<span class="dotsep"></span>8 分鐘</div>
+              <p>從分階段部署路線圖到治理框架的四大支柱，以及常見陷阱的應對策略。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
+            </a>
+
+            <a href="asset/private-agent-security-compliance.html" class="card reveal" data-cat="security">
+              <span class="mono-label">SECURITY &amp; GOVERNANCE</span>
+              <h3>私有 Agent 的安全與合規</h3>
+              <div class="post-meta">2026-05-02<span class="dotsep"></span>8 分鐘</div>
+              <p>資料安全、隱私保護、系統可靠性與合規框架的完整分析，建立可信的企業級系統。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
+            </a>
+
+            <a href="asset/manufacturing-ai-case-study.html" class="card reveal" data-cat="case">
+              <span class="mono-label">CASE STUDY</span>
+              <h3>製造業 AI 導入實戰</h3>
+              <div class="post-meta">2026-04-20<span class="dotsep"></span>7 分鐘</div>
+              <p>深入剖析紡織廠導入 AI 瑕疵檢測的完整流程，從需求分析到成效驗證的實務分享。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
+            </a>
+
+            <a href="asset/smb-ai-strategy-guide.html" class="card reveal" data-cat="strategy">
+              <span class="mono-label">STRATEGY</span>
+              <h3>中小企業 AI 策略指南</h3>
+              <div class="post-meta">2026-04-15<span class="dotsep"></span>6 分鐘</div>
+              <p>為中小企業量身打造的 AI 導入策略框架，涵蓋資源評估、風險管理與階段性實施建議。</p>
+              <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
           </div>
+
+          <p id="noresult" style="display:none; color: var(--text-dim); margin-top: var(--space-8);">此分類暫無文章。</p>
         </div>
       </section>
     </main>
@@ -135,29 +212,47 @@
     </footer>
 
     <script>
+      /* Theme toggle (light default) */
       const themeToggle = document.getElementById('theme-toggle');
       const moonIcon = themeToggle.querySelector('.moon');
       const sunIcon = themeToggle.querySelector('.sun');
       const htmlElement = document.documentElement;
-
-      // Check for saved theme preference
-      const currentTheme = localStorage.getItem('theme');
-      if (currentTheme === 'dark') {
+      if (localStorage.getItem('theme') === 'dark') {
         htmlElement.classList.add('theme-dark');
-        moonIcon.style.display = 'none';
-        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none'; sunIcon.style.display = 'block';
       }
-
       themeToggle.addEventListener('click', () => {
         htmlElement.classList.toggle('theme-dark');
         const isDark = htmlElement.classList.contains('theme-dark');
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        
         moonIcon.style.display = isDark ? 'none' : 'block';
         sunIcon.style.display = isDark ? 'block' : 'none';
       });
-      var __io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");__io.unobserve(e.target);}});},{threshold:0.12});
-      document.querySelectorAll(".reveal").forEach(function(el,i){el.style.transitionDelay=(i%4)*80+"ms";__io.observe(el);});
+
+      /* Category filtering */
+      const fbtns = document.querySelectorAll('.fbtn');
+      const posts = document.querySelectorAll('#postgrid .card');
+      const noResult = document.getElementById('noresult');
+      fbtns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          fbtns.forEach(function (x) { x.classList.remove('active'); });
+          b.classList.add('active');
+          const cat = b.dataset.cat;
+          let shown = 0;
+          posts.forEach(function (p) {
+            const match = cat === 'all' || p.dataset.cat === cat;
+            p.classList.toggle('hide', !match);
+            if (match) shown++;
+          });
+          noResult.style.display = shown ? 'none' : 'block';
+        });
+      });
+
+      /* Scroll reveal */
+      var __io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); __io.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(function (el, i) { el.style.transitionDelay = (i % 4) * 70 + 'ms'; __io.observe(el); });
     </script>
   </body>
 </html>

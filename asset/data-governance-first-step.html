@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>中小企業資料治理第一步 - AI consultant</title>
+    <link rel="stylesheet" href="../linear.css">
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <div class="nav">
+          <a href="../index.html" class="brand">AI CONSULTANT</a>
+          <nav class="navlinks">
+            <a href="../index.html#services">SERVICES</a>
+            <a href="../service_mode.html">SERVICE MODES</a>
+            <a href="../success_stories.html">SUCCESS STORIES</a>
+            <a href="../team.html">TEAM</a>
+            <a href="../blog.html">BLOG</a>
+            <a href="../ai_agent.html">AI AGENT</a>
+            <a href="../index.html#contact">CONTACT</a>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero b-bottom">
+        <div class="wrap">
+          <span class="mono-label">DATA · 閱讀約 6 分鐘</span>
+          <h1>別再用 Excel 管資料：<br>中小企業資料治理第一步</h1>
+          <div class="text-xs" style="color: var(--text-dim);">2026-05-12</div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <div style="max-width: 800px;">
+            <p>AI 的成效，七成取決於資料品質。許多中小企業卡在「資料散落各處、格式不一」，導致 AI 專案還沒開始就難產。本文用最務實的方式，帶你跨出資料治理的第一步——不需要昂貴系統。</p>
+
+            <h2>為什麼 Excel 撐不住了</h2>
+            <p>Excel 很好用，但當資料變成決策依據時，它的問題會浮現：版本混亂（report_final_v3.xlsx）、多人編輯衝突、缺乏存取控管、無法追溯誰改了什麼。這些都會讓 AI 學到「髒資料」，產出不可信的結果。</p>
+
+            <h2>第一步：盤點你有哪些資料</h2>
+            <p>先別急著買工具。花一天時間，列出公司目前的資料來源：訂單系統、LINE 對話、Email、紙本單據、各部門的 Excel。標註每一份的「擁有者、更新頻率、敏感程度」。這張清單就是治理的起點。</p>
+
+            <h2>第二步：定義單一真實來源（SSOT）</h2>
+            <p>同一筆資料只該有一個權威版本。例如「客戶名單」以 CRM 為準，其他地方都從它同步。確立 SSOT 後，AI 才知道該相信哪份資料。</p>
+
+            <h2>第三步：建立最小可行的存取規則</h2>
+            <p>不需要複雜權限系統，先做到三件事：<br/>
+• 敏感資料（個資、財務）限定人員存取<br/>
+• 重要資料定期備份且可還原<br/>
+• 任何自動化流程留下可稽核的操作紀錄</p>
+
+            <h2>第四步：清理，但只清理會用到的</h2>
+            <p>不要想著一次清完所有歷史資料。聚焦在「即將被 AI 使用」的那一小塊，做欄位標準化、去重複、補關鍵缺值即可。資料治理是持續的過程，不是一次性專案。</p>
+
+            <h2>好消息：治理可以和導入一起做</h2>
+            <p>在我們的導入流程中，資料盤點與清理本來就是第一階段的一部分。你不需要先把資料整理到完美才能開始——我們會在 POC 過程中，一邊驗證價值、一邊把資料底盤打穩。</p>
+
+            <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap" style="display: flex; justify-content: space-between;">
+        <span>© 2026 AI CONSULTANT</span>
+        <span>TW_SMB_AI_SOLUTIONS</span>
+      </div>
+    </footer>
+
+    <script>
+      const themeToggle = document.getElementById('theme-toggle');
+      const moonIcon = themeToggle.querySelector('.moon');
+      const sunIcon = themeToggle.querySelector('.sun');
+      const htmlElement = document.documentElement;
+      if (localStorage.getItem('theme') === 'dark') {
+        htmlElement.classList.add('theme-dark');
+        moonIcon.style.display = 'none'; sunIcon.style.display = 'block';
+      }
+      themeToggle.addEventListener('click', () => {
+        htmlElement.classList.toggle('theme-dark');
+        const isDark = htmlElement.classList.contains('theme-dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        moonIcon.style.display = isDark ? 'none' : 'block';
+        sunIcon.style.display = isDark ? 'block' : 'none';
+      });
+    </script>
+  </body>
+</html>
