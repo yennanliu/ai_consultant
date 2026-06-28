@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>PROOF — 成果收費的 AI 前線部署公司</title>
   <meta name="description" content="PROOF 是成果收費的 AI 前線部署公司。我們不賣顧問時數，只對結果收費——AI 上線、跑出成效，您才付費。" />
 
@@ -11,6 +11,14 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <!-- PWA / mobile app -->
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#7c3aed" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AI Consultant" />
 
   <!-- SEO / Social preview -->
   <link rel="canonical" href="https://brothersupport.github.io/ai_consultant/result_ai.html" />
@@ -119,6 +127,11 @@
     .navlinks { display: flex; align-items: center; gap: 30px; }
     .navlinks a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .15s; }
     .navlinks a:hover { color: var(--text); }
+    .nav-toggle { display: none; width: 42px; height: 42px; flex: none; cursor: pointer; flex-direction: column; align-items: center; justify-content: center; gap: 5px; background: var(--bg); border: 1px solid var(--border-strong); border-radius: 10px; padding: 0; -webkit-tap-highlight-color: transparent; }
+    .nav-toggle span { display: block; width: 19px; height: 2px; border-radius: 2px; background: var(--text); transition: transform .25s ease, opacity .2s ease; }
+    .nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.active span:nth-child(2) { opacity: 0; }
+    .nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     .nav-cta {
       padding: 9px 18px; border-radius: 999px;
       background: var(--neon); color: #fff !important;
@@ -345,7 +358,20 @@
     .reveal.in { opacity: 1; transform: none; }
 
     @media (max-width: 900px) {
-      .navlinks a:not(.nav-cta) { display: none; }
+      .nav-toggle { display: flex; }
+      .navlinks {
+        position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; align-items: stretch; gap: 0;
+        background: var(--bg); border-bottom: 1px solid var(--border);
+        box-shadow: 0 24px 60px -16px rgba(17,24,39,0.22);
+        padding: 8px max(24px, env(safe-area-inset-left)) calc(24px + env(safe-area-inset-bottom));
+        max-height: calc(100dvh - 70px); overflow-y: auto;
+        transform: translateY(-10px); opacity: 0; pointer-events: none;
+        transition: transform .25s ease, opacity .25s ease;
+      }
+      .navlinks.open { transform: none; opacity: 1; pointer-events: auto; }
+      .navlinks a { padding: 15px 6px; font-size: 16px; border-bottom: 1px solid var(--border); }
+      .navlinks a.nav-cta { margin-top: 16px; border: none; text-align: center; }
       .stats, .steps { grid-template-columns: 1fr 1fr; }
       .model-grid, .cap-grid { grid-template-columns: 1fr; }
       section { padding: 80px 0; }
@@ -733,5 +759,6 @@
       obs.observe(section);
     })();
   </script>
-</body>
+    <script defer src="mobile-nav.js"></script>
+  </body>
 </html>

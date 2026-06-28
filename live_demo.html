@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Live Demo - AI consultant｜看 AI Agent 實際跑給你看</title>
     <meta name="description" content="互動式 AI Agent 展示：智慧客服自動分流、詢價單秒變報價、營運儀表板即時監控。先看到上線後的樣子，再決定要不要導入。" />
 
@@ -11,6 +11,14 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <!-- PWA / mobile app -->
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#7c3aed" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AI Consultant" />
 
     <!-- SEO / Social preview -->
     <link rel="canonical" href="https://brothersupport.github.io/ai_consultant/live_demo.html" />
@@ -672,5 +680,6 @@
       }, { threshold: 0.25 });
       stageObs.observe(document.querySelector('.app-frame'));
     </script>
+      <script defer src="mobile-nav.js"></script>
   </body>
 </html>

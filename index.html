@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>AI consultant — 讓 AI Agent 成為企業的數位員工</title>
     <meta name="description" content="專為台灣中小企業打造的 agentic AI 導入顧問。會感知、規劃、執行、自我修正的 AI Agent，直接部署到你的營運第一線。" />
     <meta name="keywords" content="AI Agent, agentic AI, AI 導入, 流程自動化, 中小企業 AI, AI 顧問, 數位員工, 台灣" />
@@ -12,6 +12,14 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <!-- PWA / mobile app -->
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#7c3aed" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AI Consultant" />
 
     <!-- SEO / Social preview -->
     <link rel="canonical" href="https://brothersupport.github.io/ai_consultant/" />
@@ -373,5 +381,6 @@
         obs.observe(section);
       })();
     </script>
+      <script defer src="mobile-nav.js"></script>
   </body>
 </html>

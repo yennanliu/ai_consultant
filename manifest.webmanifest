@@ -1,0 +1,19 @@
+{
+  "name": "AI consultant — agentic AI 導入顧問",
+  "short_name": "AI Consultant",
+  "description": "專為台灣中小企業打造的 agentic AI 導入顧問。會感知、規劃、執行、自我修正的 AI Agent。",
+  "lang": "zh-Hant",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#7c3aed",
+  "categories": ["business", "productivity"],
+  "icons": [
+    { "src": "favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
