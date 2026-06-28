@@ -333,9 +333,12 @@
             </div><!-- /app-body -->
           </div><!-- /app-frame -->
 
-          <p class="center" style="margin-top:var(--space-6); font-size:13px; color:var(--text-dim); font-family:var(--mono);">
-            ↑ 切換上方分頁試不同場景，按「執行 Demo」重跑一次
-          </p>
+          <div class="center" style="margin-top:var(--space-8);">
+            <button class="btn btn-primary btn-lg" id="rerun-btn">▶ 執行 Demo（重新跑一次）</button>
+            <p style="margin-top:var(--space-4); font-size:13px; color:var(--text-dim); font-family:var(--mono);">
+              切換上方分頁試不同場景，隨時按「執行 Demo」重跑一次
+            </p>
+          </div>
         </div>
       </section>
 
@@ -657,6 +660,10 @@
         tab.addEventListener('click', ()=>{ show(tab.dataset.demo); });
       });
       runBtn.addEventListener('click', play);
+      document.getElementById('rerun-btn').addEventListener('click', () => {
+        document.querySelector('.app-frame').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        play();
+      });
 
       // init + autoplay first demo when scrolled into view
       show('inbox');
