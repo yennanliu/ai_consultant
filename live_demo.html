@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Live Demo - AI consultant｜看 AI Agent 實際跑給你看</title>
+    <meta name="description" content="互動式 AI Agent 展示：智慧客服自動分流、詢價單秒變報價、營運儀表板即時監控。先看到上線後的樣子，再決定要不要導入。" />
+
+    <!-- Favicons -->
+    <link rel="icon" href="favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    <!-- SEO / Social preview -->
+    <link rel="canonical" href="https://brothersupport.github.io/ai_consultant/live_demo.html" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="AI consultant" />
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:title" content="Live Demo｜看 AI Agent 實際跑給你看 - AI consultant" />
+    <meta property="og:description" content="互動式 AI Agent 展示：智慧客服自動分流、詢價單秒變報價、營運儀表板即時監控。先看到上線後的樣子，再決定要不要導入。" />
+    <meta property="og:url" content="https://brothersupport.github.io/ai_consultant/live_demo.html" />
+    <meta property="og:image" content="https://brothersupport.github.io/ai_consultant/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="AI consultant — 讓 AI Agent 成為企業的數位員工" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Live Demo｜看 AI Agent 實際跑給你看 - AI consultant" />
+    <meta name="twitter:description" content="互動式 AI Agent 展示：智慧客服自動分流、詢價單秒變報價、營運儀表板即時監控。" />
+    <meta name="twitter:image" content="https://brothersupport.github.io/ai_consultant/og-image.png" />
+
+    <link rel="stylesheet" href="linear.css">
+    <style>
+      /* ---------- demo-page scoped styles ---------- */
+      .demo-note {
+        display:inline-flex; align-items:center; gap:8px; font-family:var(--mono);
+        font-size:12px; letter-spacing:.04em; color:var(--text-muted);
+        border:1px dashed var(--border-strong); border-radius:999px; padding:6px 14px;
+      }
+      .demo-note .pulse { width:7px; height:7px; border-radius:50%; background:var(--accent-2);
+        box-shadow:0 0 0 0 rgba(34,211,238,.5); animation:pulse 2s infinite; }
+      @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(34,211,238,.45)} 70%{box-shadow:0 0 0 8px rgba(34,211,238,0)} 100%{box-shadow:0 0 0 0 rgba(34,211,238,0)} }
+
+      /* tabs */
+      .demo-tabs { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:var(--space-8); }
+      .demo-tab {
+        display:flex; align-items:center; gap:10px; cursor:pointer; user-select:none;
+        font-family:var(--mono); font-size:13px; letter-spacing:.02em; color:var(--text-muted);
+        background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-lg);
+        padding:12px 18px; transition:all .25s ease;
+      }
+      .demo-tab .ic { font-size:18px; line-height:1; }
+      .demo-tab small { display:block; font-size:11px; color:var(--text-dim); margin-top:2px; }
+      .demo-tab strong { font-weight:600; color:var(--text); font-family:var(--sans); font-size:14px; }
+      .demo-tab:hover { border-color:var(--border-strong); transform:translateY(-1px); }
+      .demo-tab.active { border-color:transparent; background:var(--grad);
+        box-shadow:var(--shadow-md); }
+      .demo-tab.active strong, .demo-tab.active small, .demo-tab.active { color:#fff; }
+
+      /* app / browser frame */
+      .app-frame { border:1px solid var(--border-strong); border-radius:var(--radius-xl);
+        overflow:hidden; box-shadow:var(--shadow-lg); background:var(--bg-alt); }
+      .app-bar { display:flex; align-items:center; gap:14px; padding:13px 18px;
+        background:var(--surface); border-bottom:1px solid var(--border); }
+      .app-dots { display:flex; gap:7px; }
+      .app-dots i { width:11px; height:11px; border-radius:50%; display:block; }
+      .app-url { flex:1; font-family:var(--mono); font-size:12px; color:var(--text-muted);
+        background:var(--bg); border:1px solid var(--border); border-radius:999px;
+        padding:6px 14px; text-align:center; max-width:420px; margin:0 auto;
+        white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .app-run { font-family:var(--mono); font-size:12px; padding:7px 16px; border-radius:var(--radius-md);
+        border:1px solid transparent; background:var(--grad); color:#fff; cursor:pointer; white-space:nowrap; }
+      .app-run:disabled { opacity:.5; cursor:default; }
+      .app-body { padding:0; }
+
+      .demo-panel { display:none; }
+      .demo-panel.active { display:block; animation:fade .4s ease; }
+      @keyframes fade { from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none} }
+
+      /* ===== Demo 1 — service inbox ===== */
+      .inbox { display:grid; grid-template-columns: 250px 1fr 280px; min-height:440px; }
+      @media (max-width:900px){ .inbox{ grid-template-columns:1fr; } .inbox .col-steps,.inbox .col-list{ display:none; } }
+      .inbox .col { padding:16px; }
+      .col-list { border-right:1px solid var(--border); background:var(--bg); }
+      .col-conv { border-right:1px solid var(--border); display:flex; flex-direction:column; }
+      .col-head { font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+        color:var(--text-dim); margin-bottom:12px; display:flex; justify-content:space-between; }
+      .tkt { padding:11px 12px; border-radius:var(--radius-md); border:1px solid var(--border);
+        margin-bottom:8px; background:var(--bg-alt); transition:all .3s; cursor:default; }
+      .tkt.cur { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-tint); }
+      .tkt.done { opacity:.55; }
+      .tkt .from { font-size:13px; font-weight:600; display:flex; align-items:center; gap:7px; }
+      .tkt .ch { font-size:10px; font-family:var(--mono); padding:1px 6px; border-radius:5px;
+        background:var(--surface); color:var(--text-muted); }
+      .tkt .prev { font-size:12px; color:var(--text-muted); margin-top:4px; line-height:1.5;
+        display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; }
+      .tkt .badge { font-size:10px; font-family:var(--mono); margin-top:7px; display:inline-block;
+        padding:2px 7px; border-radius:5px; }
+      .bg-pend{ background:var(--surface); color:var(--text-muted);} .bg-ok{ background:rgba(16,185,129,.14); color:#0ea371;}
+
+      .chat { flex:1; display:flex; flex-direction:column; gap:12px; padding:4px 2px 16px; overflow:hidden; }
+      .bub { max-width:80%; padding:11px 14px; border-radius:14px; font-size:14px; line-height:1.65; }
+      .bub.cust { align-self:flex-start; background:var(--surface); border-bottom-left-radius:4px; }
+      .bub.ai { align-self:flex-end; color:#fff; background:var(--grad); border-bottom-right-radius:4px; }
+      .bub .who { font-family:var(--mono); font-size:10px; letter-spacing:.06em; opacity:.7; margin-bottom:4px; }
+      .typing { align-self:flex-end; display:flex; gap:4px; padding:12px 16px; background:var(--grad);
+        border-radius:14px; border-bottom-right-radius:4px; }
+      .typing i { width:6px; height:6px; border-radius:50%; background:#fff; opacity:.8; animation:blink 1.2s infinite; }
+      .typing i:nth-child(2){animation-delay:.2s} .typing i:nth-child(3){animation-delay:.4s}
+      @keyframes blink { 0%,60%,100%{opacity:.25; transform:translateY(0)} 30%{opacity:1; transform:translateY(-3px)} }
+
+      .col-steps { background:var(--bg); }
+      .pstep { display:flex; gap:11px; align-items:flex-start; padding:9px 0; opacity:.4; transition:opacity .35s; }
+      .pstep.on { opacity:1; }
+      .pstep .pi { width:26px; height:26px; flex:none; border-radius:8px; display:grid; place-items:center;
+        font-size:13px; background:var(--surface); border:1px solid var(--border); transition:all .35s; }
+      .pstep.on .pi { background:var(--grad); color:#fff; border-color:transparent; }
+      .pstep .pt { font-size:13px; font-weight:600; } .pstep .pd { font-size:11.5px; color:var(--text-muted); margin-top:2px; line-height:1.5; font-family:var(--mono); }
+      .kpi-row { display:flex; gap:10px; margin-top:18px; border-top:1px solid var(--border); padding-top:16px; }
+      .kpi-row .k { flex:1; } .kpi-row .kn { font-family:var(--mono); font-size:22px; font-weight:700; line-height:1; }
+      .kpi-row .kl { font-size:10.5px; color:var(--text-dim); margin-top:5px; line-height:1.4; }
+
+      /* ===== Demo 2 — quote pipeline ===== */
+      .quote-wrap { padding:26px; display:grid; grid-template-columns:1fr 360px; gap:26px; }
+      @media (max-width:900px){ .quote-wrap{ grid-template-columns:1fr; } }
+      .pipe { display:flex; flex-direction:column; gap:0; }
+      .pnode { display:flex; gap:14px; align-items:flex-start; position:relative; padding-bottom:20px; }
+      .pnode:last-child{ padding-bottom:0; }
+      .pnode::before { content:""; position:absolute; left:21px; top:44px; bottom:-2px; width:2px;
+        background:var(--border); }
+      .pnode:last-child::before{ display:none; }
+      .pnode .dot2 { width:44px; height:44px; flex:none; border-radius:12px; display:grid; place-items:center;
+        font-size:19px; background:var(--surface); border:1px solid var(--border);
+        transition:all .4s; z-index:1; }
+      .pnode.run .dot2 { background:var(--grad); color:#fff; border-color:transparent; transform:scale(1.06); box-shadow:var(--shadow-md); }
+      .pnode.ok .dot2 { background:rgba(16,185,129,.15); border-color:#10b981; color:#0ea371; }
+      .pnode .ptxt { padding-top:3px; flex:1; }
+      .pnode .ph { font-size:15px; font-weight:600; display:flex; align-items:center; gap:9px; }
+      .pnode .chk { color:#10b981; font-size:13px; opacity:0; transition:opacity .3s; }
+      .pnode.ok .chk { opacity:1; }
+      .pnode .plog { font-family:var(--mono); font-size:12px; color:var(--text-muted); margin-top:5px;
+        min-height:17px; line-height:1.55; }
+      .filechip { display:inline-flex; align-items:center; gap:9px; font-family:var(--mono); font-size:12.5px;
+        background:var(--bg); border:1px solid var(--border-strong); border-radius:var(--radius-md);
+        padding:9px 14px; margin-bottom:20px; }
+
+      .quote-doc { background:var(--bg); border:1px solid var(--border-strong); border-radius:var(--radius-lg);
+        box-shadow:var(--shadow-md); overflow:hidden; opacity:0; transform:translateY(10px);
+        transition:opacity .5s, transform .5s; align-self:start; }
+      .quote-doc.show { opacity:1; transform:none; }
+      .qd-head { padding:18px 20px; background:var(--grad); color:#fff; }
+      .qd-head .t { font-size:15px; font-weight:700; } .qd-head .s { font-family:var(--mono); font-size:11px; opacity:.85; margin-top:3px; }
+      .qd-body { padding:16px 20px; }
+      .qd-row { display:flex; justify-content:space-between; font-size:13px; padding:8px 0; border-bottom:1px dashed var(--border); }
+      .qd-row .qn { color:var(--text-muted); } .qd-row .qv { font-family:var(--mono); }
+      .qd-total { display:flex; justify-content:space-between; align-items:baseline; padding-top:14px; margin-top:6px; }
+      .qd-total .ql { font-size:13px; color:var(--text-muted); }
+      .qd-total .qt { font-family:var(--mono); font-size:26px; font-weight:700; }
+      .qd-foot { padding:14px 20px; border-top:1px solid var(--border); display:flex; gap:10px; }
+
+      /* ===== Demo 3 — ops dashboard ===== */
+      .dash { padding:24px; }
+      .dash-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:22px; }
+      @media (max-width:720px){ .dash-kpis{ grid-template-columns:repeat(2,1fr);} }
+      .dcard { background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px; }
+      .dcard .dl { font-size:11px; color:var(--text-dim); font-family:var(--mono); letter-spacing:.04em; text-transform:uppercase; }
+      .dcard .dv { font-family:var(--mono); font-size:28px; font-weight:700; margin-top:8px; line-height:1; }
+      .dcard .dd { font-size:11.5px; margin-top:7px; color:#0ea371; font-family:var(--mono); }
+      .dcard .dd.down { color:#0ea371; }
+      .dash-grid { display:grid; grid-template-columns:1.6fr 1fr; gap:14px; }
+      @media (max-width:720px){ .dash-grid{ grid-template-columns:1fr;} }
+      .chart-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-lg); padding:18px; }
+      .chart-card h4 { font-size:13px; font-weight:600; margin-bottom:4px; }
+      .chart-card .sub { font-size:11px; color:var(--text-dim); font-family:var(--mono); margin-bottom:16px; }
+      .bars { display:flex; align-items:flex-end; gap:10px; height:150px; }
+      .bars .bar { flex:1; background:var(--grad); border-radius:6px 6px 0 0; height:0; transition:height 1s cubic-bezier(.22,.61,.36,1); position:relative; min-height:3px; }
+      .bars .bar span { position:absolute; top:-18px; left:0; right:0; text-align:center; font-family:var(--mono); font-size:10px; color:var(--text-muted); }
+      .bars-x { display:flex; gap:10px; margin-top:8px; }
+      .bars-x span { flex:1; text-align:center; font-family:var(--mono); font-size:10px; color:var(--text-dim); }
+      .feed { display:flex; flex-direction:column; gap:0; }
+      .feed .fi { display:flex; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); font-size:12.5px; opacity:0; transform:translateX(8px); animation:slidein .5s forwards; }
+      @keyframes slidein { to{ opacity:1; transform:none; } }
+      .feed .fi .fic { width:24px; height:24px; flex:none; border-radius:7px; display:grid; place-items:center; font-size:12px; background:var(--surface); }
+      .feed .fi .ft { line-height:1.5; } .feed .fi .ftime { font-family:var(--mono); font-size:10.5px; color:var(--text-dim); margin-top:2px; }
+      .feed .fi.alert .fic { background:rgba(245,158,11,.16); }
+      .feed .fi.okk .fic { background:rgba(16,185,129,.16); }
+
+      .toast { position:absolute; right:18px; top:64px; max-width:300px; background:var(--bg);
+        border:1px solid var(--border-strong); border-left:3px solid #f59e0b; border-radius:var(--radius-md);
+        box-shadow:var(--shadow-lg); padding:13px 15px; font-size:13px; line-height:1.55;
+        opacity:0; transform:translateX(20px); transition:all .45s; z-index:5; pointer-events:none; }
+      .toast.show { opacity:1; transform:none; }
+      .toast .th { font-weight:600; display:flex; gap:8px; align-items:center; margin-bottom:4px; }
+      .dash-stage { position:relative; }
+    </style>
+  </head>
+  <body>
+
+    <header>
+      <div class="wrap">
+        <div class="nav">
+          <a href="index.html" class="brand">AI CONSULTANT</a>
+          <nav class="navlinks">
+            <a href="index.html#agentic">AGENTIC</a>
+            <a href="service_mode.html">MODES</a>
+            <a href="success_stories.html">STORIES</a>
+            <a href="live_demo.html" style="color:var(--text);">LIVE DEMO</a>
+            <a href="blog.html">BLOG</a>
+            <a href="index.html#contact" class="btn btn-primary" style="height:38px;padding:8px 18px;font-size:14px;">免費診斷 →</a>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero" style="padding-bottom:var(--space-12);">
+        <div class="wrap">
+          <div class="reveal center mx-auto" style="max-width:760px;">
+            <span class="hero-badge"><span class="dot"></span>LIVE DEMO · 互動展示</span>
+            <h1>看 AI Agent<br><span class="gradient-text">實際跑給你看</span></h1>
+            <p class="lead mx-auto" style="max-width:580px;">
+              與其聽我們講，不如直接看上線後的樣子。下面是三個依真實場景做的<b style="color:var(--text);font-weight:600;">互動式模擬</b>——點一下，讓 Agent 當場跑一遍給你看。
+            </p>
+            <div style="margin-top:var(--space-6);">
+              <span class="demo-note"><span class="pulse"></span>這是模擬展示（mock），數據為示意，實際導入會接上你的系統與真實資料</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DEMO STAGE -->
+      <section style="padding-top:0;">
+        <div class="wrap">
+          <!-- tabs -->
+          <div class="demo-tabs reveal" id="demo-tabs">
+            <div class="demo-tab active" data-demo="inbox">
+              <span class="ic">💬</span><span><strong>智慧客服 Agent</strong><small>自動分流・即時回覆</small></span>
+            </div>
+            <div class="demo-tab" data-demo="quote">
+              <span class="ic">🧾</span><span><strong>報價 Agent</strong><small>詢價單秒變報價</small></span>
+            </div>
+            <div class="demo-tab" data-demo="dash">
+              <span class="ic">📊</span><span><strong>營運儀表板</strong><small>即時監控・異常預警</small></span>
+            </div>
+          </div>
+
+          <!-- app frame -->
+          <div class="app-frame reveal">
+            <div class="app-bar">
+              <div class="app-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+              <div class="app-url" id="app-url">app.your-company.ai / agent / customer-service</div>
+              <button class="app-run" id="app-run">▶ 執行 Demo</button>
+            </div>
+            <div class="app-body">
+
+              <!-- ===== Demo 1: inbox ===== -->
+              <div class="demo-panel active" id="panel-inbox">
+                <div class="inbox">
+                  <!-- ticket list -->
+                  <div class="col col-list">
+                    <div class="col-head"><span>收件匣</span><span id="inbox-q">4 待處理</span></div>
+                    <div id="ticket-list"></div>
+                  </div>
+                  <!-- conversation -->
+                  <div class="col col-conv">
+                    <div class="col-head"><span id="conv-title">對話</span><span id="conv-ch"></span></div>
+                    <div class="chat" id="chat"></div>
+                  </div>
+                  <!-- agent steps -->
+                  <div class="col col-steps">
+                    <div class="col-head"><span>Agent 處理流程</span></div>
+                    <div id="pipe-steps"></div>
+                    <div class="kpi-row">
+                      <div class="k"><div class="kn gradient-text" id="kpi-done">0</div><div class="kl">今日自動處理</div></div>
+                      <div class="k"><div class="kn gradient-text" id="kpi-rate">0%</div><div class="kl">自動解決率</div></div>
+                      <div class="k"><div class="kn gradient-text" id="kpi-time">0s</div><div class="kl">平均回應</div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ===== Demo 2: quote ===== -->
+              <div class="demo-panel" id="panel-quote">
+                <div class="quote-wrap">
+                  <div>
+                    <div class="filechip" id="filechip" style="opacity:.4;">📎 等待輸入… <span style="color:var(--text-dim)">（點「執行 Demo」上傳詢價單）</span></div>
+                    <div class="pipe" id="quote-pipe"></div>
+                  </div>
+                  <div class="quote-doc" id="quote-doc">
+                    <div class="qd-head"><div class="t">報價單 / QUOTATION</div><div class="s">No. Q-2026-0628 · 自動生成 by AI Agent</div></div>
+                    <div class="qd-body" id="qd-body"></div>
+                    <div class="qd-foot">
+                      <button class="btn btn-primary" style="flex:1;height:40px;font-size:13px;">下載 PDF</button>
+                      <button class="btn btn-secondary" style="flex:1;height:40px;font-size:13px;">送主管核可</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ===== Demo 3: dashboard ===== -->
+              <div class="demo-panel" id="panel-dash">
+                <div class="dash dash-stage">
+                  <div class="toast" id="dash-toast">
+                    <div class="th">⚠️ 異常偵測</div>
+                    <div>原料 #A-227 庫存低於安全水位，Agent 已自動建立採購單並通知負責人。</div>
+                  </div>
+                  <div class="dash-kpis">
+                    <div class="dcard"><div class="dl">今日自動任務</div><div class="dv gradient-text" data-dto="1284">0</div><div class="dd">▲ 較昨日 +12%</div></div>
+                    <div class="dcard"><div class="dl">節省工時 / 週</div><div class="dv gradient-text" data-dto="156" data-dsuffix=" hr">0</div><div class="dd">▲ 相當於 4 名人力</div></div>
+                    <div class="dcard"><div class="dl">平均處理時間</div><div class="dv gradient-text" data-dto="2" data-dsuffix=".4s">0</div><div class="dd down">▼ 較人工快 18×</div></div>
+                    <div class="dcard"><div class="dl">準確率</div><div class="dv gradient-text" data-dto="99" data-dsuffix=".2%">0</div><div class="dd">▲ 0 次漏單</div></div>
+                  </div>
+                  <div class="dash-grid">
+                    <div class="chart-card">
+                      <h4>本週自動處理任務量</h4><div class="sub">tasks / day · 即時更新</div>
+                      <div class="bars" id="dash-bars"></div>
+                      <div class="bars-x"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+                    </div>
+                    <div class="chart-card">
+                      <h4>即時事件流</h4><div class="sub">live agent activity</div>
+                      <div class="feed" id="dash-feed"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- /app-body -->
+          </div><!-- /app-frame -->
+
+          <p class="center" style="margin-top:var(--space-6); font-size:13px; color:var(--text-dim); font-family:var(--mono);">
+            ↑ 切換上方分頁試不同場景，按「執行 Demo」重跑一次
+          </p>
+        </div>
+      </section>
+
+      <!-- VALUE STRIP -->
+      <section class="b-top">
+        <div class="wrap">
+          <div class="grid-3">
+            <div class="card reveal"><div class="card-icon">🎯</div><h3>看得到的成果</h3><p>不是投影片裡的願景，而是把你的真實場景跑一遍，讓你預先看到上線後長什麼樣。</p></div>
+            <div class="card reveal"><div class="card-icon">🔌</div><h3>接你現有系統</h3><p>展示中的資料是示意；正式導入會串接你的 LINE、Email、ERP 與資料庫，不換系統。</p></div>
+            <div class="card reveal"><div class="card-icon">📈</div><h3>先試點再放大</h3><p>從一個最痛的環節開始 PoC，量到成效（省工時、轉換率）達標，再複製到其他流程。</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section id="contact">
+        <div class="wrap">
+          <div class="cta-box reveal">
+            <span class="mono-label" style="justify-content:center;">YOUR_TURN</span>
+            <h2 style="margin-top:14px;">想看 AI Agent 跑<br><span class="gradient-text">你的真實流程</span>？</h2>
+            <p class="lead mx-auto" style="max-width:560px; margin-bottom: var(--space-8);">15 分鐘免費診斷，我們會用你的場景做一份客製 Demo，讓你看到實際能省下多少。</p>
+            <a href="https://forms.gle/M1YHzT8V3wErZGNJ6" target="_blank" rel="noreferrer" class="btn btn-primary btn-lg">預約客製 Demo →</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap" style="display: flex; justify-content: space-between; flex-wrap:wrap; gap: var(--space-4);">
+        <span>© 2026 AI CONSULTANT</span>
+        <span>TW_SMB_AGENTIC_AI</span>
+      </div>
+    </footer>
+
+    <script>
+      /* ---------- theme toggle (shared) ---------- */
+      const themeToggle = document.getElementById('theme-toggle');
+      const moonIcon = themeToggle.querySelector('.moon');
+      const sunIcon = themeToggle.querySelector('.sun');
+      const htmlElement = document.documentElement;
+      if (localStorage.getItem('theme') === 'dark') {
+        htmlElement.classList.add('theme-dark');
+        moonIcon.style.display = 'none'; sunIcon.style.display = 'block';
+      }
+      themeToggle.addEventListener('click', () => {
+        htmlElement.classList.toggle('theme-dark');
+        const isDark = htmlElement.classList.contains('theme-dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        moonIcon.style.display = isDark ? 'none' : 'block';
+        sunIcon.style.display = isDark ? 'block' : 'none';
+      });
+
+      /* ---------- scroll reveal ---------- */
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 4) * 80 + 'ms'; io.observe(el); });
+
+      /* ---------- helpers ---------- */
+      const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let runToken = 0; // cancels in-flight demos when switching tabs / re-running
+
+      function countUp(el, to, suffix, dur) {
+        suffix = suffix || ''; dur = dur || 1100;
+        let start = null;
+        const tick = (t) => {
+          if (!start) start = t;
+          const p = Math.min((t - start) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
+          const val = (to % 1 === 0) ? Math.round(to * eased) : (to * eased).toFixed(1);
+          el.textContent = val + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }
+
+      /* =========================================================
+         DEMO 1 — Customer service inbox
+      ========================================================= */
+      const TICKETS = [
+        { from:'林小姐', ch:'LINE', q:'請問我上週三訂的貨大概什麼時候會到？訂單編號 #SO-3391', intent:'物流查詢',
+          reply:'林小姐您好 😊 您的訂單 #SO-3391 已於昨日出貨，目前在轉運中心，預計明天（6/29）下午前送達。需要我幫您開啟到貨通知嗎？' },
+        { from:'王經理', ch:'Email', q:'你們的工業風扇 FX-200 有現貨嗎？我要 50 台，可以給報價嗎？', intent:'詢價',
+          reply:'王經理您好，FX-200 目前現貨 68 台，可滿足 50 台需求。50 台享 8 折，單價 NT$2,240，含稅總計 NT$117,600。報價單已附上，效期 7 天。' },
+        { from:'陳先生', ch:'LINE', q:'我要退貨，東西收到時外箱破損，裡面也刮傷了', intent:'退換貨',
+          reply:'陳先生很抱歉造成不便 🙏 已為您建立退貨單 #RMA-0612，並安排明日宅配到府收件，免運費。換貨新品預計 3 個工作天送達。' },
+        { from:'Sophie', ch:'Web', q:'Do you ship to Singapore? And what payment methods?', intent:'售前諮詢',
+          reply:'Hi Sophie! Yes, we ship to Singapore (5–7 business days). We accept credit card, PayPal, and bank transfer. Shipping is free for orders over US$300.' },
+      ];
+      const PIPE = [
+        { i:'🔎', t:'意圖分類', d:'NLU 判斷客戶意圖' },
+        { i:'📚', t:'知識檢索', d:'查 KB / 訂單 / 庫存' },
+        { i:'✍️', t:'生成草稿', d:'撰寫個人化回覆' },
+        { i:'🛡️', t:'風險檢查', d:'政策與語氣審核' },
+        { i:'📤', t:'送出回覆', d:'自動回覆並結案' },
+      ];
+      function buildInbox() {
+        const list = document.getElementById('ticket-list');
+        list.innerHTML = TICKETS.map((t,i)=>`
+          <div class="tkt" data-i="${i}">
+            <div class="from">${t.from} <span class="ch">${t.ch}</span></div>
+            <div class="prev">${t.q}</div>
+            <div class="badge bg-pend">● 待處理</div>
+          </div>`).join('');
+        document.getElementById('pipe-steps').innerHTML = PIPE.map(p=>`
+          <div class="pstep"><div class="pi">${p.i}</div><div><div class="pt">${p.t}</div><div class="pd">${p.d}</div></div></div>`).join('');
+      }
+      async function runInbox(token) {
+        const chat = document.getElementById('chat');
+        const tkts = [...document.querySelectorAll('#ticket-list .tkt')];
+        const steps = [...document.querySelectorAll('#pipe-steps .pstep')];
+        let done = 0;
+        document.getElementById('kpi-done').textContent = '0';
+        document.getElementById('kpi-rate').textContent = '0%';
+        document.getElementById('kpi-time').textContent = '0s';
+
+        for (let n = 0; n < TICKETS.length; n++) {
+          if (token !== runToken) return;
+          const t = TICKETS[n];
+          tkts.forEach((el,i)=> el.classList.toggle('cur', i===n));
+          tkts[n].scrollIntoView({ block:'nearest', behavior:'smooth' });
+          document.getElementById('conv-title').textContent = t.from + ' · ' + t.intent;
+          document.getElementById('conv-ch').textContent = t.ch;
+          document.getElementById('inbox-q').textContent = (TICKETS.length - n) + ' 待處理';
+          chat.innerHTML = '';
+
+          // customer message
+          const cust = document.createElement('div');
+          cust.className = 'bub cust';
+          cust.innerHTML = '<div class="who">'+t.from+'</div>'+t.q;
+          chat.appendChild(cust);
+          await sleep(reduce?200:650); if (token !== runToken) return;
+
+          // pipeline steps light up
+          steps.forEach(s=>s.classList.remove('on'));
+          for (let s = 0; s < steps.length; s++) {
+            if (token !== runToken) return;
+            steps[s].classList.add('on');
+            await sleep(reduce?120:430);
+          }
+
+          // typing indicator
+          const typing = document.createElement('div');
+          typing.className = 'typing'; typing.innerHTML='<i></i><i></i><i></i>';
+          chat.appendChild(typing);
+          await sleep(reduce?200:800); if (token !== runToken) return;
+          typing.remove();
+
+          // ai reply (typewriter)
+          const ai = document.createElement('div');
+          ai.className = 'bub ai';
+          ai.innerHTML = '<div class="who">AI AGENT</div><span></span>';
+          chat.appendChild(ai);
+          const span = ai.querySelector('span');
+          if (reduce) { span.textContent = t.reply; }
+          else {
+            for (let c = 0; c < t.reply.length; c++) {
+              if (token !== runToken) return;
+              span.textContent += t.reply[c];
+              chat.scrollTop = chat.scrollHeight;
+              await sleep(14);
+            }
+          }
+
+          // mark resolved + update KPIs
+          tkts[n].classList.add('done');
+          tkts[n].querySelector('.badge').className = 'badge bg-ok';
+          tkts[n].querySelector('.badge').textContent = '✓ 已自動解決';
+          done++;
+          document.getElementById('kpi-done').textContent = (1283 + done);
+          document.getElementById('kpi-rate').textContent = Math.round(done/(n+1)*100*0.94) + '%';
+          document.getElementById('kpi-time').textContent = (1.8 + Math.random()*0.6).toFixed(1) + 's';
+          await sleep(reduce?300:1100);
+        }
+        tkts.forEach(el=>el.classList.remove('cur'));
+        document.getElementById('kpi-rate').textContent = '94%';
+      }
+
+      /* =========================================================
+         DEMO 2 — Quote pipeline
+      ========================================================= */
+      const QPIPE = [
+        { i:'📄', t:'解析詢價文件', log:'OCR 擷取 spec.pdf … 找到 4 個品項、數量與規格' },
+        { i:'🗂️', t:'比對品項庫存', log:'inventory.match() → 4/4 命中，現貨充足 ✓' },
+        { i:'💲', t:'計算報價', log:'套用 VIP 折扣 8 折 + 數量級距，毛利率 31.5%' },
+        { i:'🛡️', t:'毛利與政策檢查', log:'毛利 ≥ 門檻 25% ✓ 無違反定價政策 ✓' },
+        { i:'🧾', t:'生成報價單', log:'產出 Q-2026-0628.pdf，效期 7 天' },
+      ];
+      const QITEMS = [
+        { n:'工業風扇 FX-200 × 50', v:'112,000' },
+        { n:'防塵濾網 AF-12 × 50', v:'15,000' },
+        { n:'安裝支架 BR-7 × 50', v:'9,500' },
+        { n:'到府安裝服務', v:'8,000' },
+      ];
+      function buildQuote() {
+        document.getElementById('quote-pipe').innerHTML = QPIPE.map(p=>`
+          <div class="pnode"><div class="dot2">${p.i}</div>
+            <div class="ptxt"><div class="ph">${p.t} <span class="chk">✓</span></div><div class="plog"></div></div>
+          </div>`).join('');
+        document.getElementById('quote-doc').classList.remove('show');
+        document.getElementById('filechip').style.opacity = '.4';
+        document.getElementById('filechip').innerHTML = '📎 等待輸入… <span style="color:var(--text-dim)">（點「執行 Demo」上傳詢價單）</span>';
+      }
+      async function runQuote(token) {
+        const nodes = [...document.querySelectorAll('#quote-pipe .pnode')];
+        const doc = document.getElementById('quote-doc');
+        doc.classList.remove('show');
+        nodes.forEach(n=>{ n.classList.remove('run','ok'); n.querySelector('.plog').textContent=''; });
+
+        const fc = document.getElementById('filechip');
+        fc.style.opacity = '1';
+        fc.innerHTML = '📎 spec_詢價單_王經理.pdf <span style="color:var(--accent-2)">· 已接收</span>';
+        await sleep(reduce?200:600); if (token !== runToken) return;
+
+        for (let i = 0; i < nodes.length; i++) {
+          if (token !== runToken) return;
+          nodes[i].classList.add('run');
+          await sleep(reduce?150:500); if (token !== runToken) return;
+          nodes[i].querySelector('.plog').textContent = QPIPE[i].log;
+          await sleep(reduce?200:750); if (token !== runToken) return;
+          nodes[i].classList.remove('run'); nodes[i].classList.add('ok');
+        }
+
+        // reveal quote doc
+        const body = document.getElementById('qd-body');
+        body.innerHTML = QITEMS.map(q=>`<div class="qd-row"><span class="qn">${q.n}</span><span class="qv">NT$ ${q.v}</span></div>`).join('') +
+          `<div class="qd-total"><span class="ql">含稅總計 (5%)</span><span class="qt gradient-text" id="qd-total-num">NT$ 0</span></div>`;
+        doc.classList.add('show');
+        await sleep(reduce?100:300); if (token !== runToken) return;
+        const totalEl = document.getElementById('qd-total-num');
+        const total = 151725;
+        let start = null; const dur = reduce?0:1200;
+        if (reduce) { totalEl.textContent = 'NT$ ' + total.toLocaleString(); }
+        else {
+          const tick = (t)=>{ if(!start)start=t; const p=Math.min((t-start)/dur,1), e=1-Math.pow(1-p,3);
+            totalEl.textContent='NT$ '+Math.round(total*e).toLocaleString(); if(p<1 && token===runToken) requestAnimationFrame(tick); };
+          requestAnimationFrame(tick);
+        }
+      }
+
+      /* =========================================================
+         DEMO 3 — Ops dashboard
+      ========================================================= */
+      const BARS = [62, 78, 71, 95, 88, 40, 33];
+      const FEED = [
+        { c:'okk', i:'✅', t:'自動回覆客服訊息 #4821（物流查詢）', time:'剛剛' },
+        { c:'okk', i:'🧾', t:'生成報價單 Q-2026-0628 並送主管核可', time:'12 秒前' },
+        { c:'alert', i:'⚠️', t:'偵測原料 #A-227 低於安全庫存 → 自動建立採購單', time:'48 秒前' },
+        { c:'okk', i:'📦', t:'同步 38 筆訂單狀態至 ERP', time:'1 分鐘前' },
+        { c:'okk', i:'📊', t:'產出昨日營運日報並寄送 5 位主管', time:'3 分鐘前' },
+      ];
+      function buildDash() {
+        document.getElementById('dash-bars').innerHTML = BARS.map(()=>`<div class="bar"></div>`).join('');
+        document.getElementById('dash-feed').innerHTML = '';
+        document.getElementById('dash-toast').classList.remove('show');
+        document.querySelectorAll('#panel-dash [data-dto]').forEach(el=> el.textContent = '0');
+      }
+      async function runDash(token) {
+        // KPI count-up
+        document.querySelectorAll('#panel-dash [data-dto]').forEach(el=>{
+          countUp(el, +el.dataset.dto, el.dataset.dsuffix || '', 1300);
+        });
+        // bars grow
+        await sleep(reduce?0:200); if (token !== runToken) return;
+        const bars = [...document.querySelectorAll('#dash-bars .bar')];
+        const max = Math.max(...BARS);
+        bars.forEach((b,i)=>{ setTimeout(()=>{ if(token===runToken){ b.style.height=(BARS[i]/max*100)+'%'; b.innerHTML='<span>'+BARS[i]+'</span>'; } }, i*110); });
+
+        // feed slides in one by one
+        const feed = document.getElementById('dash-feed');
+        feed.innerHTML = '';
+        for (let i = 0; i < FEED.length; i++) {
+          if (token !== runToken) return;
+          const f = FEED[i];
+          const div = document.createElement('div');
+          div.className = 'fi ' + f.c;
+          div.style.animationDelay = '0s';
+          div.innerHTML = `<div class="fic">${f.i}</div><div><div class="ft">${f.t}</div><div class="ftime">${f.time}</div></div>`;
+          feed.appendChild(div);
+          if (f.c === 'alert') {
+            const toast = document.getElementById('dash-toast');
+            toast.classList.add('show');
+            setTimeout(()=>toast.classList.remove('show'), 4200);
+          }
+          await sleep(reduce?150:520);
+        }
+      }
+
+      /* =========================================================
+         Tab switching + run controller
+      ========================================================= */
+      const DEMOS = {
+        inbox: { panel:'panel-inbox', url:'app.your-company.ai / agent / customer-service', build:buildInbox, run:runInbox },
+        quote: { panel:'panel-quote', url:'app.your-company.ai / agent / quotation',        build:buildQuote, run:runQuote },
+        dash:  { panel:'panel-dash',  url:'app.your-company.ai / dashboard / live-ops',      build:buildDash,  run:runDash },
+      };
+      let current = 'inbox';
+      const runBtn = document.getElementById('app-run');
+
+      function show(key) {
+        current = key;
+        runToken++; // cancel any running demo
+        document.querySelectorAll('.demo-tab').forEach(t=> t.classList.toggle('active', t.dataset.demo===key));
+        document.querySelectorAll('.demo-panel').forEach(p=> p.classList.remove('active'));
+        document.getElementById(DEMOS[key].panel).classList.add('active');
+        document.getElementById('app-url').textContent = DEMOS[key].url;
+        DEMOS[key].build();
+      }
+      async function play() {
+        const token = ++runToken;
+        runBtn.disabled = true; runBtn.textContent = '● 執行中…';
+        DEMOS[current].build();
+        await sleep(120);
+        await DEMOS[current].run(token);
+        if (token === runToken) { runBtn.disabled = false; runBtn.textContent = '↻ 再跑一次'; }
+      }
+
+      document.querySelectorAll('.demo-tab').forEach(tab=>{
+        tab.addEventListener('click', ()=>{ show(tab.dataset.demo); });
+      });
+      runBtn.addEventListener('click', play);
+
+      // init + autoplay first demo when scrolled into view
+      show('inbox');
+      const stageObs = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if (e.isIntersecting) { play(); stageObs.disconnect(); } });
+      }, { threshold: 0.25 });
+      stageObs.observe(document.querySelector('.app-frame'));
+    </script>
+  </body>
+</html>
