@@ -43,7 +43,7 @@
     <main>
       <section class="hero b-bottom">
         <div class="wrap">
-          <span class="mono-label">CASE STUDY · 閱讀約 6 分鐘</span>
+          <span class="mono-label">CASE STUDY · 閱讀約 11 分鐘</span>
           <h1>LINE 官方帳號 × AI Agent：<br>零售客服自動化實戰</h1>
           <div class="text-xs" style="color: var(--text-dim);">2026-05-08</div>
         </div>
@@ -52,26 +52,118 @@
       <section>
         <div class="wrap">
           <div style="max-width: 800px;">
-            <p>在台灣，LINE 幾乎是中小企業與顧客溝通的主戰場。但人工客服的痛點顯而易見：下班沒人回、重複問題回到手軟、訂單與退換貨散落在對話裡。本文拆解我們如何用 AI Agent 把 LINE 客服變成 24/7 的自動戰力。</p>
+            <p>在台灣，LINE 幾乎是中小企業與顧客溝通的主戰場——訂位、問價、追蹤訂單、客訴，全都擠在同一個對話框裡。但人工客服的痛點，每位老闆都心知肚明：下班後沒人回、半夜的詢問隔天才看到、同樣的問題一天回上百次回到手軟、重要的訂單與退換貨散落在一長串對話裡找不回來。最後的結果往往是——該秒回的客人等到不耐煩跑掉，真正棘手的客訴卻被淹沒在重複訊息裡延誤處理。</p>
+            <p>這篇文章用一個真實情境的零售案例，完整拆解我們如何用 AI Agent（會自己判斷、會查系統、會做事的 AI 助理，不是只會照腳本回答的機器人），把一個普通的 LINE 官方帳號（品牌在 LINE 上經營顧客的官方門面，顧客加好友後即可對話）變成 24/7 全年無休的自動客服戰力，把 70% 的訊息交給 AI 自動處理，同時讓人力專注在最需要溫度與判斷的事情上。</p>
+
+            <div class="viz">
+              <div class="viz-title">上線後的關鍵成效（連鎖飲品品牌實例）</div>
+              <div class="kpis">
+                <div class="kpi"><div class="kpi-num">70%</div><div class="kpi-lbl">訊息由 AI 自動回覆</div></div>
+                <div class="kpi"><div class="kpi-num">數秒</div><div class="kpi-lbl">平均回應時間（原為數十分鐘）</div></div>
+                <div class="kpi"><div class="kpi-num">−60%</div><div class="kpi-lbl">客服人工處理工時</div></div>
+                <div class="kpi"><div class="kpi-num">24/7</div><div class="kpi-lbl">全年無休不打烊</div></div>
+              </div>
+              <div class="viz-caption">以下會逐段說明這些數字怎麼來的，以及換成你的店要怎麼複製。</div>
+            </div>
 
             <h2>痛點：對話量爆炸，但八成是重複問題</h2>
-            <p>一家連鎖飲品品牌，旺季每天湧入上千則 LINE 訊息，其中約 80% 是「營業時間、門市地址、訂單進度、會員點數」等重複問題。三位客服每天被淹沒，真正需要人處理的客訴反而被延誤。</p>
+            <p>先看實際情況。一家連鎖飲品品牌，旺季時每天湧入上千則 LINE 訊息。當我們把這些訊息分類後，發現一個關鍵事實：超過八成都是高度重複、答案固定的問題——「現在有開嗎？」「最近的門市在哪？」「我的訂單到哪了？」「我還有多少會員點數？」。三位客服每天光是回這些就忙到天黑，真正需要人判斷的客訴、合作洽談反而排在後面、被延誤。</p>
+            <p>這是典型的「<strong>人力錯置</strong>」：把受過訓練、懂得安撫情緒的客服，用在查一句話就能回答的事情上。對老闆而言，這不只是加班費的問題，更是把貴的資源拿去做便宜的事——而且做不完。</p>
+
+            <div class="viz">
+              <div class="viz-title">每日 LINE 訊息的組成</div>
+              <div class="ring-row">
+                <div class="ring-pct" style="--p:80"><span class="ring-num">80%</span></div>
+                <div>
+                  <p style="margin-top:0;"><strong>約八成訊息是可預測、答案固定的重複問題。</strong></p>
+                  <p style="margin-bottom:0; color: var(--text-muted); font-size:14px;">這正是 AI 最擅長、也最該優先接手的部分。剩下兩成需要情緒安撫或彈性判斷的，才是真正值得人力投入的高價值對話。</p>
+                </div>
+              </div>
+            </div>
 
             <h2>解法：一個會查系統、會判斷的 Agent</h2>
-            <p>我們部署的不是制式關鍵字機器人，而是一個 agentic 客服：</p>
-            <p>• <strong>理解意圖</strong> — 用 LLM 判斷顧客想做什麼，而非比對關鍵字<br/>
-• <strong>呼叫系統</strong> — 自動查訂單系統、庫存與會員資料庫回覆即時資訊<br/>
-• <strong>安全交接</strong> — 遇到客訴、退款等敏感情境，自動轉真人並附上對話摘要<br/>
-• <strong>持續學習</strong> — 把新的問答沉澱進知識庫，越用越準</p>
+            <p>很多老闆對「LINE 機器人」的印象，停留在那種設定關鍵字、答非所問的自動回覆——顧客打「退貨」就跳出一段制式文字，稍微換個說法就完全聽不懂。那種東西不但幫不上忙，還會把顧客氣走。</p>
+            <p>我們部署的是完全不同的東西：一個 <strong>agentic（能自主行動的）客服 Agent</strong>。它的差別在於，不是「比對關鍵字」，而是真的「理解意圖、查資料、再回答」。它有四個核心能力：</p>
+            <div class="flow">
+              <div class="flow-step"><div class="flow-n">01</div><h4>理解意圖</h4><p>用 LLM（大型語言模型，理解自然語言的 AI）判斷顧客「真正想做什麼」，不管他怎麼換句話說都聽得懂。</p></div>
+              <div class="flow-step"><div class="flow-n">02</div><h4>呼叫系統</h4><p>自動連線訂單系統、庫存與會員資料庫，回覆「你的訂單明天到」「還剩 3 杯」這類即時、正確的資訊。</p></div>
+              <div class="flow-step"><div class="flow-n">03</div><h4>安全交接</h4><p>遇到客訴、退款、情緒激動等敏感情境，自動轉真人，並附上完整對話摘要，讓客服秒接手。</p></div>
+              <div class="flow-step"><div class="flow-n">04</div><h4>持續學習</h4><p>把新的問答沉澱進知識庫（AI 的參考資料庫），越用越準，覆蓋的問題越來越廣。</p></div>
+            </div>
+            <p>關鍵在第二、第三點。「呼叫系統」讓 AI 不再只會背公版話術，而是能查到你店裡的真實資料；「安全交接」則確保它<strong>知道自己什麼時候該閉嘴、把人請出來</strong>——這是讓老闆敢放心交給它的前提。</p>
+
+            <h2>一則訊息進來，背後發生了什麼？</h2>
+            <p>為了讓你理解 AI 是怎麼「想」的，我們把顧客一句話送進來後、系統內部的處理流程拆成五步。整個過程通常在幾秒內完成，顧客完全感覺不到背後的判斷：</p>
+            <div class="flow">
+              <div class="flow-step"><div class="flow-n">01</div><h4>接收訊息</h4><p>顧客在 LINE 傳來一句話，例如「我上週訂的還沒到？」。</p></div>
+              <div class="flow-step"><div class="flow-n">02</div><h4>判斷意圖</h4><p>AI 解讀這是「查詢訂單進度」，並抓出需要的關鍵資訊（誰、哪張訂單）。</p></div>
+              <div class="flow-step"><div class="flow-n">03</div><h4>查詢資料</h4><p>自動連線訂單系統，拉出該顧客的最新物流狀態與預計到貨日。</p></div>
+              <div class="flow-step"><div class="flow-n">04</div><h4>判斷能否自答</h4><p>若資訊明確就直接回覆；若涉及客訴、退款或語氣不滿，則改走交接路線。</p></div>
+              <div class="flow-step"><div class="flow-n">05</div><h4>自動回覆 / 轉真人</h4><p>多數情況秒回顧客；需要人處理時，附上對話摘要轉給客服，無縫接手。</p></div>
+            </div>
+            <div class="callout">
+              <span class="callout-k">重點</span>
+              <p>這套流程的價值，是把「<strong>能自動的</strong>」和「<strong>該由人處理的</strong>」清楚分流。AI 不是要取代客服，而是當第一線的篩選與守門員，讓人只處理真正需要人的那兩成。</p>
+            </div>
 
             <h2>導入流程：兩週上線首版</h2>
-            <p>第 1 週盤點歷史對話與常見問題、串接訂單與會員 API；第 2 週在真實流量上灰度測試、調整交接門檻，隨即正式上線。整個過程不更換品牌既有的 LINE 官方帳號。</p>
+            <p>老闆最怕的就是「導入要搞半年、上線遙遙無期」。這個案子從啟動到正式上線只花了兩週，而且全程<strong>不更換品牌既有的 LINE 官方帳號</strong>，顧客完全無感、不需要重新加好友：</p>
+            <div class="flow">
+              <div class="flow-step"><div class="flow-n">01</div><h4>第 1 週：盤點與串接</h4><p>整理歷史對話、歸納最常見的問題類型，並串接訂單與會員 API（系統之間互通資料的橋樑），讓 AI 查得到真實資料。</p></div>
+              <div class="flow-step"><div class="flow-n">02</div><h4>第 2 週：灰度測試與上線</h4><p>在真實流量上小範圍試跑（灰度測試，先讓一部分訊息走 AI），觀察準確度、調整交接門檻，確認穩定後即正式全面上線。</p></div>
+            </div>
+            <div class="callout good">
+              <span class="callout-k">建議</span>
+              <p>不要等到「百分之百完美」才上線。先讓 AI 處理最有把握的幾類問題，<strong>不確定的一律轉真人</strong>，上線後再用真實對話逐週擴大它的守備範圍。早上線兩週，就是早兩週開始省人力。</p>
+            </div>
 
-            <h2>成效：自動回覆 70%、客服更專注</h2>
-            <p>上線後，AI 自動處理約 70% 的訊息，平均回應時間從數十分鐘降到數秒，客服團隊得以專注在高價值的客訴與熟客經營，顧客滿意度同步提升。</p>
+            <h2>成效：自動回覆 70%、回應從數十分鐘到數秒</h2>
+            <p>上線後，AI 穩定自動處理約 70% 的訊息，無需任何人介入。平均回應時間從尖峰時的數十分鐘，縮短到幾乎即時的數秒；客服團隊的重複性工時下降約六成，得以把精力放在高價值的客訴處理與熟客經營上。顧客「秒被回覆」的體驗，也讓滿意度同步提升。</p>
 
-            <h2>關鍵心得</h2>
-            <p>成功的客服自動化，重點不在「擋掉多少人力」，而在「把對的問題交給對的對象」。讓 AI 處理可預測的事，讓人處理需要溫度與判斷的事——這才是可持續的分工。</p>
+            <div class="viz">
+              <div class="viz-title">訊息處理量：AI vs 人工</div>
+              <div class="ring-row">
+                <div class="ring-pct" style="--p:70"><span class="ring-num">70%</span></div>
+                <div>
+                  <p style="margin-top:0;"><strong>每 10 則訊息，約有 7 則由 AI 全程自動完成。</strong></p>
+                  <p style="margin-bottom:0; color: var(--text-muted); font-size:14px;">剩下的 3 則自動轉給真人，且都附帶對話摘要，客服不必從頭問起，接手速度也更快。</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="viz">
+              <div class="viz-title">導入前 vs 導入後（相對值，越短越好）</div>
+              <div class="viz-frame">
+                <div class="bars">
+                  <div class="bar-row"><span class="bar-label">平均回應時間</span><div class="bar-track"><div class="bar-fill muted" style="width:100%"></div></div><span class="bar-val">數十分鐘</span></div>
+                  <div class="bar-row"><span class="bar-label">回應時間（後）</span><div class="bar-track"><div class="bar-fill" style="width:3%"></div></div><span class="bar-val">數秒</span></div>
+                  <div class="bar-row"><span class="bar-label">人工處理量</span><div class="bar-track"><div class="bar-fill muted" style="width:100%"></div></div><span class="bar-val">基準</span></div>
+                  <div class="bar-row"><span class="bar-label">人工處理量（後）</span><div class="bar-track"><div class="bar-fill alt" style="width:40%"></div></div><span class="bar-val">−60%</span></div>
+                </div>
+              </div>
+              <div class="viz-caption">灰色為導入前的基準。AI 接手大量重複問題後，回應時間幾乎瞬時，客服需親自處理的訊息量也只剩約四成。</div>
+            </div>
+
+            <h2>常見誤區：別把 AI 客服想成「省人頭」</h2>
+            <p>導入前，最容易踩的幾個觀念地雷：</p>
+            <div class="callout warn">
+              <span class="callout-k">小心這些陷阱</span>
+              <p><strong>① 以為要先裁員才划算</strong>——成效不在裁人，而在讓現有團隊不再被重複問題綁死，把人挪去做更賺錢的事。<br>
+              <strong>② 追求 100% 全自動</strong>——硬要 AI 回答它沒把握的問題，只會答錯惹怒客人。寧可保守轉真人。<br>
+              <strong>③ 串接資料前就急著上線</strong>——AI 查不到你的訂單與會員資料，就只能講空話，價值大打折扣。</p>
+            </div>
+
+            <h2>實務建議：給想做的老闆三個起手式</h2>
+            <p>如果你也想把自己的 LINE 帳號升級成自動戰力，不需要一開始就大動作。我們的建議是：</p>
+            <div class="callout good">
+              <span class="callout-k">建議</span>
+              <p><strong>① 先撈三個月的對話記錄</strong>，看看最常被問的前五個問題是什麼——那就是 AI 該優先接手的清單。<br>
+              <strong>② 從「查得到答案」的問題切入</strong>（訂單、點數、營業資訊），這類最容易做、效果最明顯。<br>
+              <strong>③ 把交接門檻設寬鬆一點</strong>，寧可多轉幾通給真人，也不要讓 AI 在客訴上自作主張。信任是慢慢養出來的。</p>
+            </div>
+
+            <h2>給老闆的一句話</h2>
+            <p>成功的客服自動化，重點從來不在「擋掉多少人力」，而在「把對的問題交給對的對象」。讓 AI 處理可預測、可查證的事；讓人處理需要溫度、需要判斷的事——這才是能長久運作、顧客也買單的分工。你的 LINE 帳號，本來就該是一台 24 小時不打烊、永遠秒回的接待員。</p>
 
             <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
           </div>

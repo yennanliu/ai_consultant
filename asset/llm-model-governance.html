@@ -44,7 +44,7 @@
     <main>
       <section class="hero b-bottom">
         <div class="wrap">
-          <span class="mono-label">// MODEL GOVERNANCE</span>
+          <span class="mono-label">// MODEL GOVERNANCE · 閱讀約 12 分鐘</span>
           <h1>模型治理：從模型選型到生命週期的全程管控</h1>
           <div class="text-xs" style="color: var(--text-dim);">2026-06-05</div>
         </div>
@@ -53,38 +53,173 @@
       <section>
         <div class="wrap">
           <div style="max-width: 800px;">
-          <p>當企業開始大量導入大型語言模型（LLM），模型本身就成了一項必須被管理的資產。哪些團隊用了哪些模型？版本是否過期？資料流向哪裡？誰為錯誤的輸出負責？若沒有一套制度回答這些問題，AI 應用很快就會變成失控的「影子系統」。本文說明什麼是<strong>模型治理（Model Governance）</strong>，以及中小企業如何用輕量的方式起步。</p>
+          <p>當企業開始大量導入大型語言模型（LLM，Large Language Model，就是 ChatGPT、Claude 這類能讀寫文字的 AI），模型本身就成了一項必須被管理的資產。哪些團隊用了哪些模型？版本是否過期？敏感資料流向了哪裡？哪天供應商把舊版本關掉、服務會不會突然中斷？萬一 AI 給錯答案造成損失，誰要負責？這些問題若沒有一套制度回答，AI 應用很快就會變成沒人說得清、也沒人管得動的「影子系統」（Shadow IT，員工私下使用、IT 部門卻不知情的工具）。</p>
+          <p>本文要說的<strong>模型治理（Model Governance）</strong>，用一句話講就是：<strong>把每個 LLM 都當成一名「受監管的新進員工」來管理</strong>。你不會讓一位來路不明、沒人面試、沒人帶、沒人考核的員工直接接觸客戶與帳務——模型也一樣。下面我們會從盤點、選型、上線、監控到汰換，一步步說明中小企業如何用輕量的方式把這件事做好。</p>
+
+          <div class="viz">
+            <div class="viz-title">把 LLM 當「受監管的員工」來管：對照一覽</div>
+            <div class="viz-scroll">
+              <table>
+                <thead><tr><th>員工管理</th><th>對應的模型治理動作</th></tr></thead>
+                <tbody>
+                  <tr><td data-label="員工管理">人事名冊</td><td data-label="對應的模型治理動作">模型清單：登錄用了哪些模型、版本、供應商、用途</td></tr>
+                  <tr><td data-label="員工管理">面試與錄取</td><td data-label="對應的模型治理動作">選型與准入：評估能力、成本、資料政策後才放行</td></tr>
+                  <tr><td data-label="員工管理">職務說明書</td><td data-label="對應的模型治理動作">模型卡：寫清楚這個模型能做什麼、不能做什麼</td></tr>
+                  <tr><td data-label="員工管理">高風險職務要主管簽核</td><td data-label="對應的模型治理動作">風險分級審批：影響客戶或財務的用途需人工核准</td></tr>
+                  <tr><td data-label="員工管理">績效考核與稽核</td><td data-label="對應的模型治理動作">監控與決策日誌：追蹤品質、成本、留存紀錄</td></tr>
+                  <tr><td data-label="員工管理">離職與交接</td><td data-label="對應的模型治理動作">版本汰換：舊版停用前完成遷移，不讓服務中斷</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="viz-caption">記住這張對照表，整篇文章的六個環節就都串起來了。</div>
+          </div>
 
           <h2>什麼是模型治理</h2>
-          <p>模型治理是指企業以制度化的方式，<strong>把模型當成受管控的企業資產來管理</strong>——涵蓋選型、上線、監控、汰換的整個生命週期。它和既有的治理體系緊密相關：<strong>資料治理（Data Governance）</strong>管的是資料的品質、權限與流向，<strong>一般 IT 治理</strong>管的是系統的安全與變更流程，而模型治理則疊在兩者之上，專門處理「模型」這個新型資產特有的問題。</p>
-          <p>LLM 讓治理變得更困難，原因有三：第一是<strong>黑箱特性</strong>，模型的決策過程難以完全解釋，無法像傳統程式一樣逐行追蹤邏輯；第二是<strong>快速演進</strong>，供應商頻繁推出新版本、棄用舊版本，企業被迫不斷重新驗證；第三是<strong>外部相依</strong>，多數企業透過商用 API 取用模型，模型的行為、定價、可用性都掌握在第三方手中。</p>
+          <p>模型治理是指企業以制度化的方式，<strong>把模型當成受管控的企業資產來管理</strong>——涵蓋選型、上線、監控、汰換的整個生命週期。它和既有的治理體系緊密相關：<strong>資料治理（Data Governance）</strong>管的是資料的品質、權限與流向（哪些資料能用、誰能看）；<strong>一般 IT 治理</strong>管的是系統的安全與變更流程；而模型治理則疊在兩者之上，專門處理「模型」這個新型資產特有的問題。打個比方：資料治理像管倉庫裡的原料，IT 治理像管工廠的機台與門禁，模型治理則是管那位會自己做判斷、還會不斷「換腦袋」的新員工。</p>
+          <p>為什麼 LLM 特別難管？原因有三。第一是<strong>黑箱特性</strong>：模型的決策過程難以完全解釋，你無法像看傳統程式一樣逐行追蹤它「為什麼這樣回答」。第二是<strong>快速演進</strong>：供應商幾乎每隔幾個月就推出新版本、棄用舊版本，企業被迫不斷重新驗證——就像你才剛把員工訓練好，他的「腦袋」又被悄悄換了一顆。第三是<strong>外部相依</strong>：多數中小企業透過商用 API（應用程式介面，指付費呼叫雲端模型的服務）取用模型，模型的行為、定價、能不能用，全掌握在第三方手中。</p>
+
+          <div class="callout">
+            <span class="callout-k">重點</span>
+            <p>模型治理不是要你「少用 AI」，而是讓你<strong>用得更放心、更大膽</strong>。沒有治理，一次資料外洩或一筆算錯的報價，就可能賠掉好幾個月省下來的人力成本。</p>
+          </div>
+
+          <h2>模型治理的生命週期：五個環節</h2>
+          <p>不論企業大小，模型治理都繞著同一條主軸運轉：從挑選、把關、上線、監督，到最後的更新汰換，週而復始。先看懂這條流程，再深入各環節就容易得多。</p>
+          <div class="flow">
+            <div class="flow-step"><div class="flow-n">01</div><h4>選型</h4><p>依任務需求比較不同模型的能力、成本、延遲與資料政策，列出候選名單。</p></div>
+            <div class="flow-step"><div class="flow-n">02</div><h4>准入</h4><p>通過資安與資料審查、指定業務負責人、登錄進模型清單後，才正式放行。</p></div>
+            <div class="flow-step"><div class="flow-n">03</div><h4>上線</h4><p>釘選（pin）特定版本、建立模型卡、依風險等級設定審批與人工把關。</p></div>
+            <div class="flow-step"><div class="flow-n">04</div><h4>監控</h4><p>持續觀察品質漂移、成本與異常，保留決策日誌以利稽核與問題排查。</p></div>
+            <div class="flow-step"><div class="flow-n">05</div><h4>汰換</h4><p>供應商棄用舊版或出現更好選擇時，排程遷移、重新驗證，回到選型。</p></div>
+          </div>
 
           <h2>模型清單與盤點</h2>
-          <p>治理的起點是「知道自己在用什麼」。許多企業低估了這一步——當每個部門各自串接 ChatGPT、Claude 或開源模型時，沒人說得清整體面貌。建立<strong>模型清單（Model Inventory / Registry）</strong>就是要把這些攤在陽光下，逐一登錄：用了<strong>哪些模型、哪個版本、來自哪家供應商、用於什麼業務用途、處理的資料流向何處</strong>。</p>
-          <p>這份清單應由專人維護，並定期更新。它不只是文件，更是後續所有治理動作的基礎：沒有清單，就無法評估風險、無法在供應商棄用某版本時即時反應、也無法在資料外洩事件發生時釐清波及範圍。</p>
+          <p>治理的起點是「知道自己在用什麼」。許多企業嚴重低估了這一步——當業務部串了 ChatGPT 寫文案、客服串了另一家做自動回覆、會計又私下用某個工具整理發票時，往往沒有任何一個人說得清公司到底在用哪些 AI、餵了哪些資料進去。這就像公司裡來了一群沒登記在人事名冊上的約聘人員，誰都管不到。</p>
+          <p>建立<strong>模型清單（Model Inventory，也常稱 Model Registry，模型登錄簿）</strong>就是要把這些攤在陽光下，逐一登錄。一份及格的清單至少要回答下表這幾個欄位：</p>
+
+          <div class="viz">
+            <div class="viz-title">模型清單該登錄哪些欄位</div>
+            <div class="viz-scroll">
+              <table>
+                <thead><tr><th>欄位</th><th>說明</th><th>範例</th></tr></thead>
+                <tbody>
+                  <tr><td data-label="欄位">模型與版本</td><td data-label="說明">用了哪個模型、釘選哪個版本</td><td data-label="範例">Claude（指定版本號）</td></tr>
+                  <tr><td data-label="欄位">供應商</td><td data-label="說明">來自哪家、透過什麼管道取用</td><td data-label="範例">商用 API</td></tr>
+                  <tr><td data-label="欄位">業務用途</td><td data-label="說明">用在哪個流程、解決什麼問題</td><td data-label="範例">客服首次回覆草稿</td></tr>
+                  <tr><td data-label="欄位">資料流向</td><td data-label="說明">餵了哪類資料、送去哪裡、是否含個資</td><td data-label="範例">客戶詢問（去識別化）</td></tr>
+                  <tr><td data-label="欄位">風險等級</td><td data-label="說明">高／中／低，決定審查強度</td><td data-label="範例">中</td></tr>
+                  <tr><td data-label="欄位">業務負責人</td><td data-label="說明">誰為這個應用的成效與風險負責</td><td data-label="範例">客服主管</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="viz-caption">中小企業用一份試算表就能起步，重點是每一欄都有人填、有人定期更新。</div>
+          </div>
+          <p>這份清單應由專人維護、定期更新。它不只是文件，更是後續所有治理動作的地基：沒有清單，就無法評估整體風險、無法在供應商棄用某版本時即時反應、也無法在資料外洩事件發生時，第一時間釐清「哪些應用、哪些客戶受到波及」。</p>
 
           <h2>模型選型與准入</h2>
-          <p>新模型進入企業前應通過<strong>准入評估</strong>，而非由工程師憑喜好直接串接。評估維度至少包括：<strong>能力</strong>（是否真能勝任該任務）、<strong>成本</strong>（每百萬 token 的價格與預估用量）、<strong>延遲</strong>（回應速度是否符合場景需求）、<strong>授權條款</strong>（商業使用是否合規）、以及<strong>資料政策</strong>（供應商是否會拿你的輸入去訓練模型、資料儲存在哪個地區）。</p>
-          <p>一個常見的關鍵抉擇是<strong>自架開源模型 vs. 商用 API</strong>。商用 API 上手快、品質穩定、免於維運，但資料須送出企業、且受制於供應商；自架開源模型（如 Llama、Qwen 等）能讓敏感資料留在內部、長期成本可控，但需要 GPU 資源與專業團隊，且品質通常需額外調校。中小企業多數情況下從商用 API 起步較務實，僅在資料極度敏感或用量極大時才考慮自架。</p>
+          <p>新模型進入企業前應通過<strong>准入評估</strong>，而不是由某位工程師憑個人喜好直接串接上線——這就像錄取一名新員工前要先面試，不能讓任何人把朋友直接帶進公司碰帳務。評估維度至少包括五項：<strong>能力</strong>（是否真能勝任這項任務）、<strong>成本</strong>（每百萬 token 的價格與預估用量；token 是模型計費的文字單位，大約幾個字算一個 token）、<strong>延遲</strong>（回應速度是否符合場景，客服要快、夜間批次跑報表則可以慢）、<strong>授權條款</strong>（商業使用是否合規），以及最關鍵的<strong>資料政策</strong>（供應商會不會拿你的輸入去訓練它的模型、你的資料存在哪個國家）。</p>
+          <p>一個常見的關鍵抉擇是<strong>自架開源模型 vs. 商用 API</strong>。商用 API 上手快、品質穩定、免於維運，但資料須送出企業、且受制於供應商；自架開源模型（如 Llama、Qwen 等可免費下載、自行部署的模型）能讓敏感資料完全留在內部、長期成本可控，但需要 GPU 主機與專業團隊，品質通常還得額外調校。下表幫你快速對照：</p>
+
+          <div class="viz">
+            <div class="viz-title">商用 API vs. 自架開源模型</div>
+            <div class="viz-scroll">
+              <table>
+                <thead><tr><th>比較項目</th><th>商用 API</th><th>自架開源模型</th></tr></thead>
+                <tbody>
+                  <tr><td data-label="比較項目">上手速度</td><td data-label="商用 API"><span class="yes">✓</span> 幾天即可串接</td><td data-label="自架開源模型"><span class="no">✗</span> 需建置與調校</td></tr>
+                  <tr><td data-label="比較項目">資料是否留在內部</td><td data-label="商用 API"><span class="no">✗</span> 須送出企業</td><td data-label="自架開源模型"><span class="yes">✓</span> 完全自主可控</td></tr>
+                  <tr><td data-label="比較項目">維運負擔</td><td data-label="商用 API"><span class="yes">✓</span> 供應商負責</td><td data-label="自架開源模型"><span class="no">✗</span> 需自備 GPU 與人力</td></tr>
+                  <tr><td data-label="比較項目">起步成本</td><td data-label="商用 API">低（用多少付多少）</td><td data-label="自架開源模型">高（硬體＋團隊）</td></tr>
+                  <tr><td data-label="比較項目">適合誰</td><td data-label="商用 API">多數中小企業</td><td data-label="自架開源模型">資料極敏感或用量極大者</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="viz-caption">經驗法則：中小企業先從商用 API 起步最務實，等到資料極度敏感、或用量大到自架更划算時，再評估遷移。</div>
+          </div>
 
           <h2>版本控管與生命週期</h2>
-          <p>模型不是「一次上線、永遠不變」。每個模型都應有清楚的生命週期：<strong>上線、版本標記、棄用（deprecation）、汰換</strong>。供應商通常會提前公告舊版本的停用日期，企業必須據此排程遷移，避免服務在某天突然中斷。建議盡量<strong>釘選（pin）特定版本</strong>，而非永遠使用「latest」，以免供應商悄悄更新後行為改變、品質回退。</p>
-          <p>每個納管的模型都應有一份<strong>模型卡（Model Card）</strong>，記錄其用途、能力邊界、已知限制、訓練資料概況、評測結果與適用／禁用場景。模型卡讓接手的人不必重新摸索，也是稽核時的重要依據。</p>
+          <p>模型不是「一次上線、永遠不變」。每個模型都應有清楚的生命週期：<strong>上線 → 版本標記 → 棄用（deprecation，供應商宣告即將停止支援）→ 汰換</strong>。供應商通常會提前公告舊版本的停用日期，企業必須據此排程遷移，否則服務可能在某天毫無預警地中斷。</p>
+          <p>這裡有個務實又重要的小技巧：盡量<strong>釘選（pin）特定版本</strong>，而不是永遠使用「latest（最新版）」。因為供應商一旦悄悄更新，模型的行為可能改變、甚至在你的特定任務上品質回退（明明之前好好的，突然變笨）。釘版本，等於是讓你的「員工」不會一夜之間被換了腦袋還沒人通知你。</p>
+          <p>另外，每個納管的模型都應有一份<strong>模型卡（Model Card）</strong>——可以理解成這名員工的「職務說明書＋體檢報告」，記錄它的用途、能力邊界、已知限制、評測結果與適用／禁用場景。模型卡讓接手的人不必從頭摸索，也是日後稽核時的重要依據。</p>
 
           <h2>風險分級與審批</h2>
-          <p>不是所有 AI 用途都需要相同強度的審查。應依<strong>用途風險高低決定審查強度</strong>：內部會議記錄摘要屬低風險，可走簡化流程快速放行；而直接影響客戶權益、財務決策或涉及個資處理的用途屬高風險，<strong>必須經過人工審核與正式簽核</strong>，並在上線後維持人在迴路（human-in-the-loop）的監督。</p>
-          <p>建立清楚的<strong>風險分級標準</strong>，能讓低風險創新快速進行、同時把治理資源集中在真正可能造成傷害的場景，避免「一刀切」式的繁瑣流程拖垮所有 AI 嘗試。</p>
+          <p>不是所有 AI 用途都需要相同強度的審查。把治理資源平均灑在每個應用上，只會讓繁瑣流程拖垮所有 AI 嘗試。正確做法是<strong>依用途的風險高低，決定審查強度</strong>——低風險的快速放行，高風險的嚴格把關。</p>
+
+          <div class="viz">
+            <div class="viz-title">用途風險分級：審查強度與範例</div>
+            <div class="viz-scroll">
+              <table>
+                <thead><tr><th>風險等級</th><th>審查強度</th><th>典型範例</th></tr></thead>
+                <tbody>
+                  <tr><td data-label="風險等級">高風險</td><td data-label="審查強度">須人工審核＋正式簽核，上線後維持人在迴路監督</td><td data-label="典型範例">財務決策建議、診所衛教或用藥資訊、直接發給客戶的報價／合約條款</td></tr>
+                  <tr><td data-label="風險等級">中風險</td><td data-label="審查強度">需登錄與抽查，輸出由員工確認後才使用</td><td data-label="典型範例">客服回覆草稿、行銷文案、合約初步摘要</td></tr>
+                  <tr><td data-label="風險等級">低風險</td><td data-label="審查強度">簡化流程、快速放行</td><td data-label="典型範例">內部會議記錄摘要、個人草稿潤飾、腦力激盪</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="viz-caption">「人在迴路（human-in-the-loop）」指 AI 出結果後，由真人複核才放行——高風險場景的最後一道防線。</div>
+          </div>
+          <p>舉例來說：一家會計事務所用 AI 摘要內部會議記錄，是低風險，員工自行使用即可；但若用 AI 直接產生報稅建議發給客戶，就是高風險，必須由會計師逐筆複核並簽核。一家診所用 AI 整理內部排班，無妨；但用 AI 回答病患的用藥問題，就必須有醫護人員把關。分級的精神，是讓低風險創新跑得快，把人力集中在真正可能造成傷害的地方。</p>
 
           <h2>監控、稽核與責任歸屬</h2>
-          <p>模型上線後仍需持續監控。重點包括：<strong>漂移（drift）</strong>——輸出品質隨時間或資料分布變化而退化；<strong>品質與成本監控</strong>——回應準確度是否下滑、token 用量與費用是否異常飆升；以及<strong>決策日誌</strong>——保存關鍵決策的輸入、模型版本、輸出與後續結果，以利問題排查與稽核。</p>
-          <p>更根本的問題是<strong>責任歸屬</strong>：當模型給出錯誤建議造成損失時，誰負責？治理制度必須明確指派每個 AI 應用的<strong>業務負責人（owner）</strong>，他要為該應用的成效、合規與風險負責，而非把責任模糊地推給「AI」或 IT 部門。</p>
+          <p>模型上線不是終點。最容易被忽略、卻最危險的，是<strong>漂移（drift）</strong>——模型的輸出品質會隨時間或資料變化而悄悄退化。打個比方：一名員工剛到職時表現很好，但客戶的問法變了、市場的行話變了，他卻沒跟著更新，答得就漸漸不對勁了。模型也一樣，需要定期「回頭考核」。</p>
+          <p>上線後的監控重點有三：<strong>品質監控</strong>（回應準確度、客訴率是否上升）、<strong>成本監控</strong>（token 用量與費用是否異常飆升，避免月底收到嚇人的帳單），以及<strong>決策日誌</strong>（保存關鍵決策的輸入、模型版本、輸出與後續結果，方便日後排查與稽核）。</p>
+
+          <div class="viz">
+            <div class="viz-title">沒有監控時，模型品質可能悄悄漂移</div>
+            <div class="viz-frame">
+              <div class="cols">
+                <div class="col"><span class="col-val">95%</span><div class="col-bar" style="height:100%"></div><span class="col-label">上線時</span></div>
+                <div class="col"><span class="col-val">92%</span><div class="col-bar" style="height:84%"></div><span class="col-label">3 個月</span></div>
+                <div class="col"><span class="col-val">86%</span><div class="col-bar alt" style="height:58%"></div><span class="col-label">6 個月</span></div>
+                <div class="col"><span class="col-val">78%</span><div class="col-bar alt" style="height:25%"></div><span class="col-label">9 個月</span></div>
+              </div>
+              <div class="legend">
+                <span><i class="s1"></i>品質仍在可接受範圍</span>
+                <span><i class="s2"></i>已明顯退化、需介入</span>
+              </div>
+            </div>
+            <div class="viz-caption">示意數字。重點不是準確率的絕對值，而是「沒人盯著時，它會一路往下掉而你卻渾然不覺」。定期抽查就能及早發現。</div>
+          </div>
+
+          <p>比技術監控更根本的問題是<strong>責任歸屬</strong>：當模型給出錯誤建議造成損失，誰負責？治理制度必須為每個 AI 應用明確指派一位<strong>業務負責人（owner）</strong>，由他為該應用的成效、合規與風險負責，而不是把責任模糊地推給「AI」或 IT 部門。沒有負責人的 AI 應用，就像沒有主管的員工——出了事沒人收尾。</p>
 
           <h2>政策與組織</h2>
-          <p>治理要落地，需要白紙黑字的<strong>使用政策</strong>，明確規範哪些資料可以丟給外部模型、哪些絕對不行、哪些用途需事前申請。同時建議成立<strong>跨職能治理委員會</strong>，成員涵蓋技術、業務、法務與資安，定期審視模型清單、審批高風險用途、檢討事件。模型治理不能孤立運作，必須與既有的<strong>合規與資安</strong>流程銜接——例如把模型准入納入既有的供應商審查與資安評估流程，而非另起爐灶。</p>
+          <p>治理要真正落地，需要白紙黑字的<strong>使用政策</strong>，明確規範哪些資料可以丟給外部模型、哪些絕對不行（例如客戶身分證號、未公開財報、營業祕密）、哪些用途需要事前申請。同時建議成立一個<strong>跨職能治理小組</strong>，成員涵蓋技術、業務、法務與資安，定期審視模型清單、審批高風險用途、檢討事件。</p>
+          <p>關鍵原則是：模型治理<strong>不能另起爐灶</strong>，要與既有的合規與資安流程銜接——例如把模型准入直接掛進原本就有的供應商審查與資安評估表單裡，而不是再造一套沒人想用的新流程。</p>
+
+          <div class="callout warn">
+            <span class="callout-k">小心</span>
+            <p>最常見的三個翻車情境：<strong>① 影子 AI 失控</strong>——各部門私接模型，敏感資料早已外流卻無人知曉。<strong>② 永遠用 latest</strong>——供應商更新後行為改變，品質默默回退也沒人發現。<strong>③ 沒人負責</strong>——出事時才發現這個應用根本沒有 owner，無人收尾。</p>
+          </div>
 
           <h2>給中小企業的輕量起步建議</h2>
-          <p>中小企業沒有大型企業的治理人力，但這不代表可以略過治理；關鍵是<strong>輕量、夠用、漸進</strong>。建議的起步順序是：先用一份試算表建立<strong>最小可行的模型清單</strong>，登錄目前在用的模型與用途；再寫一頁簡短的<strong>使用政策</strong>，劃出資料紅線；接著對少數高風險用途加上人工審核；最後再逐步補上監控與模型卡。</p>
-          <p>模型治理的本質，是讓企業在享受 LLM 帶來的生產力之餘，仍然清楚知道自己在用什麼、承擔什麼風險、由誰負責。從一張清單和一頁政策開始，遠勝於等到出事才補救。把治理當成讓 AI 能長期、安心、規模化使用的基礎建設，而非阻礙創新的官僚程序，企業才能真正把模型用成可信賴的資產。</p>
+          <p>中小企業沒有大型企業的治理人力，但這不代表可以略過治理；關鍵是<strong>輕量、夠用、漸進</strong>。你不需要一開始就買昂貴的治理平台，下面這個四步順序，多數公司一個月內就能跑起來：</p>
+          <div class="flow">
+            <div class="flow-step"><div class="flow-n">01</div><h4>建清單</h4><p>用一份試算表，登錄目前在用的所有模型、版本與業務用途，指派每項的負責人。</p></div>
+            <div class="flow-step"><div class="flow-n">02</div><h4>寫政策</h4><p>寫一頁就好的使用政策，劃出資料紅線：哪些資料絕對不能丟給外部模型。</p></div>
+            <div class="flow-step"><div class="flow-n">03</div><h4>分級把關</h4><p>挑出少數高風險用途，加上人工審核與簽核流程，其餘維持輕便。</p></div>
+            <div class="flow-step"><div class="flow-n">04</div><h4>補監控</h4><p>對重點應用定期抽查品質與成本，再逐步補上模型卡與決策日誌。</p></div>
+          </div>
+
+          <div class="viz">
+            <div class="viz-title">輕量治理：先求有，再求好</div>
+            <div class="ring-row">
+              <div class="ring-pct" style="--p:80"><span class="ring-num">80%</span></div>
+              <div>
+                <p style="margin-top:0;"><strong>一張清單加一頁政策，就能擋掉約八成的常見風險。</strong></p>
+                <p style="margin-bottom:0; color: var(--text-muted); font-size:14px;">最大的風險從來不是「治理做得不夠完美」，而是「完全沒有治理、不知道自己在用什麼」。先把基礎建起來，後面再慢慢補強。</p>
+              </div>
+            </div>
+          </div>
+
+          <h2>給老闆的一句話</h2>
+          <p>模型治理的本質，是讓企業在享受 LLM 帶來的生產力之餘，仍然清楚知道：<strong>自己在用什麼、承擔什麼風險、由誰負責</strong>。把每個模型都當成一名受監管的員工——有名冊、有面試、有職務說明、有考核、有主管——你就不會在某天被一筆算錯的報價或一次資料外洩打個措手不及。</p>
+
+          <div class="callout good">
+            <span class="callout-k">建議</span>
+            <p>不必等到「準備好」才開始。今天就開一份試算表、把現在公司在用的 AI 工具列出來，再寫下三條資料紅線——這就是你的模型治理 1.0。<strong>從一張清單和一頁政策起步，永遠勝過等到出事才補救。</strong></p>
+          </div>
 
             <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
           </div>

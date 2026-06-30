@@ -44,7 +44,7 @@
     <main>
       <section class="hero b-bottom">
         <div class="wrap">
-          <span class="mono-label">// AGENT SERIES - PART 2</span>
+          <span class="mono-label">// AGENT SERIES - PART 2 · 閱讀約 12 分鐘</span>
           <h1>Agent 六層架構：從模型到治理</h1>
           <div class="text-xs" style="color: var(--text-dim);">2026-05-02</div>
         </div>
@@ -53,113 +53,183 @@
       <section>
         <div class="wrap">
           <div style="max-width: 800px;">
-            <p>了解了 Chat 與 Agent 的區別後，下一個問題是：Agent 系統該怎麼構建？許多企業建立 Agent 後發現難以維護、無法擴展、治理混亂。根據 Asgard AI 與業界最佳實踐，成功的 Agent 系統遵循「六層架構模型」，從底層的模型選擇到頂層的治理與重用，環環相扣。本文詳解這個模型。</p>
-          
-          <h2>六層架構全景圖</h2>
-          <p><strong>Agent 系統並非簡單堆砌元件，而是有序的分層結構：</strong></p>
-          
-          <p><strong>底層 → 頂層的六層：</strong><br/>
-1️⃣ <strong>模型層（Model Layer）</strong> — 選擇基礎大型語言模型<br/>
-2️⃣ <strong>推理層（Reasoning Layer）</strong> — 決策邏輯與思考過程<br/>
-3️⃣ <strong>工具層（Tools Layer）</strong> — API、資料庫、系統集成<br/>
-4️⃣ <strong>狀態層（State Layer）</strong> — 記憶與上下文管理<br/>
-5️⃣ <strong>執行層（Execution Layer）</strong> — 工作流程與行動協調<br/>
-6️⃣ <strong>治理層（Governance Layer）</strong> — 監控、日誌、權限、可審計性</p>
-          
-          <h2>各層詳解與設計決策</h2>
-          
-          <p><strong>第 1 層：模型層（Model Layer）</strong></p>
-          <p><strong>核心決策：</strong>選擇開源模型（Llama、Mistral）還是 API 模型（Claude、GPT-4）？</p>
-          
-          <p>• <strong>開源模型</strong> — 完全控制、成本可預測、適合長期規模化但需自行維護<br/>
-• <strong>API 模型</strong> — 開發快速、能力強、適合快速試點但需按次付費且依賴供應商</p>
-          
-          <p>建議：初期用 Claude API 快速驗證，成功後如量級大（>100 萬 tokens/月），考慮遷移至開源模型或混合方案。</p>
-          
-          <p><strong>第 2 層：推理層（Reasoning Layer）</strong></p>
-          <p><strong>核心功能：</strong>將模型的回應轉化為結構化決策。這是 Agent 與 Chat 最大的區別。</p>
-          
-          <p><strong>關鍵能力：</strong><br/>
-• 目標分解 — 複雜任務分解為子步驟<br/>
-• 工具選擇 — 決定何時呼叫哪個 API<br/>
-• 條件判斷 — 根據中間結果決定下一步<br/>
-• 錯誤恢復 — 若工具調用失敗，自動尋找替代方案</p>
-          
-          <p>實現方式：Chain of Thought（COT）、ReAct 框架等。成本：每次決策 100-500 tokens 的思考開銷。</p>
-          
-          <p><strong>第 3 層：工具層（Tools Layer）</strong></p>
-          <p><strong>本質：</strong>Agent 用來改變世界的手臂。沒有工具，Agent 只能聊天。</p>
-          
-          <p><strong>工具類型：</strong><br/>
-• REST API — 調用第三方服務（Slack、Salesforce、Stripe）<br/>
-• 資料庫查詢 — 查閱或修改企業資料<br/>
-• 程式碼執行 — 運行自訂邏輯（Python、SQL）<br/>
-• 檔案操作 — 讀寫檔案系統<br/>
-• 通知系統 — 寄送郵件、訊息、報告</p>
-          
-          <p>關鍵：每個工具必須有清晰的文檔（描述、參數、返回值），Agent 才能正確使用。通常需要 50-100 工具才能覆蓋典型企業場景。</p>
-          
-          <p><strong>第 4 層：狀態層（State Layer）</strong></p>
-          <p><strong>問題：</strong>Agent 無法記住上下文，同樣的信息需要一遍遍輸入，效率低下。</p>
-          
-          <p><strong>解決方案：</strong>建立狀態管理機制，記錄：<br/>
-• 任務目標與進度<br/>
-• 已蒐集的資訊<br/>
-• 中間決策結果<br/>
-• 失敗重試次數<br/>
-• 用戶偏好與歷史互動</p>
-          
-          <p>實現方式：Memory buffer（短期）+ 向量資料庫（長期）。成本：每個工作流增加 20-30% 的儲存與查詢成本。</p>
-          
-          <p><strong>第 5 層：執行層（Execution Layer）</strong></p>
-          <p><strong>功能：</strong>協調多個工具與步驟，確保工作流有序執行。</p>
-          
-          <p><strong>核心設計：</strong><br/>
-• 步驟調度 — 決定執行順序，允許並列或條件分支<br/>
-• 超時控制 — 防止單一步驟無限等待<br/>
-• 重試邏輯 — 失敗自動重試，次數可配<br/>
-• 優雅降級 — 若核心工具失敗，啟用備選方案</p>
-          
-          <p>最佳實踐：使用工作流引擎（Airflow、Temporal）而非自行編寫，保證穩定性。</p>
-          
-          <p><strong>第 6 層：治理層（Governance Layer）</strong></p>
-          <p><strong>為何需要治理？</strong>Agent 在企業中掌控敏感決策與資料，失控可能造成重大損失。</p>
-          
-          <p><strong>治理四支柱：</strong><br/>
-• 權限與審批 — 哪些決策需要人工審批？誰有權批准？<br/>
-• 監控與告警 — 異常決策即時發現<br/>
-• 日誌與審計 — 完整記錄所有決策與行動，可回溯<br/>
-• 可解釋性 — Agent 決策的原因可被業務人員理解</p>
-          
-          <h2>層層遞進的實施順序</h2>
-          
-          <p><strong>不推薦一下子建完所有六層。正確的順序是：</strong></p>
-          
-          <p><strong>第 1-2 週：第 1-3 層</strong><br/>
-Choose model + 簡單決策邏輯 + 接入 2-3 個關鍵工具。目標：驗證可行性。</p>
-          
-          <p><strong>第 3-4 週：加入第 4 層</strong><br/>
-加入狀態管理，讓 Agent 能記住上下文。此時工作流變得更自然。</p>
-          
-          <p><strong>第 5-6 週：完善第 5-6 層</strong><br/>
-搭建執行框架與治理系統。此時 Agent 可投入生產。</p>
-          
-          <p><strong>投資與成本估算（台灣中型企業）：</strong><br/>
-• 第 1-3 層：$200 萬（技術驗證）<br/>
-• 第 4-5 層：$300 萬（核心系統）<br/>
-• 第 6 層：$200 萬（治理與安全）<br/>
-• 總計：$700 萬，投資回收期 8-12 個月</p>
-          
-          <h2>六層架構的優勢</h2>
-          
-          <p><strong>1. 清晰的分工</strong> — 各層職責明確，不同角色各司其職<br/>
-<strong>2. 漸進式投資</strong> — 可按階段推進，風險逐步降低<br/>
-<strong>3. 可重用性</strong> — 下層組件可被多個 Agent 共用<br/>
-<strong>4. 可維護性</strong> — 問題易定位，修改隔離性好<br/>
-<strong>5. 可擴展性</strong> — 新增工具或規則不需重構整個系統</p>
-          
-          <h2>結語</h2>
-          <p>六層架構模型是建立可靠、可治理 Agent 系統的藍圖。從模型選擇開始，層層遞進，最終達到企業級的監控與治理。下一篇將深入第 3 層，介紹 Agent 的核心元件：MCP、Skill、Sandbox、Plugin，說明如何實際組裝這些零件。</p>
+            <p>了解了 Chat（聊天機器人）與 Agent（能自己動手完成任務的 AI 代理人）的差別之後，下一個老闆最常問的問題是：「那我要怎麼把一套 Agent 系統真正蓋起來，而且不會三個月後就壞掉、沒人敢動？」很多企業興沖沖地做了一個 Agent，結果發現它難維護、出了錯不知道是哪裡的問題、想擴大規模又得整個打掉重練。</p>
+            <p>問題的根源，幾乎都是「沒有分層」。就像蓋房子，不會把水電、結構、裝潢全攪在一起施工；經營公司，也不會讓一個人同時管採購、生產、財務、法務。一套穩定可靠的 Agent，背後是一個有秩序的「六層架構」——從最底下的「大腦」一路往上疊到最頂端的「管理規範」。本文用蓋房子和公司組織分工的比喻，帶你把這六層一次看懂，也看懂為什麼少了哪一層都會出事。</p>
+
+            <div class="viz">
+              <div class="viz-title">為什麼要談「架構」：分層 vs 不分層的差別</div>
+              <div class="kpis">
+                <div class="kpi"><div class="kpi-num">6 層</div><div class="kpi-lbl">從「大腦」到「管理規範」</div></div>
+                <div class="kpi"><div class="kpi-num">3 階段</div><div class="kpi-lbl">分批導入、逐步上線</div></div>
+                <div class="kpi"><div class="kpi-num">1 個</div><div class="kpi-lbl">出錯時能快速定位的「樓層」</div></div>
+                <div class="kpi"><div class="kpi-num">8–12 月</div><div class="kpi-lbl">典型投資回收期</div></div>
+              </div>
+              <div class="viz-caption">分層的最大價值：出事時你知道是哪一層的問題，而不是整棟一起塌。下面逐層拆解。</div>
+            </div>
+
+            <h2>六層架構全景圖：像一棟蓋好的房子</h2>
+            <p>請把 Agent 系統想像成一棟六層樓的房子，由下往上蓋：地基要先穩，才能往上加樓層，最後屋頂裝上監視器與門禁。每一層都有清楚的職責，也都有「如果這層偷工減料會發生什麼事」。</p>
+
+            <div class="flow">
+              <div class="flow-step"><div class="flow-n">01</div><h4>模型層 Model Layer — 大腦</h4><p>選一顆「會思考的腦袋」，也就是基礎大型語言模型（會讀懂與生成文字的 AI 引擎，例如 Claude、GPT、Llama）。</p></div>
+              <div class="flow-step"><div class="flow-n">02</div><h4>推理層 Reasoning Layer — 判斷力</h4><p>把大腦的想法變成一步步的決定：先做什麼、再做什麼、卡住了怎麼辦。</p></div>
+              <div class="flow-step"><div class="flow-n">03</div><h4>工具層 Tools Layer — 手腳</h4><p>讓 AI 真的能動手：查資料庫、寄信、開發票、呼叫你公司的系統。</p></div>
+              <div class="flow-step"><div class="flow-n">04</div><h4>狀態層 State Layer — 記憶</h4><p>記得剛剛做到哪、客戶說過什麼，不必每次都從零開始重講一遍。</p></div>
+              <div class="flow-step"><div class="flow-n">05</div><h4>執行層 Execution Layer — 工頭</h4><p>協調多個步驟有序進行：誰先誰後、超時了怎麼辦、失敗了要不要重試。</p></div>
+              <div class="flow-step"><div class="flow-n">06</div><h4>治理層 Governance Layer — 管理規範</h4><p>監控、紀錄、權限、審批——確保 AI 不會闖禍，出事也查得到原因。</p></div>
+            </div>
+
+            <div class="callout">
+              <span class="callout-k">一句話記住</span>
+              <p>下面三層（大腦、判斷力、手腳）讓 Agent <strong>「能做事」</strong>；上面三層（記憶、工頭、管理規範）讓 Agent <strong>「做得可靠、做得久、可以信任」</strong>。很多公司只蓋了下面三層就上線，這正是後來「無法維護、治理混亂」的原因。</p>
+            </div>
+
+            <h2>一張表看懂：每一層負責什麼、會用到什麼、出錯會怎樣</h2>
+            <p>如果只記一件事，請記這張表。左邊是這層在做什麼（用公司比喻），中間是工程師常掛在嘴邊的技術名詞（已附白話解釋），右邊是這層偷懶或出包時，老闆會在哪裡感受到痛。</p>
+
+            <div class="viz">
+              <div class="viz-title">Agent 六層架構對照表</div>
+              <div class="viz-scroll">
+                <table>
+                  <thead><tr><th>層</th><th>負責什麼（比喻）</th><th>常見技術</th><th>出錯會怎樣</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td data-label="層">1. 模型層</td>
+                      <td data-label="負責什麼">提供思考能力，像公司請來的核心顧問大腦</td>
+                      <td data-label="常見技術">Claude、GPT、開源的 Llama / Mistral 等大型語言模型</td>
+                      <td data-label="出錯會怎樣">大腦選錯：回答品質差、或費用高到不划算</td>
+                    </tr>
+                    <tr>
+                      <td data-label="層">2. 推理層</td>
+                      <td data-label="負責什麼">把想法拆成步驟做決定，像有判斷力的專案經理</td>
+                      <td data-label="常見技術">CoT（思考鏈，讓 AI 把推理過程寫出來）、ReAct（邊想邊動手的框架）</td>
+                      <td data-label="出錯會怎樣">判斷亂跳、繞圈圈、卡住不會找替代方案</td>
+                    </tr>
+                    <tr>
+                      <td data-label="層">3. 工具層</td>
+                      <td data-label="負責什麼">實際動手執行，像會操作機台與系統的作業員</td>
+                      <td data-label="常見技術">API（系統間溝通的接口）、資料庫查詢、程式執行、寄信通知</td>
+                      <td data-label="出錯會怎樣">工具沒接好或描述不清，AI 用錯工具、改錯資料</td>
+                    </tr>
+                    <tr>
+                      <td data-label="層">4. 狀態層</td>
+                      <td data-label="負責什麼">記住上下文與進度，像隨身的工作筆記本</td>
+                      <td data-label="常見技術">記憶緩衝（短期）+ 向量資料庫（長期記憶的資料庫）</td>
+                      <td data-label="出錯會怎樣">金魚腦：每次都要重講一遍，客戶體驗很差</td>
+                    </tr>
+                    <tr>
+                      <td data-label="層">5. 執行層</td>
+                      <td data-label="負責什麼">協調步驟先後與重試，像現場的工頭</td>
+                      <td data-label="常見技術">工作流引擎（如 Temporal、Airflow，專門排程與重試的工具）</td>
+                      <td data-label="出錯會怎樣">流程卡死、無限等待、失敗不重試，整單卡住</td>
+                    </tr>
+                    <tr>
+                      <td data-label="層">6. 治理層</td>
+                      <td data-label="負責什麼">監督與審計，像公司的稽核與法務部門</td>
+                      <td data-label="常見技術">權限控管、操作日誌、異常告警、人工審批節點</td>
+                      <td data-label="出錯會怎樣">AI 闖禍沒人發現、出事查不到原因、無法究責</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="viz-caption">越往下越像「硬體與骨架」，越往上越像「制度與管理」。六層缺一不可，但要分批蓋。</div>
+            </div>
+
+            <h2>各層詳解：對老闆而言真正該知道的決策點</h2>
+
+            <p><strong>第 1 層・模型層：先租大腦，還是自己養大腦？</strong></p>
+            <p>這層的核心抉擇，是要用「API 模型」（向供應商按使用量付費、隨開隨用，例如 Claude、GPT）還是「開源模型」（把模型放在自己機器上自己維護，例如 Llama、Mistral）。用租房子來比喻：API 模型像租屋，搬進去就能住、不必操心修繕，但每月要付租金；開源模型像買房，長期住下來成本可控、完全自己掌握，但水電維修都得自己扛。</p>
+            <p>實務建議：初期用 API 模型快速驗證點子，因為它開發快、能力強，最適合「先看到成效」。等到用量真的很大（例如每月超過百萬字級的處理量），再評估搬到開源模型或混合方案來壓低長期成本。一開始就執著自建，往往是還沒驗證價值就先燒掉大筆預算。</p>
+
+            <p><strong>第 2 層・推理層：這就是 Agent 和「會聊天的 AI」最大的差別</strong></p>
+            <p>聊天機器人只會回答你問的；推理層讓 AI 會自己「拆任務、做決定、遇到問題換條路走」。它的四個關鍵能力是：把複雜任務拆成小步驟、決定何時該用哪個工具、依中間結果決定下一步、以及工具失敗時自動找替代方案。常見做法叫 CoT（思考鏈，要求 AI 把推理過程一步步寫出來，比較不會亂跳結論）和 ReAct（一邊想一邊動手的框架）。代價是每做一次決策，AI 要多花一點「思考成本」（大約相當於多讀寫幾百字的費用）。</p>
+
+            <p><strong>第 3 層・工具層：沒有工具，AI 只會出一張嘴</strong></p>
+            <p>工具層是 Agent「改變世界的手腳」。沒有工具，再聰明的 AI 也只能跟你聊天，不能真的幫你開發票、回客戶、更新庫存。常見工具包含：呼叫第三方服務的 API（像串接你的 ERP、物流系統、金流）、查改企業資料庫、執行程式、讀寫檔案、寄送郵件與通知。關鍵心法是：<strong>每個工具都要有清楚的「使用說明書」</strong>（這個工具做什麼、要填什麼參數、會回傳什麼），AI 才不會拿錯工具或填錯資料。一個涵蓋典型企業日常的 Agent，常需要數十個工具才夠用。</p>
+
+            <p><strong>第 4 層・狀態層：別讓你的 AI 是金魚腦</strong></p>
+            <p>沒有記憶的 AI，每次都要你把背景重講一遍——客戶剛報過的需求、訂單做到哪一步，全忘光。狀態層就是 Agent 的工作筆記本，記住：任務目標與進度、已蒐集的資訊、中間決策、失敗重試了幾次、以及客戶的偏好與歷史。技術上通常用「記憶緩衝」處理短期、用「向量資料庫」（能依語意快速找回相關內容的資料庫）處理長期記憶。這層會讓儲存與查詢成本增加約兩、三成，但換來的是順暢、不重複的體驗，對客服與業務場景尤其值得。</p>
+
+            <p><strong>第 5 層・執行層：工地需要一個工頭</strong></p>
+            <p>當一個任務要動用好幾個工具、好幾個步驟，就需要「工頭」來指揮：決定步驟先後（哪些可以同時做、哪些要等前面完成）、設定超時（避免某一步卡住整條流程）、設定失敗自動重試、以及「優雅降級」（核心工具掛了就啟用備案，而不是整個倒下）。最佳實踐是直接採用成熟的工作流引擎（如 Temporal、Airflow），而不是自己土法煉鋼，省下大量穩定性的踩坑。</p>
+
+            <p><strong>第 6 層・治理層：上線前最容易被省略、卻最不該省的一層</strong></p>
+            <p>當 Agent 開始碰公司的錢、客戶資料與對外決策，「失控」的代價就不再是小事。治理層有四根支柱：權限與審批（哪些決定需要人簽核、誰能批）、監控與告警（異常行為即時被抓到）、日誌與審計（每個動作都留紀錄、可回溯究責）、可解釋性（業務同仁看得懂 AI 為什麼這樣決定）。這一層就像公司的稽核與法務——平常感覺不到它的存在，出事時你會慶幸當初有裝。</p>
+
+            <div class="callout warn">
+              <span class="callout-k">最常見的致命省略</span>
+              <p>九成「Agent 翻車」事件，都是因為只蓋了第 1–5 層、跳過第 6 層治理就急著上線。等到 AI 寄錯信、改錯帳、洩漏資料，才發現<strong>沒有日誌可查、沒有權限可擋、沒有審批可攔</strong>。治理不是上線後的選配，是上線的前提。</p>
+            </div>
+
+            <h2>為什麼「分層」這麼重要？</h2>
+            <p>分層不是工程師的潔癖，而是直接關係到你的維護成本、風險與擴張速度。用一個對照就很清楚：把六層攪成一團的系統，就像一間沒有部門、沒有組織圖的公司，出了事沒人知道該找誰；分好層的系統，出事時你能立刻指向某一個「樓層」去修。</p>
+
+            <div class="viz">
+              <div class="viz-title">分層帶來的具體好處（相對程度）</div>
+              <div class="viz-frame">
+                <div class="bars">
+                  <div class="bar-row"><span class="bar-label">出錯定位速度</span><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><span class="bar-val">很快</span></div>
+                  <div class="bar-row"><span class="bar-label">元件可重用性</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><span class="bar-val">高</span></div>
+                  <div class="bar-row"><span class="bar-label">擴充新功能的容易度</span><div class="bar-track"><div class="bar-fill alt" style="width:78%"></div></div><span class="bar-val">高</span></div>
+                  <div class="bar-row"><span class="bar-label">分批投資、控管風險</span><div class="bar-track"><div class="bar-fill alt" style="width:85%"></div></div><span class="bar-val">高</span></div>
+                </div>
+              </div>
+              <div class="viz-caption">五大好處：① 分工清晰、各司其職 ② 可分階段投資、風險逐步降低 ③ 下層元件多個 Agent 共用 ④ 問題易定位、修改不互相牽連 ⑤ 加新工具不必整套重蓋。</div>
+            </div>
+
+            <h2>實施順序：別想一次蓋完六層</h2>
+            <p>蓋房子不會六層同時動工，導入 Agent 也一樣。正確做法是「由下往上、分批驗證」，每個階段都先確認站得住，再往上加。下面是一個約六週、適合中小企業試點的節奏：</p>
+
+            <div class="viz">
+              <div class="viz-title">分階段導入時程（試點專案）</div>
+              <div class="viz-frame">
+                <div class="cols">
+                  <div class="col"><span class="col-val">1–3 層</span><div class="col-bar" style="height:50%"></div><span class="col-label">第1–2 週</span></div>
+                  <div class="col"><span class="col-val">+4 層</span><div class="col-bar" style="height:75%"></div><span class="col-label">第3–4 週</span></div>
+                  <div class="col"><span class="col-val">+5–6 層</span><div class="col-bar alt" style="height:100%"></div><span class="col-label">第5–6 週</span></div>
+                </div>
+                <div class="legend">
+                  <span><i class="s1"></i>打地基、驗證可行性</span>
+                  <span><i class="s2"></i>加上治理、可正式上線</span>
+                </div>
+              </div>
+              <div class="viz-caption">第 1–2 週：選好模型 + 簡單決策邏輯 + 接 2–3 個關鍵工具，目標是「證明這事做得起來」。第 3–4 週：補上記憶，流程變順。第 5–6 週：補齊工頭與治理，才能真正放上生產環境。</div>
+            </div>
+
+            <p>至於投資規模，以下是台灣中型企業導入一套企業級 Agent 的概略區間（實際依流程複雜度與既有系統而定，中小型試點可以更精簡）：</p>
+
+            <div class="viz">
+              <div class="viz-title">分階段投資概估（台灣中型企業，僅供參考）</div>
+              <div class="viz-scroll">
+                <table>
+                  <thead><tr><th>階段</th><th>涵蓋層級</th><th class="num">概估投入</th><th>主要目的</th></tr></thead>
+                  <tbody>
+                    <tr><td data-label="階段">技術驗證</td><td data-label="涵蓋層級">第 1–3 層</td><td class="num" data-label="概估投入">約 200 萬</td><td data-label="主要目的">確認可行、看到初步成效</td></tr>
+                    <tr><td data-label="階段">核心系統</td><td data-label="涵蓋層級">第 4–5 層</td><td class="num" data-label="概估投入">約 300 萬</td><td data-label="主要目的">記憶與流程協調，能穩定運作</td></tr>
+                    <tr><td data-label="階段">治理與安全</td><td data-label="涵蓋層級">第 6 層</td><td class="num" data-label="概估投入">約 200 萬</td><td data-label="主要目的">監控、審計、權限，達企業級可信</td></tr>
+                    <tr><td data-label="階段">合計</td><td data-label="涵蓋層級">六層完整</td><td class="num" data-label="概估投入">約 700 萬</td><td data-label="主要目的">回收期約 8–12 個月</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="viz-caption">數字為大型完整導入的量級。多數中小企業會先用較小的試點預算驗證一個流程，回本後再逐步擴大——這也呼應「分批投資、控管風險」的精神。</div>
+            </div>
+
+            <h2>常見誤區</h2>
+            <div class="callout warn">
+              <span class="callout-k">小心這三個坑</span>
+              <p><strong>① 跳過治理層就上線</strong>——前面五層都做了，卻沒做日誌、權限與審批，等於開快車不裝煞車。<br>
+              <strong>② 一開始就想自建模型</strong>——還沒驗證價值就投入大筆預算養大腦，常常燒錢又拖慢進度。<br>
+              <strong>③ 六層同時開工</strong>——範圍越大、變數越多，越容易卡住又找不到問題出在哪一層。</p>
+            </div>
+
+            <h2>給老闆的一句話</h2>
+            <div class="callout good">
+              <span class="callout-k">重點</span>
+              <p>不要問「我們有沒有做 Agent」，要問「我們的 Agent 蓋到第幾層了」。<strong>能做事的下三層只是入場券，能信任的上三層才是能不能放進公司日常營運的關鍵。</strong>從一個最痛、最能量化的流程開始，由下往上分批蓋、每層都驗證過再往上——這才是讓 AI 真正落地、而且不會半年後崩掉的方法。</p>
+            </div>
+
+            <h2>結語</h2>
+            <p>六層架構模型，就是建立一套可靠、可治理 Agent 系統的藍圖：從選對大腦開始，補上判斷力與手腳讓它能做事，再加上記憶、工頭與治理讓它做得久、值得信任。先求站得穩，再求蓋得高。下一篇我們會深入第 3 層工具層，介紹 Agent 的核心零件——MCP、Skill、Sandbox、Plugin，帶你看看這些手腳實際上是怎麼組裝起來的。</p>
 
             <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
           </div>

@@ -44,7 +44,7 @@
     <main>
       <section class="hero b-bottom">
         <div class="wrap">
-          <span class="mono-label">// AGENT SERIES - PART 3</span>
+          <span class="mono-label">// AGENT SERIES - PART 3 · 閱讀約 12 分鐘</span>
           <h1>Agent 核心元件與實施路線</h1>
           <div class="text-xs" style="color: var(--text-dim);">2026-05-02</div>
         </div>
@@ -53,148 +53,169 @@
       <section>
         <div class="wrap">
           <div style="max-width: 800px;">
-            <p>前兩篇建立了 Agent 的概念基礎（Chat vs Agent）與架構藍圖（六層模型）。現在的問題是：實際動手時，用什麼技術組件來實現？本文介紹 Agent 生態中的四大核心元件：MCP、Skill、Sandbox、Plugin，說明各自的作用、何時使用，以及整合方式。</p>
-          
-          <h2>四大核心元件速覽</h2>
-          <p><strong>MCP（Model Context Protocol）</strong> — 標準化的工具集成協議<br/>
-<strong>Skill</strong> — 可複用的能力單位（特定業務邏輯的封裝）<br/>
-<strong>Sandbox</strong> — 隔離執行環境（安全地運行程式碼）<br/>
-<strong>Plugin</strong> — 動態擴展機制（熱加載新能力）</p>
-          
-          <h2>MCP（Model Context Protocol）</h2>
-          
-          <p><strong>是什麼？</strong>MCP 是 Anthropic 提出的標準，定義了 AI 模型與外部工具的通信方式。類似於 API 規範，但針對 Agent 優化。</p>
-          
-          <p><strong>核心優勢：</strong><br/>
-• <strong>標準化</strong> — 不論工具是 Slack、SQL 資料庫還是內部系統，都用統一方式接入<br/>
-• <strong>互操作性</strong> — 不同 Agent 框架都能使用同一套工具<br/>
-• <strong>安全性</strong> — 內建權限、錯誤處理、日誌記錄<br/>
-• <strong>高效</strong> — 減少模型 token 消耗，比傳統 API 調用快 40-50%</p>
-          
-          <p><strong>何時使用？</strong>連接第三方服務或企業系統時。例如：<br/>
-• 集成 Salesforce CRM 查詢客戶資料<br/>
-• 連接 Slack API 發送通知<br/>
-• 訪問企業知識庫搜索文件</p>
-          
-          <p><strong>實施成本：</strong>每個工具接入需 4-8 小時開發，成本約 10-20 萬台幣。</p>
-          
-          <h2>Skill（技能）</h2>
-          
-          <p><strong>定義：</strong>Skill 是邏輯層面的能力單位，不是技術層面的 API。一個 Skill 通常包含多個工具調用步驟與業務規則。</p>
-          
-          <p><strong>Skill vs API 的區別：</strong><br/>
-【API】呼叫「查詢銷售額」函式，返回數字<br/>
-【Skill】「月度銷售分析」技能，自動查詢銷售額 → 對比前月 → 計算成長率 → 生成報告</p>
-          
-          <p><strong>Skill 的三層構成：</strong><br/>
-1. <strong>輸入定義</strong> — 例如，月份、產品線<br/>
-2. <strong>邏輯流程</strong> — 調用 API、處理資料、條件判斷<br/>
-3. <strong>輸出格式</strong> — 結構化報告、JSON、自然語言</p>
-          
-          <p><strong>建構 Skill 的最佳實踐：</strong><br/>
-• 一個 Skill = 一個業務目標，大小適中（不過度細化，也不過度龐大）<br/>
-• 使用 YAML 或代碼定義，便於版本控制與複用<br/>
-• 建立 Skill 庫，後續 Agent 可直接組合使用</p>
-          
-          <p><strong>成本効益：</strong>開發一個 Skill 需 1-2 週，但可被 5-10 個不同 Agent 重用. ROI 顯著。</p>
-          
-          <h2>Sandbox（沙箱環境）</h2>
-          
-          <p><strong>問題：</strong>Agent 有時需執行程式碼（Python、SQL）完成複雜計算。直接在生產環境執行很危險。</p>
-          
-          <p><strong>解決方案：</strong>Sandbox 提供隔離的執行環境，Agent 可安全地運行程式碼而不影響主系統。</p>
-          
-          <p><strong>Sandbox 的設計考量：</strong><br/>
-• <strong>資源限制</strong> — 限制 CPU、記憶體、執行時間，防止無限佔用<br/>
-• <strong>文件系統隔離</strong> — Agent 無法存取系統敏感檔案<br/>
-• <strong>網路隔離</strong> — 預先白名單允許的外部 URL<br/>
-• <strong>超時控制</strong> — 程式碼執行超過時限立即終止</p>
-          
-          <p><strong>實現方式：</strong><br/>
-• Docker 容器 — 最常見，實施相對簡單<br/>
-• VM 虛擬機 — 隔離度更高但資源消耗大<br/>
-• 雲端函式（AWS Lambda、Google Cloud Functions）— 無需自行維護基礎設施</p>
-          
-          <p><strong>應用場景：</strong><br/>
-• 資料分析與視覺化<br/>
-• 複雜的 SQL 查詢組裝<br/>
-• 機器學習推理<br/>
-• 臨時計算任務</p>
-          
-          <h2>Plugin（外掛）</h2>
-          
-          <p><strong>定義：</strong>Plugin 是動態擴展機制，讓 Agent 系統在運行時加載新的功能，無需重啟。</p>
-          
-          <p><strong>Plugin 與 Skill 的區別：</strong><br/>
-【Skill】靜態定義，部署時決定能力<br/>
-【Plugin】動態加載，可在執行時開啟或關閉特定功能</p>
-          
-          <p><strong>Plugin 的結構：</strong><br/>
-• 元數據 — 名稱、版本、依賴<br/>
-• 入口點 — 初始化與執行函式<br/>
-• 配置文件 — 可配置的參數</p>
-          
-          <p><strong>使用場景：</strong><br/>
-• A/B 測試 — 快速開關測試版本<br/>
-• 漸進式部署 — 向部分用戶推出新功能<br/>
-• 企業定製 — 不同客戶加載不同 Plugin</p>
-          
-          <h2>四大元件的集成方式</h2>
-          
-          <p><strong>典型的 Agent 工作流：</strong></p>
-          
-          <p>1️⃣ <strong>用戶提交任務</strong><br/>
-「幫我分析上季度銷售表現」</p>
-          
-          <p>2️⃣ <strong>Agent 選擇 Skill</strong><br/>
-識別需要「季度銷售分析」Skill</p>
-          
-          <p>3️⃣ <strong>Skill 調用 MCP 工具</strong><br/>
-Skill 透過 MCP 協議，遠端呼叫 CRM 系統查詢銷售資料</p>
-          
-          <p>4️⃣ <strong>數據進 Sandbox 處理</strong><br/>
-Agent 在 Sandbox 運行 Python 程式碼，進行統計分析與視覺化</p>
-          
-          <p>5️⃣ <strong>結果透過 Plugin 交付</strong><br/>
-報告透過 Email Plugin 發送，Dashboard Plugin 展示</p>
-          
-          <h2>實施路線圖（台灣企業適用）</h2>
-          
-          <p><strong>第 1 個月：建立基礎</strong><br/>
-• 評估現有系統，識別 3-5 個關鍵工具<br/>
-• 為每個工具設計 MCP 接入<br/>
-• 成本：$150 萬</p>
-          
-          <p><strong>第 2-3 個月：開發核心 Skill</strong><br/>
-• 設計 5-10 個業務 Skill（銷售分析、客服、流程審批等）<br/>
-• 搭建 Skill 庫與版本管理<br/>
-• 成本：$200 萬</p>
-          
-          <p><strong>第 4 個月：Sandbox + Plugin</strong><br/>
-• 搭建 Sandbox 環境（Docker + resource limits）<br/>
-• 設計 2-3 個關鍵 Plugin（通知、reporting、dashboard）<br/>
-• 成本：$150 萬</p>
-          
-          <p><strong>第 5-6 個月：生產驗證</strong><br/>
-• 小範圍上線（100 用戶），蒐集反饋<br/>
-• 監控與優化<br/>
-• 成本：$100 萬</p>
-          
-          <p><strong>總投資：$600 萬，6 個月從零到可用的 Agent 系統</strong></p>
-          
-          <h2>避免的常見陷阱</h2>
-          
-          <p><strong>陷阱 1：過度複雜的 Skill 設計</strong><br/>
-一個 Skill 試圖做太多事，導致難以維護。建議：一個 Skill = 單一明確的業務目標。</p>
-          
-          <p><strong>陷阱 2：Sandbox 配置不當</strong><br/>
-Agent 程式碼執行失敗或超時，整個工作流中斷。建議：設置明確的超時、重試與降級策略。</p>
-          
-          <p><strong>陷阱 3：Plugin 版本衝突</strong><br/>
-多個 Plugin 相互依賴，更新時容易出錯。建議：嚴格的版本管理與相容性測試。</p>
-          
-          <h2>結語</h2>
-          <p>MCP、Skill、Sandbox、Plugin 四大元件構成現代 Agent 系統的核心。從工具集成開始（MCP），到能力封裝（Skill），到安全執行（Sandbox），到動態擴展（Plugin），各層環環相扣。台灣企業採用這套模式，平均 6 個月投資 $600 萬，可建立生產級 Agent 系統，年度 ROI 通常在 200-300%。關鍵是堅持漸進式實施，避免一步到位的陷阱。</p>
+            <p>前兩篇我們談了 Agent 是什麼（會自己思考、自己動手完成任務的 AI，而不只是會聊天的機器人），也畫了它的架構藍圖。這一篇要回答最實際的問題：<strong>真正要動手蓋一個 Agent，到底是用哪些零件組起來的？</strong></p>
+            <p>答案是四個核心元件：<strong>MCP、Skill、Sandbox、Plugin</strong>。名字聽起來很技術，但其實每一個都對應一件你公司裡早就在做的事。為了讓老闆聽得懂，我們先用一個比喻把四者一次串起來：把 Agent 想像成你<strong>新請的一位數位員工</strong>——</p>
+
+            <div class="flow">
+              <div class="flow-step"><div class="flow-n">01</div><h4>MCP　＝　員工的「門禁卡」</h4><p>讓這位數位員工能用標準方式去刷進公司各個系統（CRM、ERP、出貨平台、Email），查資料、按按鈕。一張卡就能進所有門。</p></div>
+              <div class="flow-step"><div class="flow-n">02</div><h4>Skill　＝　員工的「工作 SOP」</h4><p>一套套教好的標準作業流程。例如「做月報」這個 Skill，就是把查數字、比上月、算成長、寫結論這幾個動作，包成一個按鈕。</p></div>
+              <div class="flow-step"><div class="flow-n">03</div><h4>Sandbox　＝　員工的「實驗室」</h4><p>一間與正式系統隔開的安全房間。要試算、跑程式、做複雜運算，都在這裡進行，搞砸了也不會碰壞公司真正的帳務或資料。</p></div>
+              <div class="flow-step"><div class="flow-n">04</div><h4>Plugin　＝　可隨時插拔的「外掛配件」</h4><p>像手機 App 一樣，要哪個功能就裝哪個、不要就關掉，全程不用把整套系統關機重來。</p></div>
+            </div>
+
+            <p>下面這張對照表，把四個元件用同一組問題拆給你看——它是什麼、它幫你解決什麼麻煩、實際長什麼樣子。看懂這張表，這篇文章的一半就吸收了。</p>
+
+            <div class="viz">
+              <div class="viz-title">四大核心元件對照：是什麼 / 解決什麼問題 / 例子</div>
+              <div class="viz-scroll">
+                <table>
+                  <thead><tr><th>元件</th><th>白話講是什麼</th><th>解決什麼問題</th><th>具體例子</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td data-label="元件"><strong>MCP</strong><br><span style="color:var(--text-muted);font-size:13px;">標準連接協議</span></td>
+                      <td data-label="白話講是什麼">AI 與外部系統溝通的「萬用插座」標準</td>
+                      <td data-label="解決什麼問題">每接一個新系統都要重寫一套程式，又貴又慢</td>
+                      <td data-label="具體例子">用同一套方式接通 CRM、出貨系統、LINE、會計軟體</td>
+                    </tr>
+                    <tr>
+                      <td data-label="元件"><strong>Skill</strong><br><span style="color:var(--text-muted);font-size:13px;">能力／技能單位</span></td>
+                      <td data-label="白話講是什麼">把一串動作打包成一個「按鈕」的工作 SOP</td>
+                      <td data-label="解決什麼問題">同樣的多步驟流程每次都要從頭交代一遍</td>
+                      <td data-label="具體例子">「月度銷售分析」「客訴分類回覆」「報價單生成」</td>
+                    </tr>
+                    <tr>
+                      <td data-label="元件"><strong>Sandbox</strong><br><span style="color:var(--text-muted);font-size:13px;">隔離執行環境</span></td>
+                      <td data-label="白話講是什麼">與正式系統隔開的安全「實驗室」</td>
+                      <td data-label="解決什麼問題">AI 跑程式出錯，可能弄壞或外洩公司真實資料</td>
+                      <td data-label="具體例子">在隔離環境跑 Excel 試算、SQL 查詢、圖表生成</td>
+                    </tr>
+                    <tr>
+                      <td data-label="元件"><strong>Plugin</strong><br><span style="color:var(--text-muted);font-size:13px;">動態外掛</span></td>
+                      <td data-label="白話講是什麼">隨時可插拔、不用關機重啟的「配件」</td>
+                      <td data-label="解決什麼問題">加一個小功能就要停機重新部署，影響營運</td>
+                      <td data-label="具體例子">先給三家門市試用新報表，沒問題再全面開啟</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="viz-caption">記住順序：先有門禁卡（MCP）能進系統，才教得會 SOP（Skill）；複雜運算進實驗室（Sandbox）才安全；功能要能隨插隨拔（Plugin）才好維護。</div>
+            </div>
+
+            <h2>MCP：讓 AI 一張卡刷遍所有系統</h2>
+            <p><strong>MCP（Model Context Protocol，模型情境協議）</strong>是 Anthropic 提出的一套公開標準，規範了「AI 模型要怎麼跟外部工具講話」。你可以把它想成<strong>水電的國家標準</strong>——只要插頭符合規格，任何電器插上任何插座都能用，不必為每台電器各拉一條專線。</p>
+            <p>對中小企業最直接的意義是：以前每接一個新系統（換一家物流、導一套新的進銷存），工程師都得重寫一段「翻譯程式」，費用與時間都重來一次。有了 MCP 這個共通標準，接新系統像換插頭，不是重新拉線。</p>
+            <p><strong>它為老闆省的，主要是這四件事：</strong></p>
+            <p>• <strong>標準化</strong>——不論對方是 LINE、SQL 資料庫還是你家的舊 ERP，都用同一種方式接入。<br>
+            • <strong>可互換</strong>——今天用這套 Agent 框架接好的工具，明天換框架也能繼續用，不被單一廠商綁死。<br>
+            • <strong>內建安全</strong>——權限管控、錯誤處理、操作紀錄都是規格的一部分，誰在什麼時候動了什麼，查得到。<br>
+            • <strong>更省成本</strong>——溝通格式精簡，比傳統土法接法明顯減少 AI 的運算花費（也就是每次呼叫的 token 用量），長期帳單更輕。</p>
+
+            <div class="callout">
+              <span class="callout-k">紡織業例子</span>
+              <p>一家布料貿易商，過去業務查庫存得開 ERP、查客戶得開 CRM、確認船期得登入報關平台，三個系統三套登入。導入 MCP 後，業務只要在對話框問「<strong>A 客戶這款卡其布還有多少現貨、最快哪天能出</strong>」，Agent 用同一張「門禁卡」一次刷過三個系統，幾秒鐘給出整合答案。</p>
+            </div>
+
+            <p><strong>什麼時候該用 MCP？</strong>只要任務需要「去查公司既有系統的資料」或「在外部系統按下某個動作」，就一定會用到它。常見如：接 CRM 查客戶往來紀錄、接通訊軟體發通知、接內部知識庫翻文件規章。<br>
+            <strong>大概要花多少？</strong>每接一個系統大約是 4–8 小時的工，視系統複雜度，單一接點費用通常落在數萬元等級——而且接得越多，攤下來的單價越低。</p>
+
+            <h2>Skill：把「整套流程」打包成一個按鈕</h2>
+            <p>很多人會把 Skill 和「程式功能」搞混。差別在這裡：<strong>單一功能只做一件事，Skill 是把一串為了完成某個業務目標的動作，包成一個可重複使用的整套流程。</strong></p>
+            <p>用「做月報」舉例最清楚：</p>
+            <div class="viz">
+              <div class="viz-title">單一功能 vs Skill：差在哪？</div>
+              <div class="viz-scroll">
+                <table>
+                  <thead><tr><th>比較</th><th>單一功能（一個動作）</th><th>Skill（一整套 SOP）</th></tr></thead>
+                  <tbody>
+                    <tr><td data-label="比較">做的事</td><td data-label="單一功能">「查本月銷售額」回傳一個數字</td><td data-label="Skill">查本月 → 比上月 → 算成長率 → 標出異常 → 寫成一頁結論</td></tr>
+                    <tr><td data-label="比較">誰來串起來</td><td data-label="單一功能">每次都要人重新交代步驟</td><td data-label="Skill">步驟已內建，一句「做月報」就跑完</td></tr>
+                    <tr><td data-label="比較">能不能重用</td><td data-label="單一功能">只是個零件</td><td data-label="Skill"><span class="yes">✓</span> 不同部門、不同 Agent 都能直接套用</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="viz-caption">一句話總結：功能是「零件」，Skill 是把零件組好、可以直接上工的「整套工法」。</div>
+            </div>
+
+            <p>一個設計良好的 Skill 通常有三層：<strong>輸入</strong>（要給它什麼，例如月份、產品線）、<strong>處理流程</strong>（依序查資料、運算、判斷）、<strong>輸出</strong>（給出報表、表格或一段白話結論）。建構時把握三個原則：一個 Skill 對應一個明確的業務目標（不要塞太多）、把它寫成可版本控管的設定檔（改了什麼有紀錄）、並逐步累積成一座「Skill 庫」。</p>
+
+            <div class="callout good">
+              <span class="callout-k">為什麼 Skill 最划算</span>
+              <p>開發一個 Skill 大約要 1–2 週，但它<strong>一次做好、能被多個部門和多個 Agent 重複使用</strong>。同一個「客訴分類」Skill，客服、業務、品保都能用——做一次、回收很多次，這是四大元件裡投資報酬最明顯的一個。</p>
+            </div>
+
+            <h2>Sandbox：給 AI 一間「弄壞了也沒關係」的實驗室</h2>
+            <p>Agent 厲害的地方，是它有時會自己寫一小段程式來算複雜的東西（例如把上萬筆訂單做交叉統計、跑一份財務試算）。問題來了：<strong>讓 AI 直接在公司正式系統上跑沒看過的程式，風險太高</strong>——萬一邏輯出錯、無限佔用資源，或不小心碰到敏感資料，後果不堪設想。</p>
+            <p><strong>Sandbox（沙箱）</strong>就是為此而生的隔離房間。AI 想跑的程式全部關進這間實驗室執行，跑壞了、跑爆了，都被關在房間裡，碰不到外面真正的帳務與客戶資料。</p>
+            <p>一間設計妥當的 Sandbox 會設下四道防線：<strong>資源上限</strong>（限制能用多少運算力與時間，避免一支程式拖垮系統）、<strong>檔案隔離</strong>（看不到也改不了系統機密檔）、<strong>網路管制</strong>（只准連事先核可的網址）、<strong>逾時中止</strong>（跑太久立刻喊停）。技術上常用 Docker 容器（最普遍、成本低）、虛擬機（隔離更徹底但較吃資源），或雲端函式（不必自己養機房）。</p>
+
+            <div class="callout warn">
+              <span class="callout-k">會計事務所的提醒</span>
+              <p>一家會計事務所用 Agent 自動跑客戶試算表，若沒有 Sandbox，一段算錯的程式可能直接覆蓋客戶的真實底稿。<strong>有了 Sandbox，所有試算都在副本上進行，確認無誤才回寫。</strong>凡是會碰到錢、碰到客戶機密資料的流程，Sandbox 不是加分項，是必備品。</p>
+            </div>
+
+            <h2>Plugin：像裝手機 App 一樣，隨插隨拔</h2>
+            <p><strong>Plugin（外掛）</strong>讓你的 Agent 系統能在<strong>不關機、不重新部署</strong>的情況下，臨時加上或拿掉某個功能。和 Skill 的差別是：Skill 比較像「員工已經學會的能力」，部署當下就定好；Plugin 則像「可隨時插拔的配件」，營運中就能開關。</p>
+            <p>對老闆來說，Plugin 真正的價值是<strong>讓「試新功能」變得低風險</strong>：</p>
+            <p>• <strong>小範圍試水溫</strong>——新報表先給三家門市用，好用再全面開。<br>
+            • <strong>分批上線</strong>——新功能先推 10% 客戶，沒問題再擴大，出事影響面也小。<br>
+            • <strong>客製不打架</strong>——不同客戶裝不同 Plugin，互不干擾，也不必為一家客戶改動整套系統。</p>
+
+            <h2>四個元件怎麼串起來幹活？</h2>
+            <p>單看四個零件可能還是抽象。我們用一個真實的請求，看它們如何接力。情境：餐飲連鎖的老闆在對話框打了一句「<strong>幫我分析上一季各分店的營收表現，做成一頁報告寄給我</strong>」。</p>
+
+            <div class="flow">
+              <div class="flow-step"><div class="flow-n">01</div><h4>老闆下指令</h4><p>用自然語言提出任務，不需要懂任何技術細節。</p></div>
+              <div class="flow-step"><div class="flow-n">02</div><h4>Agent 選對 Skill</h4><p>判斷這是「季度營收分析」這個 Skill 的工作，調出對應的 SOP。</p></div>
+              <div class="flow-step"><div class="flow-n">03</div><h4>用 MCP 撈資料</h4><p>透過 MCP 這張門禁卡，刷進 POS 與會計系統，取出各分店的營收數字。</p></div>
+              <div class="flow-step"><div class="flow-n">04</div><h4>進 Sandbox 運算</h4><p>在隔離實驗室裡跑統計與圖表，比較分店、算出成長率、標出異常。</p></div>
+              <div class="flow-step"><div class="flow-n">05</div><h4>靠 Plugin 交付</h4><p>用 Email Plugin 把報告寄出，同時推上 Dashboard Plugin 供隨時查看。</p></div>
+            </div>
+
+            <p>環環相扣：<strong>MCP 負責進得去、Skill 負責知道怎麼做、Sandbox 負責安全地算、Plugin 負責把成果送出去。</strong>少了任何一環，這位數位員工都做不完一件完整的事。</p>
+
+            <h2>六個月落地路線圖</h2>
+            <p>聽起來很完整，但中小企業最怕的就是「一次想做完、結果做不完」。我們建議的節奏是<strong>分四階段、半年到位</strong>，每一階段都先產出看得到的成果，再往下走。下面這張圖把六個月的累積進度視覺化——重點不是哪個月花多少錢，而是<strong>價值是逐月疊上去的，不是最後一刻才出現。</strong></p>
+
+            <div class="viz">
+              <div class="viz-title">六個月落地：累積完成度（%）</div>
+              <div class="viz-frame">
+                <div class="cols">
+                  <div class="col"><span class="col-val">15%</span><div class="col-bar" style="height:15%"></div><span class="col-label">第1月</span></div>
+                  <div class="col"><span class="col-val">45%</span><div class="col-bar" style="height:45%"></div><span class="col-label">第2-3月</span></div>
+                  <div class="col"><span class="col-val">70%</span><div class="col-bar alt" style="height:70%"></div><span class="col-label">第4月</span></div>
+                  <div class="col"><span class="col-val">100%</span><div class="col-bar alt" style="height:100%"></div><span class="col-label">第5-6月</span></div>
+                </div>
+                <div class="legend">
+                  <span><i class="s1"></i>打地基階段</span>
+                  <span><i class="s2"></i>整合與上線階段</span>
+                </div>
+              </div>
+              <div class="viz-caption">每一階段都交付可用成果：先接得進系統，再學會做事，再安全運算，最後實際上線驗證。</div>
+            </div>
+
+            <div class="flow">
+              <div class="flow-step"><div class="flow-n">01</div><h4>第 1 個月　打地基（MCP）</h4><p>盤點現有系統，挑出 3–5 個最關鍵的工具（如 CRM、進銷存、通訊軟體），逐一用 MCP 接通。先求「AI 進得了你的系統」。</p></div>
+              <div class="flow-step"><div class="flow-n">02</div><h4>第 2–3 個月　教技能（Skill）</h4><p>針對最痛、最高頻的流程，開發 5–8 個業務 Skill（例如銷售分析、客訴分類、報價生成），並建立可版本控管的 Skill 庫。</p></div>
+              <div class="flow-step"><div class="flow-n">03</div><h4>第 4 個月　築防線＋裝配件（Sandbox + Plugin）</h4><p>搭好 Sandbox 安全環境，讓需要運算的任務有地方安全執行；再設計 2–3 個關鍵 Plugin（通知、報表、儀表板）方便交付。</p></div>
+              <div class="flow-step"><div class="flow-n">04</div><h4>第 5–6 個月　小規模上線驗證</h4><p>先在一個部門或少數門市實際運行，蒐集真實回饋，監控成效並持續調校，確認可行再逐步擴大。</p></div>
+            </div>
+
+            <div class="callout good">
+              <span class="callout-k">給老闆的關鍵心法</span>
+              <p>不要把六個月當成「等半年才看得到東西」。正確做法是<strong>每個階段結束都要有一個能向團隊展示的成果</strong>——第一個月就能 Demo「AI 幫我查到了庫存」，第三個月能 Demo「AI 自動做出了月報」。<strong>讓成效一段一段被看見，內部支持才會一段一段累積起來。</strong></p>
+            </div>
+
+            <h2>三個最常見的踩雷點</h2>
+            <div class="callout warn">
+              <span class="callout-k">小心這些陷阱</span>
+              <p><strong>① Skill 設計貪心</strong>——一個 Skill 想包山包海，結果又難維護又容易出錯。守住「一個 Skill = 一個明確業務目標」。<br>
+              <strong>② Sandbox 沒設好退路</strong>——程式跑失敗或逾時，整條流程卡死。一定要先想好逾時、重試與「失敗了改用人工」的降級方案。<br>
+              <strong>③ Plugin 版本打架</strong>——外掛之間互相依賴，更新一個就拖垮另一個。嚴格做版本管理與相容性測試，別讓便利變成災難。</p>
+            </div>
+
+            <h2>給老闆的一句話</h2>
+            <p>MCP、Skill、Sandbox、Plugin 聽起來像四個技術名詞，本質上只是回答了四個經營問題：<strong>AI 進得了我的系統嗎（MCP）？它知道怎麼把事做對嗎（Skill）？它出錯時會不會弄壞東西（Sandbox）？我能安心地一點一點開放它嗎（Plugin）？</strong></p>
+            <p>四個答案都「是」，你就有了一位可靠的數位員工。而通往那裡的路，不是賭一把砸大錢一次到位，而是<strong>分階段、每一步都先讓成效被看見，再決定要不要往前走</strong>——這也正是我們協助每一家中小企業導入 Agent 的核心原則。</p>
 
             <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
           </div>

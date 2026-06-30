@@ -43,7 +43,7 @@
     <main>
       <section class="hero b-bottom">
         <div class="wrap">
-          <span class="mono-label">TOOLS · 閱讀約 7 分鐘</span>
+          <span class="mono-label">TOOLS · 閱讀約 12 分鐘</span>
           <h1>n8n、Make 還是自建？<br>自動化工具選型指南</h1>
           <div class="text-xs" style="color: var(--text-dim);">2026-05-05</div>
         </div>
@@ -52,24 +52,108 @@
       <section>
         <div class="wrap">
           <div style="max-width: 800px;">
-            <p>當你決定要自動化某個流程，下一個問題就是：用現成工具還是自己開發？選錯不只浪費錢，還會在半年後綁手綁腳。本文用三個面向幫你做決策。</p>
+            <p>當你下定決心要把某個流程自動化，緊接著一定會撞上同一個十字路口：<strong>到底要用現成的工具拼裝起來，還是乾脆請工程師自己開發一套？</strong>這個選擇看似技術問題，實際上是一筆會跟著你好幾年的生意決策。選對了，幾週內就能省下大把人力；選錯了，輕則白花一筆錢，重則半年後流程一改就動彈不得，被工具或廠商「綁架」。</p>
+            <p>市面上的選項其實不複雜，主要就三條路：低程式碼平台（如 Make、Zapier）、可自行架設的開源平台（如 n8n），以及完全客製的自建系統。難的不是認識它們，而是「你的情況該選哪一個」。本文把這道題拆成三個老闆聽得懂的面向——<strong>資料敏感度、變動頻率、成本曲線</strong>——讓你不必懂程式，也能在簽約前就判斷得八九不離十。</p>
 
-            <h2>三種主流路線</h2>
-            <p>• <strong>低程式碼平台（Make、Zapier）</strong> — 上手最快，適合標準化的串接（如表單 → 試算表 → 通知）。按執行量計費，量大時成本會明顯上升。<br/>
-• <strong>開源自架（n8n）</strong> — 可自行部署、資料留在內部，彈性高、長期成本低，但需要一點技術維運能力。<br/>
-• <strong>完全自建</strong> — 最大彈性與整合深度，適合核心競爭流程，但開發與維護成本最高。</p>
+            <div class="viz">
+              <div class="viz-title">三條路線，一眼看懂差在哪</div>
+              <div class="kpis">
+                <div class="kpi"><div class="kpi-num">1 天</div><div class="kpi-lbl">Make 串好一條流程</div></div>
+                <div class="kpi"><div class="kpi-num">1～2 週</div><div class="kpi-lbl">n8n 自架上線</div></div>
+                <div class="kpi"><div class="kpi-num">1～3 月</div><div class="kpi-lbl">完全自建開發</div></div>
+                <div class="kpi"><div class="kpi-num">3 問</div><div class="kpi-lbl">就能定位你該走哪條</div></div>
+              </div>
+              <div class="viz-caption">時間僅為單一流程的概略量級，實際依複雜度而定。重點是：上手速度與長期彈性，往往是反向的。</div>
+            </div>
+
+            <h2>先認識三種主流路線</h2>
+            <p>在比較之前，先用人話講清楚這三個名詞，因為它們常被混在一起講：</p>
+            <div class="flow">
+              <div class="flow-step"><div class="flow-n">01</div><h4>低程式碼平台（Make、Zapier）</h4><p>所謂「低程式碼（Low-code，幾乎不用寫程式，用拖拉設定就能完成）」平台。你在網頁上像排積木一樣把「表單 → 試算表 → 通知」串起來，半天就能跑。缺點是按「執行次數」收費，量一大費用就跳升，而且資料會經過國外的雲端服務商。</p></div>
+              <div class="flow-step"><div class="flow-n">02</div><h4>開源自架（n8n）</h4><p>n8n 是一套「開源（Open-source，程式碼公開、可免費自行使用）」的自動化平台。它跟 Make 一樣是拖拉式操作，但你可以把它裝在自己的伺服器上，<strong>資料完全留在公司內部</strong>，而且不按次數計費。代價是要有人會架設與維護。</p></div>
+              <div class="flow-step"><div class="flow-n">03</div><h4>完全自建</h4><p>請工程師（或外包團隊）從零寫一套專屬系統。彈性與整合深度最高，能完全貼合你獨有的生意邏輯，適合「拿來打天下」的核心流程。代價是開發慢、費用高，且日後維護要持續投入。</p></div>
+            </div>
+            <div class="callout"><span class="callout-k">一句話分辨</span><p>Make 像<strong>租一台配好的車</strong>，馬上能開但里程計費；n8n 像<strong>買一台車自己養</strong>，要會保養但跑再多都不加價；自建像<strong>找師傅打造一台專用車</strong>，最貼身也最貴。</p></div>
+
+            <h2>五個維度的正面對決</h2>
+            <p>下面這張表把三條路線放在同一個天平上比。沒有「最好」，只有「最適合你現在這個流程」：</p>
+            <div class="viz">
+              <div class="viz-title">n8n／Make／自建：五大維度比較</div>
+              <div class="viz-scroll">
+                <table>
+                  <thead><tr><th>維度</th><th>Make（雲端 SaaS）</th><th>n8n（開源自架）</th><th>完全自建</th></tr></thead>
+                  <tbody>
+                    <tr><td data-label="維度">資料隱私</td><td data-label="Make">資料經第三方雲端 <span class="no">✗</span></td><td data-label="n8n">資料留在內部 <span class="yes">✓</span></td><td data-label="自建">完全自主 <span class="yes">✓</span></td></tr>
+                    <tr><td data-label="維度">上手難度</td><td data-label="Make">最簡單，拖拉即可 <span class="yes">✓</span></td><td data-label="n8n">中等，需會架設</td><td data-label="自建">高，需開發團隊 <span class="no">✗</span></td></tr>
+                    <tr><td data-label="維度">彈性／客製</td><td data-label="Make">受平台功能限制</td><td data-label="n8n">高，可寫程式擴充 <span class="yes">✓</span></td><td data-label="自建">最高，想怎麼做都行 <span class="yes">✓</span></td></tr>
+                    <tr><td data-label="維度">前期成本</td><td data-label="Make">低，月費起跳 <span class="yes">✓</span></td><td data-label="n8n">中，含架設工時</td><td data-label="自建">高，開發費可觀 <span class="no">✗</span></td></tr>
+                    <tr><td data-label="維度">維運負擔</td><td data-label="Make">平台全包，最省心 <span class="yes">✓</span></td><td data-label="n8n">要自己更新、備份</td><td data-label="自建">全部自己扛 <span class="no">✗</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="viz-caption">看得出規律：越往右越彈性、越自主，但前期投入與維運責任也越重。多數中小企業的甜蜜點，其實落在中間或「混搭」。</div>
+            </div>
 
             <h2>面向一：資料敏感度</h2>
-            <p>若流程會碰到個資、財務或營業機密，優先考慮可自架的方案（n8n 或自建），避免敏感資料流經第三方雲端。一般的行銷或通知流程，則用雲端 SaaS 即可。</p>
+            <p>第一個要問的，是這條流程會碰到什麼資料。如果它會處理<strong>個資（客戶姓名、電話、身分證、病歷）、財務數字或營業機密</strong>，那麼讓資料流經國外第三方雲端，就是一個你要嚴肅看待的風險——不只是被看到的疑慮，還牽涉個資法的合規責任。</p>
+            <p>舉例來說：一家<strong>診所</strong>要自動整理病患回診提醒，內容含姓名與病症，這類資料最好走 n8n 自架或自建，全程留在院內。一家<strong>會計事務所</strong>幫客戶跑財報彙整，同理。反過來，如果只是<strong>餐飲店</strong>把 Google 表單的訂位通知轉發到 LINE、或<strong>零售商</strong>把促銷文案排程發到社群，這些資料公開、無關機密，用 Make 這類雲端工具又快又省，完全沒必要為它自架。</p>
+            <div class="callout warn"><span class="callout-k">小心</span><p>「資料會不會出公司」是一條難以回頭的紅線。一旦敏感資料已經跑在第三方平台上半年，事後要搬回內部，往往比一開始就架好還麻煩。<strong>涉及個資與機密，寧可一開始就選可自架的方案。</strong></p></div>
 
             <h2>面向二：流程的「變動頻率」</h2>
-            <p>越穩定、越標準的流程，越適合現成工具；越是公司獨有、會頻繁調整的核心流程，越值得投資自建或半自建，換取長期彈性。</p>
+            <p>第二個要問的，是這條流程多久會改一次。這直接決定了現成工具划不划算。</p>
+            <p><strong>越穩定、越標準的流程</strong>（例如「收到發票郵件就存進雲端硬碟並通知會計」），規則幾乎不變，用 Make / n8n 設定一次就能長年運作，自建反而是殺雞用牛刀。<strong>越是公司獨有、會頻繁微調的核心流程</strong>（例如紡織廠依季節與客戶調整的報價邏輯、貿易商獨門的選品與配貨規則），現成工具的「積木」常常拼不出你要的形狀，每次想改都卡在平台限制——這時投資 n8n 深度客製或自建，換來的是「想怎麼改就怎麼改」的長期彈性。</p>
+            <div class="viz">
+              <div class="viz-title">該選哪條路？用「敏感度 × 變動頻率」定位</div>
+              <div class="viz-scroll">
+                <table>
+                  <thead><tr><th>情境</th><th>資料敏感度</th><th>變動頻率</th><th>建議路線</th></tr></thead>
+                  <tbody>
+                    <tr><td data-label="情境">社群貼文排程、行銷通知</td><td data-label="敏感度">低</td><td data-label="變動">低</td><td data-label="建議">Make／Zapier</td></tr>
+                    <tr><td data-label="情境">診所回診、客戶個資處理</td><td data-label="敏感度">高</td><td data-label="變動">低～中</td><td data-label="建議">n8n 自架</td></tr>
+                    <tr><td data-label="情境">獨門報價、配貨核心邏輯</td><td data-label="敏感度">高</td><td data-label="變動">高</td><td data-label="建議">自建（或 n8n 深度客製）</td></tr>
+                    <tr><td data-label="情境">內部表單彙整、跨部門通知</td><td data-label="敏感度">中</td><td data-label="變動">中</td><td data-label="建議">n8n 自架</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="viz-caption">兩個面向一交叉，答案常常就浮現了。資料越敏感越往「自架／自建」靠，變動越頻繁越值得投資彈性。</div>
+            </div>
 
             <h2>面向三：規模與成本曲線</h2>
-            <p>SaaS 平台前期便宜、後期隨用量變貴；自架方案前期需投入、但邊際成本趨近於零。估算 12～24 個月的總成本，而不是只看第一個月。</p>
+            <p>第三個、也是最容易算錯的，是成本。陷阱在於：大家通常只看「第一個月」，但這三條路線的成本是<strong>隨用量沿著完全不同的曲線在走</strong>。</p>
+            <p>Make 這類 SaaS 前期幾乎零成本，但它按執行次數計費——當你的流程從每月幾百次成長到幾萬次，月費會一路爬升。n8n 自架剛好相反：前期要付一筆架設工時，但之後不管跑幾萬次，伺服器成本幾乎不動，<strong>邊際成本（每多跑一次所增加的花費）趨近於零</strong>。自建則前期投入最高，但跑量同樣不額外加價。</p>
+            <div class="viz">
+              <div class="viz-title">三條路線的兩年累積成本（示意，單位：萬元）</div>
+              <div class="viz-frame">
+                <div class="bars">
+                  <div class="bar-row"><span class="bar-label">Make（高用量）</span><div class="bar-track"><div class="bar-fill muted" style="width:90%"></div></div><span class="bar-val">~36</span></div>
+                  <div class="bar-row"><span class="bar-label">完全自建</span><div class="bar-track"><div class="bar-fill alt" style="width:75%"></div></div><span class="bar-val">~30</span></div>
+                  <div class="bar-row"><span class="bar-label">n8n 自架</span><div class="bar-track"><div class="bar-fill" style="width:45%"></div></div><span class="bar-val">~18</span></div>
+                </div>
+              </div>
+              <div class="viz-caption">高用量情境下兩年累積成本的概略比較。Make 因按次計費在量大時反而最貴；n8n 自架以一筆固定投入換來低邊際成本，常是性價比甜蜜點。低用量時則 Make 最划算——關鍵永遠是「你的量」。</div>
+            </div>
+            <div class="callout"><span class="callout-k">怎麼算</span><p>別只看月費單。請估 <strong>12～24 個月的總持有成本</strong>：把架設、月費、維運、未來改版工時全加進去，再除以這段期間的預期執行量。很多老闆一算才發現，「最便宜」的工具在自己的用量下其實最貴。</p></div>
 
-            <h2>我們的實務原則：混合而非二選一</h2>
-            <p>最務實的答案通常是組合拳——用 n8n / Make 快速串起周邊流程，把真正產生競爭力的核心邏輯（如客製 Agent、決策模型）自建並掌握在手裡。先用現成工具跑出成效，再針對瓶頸逐步自建，是風險最低的路徑。</p>
+            <h2>選型三問：三十秒做出初判</h2>
+            <p>把上面三個面向濃縮成一套可以照著走的流程，下次評估任何自動化需求，依序問自己這三題：</p>
+            <div class="flow">
+              <div class="flow-step"><div class="flow-n">01</div><h4>這流程碰機密資料嗎？</h4><p>會碰個資、財務、營業機密 → 直接刷掉純雲端方案，往 n8n 自架或自建走。不會 → 三條路都還在檯面上。</p></div>
+              <div class="flow-step"><div class="flow-n">02</div><h4>它多久改一次？</h4><p>幾乎不改、規則標準 → 現成工具（Make／n8n）最省。常改、是你獨門的競爭力 → 投資自建或深度客製換彈性。</p></div>
+              <div class="flow-step"><div class="flow-n">03</div><h4>未來的量會多大？</h4><p>量小且穩 → Make 最划算。量大或會快速成長 → n8n／自建的低邊際成本長期勝出。把 24 個月一起算。</p></div>
+            </div>
+            <div class="callout good"><span class="callout-k">選型口訣</span><p><strong>機密留內部、常改靠自建、量大省在自架。</strong>三題答完，路線通常就八九不離十了——剩下的只是驗證細節。</p></div>
+
+            <h2>常見誤區</h2>
+            <div class="callout warn">
+              <span class="callout-k">小心這些陷阱</span>
+              <p><strong>① 一開始就追求「全部自建」</strong>——核心流程值得自建，但把連發通知這種小事也自己寫，是把預算燒在沒有競爭力的地方。<br>
+              <strong>② 只比第一個月的價格</strong>——忽略 SaaS 隨用量上升的曲線，也忽略自架的維運工時，兩種錯都會讓事後帳對不上。<br>
+              <strong>③ 把敏感資料丟上雲端再說</strong>——當下最快，但合規風險與日後搬遷成本，往往比省下的時間貴得多。</p>
+            </div>
+
+            <h2>我們的實務原則：混合，而不是二選一</h2>
+            <p>講了這麼多比較，最務實的答案其實常常不是「選一個」，而是<strong>組合拳</strong>。用 n8n / Make 快速把周邊、標準化的流程串起來，先跑出看得見的成效；把真正產生競爭力的核心邏輯（例如客製的 AI Agent、你獨有的決策模型）自建並牢牢握在自己手裡。先用現成工具驗證價值、跑出第一桶金，再針對真正的瓶頸逐步自建，是<strong>風險最低、回本最快</strong>的路徑。</p>
+            <p>我們協助中小企業時，幾乎都是這個節奏：先用兩三週搭一條會回本的自動化，讓老闆親眼看到成效，再決定哪些值得往下深做。<strong>讓工具配合你的生意，而不是讓生意去遷就工具。</strong></p>
 
             <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
           </div>

@@ -44,7 +44,7 @@
     <main>
       <section class="hero b-bottom">
         <div class="wrap">
-          <span class="mono-label">// EVALUATION</span>
+          <span class="mono-label">EVALUATION · 閱讀約 12 分鐘</span>
           <h1>LLM 評測實務：別再只看 Demo，建立可信的評估流程</h1>
           <div class="text-xs" style="color: var(--text-dim);">2026-06-09</div>
         </div>
@@ -53,31 +53,120 @@
       <section>
         <div class="wrap">
           <div style="max-width: 800px;">
-          <p>幾乎每個 LLM 專案都有一個共同的危險時刻：團隊在會議室裡跑了幾個漂亮的範例，所有人都點頭稱讚，於是決定上線。但上線後才發現，真實使用者的問法千奇百怪，模型開始答非所問、捏造資訊，甚至在你「優化」提示詞之後反而變差了。本文整理一套務實的 LLM 評測流程，幫助中小企業在投入資源前，先建立可信的判斷依據。</p>
+          <p>幾乎每個 LLM（大型語言模型，也就是 ChatGPT 這類能讀懂並生成文字的 AI）專案，都有一個共同的危險時刻：團隊在會議室裡跑了幾個漂亮的範例，老闆和同事都點頭稱讚，於是拍板上線。但上線後才發現，真實使用者的問法千奇百怪，模型開始答非所問、編造不存在的資訊，甚至在你「優化」提示詞（prompt，給 AI 的指令文字）之後表現反而更差了。</p>
+          <p>問題不在 AI 不夠強，而在於沒有人替它把過「品質關」。本文用餐飲、診所、會計事務所、貿易商這些你熟悉的場景，整理一套務實的 LLM 評測流程——所謂<strong>評測</strong>，白話說就是「在花大錢、把系統交到客戶面前之前，先用一套可重複的方法量出它到底好不好、改動之後是變好還是變壞」。這就像餐廳開賣新菜前要試吃打分，而不是端上桌才知道顧客愛不愛。</p>
+
+          <div class="viz">
+            <div class="viz-title">為什麼 Demo 驚艷卻常常翻車</div>
+            <div class="kpis">
+              <div class="kpi"><div class="kpi-num">80%</div><div class="kpi-lbl">常見問題模型答得好</div></div>
+              <div class="kpi"><div class="kpi-num">20%</div><div class="kpi-lbl">邊界情況才是客訴來源</div></div>
+              <div class="kpi"><div class="kpi-num">2 次</div><div class="kpi-lbl">同問題可能給不同答案</div></div>
+              <div class="kpi"><div class="kpi-num">0</div><div class="kpi-lbl">沒有評測時的客觀依據</div></div>
+            </div>
+            <div class="viz-caption">Demo 挑的是模型擅長的題目；真正決定能不能上線的，是那 2 成你沒示範到的狀況。</div>
+          </div>
 
           <h2>為什麼「Demo 很驚艷」不等於「能上線」</h2>
-          <p>Demo 之所以好看，是因為示範者通常挑了模型擅長的問題。但實際營運會暴露三個結構性問題。第一是<strong>非決定性輸出</strong>：同一個問題問兩次，LLM 可能給出不同答案，這代表你不能用「跑過一次成功」當作驗收標準。第二是<strong>長尾失敗</strong>：8 成常見問題答得不錯，但剩下 2 成的邊界情況才是真正會引發客訴與信任崩潰的地方。第三是<strong>幻覺（hallucination）與退步（regression）</strong>：模型會自信地編造不存在的事實；而當你修改提示詞或更換模型版本時，原本答對的案例可能悄悄變成答錯——這種「改 A 壞 B」的退步，靠人工肉眼幾乎不可能察覺。</p>
+          <p>Demo 之所以好看，是因為示範者通常挑了模型最擅長的問題。但實際營運會暴露三個結構性問題。第一是<strong>非決定性輸出</strong>：同一個問題問兩次，LLM 可能給出不同答案，所以「跑過一次成功」不能當驗收標準。第二是<strong>長尾失敗</strong>：8 成常見問題答得不錯，但剩下 2 成的邊界情況——奇怪的問法、超出範圍的需求、惡意測試——才是真正引發客訴與信任崩潰的地方。第三是<strong>幻覺與退步</strong>：模型會一臉自信地編造不存在的事實（這就是<strong>幻覺，hallucination</strong>，例如診所客服 AI 杜撰一個根本沒有的門診時段）；而當你修改提示詞或更換模型版本時，原本答對的案例可能悄悄變成答錯，這種「改 A 壞 B」叫<strong>退步（regression）</strong>，靠人工肉眼幾乎不可能察覺。</p>
 
-          <h2>建立評測資料集：你的黃金樣本</h2>
-          <p>評測的起點不是工具，而是一份代表性的資料集，業界稱為<strong>黃金樣本（golden set）</strong>。它由一組「問題＋期望答案（或評分標準）」組成，是衡量系統好壞的基準。建立原則有三：一是<strong>涵蓋真實案例</strong>，直接從客服紀錄、搜尋日誌、實際使用情境中蒐集問題，而非自己憑空想像；二是<strong>納入邊界情況</strong>，包含模稜兩可的提問、超出範圍的問題、惡意輸入、以及容易引發幻覺的冷門題目；三是<strong>持續擴充</strong>，每當線上出現一個新的失敗案例，就把它加進黃金樣本，讓資料集隨著時間越來越能反映真實世界。初期不必貪多，50 到 200 筆精心挑選的樣本，往往比上千筆隨機資料更有價值。</p>
+          <div class="callout warn">
+            <span class="callout-k">小心</span>
+            <p><strong>Demo 很驚艷，不等於能上線。</strong>會議室裡跑通的三五個例子，只證明「模型做得到」，不證明「它在真實流量下穩定可靠」。把 Demo 當驗收標準，等於拿一次幸運的試吃決定整季菜單。</p>
+          </div>
 
-          <h2>離線評測：在上線前先量化</h2>
-          <p>有了資料集，就能在不打擾使用者的情況下進行<strong>離線評測</strong>。常見方法依任務性質而定。對於有標準答案的任務，可用<strong>精確比對（exact match）</strong>，例如數字、日期、分類標籤是否完全一致。對於開放式生成，精確比對太嚴格，這時改用<strong>語意相似度</strong>——把模型輸出與標準答案各自轉成向量（embedding），計算餘弦相似度，判斷意思是否接近。對於有明確成敗的任務，則直接計算<strong>任務成功率</strong>。若是分類或資訊抽取這類傳統 NLP 任務，務必使用標準指標：<strong>precision（精確率，預測為正的有多少是對的）、recall（召回率，實際為正的抓到多少）、F1（兩者的調和平均）</strong>。只看整體準確率（accuracy）在資料不平衡時會嚴重誤導，這三個指標能讓你看清模型是「不敢答」還是「亂答」。</p>
+          <h2>整體流程：評測長什麼樣子</h2>
+          <p>在拆解細節之前，先看全貌。一套可信的評測不是一次性動作，而是一條會循環的流水線：先建好一份「考古題＋標準答案」，在上線前自己先打分，挑出最好的版本拿去給少數真實使用者試，最後把每次改動都自動重考一遍、擋下退步。下面四步就是這條流水線的骨架。</p>
+          <div class="flow">
+            <div class="flow-step"><div class="flow-n">01</div><h4>建資料集</h4><p>蒐集真實問題與期望答案，整理成「黃金樣本」考古題庫。</p></div>
+            <div class="flow-step"><div class="flow-n">02</div><h4>離線評測</h4><p>不打擾使用者，自己先用考古題替模型打分、量化好壞。</p></div>
+            <div class="flow-step"><div class="flow-n">03</div><h4>上線 A/B</h4><p>把新版交給一小部分真實使用者，比對舊版的業務成效。</p></div>
+            <div class="flow-step"><div class="flow-n">04</div><h4>回歸測試</h4><p>之後每次改動都自動重考一輪，發現退步立刻擋下。</p></div>
+          </div>
 
-          <h2>LLM-as-judge：用模型當評審</h2>
-          <p>許多輸出（例如客服回覆的語氣、摘要的完整度）很難用程式自動判分。近年流行的做法是<strong>LLM-as-judge</strong>，也就是用另一個（通常更強的）模型，依據評分準則去評判輸出品質。它的好處是快速、便宜、可規模化，能在幾分鐘內評完上百筆。但要注意它的<strong>偏誤</strong>：模型評審常偏好較長的答案、偏好排在前面的選項、甚至偏好風格與自己相近的輸出。因此必須做<strong>校準</strong>——先讓人工標註一小批樣本，再檢查 LLM 評審與人工的一致性，調整評分提示詞直到對齊。最務實的策略是<strong>人機搭配</strong>：用 LLM-as-judge 做大量初篩，再由人工抽查爭議或低分案例，兼顧效率與可信度。</p>
+          <h2>第一步・建立評測資料集：你的黃金樣本</h2>
+          <p>評測的起點不是工具，而是一份代表性的資料集，業界稱為<strong>黃金樣本（golden set，可想成「附標準答案的考古題庫」）</strong>。它由一組「問題＋期望答案（或評分標準）」組成，是衡量系統好壞的尺。建立原則有三：一是<strong>涵蓋真實案例</strong>，直接從客服紀錄、LINE 對話、搜尋日誌、實際情境中蒐集問題，而非自己憑空想像（會計事務所就把客戶真正問過的稅務問題收進來）；二是<strong>納入邊界情況</strong>，包含模稜兩可的提問、超出範圍的問題、惡意輸入、以及容易引發幻覺的冷門題目；三是<strong>持續擴充</strong>，每當線上出現一個新的失敗案例，就把它加進黃金樣本，讓題庫隨時間越來越貼近真實世界。初期不必貪多，50 到 200 筆精心挑選的樣本，往往比上千筆隨機資料更有價值。</p>
 
-          <h2>線上評測：讓真實使用者告訴你答案</h2>
-          <p>離線分數再漂亮，最終仍要看真實世界的表現。<strong>線上評測</strong>有幾種互補手段。<strong>A/B 測試</strong>把使用者隨機分成兩組，分別接觸新舊版本，比較關鍵指標差異，這是因果關係最可靠的證據。<strong>影子流量（shadow traffic）</strong>則讓新版本在背景跟著處理真實請求、但不回傳給使用者，藉此在零風險下觀察新版會如何反應。同時別忘了蒐集<strong>使用者回饋</strong>（按讚／倒讚、是否轉真人客服）與<strong>真實 KPI</strong>——例如客服的<strong>解決率</strong>、電商的<strong>轉換率</strong>、整體<strong>滿意度</strong>。這些業務指標才是專案存在的理由，離線指標只是它們的代理。</p>
+          <div class="callout">
+            <span class="callout-k">重點</span>
+            <p>黃金樣本是整套評測的地基。<strong>題庫爛，後面所有分數都是假的。</strong>寧可只有 80 筆但每筆都來自真實場景，也不要 1000 筆閉門造車的題目。</p>
+          </div>
 
-          <h2>回歸測試與 CI：把評測變成自動防線</h2>
-          <p>評測若只在上線前做一次，價值會迅速折舊。正確的做法是把它接進<strong>持續整合（CI）</strong>流程：每次修改提示詞、更換模型、調整檢索設定，系統就自動針對黃金樣本跑一輪評測，並與前一版的分數做<strong>版本比較</strong>。一旦發現某些案例由對轉錯，也就是出現<strong>退步（regression）</strong>，就自動擋下這次變更，避免帶病上線。這等同於軟體工程裡的<strong>回歸測試</strong>，只是對象換成了 LLM。對中小企業而言，哪怕只是一支跑過 50 筆樣本、印出通過率與失敗清單的腳本，都能擋掉絕大多數「自以為改好、其實改壞」的意外。</p>
+          <h2>第二步・離線評測：在上線前先量化</h2>
+          <p>有了題庫，就能在不打擾使用者的情況下進行<strong>離線評測</strong>（在自己的環境裡先替模型打分）。方法依任務性質而定。對於有標準答案的任務，可用<strong>精確比對（exact match）</strong>，例如金額、日期、分類標籤是否一字不差。對於開放式生成（像客服回覆、摘要），精確比對太嚴格，這時改用<strong>語意相似度</strong>——把模型輸出與標準答案各自轉成一串數字（向量／embedding），計算兩者方向有多接近，藉此判斷「意思像不像」，而非「字句一不一樣」。若是分類或資訊抽取這類任務，務必使用三個標準指標：<strong>precision（精確率，模型說「是」的裡面有多少真的對）、recall（召回率，所有真正該抓的裡面抓到多少）、F1（前兩者的平衡分數）</strong>。只看整體準確率在資料不平衡時會嚴重誤導；這三個指標能讓你看清模型究竟是「太保守不敢答」還是「太衝動亂答」。</p>
 
-          <h2>RAG 與 Agent 的專屬評測</h2>
-          <p>若你的系統是檢索增強生成（RAG）或會呼叫工具的 Agent，光評測最終答案並不夠，必須拆解每個環節。RAG 要看<strong>檢索命中率（retrieval hit rate）</strong>——正確的資料段落有沒有被找出來，以及<strong>引用正確性</strong>——模型的回答是否真的有所引用的來源支撐，而非自行腦補。Agent 則要評估<strong>工具呼叫正確率</strong>（有沒有在對的時機、用對的參數呼叫對的工具）與<strong>端到端任務完成率</strong>（多步驟流程整體是否達成目標）。分環節評測的好處是能快速定位問題：當答案出錯，你能立刻判斷是「沒檢索到」「檢索到卻沒用」還是「工具用錯」，而不是面對一個黑盒子束手無策。</p>
+          <h2>第三步・各種評測方法，一張表看懂</h2>
+          <p>方法很多，但沒有哪一種包山包海。最務實的做法是依照「你想測什麼」去組合。下表把主要方法的用途與優缺點攤開對照：</p>
+          <div class="viz">
+            <div class="viz-title">主要評測方法對照</div>
+            <div class="viz-scroll">
+              <table>
+                <thead><tr><th>方法</th><th>測什麼</th><th>優點</th><th>缺點</th></tr></thead>
+                <tbody>
+                  <tr><td data-label="方法">精確比對</td><td data-label="測什麼">金額、日期、分類等有標準答案的輸出</td><td data-label="優點">快、便宜、零爭議</td><td data-label="缺點">只適合「對／錯」分明的題目</td></tr>
+                  <tr><td data-label="方法">語意相似度</td><td data-label="測什麼">開放式回覆意思對不對</td><td data-label="優點">能容忍不同字句</td><td data-label="缺點">分數抽象、需設門檻</td></tr>
+                  <tr><td data-label="方法">LLM-as-judge</td><td data-label="測什麼">語氣、完整度、是否切題</td><td data-label="優點">快又便宜、可大量自動評</td><td data-label="缺點">有偏誤，需人工校準</td></tr>
+                  <tr><td data-label="方法">人工標註</td><td data-label="測什麼">最終仲裁、爭議案例</td><td data-label="優點">最可信</td><td data-label="缺點">慢、貴、難規模化</td></tr>
+                  <tr><td data-label="方法">A/B 測試</td><td data-label="測什麼">真實業務成效（轉換、解決率）</td><td data-label="優點">因果證據最強</td><td data-label="缺點">要有足夠流量與時間</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="viz-caption">沒有單一方法全包；實務上用便宜的方法做大量初篩，再用貴的方法做關鍵抽查。</div>
+          </div>
 
-          <h2>結語：給中小企業的最小可行評測流程</h2>
-          <p>你不需要昂貴的平台才能開始。最小可行流程只有四步：第一，蒐集 50 到 100 筆涵蓋真實與邊界情況的黃金樣本；第二，寫一支簡單腳本，混用精確比對、語意相似度與 LLM-as-judge 自動評分；第三，把這支腳本設定成每次改動就跑，擋住退步；第四，上線後持續蒐集失敗案例回補資料集，並追蹤一兩個真實業務 KPI。評測的本質不是追求完美分數，而是讓每一次決策——要不要上線、要不要換模型、改動到底是進步還是退步——都有客觀數據可依。當「能不能上線」不再靠感覺，而是靠可重複的數字，你的 AI 專案才算真正站穩了腳步。</p>
+          <h2>第四步・LLM-as-judge：用模型當評審</h2>
+          <p>許多輸出（客服回覆的語氣、摘要的完整度）很難用程式自動判分。近年流行的做法是<strong>LLM-as-judge</strong>，白話說就是<strong>請另一個（通常更強的）AI 來當改考卷的評審</strong>，依評分準則替輸出打分。好處是快速、便宜、可規模化，幾分鐘能評完上百筆。但要注意它的<strong>偏誤</strong>：AI 評審常偏好較長的答案、偏好排在前面的選項、甚至偏好風格與自己相近的輸出。因此必須<strong>校準</strong>——先讓人工評一小批樣本，再檢查 AI 評審與人工的一致程度，反覆調整評分指令直到對齊。最務實的策略是<strong>人機搭配</strong>：用 AI 評審做大量初篩，再由人工抽查爭議或低分案例，兼顧效率與可信度。下圖比較不同方法能涵蓋多少比例的題目（覆蓋率）：</p>
+          <div class="viz">
+            <div class="viz-title">不同方法的題目覆蓋率與相對成本</div>
+            <div class="viz-frame">
+              <div class="bars">
+                <div class="bar-row"><span class="bar-label">LLM-as-judge（低成本）</span><div class="bar-track"><div class="bar-fill" style="width:95%"></div></div><span class="bar-val">~95%</span></div>
+                <div class="bar-row"><span class="bar-label">語意相似度（低成本）</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><span class="bar-val">~80%</span></div>
+                <div class="bar-row"><span class="bar-label">精確比對（極低成本）</span><div class="bar-track"><div class="bar-fill alt" style="width:40%"></div></div><span class="bar-val">~40%</span></div>
+                <div class="bar-row"><span class="bar-label">純人工標註（高成本）</span><div class="bar-track"><div class="bar-fill muted" style="width:20%"></div></div><span class="bar-val">~20%</span></div>
+              </div>
+            </div>
+            <div class="viz-caption">數字為示意：自動方法（紫）能覆蓋大量題目又便宜；人工（灰）最可信但慢又貴，所以只留給關鍵抽查。聰明的組合是「自動評全部、人工抽查爭議」。</div>
+          </div>
+
+          <h2>第五步・線上評測：讓真實使用者告訴你答案</h2>
+          <p>離線分數再漂亮，最終仍要看真實世界的表現。<strong>線上評測</strong>有幾種互補手段。<strong>A/B 測試</strong>是把使用者隨機分成兩組，一組用舊版、一組用新版，再比較關鍵指標誰高——就像同一道菜出兩種配方給不同桌客人試吃、看哪桌回購率高，這是判斷「新版是否真的更好」最可靠的因果證據。<strong>影子流量（shadow traffic）</strong>則讓新版在背景偷偷跟著處理真實請求、但不回傳給使用者，藉此在零風險下觀察新版會怎麼反應。同時別忘了蒐集<strong>使用者回饋</strong>（按讚／倒讚、是否轉真人客服）與<strong>真實業務 KPI</strong>——客服的<strong>解決率</strong>、電商的<strong>轉換率</strong>、整體<strong>滿意度</strong>。這些業務指標才是專案存在的理由，離線分數只是它們的替身。</p>
+
+          <h2>第六步・回歸測試與 CI：把評測變成自動防線</h2>
+          <p>評測若只在上線前做一次，價值會迅速折舊。正確做法是把它接進<strong>持續整合（CI，每次改動就自動跑一輪檢查的機制）</strong>：每次修改提示詞、更換模型、調整檢索設定，系統就自動拿黃金樣本重考一遍，並和前一版的分數做<strong>版本比較</strong>。一旦發現某些案例由對轉錯，也就是出現<strong>退步</strong>，就自動擋下這次變更，不讓它帶病上線。這等同於軟體工程裡的<strong>回歸測試</strong>（每次改動後重跑舊測試，確認沒把原本好的東西改壞），只是對象換成了 LLM。下圖示意一次「自以為改好、其實改壞」的變更，如何被回歸測試擋在門外：</p>
+          <div class="viz">
+            <div class="viz-title">回歸測試如何擋下退步（黃金樣本 100 題的通過數）</div>
+            <div class="viz-frame">
+              <div class="cols">
+                <div class="col"><span class="col-val">92</span><div class="col-bar" style="height:92%"></div><span class="col-label">改動前（基準）</span></div>
+                <div class="col"><span class="col-val">85</span><div class="col-bar muted" style="height:85%"></div><span class="col-label">改動後（被擋下）</span></div>
+                <div class="col"><span class="col-val">92</span><div class="col-bar alt" style="height:92%"></div><span class="col-label">擋下後維持</span></div>
+              </div>
+              <div class="legend">
+                <span><i class="s1"></i>基準版本</span>
+                <span><i class="s2"></i>守住的線上版本</span>
+              </div>
+            </div>
+            <div class="viz-caption">改動把通過數從 92 拉低到 85，系統比對發現 <strong>9 題由對轉錯</strong>，自動擋下這次變更，線上維持在 92 的可信版本。沒有這道防線，這 9 題的退步會直接送到客戶面前。對中小企業而言，哪怕只是一支跑過 50 題、印出通過率與失敗清單的小腳本，就能擋掉絕大多數這類意外。</div>
+          </div>
+
+          <h2>第七步・RAG 與 Agent 的專屬評測</h2>
+          <p>若你的系統是 <strong>RAG（檢索增強生成，讓 AI 先去查過你自己的資料庫或文件，再根據查到的內容回答，而不是憑記憶亂講）</strong>，或是會自動呼叫工具的 <strong>Agent（能自己分步驟、調用外部工具完成任務的 AI 代理）</strong>，那麼光評測最終答案並不夠，必須拆開每個環節分別檢查。RAG 要看<strong>檢索命中率</strong>——正確的資料段落到底有沒有被找出來，以及<strong>引用正確性</strong>——回答是否真的有所引用的來源撐腰，而非自行腦補。Agent 則要評估<strong>工具呼叫正確率</strong>（有沒有在對的時機、用對的參數呼叫對的工具）與<strong>端到端任務完成率</strong>（多步驟流程整體有沒有達成目標）。分環節評測的最大好處是能快速定位問題：當答案出錯，你能立刻判斷是「沒檢索到」「檢索到卻沒用」還是「工具用錯」，而不是面對一個黑盒子束手無策。</p>
+
+          <h2>常見誤區</h2>
+          <div class="callout warn">
+            <span class="callout-k">三個最常踩的坑</span>
+            <p><strong>① 把 Demo 當驗收</strong>——用幾個順利的例子拍板，忽略長尾與非決定性。<br>
+            <strong>② 只做一次評測</strong>——上線後就不再回考，模型隨改動悄悄退步也沒人發現。<br>
+            <strong>③ 只追離線分數</strong>——指標漂亮卻沒連到轉換率、解決率等真實業務 KPI，等於考高分卻沒幫到生意。</p>
+          </div>
+
+          <h2>給老闆的最小可行評測流程</h2>
+          <p>你不需要昂貴的平台才能開始。最小可行流程只有四步：第一，蒐集 50 到 100 筆涵蓋真實與邊界情況的黃金樣本；第二，寫一支簡單腳本，混用精確比對、語意相似度與 LLM-as-judge 自動評分；第三，把這支腳本設定成「每次改動就自動跑」，擋住退步；第四，上線後持續把新的失敗案例回補進題庫，並追蹤一兩個真實業務 KPI。</p>
+          <div class="callout good">
+            <span class="callout-k">建議</span>
+            <p>評測的本質不是追求滿分，而是讓每一次決策——<strong>要不要上線、要不要換模型、這次改動到底是進步還是退步</strong>——都有客觀數字可依。當「能不能上線」不再靠感覺，而是靠可重複的數據，你的 AI 專案才算真正站穩腳步。一句話給老闆：<strong>沒有評測的 AI 上線，等於沒試吃就出菜——偶爾驚艷，遲早翻車。</strong></p>
+          </div>
 
             <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
           </div>

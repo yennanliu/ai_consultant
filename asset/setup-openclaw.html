@@ -44,7 +44,7 @@
     <main>
       <section class="hero b-bottom">
         <div class="wrap">
-          <span class="mono-label">// HANDS-ON</span>
+          <span class="mono-label">// HANDS-ON · 閱讀約 13 分鐘</span>
           <h1>動手實作：從零架設 OpenClaw 開源 Agent 環境</h1>
           <div class="text-xs" style="color: var(--text-dim);">2026-06-24</div>
         </div>
@@ -53,20 +53,45 @@
       <section>
         <div class="wrap">
           <div style="max-width: 800px;">
-          <p>想要在自己的機器或公司伺服器上跑一個能自主執行任務的 AI Agent，但又不想把資料送到外部 SaaS？開源 Agent 框架正是答案。本文以「OpenClaw」這個開源 Agent harness 為範例，帶你從零走過一次完整的架設流程。請注意：以下指令與設定皆為「示意性質」，用來說明大多數開源 Agent 框架共通的設定模式，實際的套件名稱、參數與版本請以你所選工具的官方文件為準。</p>
+          <p>「我想要一個能自己讀檔、查資料、執行任務的 AI 幫手，但客戶名單、報價單、財務數字這些東西，我實在不放心丟到外面的雲端服務。」如果你也有這個念頭，那麼<strong>開源 Agent（自主代理）框架</strong>就是為你準備的答案。所謂 Agent，指的不是只會聊天的機器人，而是能「自己規劃步驟、動手呼叫工具、看完結果再決定下一步」的 AI；而「開源」意味著程式碼公開、可以裝在自己的電腦或公司伺服器上，資料不必離開你的機房。</p>
+          <p>本文以「OpenClaw」這個開源 Agent harness（harness 即「執行外殼」，是負責驅動 AI 跑任務的那層框架）為範例，帶你從零走過一次完整的架設流程：從備妥環境，到第一次真正跑出一份報表。這篇是動手實作型的文章，但即使你不是工程師，讀完也能清楚知道<strong>這件事需要哪些東西、卡點在哪、安全該怎麼把關</strong>，足以和你的技術夥伴或外部顧問對話、甚至自己評估該不該自架。</p>
+          <p><strong>重要前提：</strong>以下所有指令與設定檔都是「示意性質（示意）」，用來說明大多數開源 Agent 框架<em>共通的設定模式</em>，並非任何特定產品的權威語法。實際的套件名稱、參數、版本與 API 名稱，請一律以你所選工具的官方文件為準——本文刻意不杜撰精確的版本號或 API 名稱，以免誤導。</p>
+
+          <div class="viz">
+            <div class="viz-title">自架一套開源 Agent 環境，你會碰到的幾件事</div>
+            <div class="kpis">
+              <div class="kpi"><div class="kpi-num">7</div><div class="kpi-lbl">核心步驟（本文逐一拆解）</div></div>
+              <div class="kpi"><div class="kpi-num">0 元</div><div class="kpi-lbl">本地模型的每次呼叫費用</div></div>
+              <div class="kpi"><div class="kpi-num">100%</div><div class="kpi-lbl">資料可留在自家機房</div></div>
+              <div class="kpi"><div class="kpi-num">半天～數天</div><div class="kpi-lbl">第一次跑通的合理時程</div></div>
+            </div>
+            <div class="viz-caption">數字為一般情境下的概略參考。「跑通」指的是能成功執行一個簡單任務，不含正式上線所需的調校與評測。</div>
+          </div>
+
+          <h2>整體流程：七個步驟一次看懂</h2>
+          <p>在鑽進指令細節之前，先把全貌看清楚。架設一套開源 Agent 環境，本質上就是下面這條流水線，<strong>每一步都建立在上一步之上</strong>——尤其是「沙箱」這一關，千萬別為了趕快看到成果而跳過。</p>
+          <div class="flow">
+            <div class="flow-step"><div class="flow-n">01</div><h4>前置需求</h4><p>備妥作業系統、執行環境、容器與模型存取方式。</p></div>
+            <div class="flow-step"><div class="flow-n">02</div><h4>安裝與初始化</h4><p>取得原始碼、裝相依套件、產生設定檔。</p></div>
+            <div class="flow-step"><div class="flow-n">03</div><h4>設定模型後端</h4><p>決定 AI 的「大腦」要用本地模型還是雲端 API。</p></div>
+            <div class="flow-step"><div class="flow-n">04</div><h4>串接工具</h4><p>讓 Agent 能讀寫檔案、查資料，並設好權限白名單。</p></div>
+            <div class="flow-step"><div class="flow-n">05</div><h4>建立沙箱</h4><p>用容器把它關起來，限制資源、網路與可存取目錄。</p></div>
+            <div class="flow-step"><div class="flow-n">06</div><h4>第一次執行</h4><p>用簡單、低風險的任務測試整條鏈路是否正常。</p></div>
+            <div class="flow-step"><div class="flow-n">07</div><h4>可觀測性</h4><p>加上記錄與評測，再逐步接上正式業務系統。</p></div>
+          </div>
 
           <h2>一、前置需求</h2>
-          <p>在動手之前，先把基礎環境準備好。多數開源 Agent harness 的需求大同小異：</p>
+          <p>在動手之前，先把基礎環境準備好。這就像開餐廳前要先確認水電、瓦斯、冰箱都到位——多數開源 Agent harness 的需求大同小異：</p>
           <ul>
-            <li><strong>作業系統：</strong>Linux（Ubuntu 22.04 以上最常見）或 macOS 皆可。若要部署到正式環境，建議使用 Linux 伺服器。</li>
-            <li><strong>執行環境：</strong>視框架而定，通常需要 Python 3.10 以上，或 Node.js 20 以上。有些框架兩者都會用到。</li>
-            <li><strong>容器：</strong>強烈建議安裝 Docker（或 Podman），後續沙箱隔離會用到。</li>
-            <li><strong>Git：</strong>用來取得原始碼。</li>
-            <li><strong>模型存取：</strong>這是關鍵。你可以選擇「自架開源模型」（例如用 Ollama 或 vLLM 在本地跑），或「使用雲端 API 金鑰」（例如向某家模型供應商申請）。先決定好這一點，後面設定模型後端時會用到。</li>
+            <li><strong>作業系統：</strong>Linux（Ubuntu 22.04 以上最常見）或 macOS 皆可。若要部署到正式環境（也就是真正天天運轉、給同事使用的伺服器），建議使用 Linux 伺服器，穩定且資源好掌控。</li>
+            <li><strong>執行環境：</strong>視框架而定，通常需要 Python 3.10 以上，或 Node.js 20 以上（這兩者是跑這類程式的「引擎」）。有些框架兩者都會用到。</li>
+            <li><strong>容器（Container）：</strong>強烈建議安裝 Docker（或 Podman）。容器可以想成「裝在透明盒子裡的迷你電腦」，把程式和它需要的東西打包隔離，後續的沙箱安全會用到。</li>
+            <li><strong>Git：</strong>取得原始碼用的版本控制工具，相當於「把官方專案下載下來」的標準方式。</li>
+            <li><strong>模型存取：</strong>這是最關鍵的一項。你要先決定 AI 的「大腦」從哪來——「自架開源模型」（例如用 Ollama 或 vLLM 這類工具在自己機器上跑模型），或「使用雲端 API 金鑰」（向模型供應商申請一把鑰匙，按用量付費）。這個選擇直接牽動成本、隱私與效能，下一節會專門比較。</li>
           </ul>
 
           <h2>二、安裝與初始化</h2>
-          <p>取得原始碼、安裝相依套件、建立設定檔，是每個框架共通的三步驟。以下為示意流程：</p>
+          <p>取得原始碼、安裝相依套件、建立設定檔，是每個框架共通的三步驟。打個比方：相依套件就像食譜需要的「所有食材」，設定檔則是寫明「火候與份量」的那張紙。以下為示意流程：</p>
           <pre><code># 範例示意，實際指令依官方文件為準
 git clone https://github.com/example/openclaw.git
 cd openclaw
@@ -78,20 +103,48 @@ pip install -r requirements.txt
 
 # 初始化設定檔
 openclaw init</code></pre>
-          <p><code>init</code> 這類指令通常會在專案目錄產生一個設定檔（例如 <code>config.yaml</code> 或 <code>.env</code>）。建議用 <code>venv</code>、<code>conda</code> 或容器隔離相依套件，避免污染系統環境，也方便日後重現。</p>
+          <p><code>init</code> 這類指令通常會在專案目錄產生一個設定檔（例如 <code>config.yaml</code> 或 <code>.env</code>，就是那張寫滿設定的「設定表」）。建議用 <code>venv</code>、<code>conda</code> 或容器把相依套件隔離開來，避免污染系統環境，也方便日後在另一台機器上原樣重現——這對日後交接或擴充非常重要。</p>
+
+          <div class="callout warn">
+            <span class="callout-k">小心</span>
+            <p>絕對<strong>不要</strong>直接 <code>sudo pip install</code> 把套件裝進系統 Python。一旦版本互相打架，輕則這個專案跑不起來，重則影響系統其他程式。永遠在隔離環境裡安裝——這是新手最常踩、也最容易避開的坑。</p>
+          </div>
 
           <h2>三、設定模型後端</h2>
-          <p>Agent 的「大腦」是背後的語言模型。在設定檔裡，你需要指定模型端點與金鑰。一個典型的設定區塊看起來像這樣：</p>
+          <p>Agent 的「大腦」就是背後那顆語言模型。在設定檔裡，你需要指定模型的端點（endpoint，也就是「去哪裡找這顆大腦」的網址）與金鑰（API key，存取用的鑰匙）。一個典型的設定區塊看起來像這樣：</p>
           <pre><code># config.yaml（示意）
 model:
   provider: "openai_compatible"   # 多數框架支援相容介面
   endpoint: "https://api.example.com/v1"
   api_key: "${MODEL_API_KEY}"     # 從環境變數讀取，勿寫死
   model_name: "your-model-name"</code></pre>
-          <p><strong>本地 vs 雲端的取捨：</strong>若用本地自架模型（例如把 <code>endpoint</code> 指向 <code>http://localhost:11434</code> 之類的本地服務），優點是資料完全不出機房、無 API 費用，缺點是需要 GPU 與維運成本，且模型能力可能不及頂尖雲端模型。若用雲端 API，能立即取得最強模型、免維運，但要承擔費用與資料外傳的合規考量。金鑰務必透過環境變數或祕密管理工具注入，切勿提交進版本庫。</p>
+          <p><strong>本地 vs 雲端，是整個專案最重要的一個岔路口。</strong>若用本地自架模型（例如把 <code>endpoint</code> 指向 <code>http://localhost:11434</code> 之類的本地服務），優點是資料完全不出機房、沒有每次呼叫的 API 費用；缺點是需要一張像樣的 GPU（顯示卡，跑模型的算力來源）與維運心力，而且本地模型的聰明程度，現階段通常還追不上頂尖的雲端模型。反過來說，雲端 API 能讓你立刻用上最強的模型、不必自己養機器，但要承擔按量計費的成本，以及「資料送到外部」的合規考量。下表幫你一眼看懂取捨：</p>
+
+          <div class="viz">
+            <div class="viz-title">本地自架模型 vs 雲端 API：怎麼選？</div>
+            <div class="viz-scroll">
+              <table>
+                <thead><tr><th>比較面向</th><th>本地自架（如 Ollama / vLLM）</th><th>雲端 API</th></tr></thead>
+                <tbody>
+                  <tr><td data-label="比較面向">資料隱私</td><td data-label="本地自架"><span class="yes">✓</span> 完全不出機房</td><td data-label="雲端 API"><span class="no">✗</span> 須評估資料外傳合規</td></tr>
+                  <tr><td data-label="比較面向">每次呼叫費用</td><td data-label="本地自架"><span class="yes">✓</span> 幾乎為零</td><td data-label="雲端 API">按用量計費</td></tr>
+                  <tr><td data-label="比較面向">起步門檻</td><td data-label="本地自架"><span class="no">✗</span> 需 GPU、安裝設定較繁</td><td data-label="雲端 API"><span class="yes">✓</span> 申請金鑰即用</td></tr>
+                  <tr><td data-label="比較面向">模型能力</td><td data-label="本地自架">夠用，但通常略遜頂尖</td><td data-label="雲端 API"><span class="yes">✓</span> 隨時用到最新最強</td></tr>
+                  <tr><td data-label="比較面向">維運負擔</td><td data-label="本地自架"><span class="no">✗</span> 自己顧硬體與更新</td><td data-label="雲端 API"><span class="yes">✓</span> 供應商代管</td></tr>
+                  <tr><td data-label="比較面向">適合誰</td><td data-label="本地自架">資料極敏感、用量大、有 IT 人手</td><td data-label="雲端 API">想快速驗證、用量不固定、無專責維運</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="viz-caption">沒有絕對的對錯，只有適不適合。多數中小企業的務實做法是「先用雲端 API 快速跑通、驗證價值，再依資料敏感度與用量決定是否轉本地」。</div>
+          </div>
+
+          <div class="callout warn">
+            <span class="callout-k">小心</span>
+            <p>金鑰（API key）等於你帳戶的鑰匙，<strong>務必透過環境變數或祕密管理工具注入，切勿寫死在程式或提交進版本庫</strong>。一旦金鑰隨程式碼上了公開的 Git，可能在數分鐘內被掃描程式撿走盜用，產生鉅額帳單。這是真實發生過無數次的慘案。</p>
+          </div>
 
           <h2>四、串接工具與 MCP</h2>
-          <p>Agent 真正的價值來自「能動手做事」——讀寫檔案、呼叫 API、執行指令。框架通常透過工具（tools）或 MCP（Model Context Protocol）伺服器來提供這些能力。設定時的重點是「明確定義可用工具」與「權限白名單」：</p>
+          <p>Agent 真正的價值，來自「能動手做事」——讀寫檔案、呼叫 API、執行指令。光會聊天的不算 Agent，能照著結果決定下一步動作的才算。框架通常透過工具（tools，給 AI 的一組「可用動作」）或 MCP（Model Context Protocol，模型上下文協定，一種讓 AI 與外部系統溝通的標準介面）伺服器來提供這些能力。設定時的兩個重點是「明確定義可用工具」與「權限白名單」：</p>
           <pre><code># config.yaml（示意）
 tools:
   - name: "file_read"
@@ -102,7 +155,12 @@ tools:
 mcp_servers:
   - name: "internal_db"
     command: "node mcp-db-server.js"</code></pre>
-          <p>原則是「最小權限」：只開放任務必要的檔案路徑與網域。例如一個整理報表的 Agent，沒有理由讓它能存取整個檔案系統或任意外連網路。把可存取範圍寫死在白名單裡，是控制風險最直接的手段。</p>
+          <p>原則是「最小權限」：只開放任務必要的檔案路徑與網域，其餘一律不給。例如一個整理報表的 Agent，沒有任何理由讓它能讀整台電腦的檔案、或任意連到外部網站。把可存取範圍明確寫死在白名單裡，是控制風險最直接、也最有效的手段。</p>
+
+          <div class="callout good">
+            <span class="callout-k">建議</span>
+            <p>把權限設計想成「<strong>給工讀生的鑰匙圈</strong>」：你不會把整棟大樓的萬能鑰匙交給臨時人員，只會給他當天用得到的那幾把。Agent 也一樣——先全部關起來，再依任務需要一項一項開。寧可不夠用時再補，也不要一開始就開太大。</p>
+          </div>
 
           <h2>五、沙箱與安全邊界</h2>
           <p>即使設了工具白名單，仍建議讓整個 Agent 在受限環境中執行。最常見的做法是用容器把它包起來：</p>
@@ -112,21 +170,71 @@ docker run --rm \
   --network none \                     # 預設不給網路，需要時再開
   -v $(pwd)/workspace:/workspace:rw \  # 只掛載工作目錄
   openclaw:latest run --task-file task.md</code></pre>
-          <p>透過容器，你可以限制記憶體與 CPU、預設關閉網路、只掛載必要的目錄。這樣即使 Agent 因為提示詞注入或模型誤判而「失控」，破壞範圍也被限制在沙箱之內。對處理敏感資料的場景，這一層隔離不是可選項，而是必需品。</p>
+          <p>透過容器，你可以限制記憶體與 CPU（避免它吃光機器資源）、預設關閉網路、只掛載必要的目錄。這樣一來，即使 Agent 因為「提示詞注入」（prompt injection，指有心人士在資料裡藏入惡意指令，誘騙 AI 做不該做的事）或模型一時誤判而「失控」，破壞範圍也被牢牢限制在沙箱之內，動不了沙箱外的任何東西。對任何會碰到客戶資料、財務或營業機密的場景，這一層隔離不是「加分項」，而是不可省略的必需品。</p>
+
+          <div class="callout warn">
+            <span class="callout-k">小心</span>
+            <p>千萬別為了「先看到成果」就跳過沙箱、直接在自己的工作電腦上裸跑 Agent，還順手把整個家目錄掛給它。一旦遇到提示詞注入或模型誤刪檔案，受害的就是你的真實資料。<strong>沙箱要在第一次執行之前就建好，不是等出事再補。</strong></p>
+          </div>
 
           <h2>六、第一次執行一個任務</h2>
           <p>環境就緒後，就可以下第一個指令了。多數框架的執行入口長得像這樣：</p>
           <pre><code>openclaw run --task "讀取 /workspace/data 下的 CSV，整理出每月銷售總額，輸出成 summary.md"</code></pre>
-          <p>送出後，觀察 Agent 的執行迴圈（agent loop）：它會先理解任務、規劃步驟、呼叫工具、檢視結果，再決定下一步，直到完成或卡住。這時請打開終端機輸出或 log 檔，逐步閱讀它的 trace——每一次的「思考、行動、觀察」。第一次跑時，建議用簡單、低風險的任務測試，確認工具呼叫、權限與輸出都符合預期，再逐步交付更複雜的工作。</p>
+          <p>送出後，觀察 Agent 的執行迴圈（agent loop，代理迴圈）：它會先理解任務、規劃步驟、呼叫工具、檢視結果，再決定下一步，如此循環，直到完成或卡住。這時請打開終端機輸出或 log（執行記錄檔），逐步閱讀它的 trace（執行軌跡）——也就是每一輪的「思考、行動、觀察」。看著它一步步推進，你會很快建立起對它能力與邊界的直覺。</p>
+
+          <div class="callout good">
+            <span class="callout-k">建議</span>
+            <p>第一次跑，請刻意挑一個<strong>簡單、可逆、低風險</strong>的任務（例如「讀一份 CSV、算個總和、輸出成一個新檔」），先確認模型連得上、工具呼叫成功、權限與輸出都如預期。整條鏈路驗證過一次，再逐步把更複雜、更有價值的工作交給它。穩紮穩打，遠勝一步到位。</p>
+          </div>
 
           <h2>七、可觀測性與下一步</h2>
           <p>能跑通只是起點。要把 Agent 用在實際業務上，可觀測性與評測不可或缺：</p>
           <ul>
-            <li><strong>記錄（Logging）：</strong>完整保存每次任務的輸入、推理過程、工具呼叫與輸出。這既是除錯依據，也是日後稽核與責任歸屬的基礎。</li>
-            <li><strong>評測（Evaluation）：</strong>建立一組代表性任務作為「測試集」，每次調整提示詞或更換模型後跑一遍，量化成功率與品質，避免改了一處卻悄悄退步。</li>
-            <li><strong>接到內部系統：</strong>當你對穩定度有信心後，再透過 API、訊息佇列或排程，把 Agent 接上公司的資料庫、工單系統或通訊軟體，讓它真正融入工作流。</li>
+            <li><strong>記錄（Logging）：</strong>完整保存每次任務的輸入、推理過程、工具呼叫與輸出。這既是出錯時的除錯依據，也是日後稽核、釐清責任歸屬的基礎——對受監理的產業（如診所、會計事務所）尤其重要。</li>
+            <li><strong>評測（Evaluation）：</strong>建立一組有代表性的任務當作「測試集」，每次調整提示詞或更換模型後就跑一遍，量化成功率與品質。沒有評測，你永遠不會知道「改了一處」是不是讓別處悄悄退步了。</li>
+            <li><strong>接到內部系統：</strong>等你對穩定度有信心後，再透過 API、訊息佇列或排程，把 Agent 接上公司的資料庫、工單系統或通訊軟體（如 LINE、Slack），讓它真正融入日常工作流，而不只是個玩具。</li>
           </ul>
-          <p>從零架設一個開源 Agent 環境，本質上就是這七個步驟：備妥環境、安裝初始化、設定模型、串接工具、建立沙箱、執行任務、加上可觀測性。不論你最後選用的是 OpenClaw 還是其他框架，這套模式都通用。建議先在本地小規模跑通，把安全邊界與權限白名單設好，再逐步擴大應用範圍——穩紮穩打，才能放心把 Agent 交付到真實業務之中。</p>
+
+          <h2>實務檢查清單：上線前對一遍</h2>
+          <p>真正要把自架 Agent 交付到業務裡，請把下面這張清單從頭核對一次。多數中小企業的踩雷，都是少做了其中一兩項：</p>
+          <div class="viz">
+            <div class="viz-title">自架 Agent 上線前檢查清單</div>
+            <div class="viz-scroll">
+              <table>
+                <thead><tr><th>檢查項目</th><th>為什麼重要</th><th>做了沒</th></tr></thead>
+                <tbody>
+                  <tr><td data-label="檢查項目">金鑰用環境變數注入</td><td data-label="為什麼重要">防止金鑰外洩、帳單暴衝</td><td data-label="做了沒"><span class="yes">✓</span></td></tr>
+                  <tr><td data-label="檢查項目">相依套件隔離安裝</td><td data-label="為什麼重要">避免版本衝突、方便重現</td><td data-label="做了沒"><span class="yes">✓</span></td></tr>
+                  <tr><td data-label="檢查項目">工具權限走白名單</td><td data-label="為什麼重要">最小權限，限制可動範圍</td><td data-label="做了沒"><span class="yes">✓</span></td></tr>
+                  <tr><td data-label="檢查項目">在容器沙箱中執行</td><td data-label="為什麼重要">失控時破壞被關在盒子裡</td><td data-label="做了沒"><span class="yes">✓</span></td></tr>
+                  <tr><td data-label="檢查項目">關閉非必要網路</td><td data-label="為什麼重要">防資料外傳與惡意外連</td><td data-label="做了沒"><span class="yes">✓</span></td></tr>
+                  <tr><td data-label="檢查項目">完整 log 與評測集</td><td data-label="為什麼重要">可除錯、可稽核、不退步</td><td data-label="做了沒"><span class="yes">✓</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="viz-caption">前四項屬於「資安底線」，沒做齊之前，不建議讓 Agent 碰任何真實的客戶或財務資料。</div>
+          </div>
+
+          <h2>常見誤區</h2>
+          <div class="callout warn">
+            <span class="callout-k">小心</span>
+            <p><strong>① 為了快，省略沙箱與權限</strong>——這是最危險的捷徑，等於把鑰匙交給還不熟的新人又不上鎖。<br>
+            <strong>② 一開始就想全自動</strong>——讓 Agent 一次包辦複雜流程，變數太多、難以除錯；先讓它做一小段、人來把關，更穩。<br>
+            <strong>③ 不留 log、沒有評測</strong>——出錯時無從追查，換模型後也不知道是變好還變壞，等於蒙著眼睛開車。</p>
+          </div>
+
+          <h2>給老闆的一句話</h2>
+          <p>從零架設一套開源 Agent 環境，說穿了就是這七個步驟：<strong>備妥環境 → 安裝初始化 → 設定模型 → 串接工具 → 建立沙箱 → 執行任務 → 加上可觀測性</strong>。不論你最後選用的是 OpenClaw 還是其他框架，這套模式都通用。</p>
+          <div class="viz">
+            <div class="ring-row">
+              <div class="ring-pct" style="--p:80"><span class="ring-num">80%</span></div>
+              <div>
+                <p style="margin-top:0;"><strong>自架 Agent 的工夫，八成花在「安全與權限」，而非把它跑起來。</strong></p>
+                <p style="margin-bottom:0; color: var(--text-muted); font-size:14px;">「跑得起來」其實是最容易的一步；真正決定能不能放心用在業務上的，是沙箱、白名單與記錄這些把關工作。把這八成做扎實，剩下的兩成自然水到渠成。</p>
+              </div>
+            </div>
+          </div>
+          <p>對中小企業來說，自架最大的價值在於<strong>資料留在自己手裡</strong>，最大的代價則是<strong>要自己扛起維運與安全</strong>。建議的路線是：先在本地小規模跑通、把安全邊界與權限白名單設好，再逐步擴大應用範圍。如果你想把這套流程套用到自家的具體場景（例如報關、報表彙整、客服分流），卻不確定該選本地還是雲端、安全該做到什麼程度，這正是我們能幫你把關、少走冤枉路的地方——讓你穩紮穩打，放心把 Agent 交付到真實業務之中。</p>
 
             <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
           </div>

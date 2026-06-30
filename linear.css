@@ -515,3 +515,73 @@ tbody td { height: 34px; padding: 8px 12px; border-bottom: 1px solid var(--borde
 tbody tr:nth-child(even) td { background: var(--bg-alt); }
 tbody tr:hover td { background: var(--accent-tint); }
 td.num, th.num { text-align: right; font-family: var(--mono); }
+
+/* =========================================================
+   BLOG VISUALIZATION TOOLKIT
+   Self-contained, theme-aware charts for asset/*.html articles.
+   No external libraries (offline-capable PWA). Inline SVG/CSS only.
+   Bar/column widths & heights are set via inline style on the fill.
+   ========================================================= */
+.viz { margin: var(--space-12) 0; }
+.viz-title { font-family: var(--mono); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-dim); margin-bottom: var(--space-4); display: flex; align-items: center; gap: 8px; }
+.viz-title::before { content: ""; width: 16px; height: 2px; background: var(--accent); border-radius: 2px; flex: none; }
+.viz-caption { font-size: 12.5px; color: var(--text-dim); margin-top: var(--space-3); }
+.viz-frame { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-6); background: var(--bg-alt); }
+
+/* Horizontal bar chart */
+.bars { display: flex; flex-direction: column; gap: 14px; }
+.bar-row { display: grid; grid-template-columns: minmax(84px, 32%) 1fr auto; align-items: center; gap: 12px; }
+.bar-row .bar-label { font-size: 13px; color: var(--text-muted); }
+.bar-track { position: relative; height: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; overflow: hidden; }
+.bar-fill { position: absolute; top: 0; left: 0; bottom: 0; background: var(--grad); border-radius: 999px; min-width: 3px; }
+.bar-fill.alt { background: linear-gradient(120deg, var(--accent-2), var(--accent-2-bright)); }
+.bar-fill.muted { background: var(--border-strong); }
+.bar-val { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap; }
+
+/* Vertical column chart — set each .col-bar height via inline style (e.g. height:72%) */
+.cols { display: flex; align-items: flex-end; gap: 12px; height: 210px; padding-top: var(--space-4); border-bottom: 1px solid var(--border-strong); }
+.col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 8px; height: 100%; }
+.col-bar { width: 100%; max-width: 56px; background: var(--grad); border-radius: 8px 8px 0 0; min-height: 4px; transition: height .3s ease; }
+.col-bar.alt { background: linear-gradient(180deg, var(--accent-2-bright), var(--accent-2)); }
+.col-val { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--text); }
+.col-label { font-size: 12px; color: var(--text-dim); text-align: center; }
+
+/* KPI callouts */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-4); }
+.kpi { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-5); background: var(--bg-alt); }
+.kpi-num { font-size: 32px; font-weight: 700; line-height: 1; background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.kpi-lbl { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
+
+/* Callout / insight box */
+.callout { border: 1px solid var(--border); border-left: 3px solid var(--accent); background: var(--accent-tint); border-radius: var(--radius-md); padding: var(--space-5) var(--space-6); margin: var(--space-8) 0; }
+.callout .callout-k { font-family: var(--mono); font-size: 12px; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 6px; display: block; }
+.callout p { margin: 0; }
+.callout.warn { border-left-color: var(--warning); background: rgba(217,119,6,0.09); }
+.callout.warn .callout-k { color: var(--warning); }
+.callout.good { border-left-color: var(--gain); background: rgba(22,163,74,0.09); }
+.callout.good .callout-k { color: var(--gain); }
+
+/* Numbered flow / steps */
+.flow { display: flex; flex-wrap: wrap; gap: 12px; }
+.flow-step { flex: 1 1 150px; border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-4); background: var(--bg-alt); }
+.flow-step .flow-n { font-family: var(--mono); font-size: 12px; color: var(--accent); }
+.flow-step h4 { margin: 6px 0 4px; font-size: 15px; }
+.flow-step p { margin: 0; font-size: 13px; color: var(--text-dim); }
+
+/* Legend */
+.legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: var(--space-4); font-size: 12px; color: var(--text-muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.legend i.s1 { background: var(--accent-bright); }
+.legend i.s2 { background: var(--accent-2); }
+
+/* Percentage donut (conic-gradient) — set value with style="--p:NN" */
+.ring-pct { --p: 70; --size: 132px; width: var(--size); height: var(--size); flex: none; border-radius: 50%; display: grid; place-items: center; position: relative; background: conic-gradient(var(--accent) calc(var(--p) * 1%), var(--surface) 0); }
+.ring-pct::before { content: ""; position: absolute; inset: 13px; border-radius: 50%; background: var(--bg); }
+.ring-pct .ring-num { position: relative; font-weight: 700; font-size: 26px; color: var(--text); }
+.ring-row { display: flex; align-items: center; gap: var(--space-8); flex-wrap: wrap; }
+
+@media (max-width: 560px) {
+  .bar-row { grid-template-columns: minmax(72px, 40%) 1fr auto; gap: 8px; }
+  .cols { gap: 6px; height: 170px; }
+}

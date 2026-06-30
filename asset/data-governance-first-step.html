@@ -43,7 +43,7 @@
     <main>
       <section class="hero b-bottom">
         <div class="wrap">
-          <span class="mono-label">DATA · 閱讀約 6 分鐘</span>
+          <span class="mono-label">DATA · 閱讀約 11 分鐘</span>
           <h1>別再用 Excel 管資料：<br>中小企業資料治理第一步</h1>
           <div class="text-xs" style="color: var(--text-dim);">2026-05-12</div>
         </div>
@@ -52,28 +52,107 @@
       <section>
         <div class="wrap">
           <div style="max-width: 800px;">
-            <p>AI 的成效，七成取決於資料品質。許多中小企業卡在「資料散落各處、格式不一」，導致 AI 專案還沒開始就難產。本文用最務實的方式，帶你跨出資料治理的第一步——不需要昂貴系統。</p>
+            <p>很多老闆問我們的第一個問題是：「導入 AI 要準備什麼？」答案往往出乎意料——不是先挑工具、也不是先談預算，而是先把<strong>資料</strong>整理好。因為再聰明的 AI，吃進去的若是一團亂的資料，吐出來的也只會是一團亂的答案。這就是業界常說的「Garbage in, garbage out」（餵垃圾進去，產出垃圾）。</p>
+            <p>根據我們陪伴中小企業導入的經驗，一個 AI 專案最後成不成功，<strong>大約七成取決於資料品質，而不是模型本身有多厲害</strong>。偏偏這也是最多中小企業卡關的地方：資料散落在不同部門的 Excel、LINE 對話、Email、甚至紙本單據裡，格式不一、版本混亂，AI 專案還沒真正開始就難產。</p>
+            <p>好消息是：把資料整理到「AI 用得動」的程度，並不需要昂貴的系統，也不需要資訊背景。本文用最務實的方式，帶你跨出資料治理（Data Governance，意思是替公司的資料建立一套「誰負責、放哪裡、怎麼用」的管理規矩）的第一步。</p>
+
+            <div class="viz">
+              <div class="viz-title">為什麼要先談資料？</div>
+              <div class="ring-row">
+                <div class="ring-pct" style="--p:70"><span class="ring-num">70%</span></div>
+                <div>
+                  <p style="margin-top:0;"><strong>AI 專案的成敗，約七成取決於資料品質。</strong></p>
+                  <p style="margin-bottom:0; color: var(--text-muted); font-size:14px;">模型再先進，也比不上一份乾淨、結構清楚、可信任的資料。先把這 70% 顧好，剩下的 30% 才談得上發揮。</p>
+                </div>
+              </div>
+            </div>
 
             <h2>為什麼 Excel 撐不住了</h2>
-            <p>Excel 很好用，但當資料變成決策依據時，它的問題會浮現：版本混亂（report_final_v3.xlsx）、多人編輯衝突、缺乏存取控管、無法追溯誰改了什麼。這些都會讓 AI 學到「髒資料」，產出不可信的結果。</p>
+            <p>先說清楚：Excel 沒有錯，它依然是中小企業最順手的工具。問題出在「<strong>當資料從個人記事本，升級成全公司的決策依據、甚至 AI 的學習教材</strong>」時，Excel 的先天限制就會一個個浮現。</p>
+            <p>想像一家紡織貿易商：報價單放在業務的電腦、客戶名單在會計的另一份檔案、出貨紀錄又是一份。每個人手上都有一份「report_final_v3.xlsx」，卻沒人說得清哪一份才是最新、最正確的。這不是誰偷懶，而是工具走到了天花板。常見的痛點包括：</p>
+            <ul>
+              <li><strong>版本混亂：</strong>final、final2、真的final——同一份資料有好幾個版本，AI 不知道該信哪一個。</li>
+              <li><strong>多人編輯衝突：</strong>兩個人同時改，後存檔的覆蓋掉前一個人的心血。</li>
+              <li><strong>沒有存取控管：</strong>含客戶個資、財務數字的檔案，整個部門都能開、能複製、能外寄。</li>
+              <li><strong>無法追溯：</strong>數字被改了，卻查不出是誰、什麼時候、改了什麼。</li>
+            </ul>
+            <p>這些都會讓 AI 學到所謂的「髒資料」（dirty data，指有錯誤、重複、缺漏或前後矛盾的資料），最後產出你不敢採信的結果。</p>
+
+            <div class="viz">
+              <div class="viz-title">Excel 土法管理 vs 有資料治理</div>
+              <div class="viz-scroll">
+                <table>
+                  <thead><tr><th>維度</th><th>Excel 土法管理</th><th>有資料治理</th></tr></thead>
+                  <tbody>
+                    <tr><td data-label="維度">最新版本</td><td data-label="Excel 土法管理"><span class="no">✗</span> 多份檔案各說各話</td><td data-label="有資料治理"><span class="yes">✓</span> 單一權威版本</td></tr>
+                    <tr><td data-label="維度">存取權限</td><td data-label="Excel 土法管理"><span class="no">✗</span> 人人可開、可外寄</td><td data-label="有資料治理"><span class="yes">✓</span> 依敏感度分層控管</td></tr>
+                    <tr><td data-label="維度">修改紀錄</td><td data-label="Excel 土法管理"><span class="no">✗</span> 查不出誰改了什麼</td><td data-label="有資料治理"><span class="yes">✓</span> 留下可稽核軌跡</td></tr>
+                    <tr><td data-label="維度">備份還原</td><td data-label="Excel 土法管理"><span class="no">✗</span> 檔案毀了就沒了</td><td data-label="有資料治理"><span class="yes">✓</span> 定期備份、可還原</td></tr>
+                    <tr><td data-label="維度">能否餵給 AI</td><td data-label="Excel 土法管理"><span class="no">✗</span> 格式雜亂、結果不可信</td><td data-label="有資料治理"><span class="yes">✓</span> 結構清楚、結果可信</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="viz-caption">差別不在「有沒有用 Excel」，而在「資料背後有沒有一套規矩」。治理做好，Excel 也能是健康的起點。</div>
+            </div>
+
+            <h2>資料治理的第一步：四個動作</h2>
+            <p>聽到「治理」兩個字，很多老闆會以為要導入大系統、花大錢。其實第一步只是把現況理清楚，照著下面四個動作走，多數中小企業一週內就能完成第一輪。</p>
+            <div class="flow">
+              <div class="flow-step"><div class="flow-n">01</div><h4>盤點</h4><p>列出公司現有的資料來源與擁有者，先看清楚自己有什麼。</p></div>
+              <div class="flow-step"><div class="flow-n">02</div><h4>清理</h4><p>只整理「即將被用到」的那一塊，去重複、補缺值、統一格式。</p></div>
+              <div class="flow-step"><div class="flow-n">03</div><h4>分類</h4><p>替每份資料貼上敏感程度標籤，分清楚哪些能公開、哪些要保護。</p></div>
+              <div class="flow-step"><div class="flow-n">04</div><h4>建立規範</h4><p>定下「誰負責、放哪裡、誰能用」的最小規則，讓秩序持續下去。</p></div>
+            </div>
 
             <h2>第一步：盤點你有哪些資料</h2>
-            <p>先別急著買工具。花一天時間，列出公司目前的資料來源：訂單系統、LINE 對話、Email、紙本單據、各部門的 Excel。標註每一份的「擁有者、更新頻率、敏感程度」。這張清單就是治理的起點。</p>
+            <p>先別急著買工具。花一天時間，把公司目前的資料來源全部列出來：訂單系統、LINE 對話、Email、紙本單據、各部門的 Excel。每一份都標註三件事——<strong>擁有者</strong>（誰負責維護）、<strong>更新頻率</strong>（每天、每月還是早就沒人動）、<strong>敏感程度</strong>（含不含個資或財務數字）。</p>
+            <p>這張清單看似簡單，卻往往是老闆第一次「看見」公司的資料全貌。很多餐飲、零售業主做完才驚覺：原來最關鍵的客戶喜好紀錄，只存在某位店長的手機 LINE 裡，他一離職就全沒了。盤點本身，就已經是降低風險。</p>
 
             <h2>第二步：定義單一真實來源（SSOT）</h2>
-            <p>同一筆資料只該有一個權威版本。例如「客戶名單」以 CRM 為準，其他地方都從它同步。確立 SSOT 後，AI 才知道該相信哪份資料。</p>
+            <p>同一筆資料，只該有一個「說了算」的權威版本，這在業界叫做<strong>單一真實來源</strong>（SSOT, Single Source of Truth）。白話說就是：當大家對某個數字有疑問時，都知道要去翻哪一份。</p>
+            <p>舉例來說，「客戶名單」就以 CRM（客戶關係管理系統）為準，其他地方要用就從它同步，而不是各自維護一份。確立 SSOT 之後，不只人不會吵架，AI 也才知道該相信哪一份資料、該從哪裡學。一家貿易商把客戶資料統一到 SSOT 後，光是「報價時拿錯舊價格」這類錯誤就大幅減少。</p>
 
             <h2>第三步：建立最小可行的存取規則</h2>
-            <p>不需要複雜權限系統，先做到三件事：<br/>
-• 敏感資料（個資、財務）限定人員存取<br/>
-• 重要資料定期備份且可還原<br/>
-• 任何自動化流程留下可稽核的操作紀錄</p>
+            <p>你不需要一上來就導入複雜的權限系統。對中小企業而言，先做到下面三件事，就已經勝過九成同業：</p>
+            <ul>
+              <li><strong>敏感資料限定人員存取：</strong>個資、財務、薪資這類資料，只開放給真正需要的人，而不是全公司共用一個資料夾。</li>
+              <li><strong>重要資料定期備份且可還原：</strong>不只是「有備份」，更要確認真的「救得回來」——很多公司是出事那天才發現備份檔早就壞了。</li>
+              <li><strong>自動化流程留下可稽核紀錄：</strong>任何 AI 或程式動過資料，都要留下「誰、何時、做了什麼」的紀錄，事後查得到、說得清。</li>
+            </ul>
 
             <h2>第四步：清理，但只清理會用到的</h2>
-            <p>不要想著一次清完所有歷史資料。聚焦在「即將被 AI 使用」的那一小塊，做欄位標準化、去重複、補關鍵缺值即可。資料治理是持續的過程，不是一次性專案。</p>
+            <p>這是最多人踩雷、也最容易半途而廢的一步。千萬<strong>不要想著一次清完十年的歷史資料</strong>——那是一座永遠搬不完的山，團隊很快就累垮、放棄。</p>
+            <p>正確做法是聚焦在「即將被 AI 使用」的那一小塊，做三件事：欄位標準化（例如電話統一格式、日期統一寫法）、去除重複資料、補上關鍵缺值。資料治理是<strong>持續的過程，不是一次性專案</strong>——清一塊、用一塊、再清下一塊，比一次想做到完美實際得多。</p>
 
-            <h2>好消息：治理可以和導入一起做</h2>
-            <p>在我們的導入流程中，資料盤點與清理本來就是第一階段的一部分。你不需要先把資料整理到完美才能開始——我們會在 POC 過程中，一邊驗證價值、一邊把資料底盤打穩。</p>
+            <div class="viz">
+              <div class="viz-title">第一輪資料治理的時間配置（範例：一週）</div>
+              <div class="viz-frame">
+                <div class="bars">
+                  <div class="bar-row"><span class="bar-label">盤點來源</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="bar-val">~1 天</span></div>
+                  <div class="bar-row"><span class="bar-label">定義 SSOT</span><div class="bar-track"><div class="bar-fill alt" style="width:20%"></div></div><span class="bar-val">~1 天</span></div>
+                  <div class="bar-row"><span class="bar-label">分類與存取規則</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="bar-val">~1 天</span></div>
+                  <div class="bar-row"><span class="bar-label">清理關鍵資料</span><div class="bar-track"><div class="bar-fill alt" style="width:40%"></div></div><span class="bar-val">~2 天</span></div>
+                </div>
+              </div>
+              <div class="viz-caption">數字為一般中小企業的概略區間，實際依資料量而定。重點是：第一輪不必求完美，能跑起來、能持續比較重要。</div>
+            </div>
+
+            <h2>常見的資料地雷</h2>
+            <div class="callout warn">
+              <span class="callout-k">小心這些陷阱</span>
+              <p><strong>① 個資沒分流就餵 AI</strong>——把含身分證號、聯絡方式的原始資料直接丟給外部 AI，可能踩到個資法紅線。<br>
+              <strong>② 一次想清完所有歷史資料</strong>——範圍太大、看不到成果，團隊很快就放棄。<br>
+              <strong>③ 沒有人「擁有」資料</strong>——人人能改、卻沒人負責，最後又退回各做各的混亂。<br>
+              <strong>④ 把備份當成做完了</strong>——沒實際演練還原，等於沒有備份。</p>
+            </div>
+
+            <h2>給老闆的一句話</h2>
+            <p>很多老闆擔心：「是不是要先把資料整理到完美，才能開始導入 AI？」答案是不必。在我們的導入流程中，<strong>資料盤點與清理本來就是第一階段的一部分</strong>，會和 POC（概念驗證，用小範圍、真實數據先驗證 AI 到底有沒有用）同步進行。</p>
+            <div class="callout good">
+              <span class="callout-k">建議</span>
+              <p>不要等資料完美才出發。<strong>先選一塊最關鍵、最常用的資料</strong>，把它整理乾淨、定好 SSOT，再讓 AI 從這一塊開始發揮——一邊驗證價值，一邊把資料底盤打穩。整理資料不是 AI 的前置作業，它本身就是 AI 專案的第一步。</p>
+            </div>
+            <p>這正是我們「<strong>先看到成效，再決定要不要前進</strong>」的核心理念：讓你在低風險、小範圍下，先看見乾淨資料帶來的差別，再決定要不要把治理擴大到全公司。</p>
 
             <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
           </div>
