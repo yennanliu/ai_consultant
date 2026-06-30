@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Harness 工程：打造可靠 AI Agent 的執行骨架 - AI consultant</title>
+        <!-- Favicons -->
+    <link rel="icon" href="../favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+    <!-- PWA / mobile app -->
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <meta name="theme-color" content="#7c3aed" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AI Consultant" />
+    <link rel="stylesheet" href="../linear.css">
+  </head>
+  <body>
+
+    <header>
+      <div class="wrap">
+        <div class="nav">
+          <a href="../index.html" class="brand">AI CONSULTANT</a>
+          <nav class="navlinks">
+            <a href="../index.html#services">SERVICES</a>
+            <a href="../service_mode.html">SERVICE MODES</a>
+            <a href="../success_stories.html">SUCCESS STORIES</a>
+            <a href="../team.html">TEAM</a>
+            <a href="../blog.html">BLOG</a>
+            <a href="../ai_agent.html">AI AGENT</a>
+            <a href="../index.html#contact">CONTACT</a>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero b-bottom">
+        <div class="wrap">
+          <span class="mono-label">// HARNESS ENGINEERING</span>
+          <h1>Harness 工程：打造可靠 AI Agent 的執行骨架</h1>
+          <div class="text-xs" style="color: var(--text-dim);">2026-06-28</div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <div style="max-width: 800px;">
+          <p>許多企業在導入 AI Agent 時，把焦點全放在「換一個更強的模型」上，卻發現換了之後成效並沒有明顯提升。真正決定 Agent 可靠度的，往往不是模型本身，而是包在模型外面的那一層執行骨架——也就是我們所說的 <strong>harness（執行框架）</strong>。本文整理 harness 工程的核心觀念，協助企業理解該把工程資源投在哪裡。</p>
+
+          <h2>什麼是 harness</h2>
+          <p><strong>harness 不是模型，而是包住模型的執行環境。</strong>模型本身只是一個「輸入文字、輸出文字」的函式；它不會自己呼叫工具、不會記住上一步做了什麼、也不會在出錯時重試。把這些能力組裝起來、讓模型能在真實業務流程中持續運作的，就是 harness。它通常包含四個部分：<strong>控制迴圈</strong>（決定何時呼叫模型、何時停止）、<strong>工具呼叫</strong>（讓模型能讀寫資料、操作系統）、<strong>狀態與記憶</strong>（記住目標與已完成的步驟），以及<strong>錯誤處理</strong>（面對逾時、失敗、超出預算時的應對）。</p>
+          <p>為什麼 Agent 的成敗多半取決於 harness 而非換更大的模型？因為大多數真實失敗並不是「模型不夠聰明」，而是「模型沒有拿到對的上下文」、「工具回傳格式沒被正確解析」、「一步失敗後整個流程崩潰」。這些都屬於 harness 的範疇。一個設計良好的 harness，能讓中等規模的模型穩定完成任務；反之，再強的模型放在脆弱的 harness 裡，也只會放大混亂。</p>
+
+          <h2>核心控制迴圈（Agent Loop）</h2>
+          <p>harness 的心臟是<strong>控制迴圈</strong>。典型的迴圈是「感知 → 規劃 → 行動 → 觀察 → 反思」的循環：Agent 先感知目前狀態與目標，規劃下一步，採取行動（通常是呼叫某個工具），觀察工具回傳的結果，再反思是否接近目標、需不需要調整策略，然後進入下一輪。這個迴圈會一直跑，直到滿足<strong>停止條件</strong>為止。</p>
+          <p>沒有妥善設計的停止條件，是 Agent 失控與燒錢的主因。實務上必須設下多重保險：<strong>最大步數</strong>（例如單一任務最多 20 步，避免無限迴圈）、<strong>預算上限</strong>（token 或 API 成本達到上限即中止）、以及明確的<strong>完成判定</strong>（任務達標的具體訊號）。這些限制讓 Agent 即使陷入錯誤的策略，也不會無止境地消耗資源。</p>
+
+          <h2>工具與環境介面</h2>
+          <p>Agent 之所以能「做事」而不只是「聊天」，靠的是工具介面。最常見的形式是 <strong>tool / function calling</strong>：把每個工具定義成帶有名稱、參數結構（schema）與說明的函式，模型輸出要呼叫哪個工具、帶什麼參數，由 harness 實際執行後把結果回傳。近年逐漸普及的 <strong>MCP（Model Context Protocol）</strong>則提供了一套標準化協定，讓工具與資料來源能以統一方式接上不同的 Agent，降低重複串接的成本。</p>
+          <p>當 Agent 需要操作檔案或執行程式碼時，<strong>沙箱（sandbox）</strong>與<strong>權限邊界</strong>就格外重要。應該讓 Agent 在隔離的環境中運作，明確界定它能讀寫哪些目錄、能呼叫哪些指令；對於會修改資料或對外發送的高風險操作，更要設下審核或確認機制。權限設計遵循最小權限原則：只給完成任務所需的最小能力，而非預設開放。</p>
+
+          <h2>上下文工程（Context Engineering）</h2>
+          <p>模型的判斷品質，幾乎完全取決於它在那一刻看到的上下文。<strong>上下文工程</strong>就是有系統地管理「在每一步要把什麼放進模型的輸入視窗」。這包含<strong>提示組裝</strong>（把系統指令、任務目標、歷史步驟、工具結果妥善拼接）、<strong>檢索</strong>（從知識庫或文件中只取出當下相關的片段，而非全部塞入），以及<strong>記憶壓縮</strong>（把過長的歷史摘要成精簡版本，保留關鍵結論）。</p>
+          <p>由於模型的上下文視窗有限，<strong>token 預算管理</strong>是一門必修課：要持續衡量每一段內容的價值，把寶貴的視窗留給最相關的資訊。同時要避免<strong>上下文污染</strong>——也就是錯誤的、過時的或不相干的內容混進輸入，誤導模型後續的所有判斷。一旦污染發生，往往會像滾雪球一樣連鎖出錯，因此乾淨、聚焦的上下文，是可靠 Agent 的基礎。</p>
+
+          <h2>可靠性工程</h2>
+          <p>真實世界充滿不確定性：網路會斷、API 會逾時、工具會回傳意料之外的格式。<strong>可靠性工程</strong>就是讓 harness 在這些情況下依然穩健。基本工具包括<strong>重試</strong>（失敗時自動再試，搭配指數退避避免雪崩）、<strong>逾時</strong>（為每個操作設定時限，避免卡死），以及<strong>失敗回退</strong>（當主路徑失敗時，降級到替代方案或交回人工）。</p>
+          <p><strong>冪等性</strong>是另一個容易被忽略卻關鍵的概念：同一個操作若被重複執行（例如重試導致），結果應該保持一致，而不會重複扣款、重複寄信。對於高風險或不可逆的決策，應設置<strong>人類介入（human-in-the-loop）</strong>節點，讓 Agent 在執行前先暫停、由人確認。把人放在迴圈裡的關鍵位置，不是 Agent 不夠成熟的妥協，而是負責任的工程設計。</p>
+
+          <h2>可觀測性</h2>
+          <p>當 Agent 在生產環境出問題時，若無法看清它「當時想了什麼、做了什麼」，排查幾乎不可能。因此 harness 必須具備<strong>可觀測性</strong>：追蹤每一步的輸入與輸出，記錄完整的<strong>trace（執行軌跡）</strong>——包含模型的每次呼叫、選用的工具、傳入的參數、回傳的結果，以及最終決策。這些軌跡既是除錯的依據，也是合規審計的證據。</p>
+          <p>更進一步，可觀測性要與<strong>評測與回歸測試</strong>掛勾。建立一組代表性的測試案例，每次調整提示、更換模型或修改工具後，自動跑一遍並比對結果，確認沒有造成退步（regression）。這讓團隊能用數據而非感覺來判斷「這次改動到底是變好還是變壞」，把 Agent 開發從碰運氣轉變成可度量、可迭代的工程。</p>
+
+          <h2>給中小企業的實務建議與結語</h2>
+          <p>對資源有限的中小企業，建議把工程心力優先投在 harness，而不是追逐最新最大的模型。實務上可以這樣起步：先用最小可行的控制迴圈跑通一個明確、低風險的流程；務必先設好停止條件與預算上限；為每一步加上 trace 記錄；在不可逆的環節放上人工確認；再透過一小組測試案例持續驗證品質。等流程穩定後，再逐步擴大工具範圍與自動化程度。</p>
+          <p>Agent 的可靠度，本質上是一個工程問題，而非模型問題。把控制迴圈、工具介面、上下文管理、可靠性與可觀測性這些骨架做扎實，即使用中等規模的模型，也能打造出企業敢放心交付任務的 AI Agent。投資 harness，就是投資 Agent 真正能落地、能規模化的基礎。</p>
+
+            <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap" style="display: flex; justify-content: space-between;">
+        <span>© 2026 AI CONSULTANT</span>
+        <span>TW_SMB_AI_SOLUTIONS</span>
+      </div>
+    </footer>
+
+    <script>
+      const themeToggle = document.getElementById('theme-toggle');
+      const moonIcon = themeToggle.querySelector('.moon');
+      const sunIcon = themeToggle.querySelector('.sun');
+      const htmlElement = document.documentElement;
+
+      // Check for saved theme preference
+      const currentTheme = localStorage.getItem('theme');
+      if (currentTheme === 'dark') {
+        htmlElement.classList.add('theme-dark');
+        moonIcon.style.display = 'none';
+        sunIcon.style.display = 'block';
+      }
+
+      themeToggle.addEventListener('click', () => {
+        htmlElement.classList.toggle('theme-dark');
+        const isDark = htmlElement.classList.contains('theme-dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+
+        moonIcon.style.display = isDark ? 'none' : 'block';
+        sunIcon.style.display = isDark ? 'block' : 'none';
+      });
+    </script>
+      <script defer src="../mobile-nav.js"></script>
+  </body>
+</html>

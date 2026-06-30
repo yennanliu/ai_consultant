@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>多租戶 LLM 系統設計：隔離、配額與成本分攤 - AI consultant</title>
+        <!-- Favicons -->
+    <link rel="icon" href="../favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+    <!-- PWA / mobile app -->
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <meta name="theme-color" content="#7c3aed" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AI Consultant" />
+    <link rel="stylesheet" href="../linear.css">
+  </head>
+  <body>
+
+    <header>
+      <div class="wrap">
+        <div class="nav">
+          <a href="../index.html" class="brand">AI CONSULTANT</a>
+          <nav class="navlinks">
+            <a href="../index.html#services">SERVICES</a>
+            <a href="../service_mode.html">SERVICE MODES</a>
+            <a href="../success_stories.html">SUCCESS STORIES</a>
+            <a href="../team.html">TEAM</a>
+            <a href="../blog.html">BLOG</a>
+            <a href="../ai_agent.html">AI AGENT</a>
+            <a href="../index.html#contact">CONTACT</a>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero b-bottom">
+        <div class="wrap">
+          <span class="mono-label">// ARCHITECTURE</span>
+          <h1>多租戶 LLM 系統設計：隔離、配額與成本分攤</h1>
+          <div class="text-xs" style="color: var(--text-dim);">2026-06-12</div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <div style="max-width: 800px;">
+          <p>當一個 AI 平台需要同時服務多個客戶、多個部門，或多個品牌時，「多租戶（multi-tenancy）」就成為架構的核心議題。對中小企業與 SaaS 團隊而言，把一套 LLM 系統設計成可安全共用、可計量、可控成本的平台，往往是能不能規模化的關鍵。本文整理多租戶 LLM 系統的設計要點與取捨。</p>
+
+          <h2>什麼是多租戶，為什麼 LLM 平台常需要它</h2>
+          <p><strong>多租戶</strong>指的是同一套軟體與基礎設施，同時服務多個彼此獨立的「租戶（tenant）」——可以是不同的付費客戶，也可以是企業內不同的部門或事業群。每個租戶在邏輯上看到的是「自己專屬的系統」，但底層運算、模型呼叫與儲存資源其實是共用的。</p>
+          <p>LLM 平台特別需要多租戶，原因在於<strong>成本攤平</strong>。GPU 推論、向量資料庫、模型 API 呼叫都所費不貲，若為每個客戶都獨立部署一整套堆疊，閒置資源與維運成本會迅速失控。多租戶讓多個租戶共享同一批資源，提升使用率、降低單位成本，也讓功能升級與安全修補只需做一次。</p>
+          <p><strong>單租戶 vs 多租戶</strong>是一組明確的取捨：單租戶（每客戶獨立部署）隔離性最強、客製化最自由、合規舉證最單純，但成本高、維運分散；多租戶成本低、迭代快，但工程複雜度集中在「如何保證租戶之間不互相干擾、不互相外洩」。多數平台會採取混合策略——一般客戶走多租戶，少數高合規或大型客戶提供單租戶或專屬部署選項。</p>
+
+          <h2>資料隔離模型</h2>
+          <p>資料隔離是多租戶最不能出錯的環節，常見有兩種模型。<strong>邏輯隔離（共用資料庫）</strong>讓所有租戶共用同一套資料庫與資料表，靠每一筆資料上的 <strong>tenant_id</strong> 欄位來區分歸屬。優點是資源利用率高、易於擴充，缺點是所有查詢都必須強制帶上 tenant_id 過濾，一旦某段程式忘了加條件，就可能造成跨租戶資料外洩。實務上會以 row-level security、ORM 層強制注入租戶條件，或共用結構但每租戶獨立 schema 來收斂風險。</p>
+          <p><strong>實體隔離</strong>則為每個租戶配置獨立的資料庫、儲存桶甚至運算資源。隔離性與合規舉證最強，適合金融、醫療等高敏感場景，但成本與維運負擔最高。</p>
+          <p>在 LLM 場景中還要特別注意<strong>向量資料庫與 RAG 索引的隔離</strong>。檢索式生成會把企業文件切塊、向量化後存入向量庫，若不同租戶的向量混在同一索引，檢索時極可能撈到別家的內容。正確做法是以<strong>命名空間（namespace）</strong>或每租戶獨立 collection／index 來隔離，並在每次檢索查詢時強制帶入租戶的 namespace，確保相似度搜尋的範圍永遠侷限在該租戶自己的資料內。</p>
+
+          <h2>身分與存取控制</h2>
+          <p>每個租戶應持有<strong>獨立的 API 金鑰或憑證</strong>，平台據此辨識請求來源並套用對應的權限與配額。租戶內部再以<strong>RBAC（角色型存取控制）</strong>劃分管理者、一般使用者、唯讀等角色，控制誰能管理金鑰、誰能存取哪些文件。</p>
+          <p>跨租戶資料外洩的防線不只在資料庫層，也必須延伸到 <strong>prompt 與檢索層</strong>。常見風險包括：把多個租戶的內容拼進同一個上下文、共用對話記憶或快取而未依租戶分隔、或檢索時 namespace 過濾失效。設計上應讓「租戶身分」貫穿整條鏈路——從請求驗證、檢索查詢、prompt 組裝到回應紀錄，每一步都帶著且驗證 tenant_id，並在系統提示中明確限定模型只能使用本租戶的檢索結果。</p>
+
+          <h2>用量配額與速率限制</h2>
+          <p>共用資源最大的營運風險是<strong>吵鬧鄰居（noisy neighbor）問題</strong>：某個租戶突然大量呼叫，把 GPU 或 API 配額吃光，導致其他租戶延遲飆高甚至服務中斷。對策是為每個租戶設定明確的用量上限。</p>
+          <p><strong>速率限制（rate limiting）</strong>控制單位時間內的請求數（如每分鐘請求數、每分鐘 token 數），常以權杖桶（token bucket）等演算法實作；<strong>token 配額</strong>則限制租戶在計費週期內可消耗的總 token 量，超出後降級或拒絕服務。建議同時設定軟限制（觸發告警與限流）與硬上限（強制阻斷），並對突發流量保留公平排隊或優先級機制，避免單一租戶獨佔。</p>
+
+          <h2>模型路由與資源管理</h2>
+          <p>不同租戶的需求與付費層級不同，可透過<strong>模型路由</strong>讓請求導向合適的模型：高階方案使用能力較強的大模型，基礎方案使用更便宜、更快的小模型；同一租戶內也可依任務難易動態選模型，簡單分類用小模型、複雜推理才升級到大模型。</p>
+          <p>資源管理上，<strong>快取</strong>是降低成本的利器——對重複或相似的查詢回傳快取結果，並善用提示快取（prompt caching）重用固定的系統提示與長文件前綴；但快取務必以租戶為界，切勿讓租戶共用同一份內容快取。<strong>批次（batching）</strong>則把多筆請求合併推論以提升 GPU 使用率，適用於離線或可容忍延遲的工作。這些機制都應在多租戶前提下設計，兼顧成本與隔離。</p>
+
+          <h2>成本歸屬與計量</h2>
+          <p>多租戶要能持續經營，必須能精準回答「每個租戶花了多少、該收多少」。核心是<strong>計量（metering）</strong>：依每次呼叫的<strong>輸入與輸出 token 數、呼叫次數、所用模型層級</strong>逐筆記錄用量，並關聯到租戶。</p>
+          <p>這需要完整的<strong>可觀測性</strong>支撐——每一次模型呼叫都留下含 tenant_id、模型、token 數、延遲、成本的紀錄，匯總成各租戶的用量儀表板，既能用於<strong>帳務（billing）</strong>，也能即時偵測異常用量與成本暴衝。良好的成本歸屬讓平台能設計分級訂價、找出高成本租戶，並把共用基礎設施的真實成本公平分攤回去。</p>
+
+          <h2>給中小企業／SaaS 的實務建議與結語</h2>
+          <p>對資源有限的中小企業與 SaaS 團隊，建議務實起步：初期以<strong>邏輯隔離加嚴格的 tenant_id 強制過濾</strong>降低成本，並從第一天就把租戶身分貫穿到資料、檢索與計量各層，避免日後難以補洞；向量庫一開始就用<strong>命名空間隔離</strong>，這是最容易被忽略卻最容易出包的地方。配額與速率限制應在上線前就具備，先擋住吵鬧鄰居，再談優化。計量與可觀測性越早建立越好，否則無從訂價、也無從控管成本。等到有高合規或大型客戶時，再為其提供單租戶或專屬部署的升級選項。</p>
+          <p>多租戶 LLM 系統的本質，是在「共享資源以攤平成本」與「嚴格隔離以保障安全」之間取得平衡。把隔離、配額與計量這三件事在架構初期就做對，平台才能在不犧牲信任的前提下，安全地規模化服務更多客戶。</p>
+
+            <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap" style="display: flex; justify-content: space-between;">
+        <span>© 2026 AI CONSULTANT</span>
+        <span>TW_SMB_AI_SOLUTIONS</span>
+      </div>
+    </footer>
+
+    <script>
+      const themeToggle = document.getElementById('theme-toggle');
+      const moonIcon = themeToggle.querySelector('.moon');
+      const sunIcon = themeToggle.querySelector('.sun');
+      const htmlElement = document.documentElement;
+
+      // Check for saved theme preference
+      const currentTheme = localStorage.getItem('theme');
+      if (currentTheme === 'dark') {
+        htmlElement.classList.add('theme-dark');
+        moonIcon.style.display = 'none';
+        sunIcon.style.display = 'block';
+      }
+
+      themeToggle.addEventListener('click', () => {
+        htmlElement.classList.toggle('theme-dark');
+        const isDark = htmlElement.classList.contains('theme-dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+
+        moonIcon.style.display = isDark ? 'none' : 'block';
+        sunIcon.style.display = isDark ? 'block' : 'none';
+      });
+    </script>
+      <script defer src="../mobile-nav.js"></script>
+  </body>
+</html>

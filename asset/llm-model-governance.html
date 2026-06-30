@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>模型治理：從模型選型到生命週期的全程管控 - AI consultant</title>
+        <!-- Favicons -->
+    <link rel="icon" href="../favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+    <!-- PWA / mobile app -->
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <meta name="theme-color" content="#7c3aed" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AI Consultant" />
+    <link rel="stylesheet" href="../linear.css">
+  </head>
+  <body>
+
+    <header>
+      <div class="wrap">
+        <div class="nav">
+          <a href="../index.html" class="brand">AI CONSULTANT</a>
+          <nav class="navlinks">
+            <a href="../index.html#services">SERVICES</a>
+            <a href="../service_mode.html">SERVICE MODES</a>
+            <a href="../success_stories.html">SUCCESS STORIES</a>
+            <a href="../team.html">TEAM</a>
+            <a href="../blog.html">BLOG</a>
+            <a href="../ai_agent.html">AI AGENT</a>
+            <a href="../index.html#contact">CONTACT</a>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero b-bottom">
+        <div class="wrap">
+          <span class="mono-label">// MODEL GOVERNANCE</span>
+          <h1>模型治理：從模型選型到生命週期的全程管控</h1>
+          <div class="text-xs" style="color: var(--text-dim);">2026-06-05</div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <div style="max-width: 800px;">
+          <p>當企業開始大量導入大型語言模型（LLM），模型本身就成了一項必須被管理的資產。哪些團隊用了哪些模型？版本是否過期？資料流向哪裡？誰為錯誤的輸出負責？若沒有一套制度回答這些問題，AI 應用很快就會變成失控的「影子系統」。本文說明什麼是<strong>模型治理（Model Governance）</strong>，以及中小企業如何用輕量的方式起步。</p>
+
+          <h2>什麼是模型治理</h2>
+          <p>模型治理是指企業以制度化的方式，<strong>把模型當成受管控的企業資產來管理</strong>——涵蓋選型、上線、監控、汰換的整個生命週期。它和既有的治理體系緊密相關：<strong>資料治理（Data Governance）</strong>管的是資料的品質、權限與流向，<strong>一般 IT 治理</strong>管的是系統的安全與變更流程，而模型治理則疊在兩者之上，專門處理「模型」這個新型資產特有的問題。</p>
+          <p>LLM 讓治理變得更困難，原因有三：第一是<strong>黑箱特性</strong>，模型的決策過程難以完全解釋，無法像傳統程式一樣逐行追蹤邏輯；第二是<strong>快速演進</strong>，供應商頻繁推出新版本、棄用舊版本，企業被迫不斷重新驗證；第三是<strong>外部相依</strong>，多數企業透過商用 API 取用模型，模型的行為、定價、可用性都掌握在第三方手中。</p>
+
+          <h2>模型清單與盤點</h2>
+          <p>治理的起點是「知道自己在用什麼」。許多企業低估了這一步——當每個部門各自串接 ChatGPT、Claude 或開源模型時，沒人說得清整體面貌。建立<strong>模型清單（Model Inventory / Registry）</strong>就是要把這些攤在陽光下，逐一登錄：用了<strong>哪些模型、哪個版本、來自哪家供應商、用於什麼業務用途、處理的資料流向何處</strong>。</p>
+          <p>這份清單應由專人維護，並定期更新。它不只是文件，更是後續所有治理動作的基礎：沒有清單，就無法評估風險、無法在供應商棄用某版本時即時反應、也無法在資料外洩事件發生時釐清波及範圍。</p>
+
+          <h2>模型選型與准入</h2>
+          <p>新模型進入企業前應通過<strong>准入評估</strong>，而非由工程師憑喜好直接串接。評估維度至少包括：<strong>能力</strong>（是否真能勝任該任務）、<strong>成本</strong>（每百萬 token 的價格與預估用量）、<strong>延遲</strong>（回應速度是否符合場景需求）、<strong>授權條款</strong>（商業使用是否合規）、以及<strong>資料政策</strong>（供應商是否會拿你的輸入去訓練模型、資料儲存在哪個地區）。</p>
+          <p>一個常見的關鍵抉擇是<strong>自架開源模型 vs. 商用 API</strong>。商用 API 上手快、品質穩定、免於維運，但資料須送出企業、且受制於供應商；自架開源模型（如 Llama、Qwen 等）能讓敏感資料留在內部、長期成本可控，但需要 GPU 資源與專業團隊，且品質通常需額外調校。中小企業多數情況下從商用 API 起步較務實，僅在資料極度敏感或用量極大時才考慮自架。</p>
+
+          <h2>版本控管與生命週期</h2>
+          <p>模型不是「一次上線、永遠不變」。每個模型都應有清楚的生命週期：<strong>上線、版本標記、棄用（deprecation）、汰換</strong>。供應商通常會提前公告舊版本的停用日期，企業必須據此排程遷移，避免服務在某天突然中斷。建議盡量<strong>釘選（pin）特定版本</strong>，而非永遠使用「latest」，以免供應商悄悄更新後行為改變、品質回退。</p>
+          <p>每個納管的模型都應有一份<strong>模型卡（Model Card）</strong>，記錄其用途、能力邊界、已知限制、訓練資料概況、評測結果與適用／禁用場景。模型卡讓接手的人不必重新摸索，也是稽核時的重要依據。</p>
+
+          <h2>風險分級與審批</h2>
+          <p>不是所有 AI 用途都需要相同強度的審查。應依<strong>用途風險高低決定審查強度</strong>：內部會議記錄摘要屬低風險，可走簡化流程快速放行；而直接影響客戶權益、財務決策或涉及個資處理的用途屬高風險，<strong>必須經過人工審核與正式簽核</strong>，並在上線後維持人在迴路（human-in-the-loop）的監督。</p>
+          <p>建立清楚的<strong>風險分級標準</strong>，能讓低風險創新快速進行、同時把治理資源集中在真正可能造成傷害的場景，避免「一刀切」式的繁瑣流程拖垮所有 AI 嘗試。</p>
+
+          <h2>監控、稽核與責任歸屬</h2>
+          <p>模型上線後仍需持續監控。重點包括：<strong>漂移（drift）</strong>——輸出品質隨時間或資料分布變化而退化；<strong>品質與成本監控</strong>——回應準確度是否下滑、token 用量與費用是否異常飆升；以及<strong>決策日誌</strong>——保存關鍵決策的輸入、模型版本、輸出與後續結果，以利問題排查與稽核。</p>
+          <p>更根本的問題是<strong>責任歸屬</strong>：當模型給出錯誤建議造成損失時，誰負責？治理制度必須明確指派每個 AI 應用的<strong>業務負責人（owner）</strong>，他要為該應用的成效、合規與風險負責，而非把責任模糊地推給「AI」或 IT 部門。</p>
+
+          <h2>政策與組織</h2>
+          <p>治理要落地，需要白紙黑字的<strong>使用政策</strong>，明確規範哪些資料可以丟給外部模型、哪些絕對不行、哪些用途需事前申請。同時建議成立<strong>跨職能治理委員會</strong>，成員涵蓋技術、業務、法務與資安，定期審視模型清單、審批高風險用途、檢討事件。模型治理不能孤立運作，必須與既有的<strong>合規與資安</strong>流程銜接——例如把模型准入納入既有的供應商審查與資安評估流程，而非另起爐灶。</p>
+
+          <h2>給中小企業的輕量起步建議</h2>
+          <p>中小企業沒有大型企業的治理人力，但這不代表可以略過治理；關鍵是<strong>輕量、夠用、漸進</strong>。建議的起步順序是：先用一份試算表建立<strong>最小可行的模型清單</strong>，登錄目前在用的模型與用途；再寫一頁簡短的<strong>使用政策</strong>，劃出資料紅線；接著對少數高風險用途加上人工審核；最後再逐步補上監控與模型卡。</p>
+          <p>模型治理的本質，是讓企業在享受 LLM 帶來的生產力之餘，仍然清楚知道自己在用什麼、承擔什麼風險、由誰負責。從一張清單和一頁政策開始，遠勝於等到出事才補救。把治理當成讓 AI 能長期、安心、規模化使用的基礎建設，而非阻礙創新的官僚程序，企業才能真正把模型用成可信賴的資產。</p>
+
+            <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap" style="display: flex; justify-content: space-between;">
+        <span>© 2026 AI CONSULTANT</span>
+        <span>TW_SMB_AI_SOLUTIONS</span>
+      </div>
+    </footer>
+
+    <script>
+      const themeToggle = document.getElementById('theme-toggle');
+      const moonIcon = themeToggle.querySelector('.moon');
+      const sunIcon = themeToggle.querySelector('.sun');
+      const htmlElement = document.documentElement;
+
+      // Check for saved theme preference
+      const currentTheme = localStorage.getItem('theme');
+      if (currentTheme === 'dark') {
+        htmlElement.classList.add('theme-dark');
+        moonIcon.style.display = 'none';
+        sunIcon.style.display = 'block';
+      }
+
+      themeToggle.addEventListener('click', () => {
+        htmlElement.classList.toggle('theme-dark');
+        const isDark = htmlElement.classList.contains('theme-dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+
+        moonIcon.style.display = isDark ? 'none' : 'block';
+        sunIcon.style.display = isDark ? 'block' : 'none';
+      });
+    </script>
+      <script defer src="../mobile-nav.js"></script>
+  </body>
+</html>

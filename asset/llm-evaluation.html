@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>LLM 評測實務：別再只看 Demo，建立可信的評估流程 - AI consultant</title>
+        <!-- Favicons -->
+    <link rel="icon" href="../favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+    <!-- PWA / mobile app -->
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <meta name="theme-color" content="#7c3aed" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AI Consultant" />
+    <link rel="stylesheet" href="../linear.css">
+  </head>
+  <body>
+
+    <header>
+      <div class="wrap">
+        <div class="nav">
+          <a href="../index.html" class="brand">AI CONSULTANT</a>
+          <nav class="navlinks">
+            <a href="../index.html#services">SERVICES</a>
+            <a href="../service_mode.html">SERVICE MODES</a>
+            <a href="../success_stories.html">SUCCESS STORIES</a>
+            <a href="../team.html">TEAM</a>
+            <a href="../blog.html">BLOG</a>
+            <a href="../ai_agent.html">AI AGENT</a>
+            <a href="../index.html#contact">CONTACT</a>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero b-bottom">
+        <div class="wrap">
+          <span class="mono-label">// EVALUATION</span>
+          <h1>LLM 評測實務：別再只看 Demo，建立可信的評估流程</h1>
+          <div class="text-xs" style="color: var(--text-dim);">2026-06-09</div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <div style="max-width: 800px;">
+          <p>幾乎每個 LLM 專案都有一個共同的危險時刻：團隊在會議室裡跑了幾個漂亮的範例，所有人都點頭稱讚，於是決定上線。但上線後才發現，真實使用者的問法千奇百怪，模型開始答非所問、捏造資訊，甚至在你「優化」提示詞之後反而變差了。本文整理一套務實的 LLM 評測流程，幫助中小企業在投入資源前，先建立可信的判斷依據。</p>
+
+          <h2>為什麼「Demo 很驚艷」不等於「能上線」</h2>
+          <p>Demo 之所以好看，是因為示範者通常挑了模型擅長的問題。但實際營運會暴露三個結構性問題。第一是<strong>非決定性輸出</strong>：同一個問題問兩次，LLM 可能給出不同答案，這代表你不能用「跑過一次成功」當作驗收標準。第二是<strong>長尾失敗</strong>：8 成常見問題答得不錯，但剩下 2 成的邊界情況才是真正會引發客訴與信任崩潰的地方。第三是<strong>幻覺（hallucination）與退步（regression）</strong>：模型會自信地編造不存在的事實；而當你修改提示詞或更換模型版本時，原本答對的案例可能悄悄變成答錯——這種「改 A 壞 B」的退步，靠人工肉眼幾乎不可能察覺。</p>
+
+          <h2>建立評測資料集：你的黃金樣本</h2>
+          <p>評測的起點不是工具，而是一份代表性的資料集，業界稱為<strong>黃金樣本（golden set）</strong>。它由一組「問題＋期望答案（或評分標準）」組成，是衡量系統好壞的基準。建立原則有三：一是<strong>涵蓋真實案例</strong>，直接從客服紀錄、搜尋日誌、實際使用情境中蒐集問題，而非自己憑空想像；二是<strong>納入邊界情況</strong>，包含模稜兩可的提問、超出範圍的問題、惡意輸入、以及容易引發幻覺的冷門題目；三是<strong>持續擴充</strong>，每當線上出現一個新的失敗案例，就把它加進黃金樣本，讓資料集隨著時間越來越能反映真實世界。初期不必貪多，50 到 200 筆精心挑選的樣本，往往比上千筆隨機資料更有價值。</p>
+
+          <h2>離線評測：在上線前先量化</h2>
+          <p>有了資料集，就能在不打擾使用者的情況下進行<strong>離線評測</strong>。常見方法依任務性質而定。對於有標準答案的任務，可用<strong>精確比對（exact match）</strong>，例如數字、日期、分類標籤是否完全一致。對於開放式生成，精確比對太嚴格，這時改用<strong>語意相似度</strong>——把模型輸出與標準答案各自轉成向量（embedding），計算餘弦相似度，判斷意思是否接近。對於有明確成敗的任務，則直接計算<strong>任務成功率</strong>。若是分類或資訊抽取這類傳統 NLP 任務，務必使用標準指標：<strong>precision（精確率，預測為正的有多少是對的）、recall（召回率，實際為正的抓到多少）、F1（兩者的調和平均）</strong>。只看整體準確率（accuracy）在資料不平衡時會嚴重誤導，這三個指標能讓你看清模型是「不敢答」還是「亂答」。</p>
+
+          <h2>LLM-as-judge：用模型當評審</h2>
+          <p>許多輸出（例如客服回覆的語氣、摘要的完整度）很難用程式自動判分。近年流行的做法是<strong>LLM-as-judge</strong>，也就是用另一個（通常更強的）模型，依據評分準則去評判輸出品質。它的好處是快速、便宜、可規模化，能在幾分鐘內評完上百筆。但要注意它的<strong>偏誤</strong>：模型評審常偏好較長的答案、偏好排在前面的選項、甚至偏好風格與自己相近的輸出。因此必須做<strong>校準</strong>——先讓人工標註一小批樣本，再檢查 LLM 評審與人工的一致性，調整評分提示詞直到對齊。最務實的策略是<strong>人機搭配</strong>：用 LLM-as-judge 做大量初篩，再由人工抽查爭議或低分案例，兼顧效率與可信度。</p>
+
+          <h2>線上評測：讓真實使用者告訴你答案</h2>
+          <p>離線分數再漂亮，最終仍要看真實世界的表現。<strong>線上評測</strong>有幾種互補手段。<strong>A/B 測試</strong>把使用者隨機分成兩組，分別接觸新舊版本，比較關鍵指標差異，這是因果關係最可靠的證據。<strong>影子流量（shadow traffic）</strong>則讓新版本在背景跟著處理真實請求、但不回傳給使用者，藉此在零風險下觀察新版會如何反應。同時別忘了蒐集<strong>使用者回饋</strong>（按讚／倒讚、是否轉真人客服）與<strong>真實 KPI</strong>——例如客服的<strong>解決率</strong>、電商的<strong>轉換率</strong>、整體<strong>滿意度</strong>。這些業務指標才是專案存在的理由，離線指標只是它們的代理。</p>
+
+          <h2>回歸測試與 CI：把評測變成自動防線</h2>
+          <p>評測若只在上線前做一次，價值會迅速折舊。正確的做法是把它接進<strong>持續整合（CI）</strong>流程：每次修改提示詞、更換模型、調整檢索設定，系統就自動針對黃金樣本跑一輪評測，並與前一版的分數做<strong>版本比較</strong>。一旦發現某些案例由對轉錯，也就是出現<strong>退步（regression）</strong>，就自動擋下這次變更，避免帶病上線。這等同於軟體工程裡的<strong>回歸測試</strong>，只是對象換成了 LLM。對中小企業而言，哪怕只是一支跑過 50 筆樣本、印出通過率與失敗清單的腳本，都能擋掉絕大多數「自以為改好、其實改壞」的意外。</p>
+
+          <h2>RAG 與 Agent 的專屬評測</h2>
+          <p>若你的系統是檢索增強生成（RAG）或會呼叫工具的 Agent，光評測最終答案並不夠，必須拆解每個環節。RAG 要看<strong>檢索命中率（retrieval hit rate）</strong>——正確的資料段落有沒有被找出來，以及<strong>引用正確性</strong>——模型的回答是否真的有所引用的來源支撐，而非自行腦補。Agent 則要評估<strong>工具呼叫正確率</strong>（有沒有在對的時機、用對的參數呼叫對的工具）與<strong>端到端任務完成率</strong>（多步驟流程整體是否達成目標）。分環節評測的好處是能快速定位問題：當答案出錯，你能立刻判斷是「沒檢索到」「檢索到卻沒用」還是「工具用錯」，而不是面對一個黑盒子束手無策。</p>
+
+          <h2>結語：給中小企業的最小可行評測流程</h2>
+          <p>你不需要昂貴的平台才能開始。最小可行流程只有四步：第一，蒐集 50 到 100 筆涵蓋真實與邊界情況的黃金樣本；第二，寫一支簡單腳本，混用精確比對、語意相似度與 LLM-as-judge 自動評分；第三，把這支腳本設定成每次改動就跑，擋住退步；第四，上線後持續蒐集失敗案例回補資料集，並追蹤一兩個真實業務 KPI。評測的本質不是追求完美分數，而是讓每一次決策——要不要上線、要不要換模型、改動到底是進步還是退步——都有客觀數據可依。當「能不能上線」不再靠感覺，而是靠可重複的數字，你的 AI 專案才算真正站穩了腳步。</p>
+
+            <a href="../blog.html" class="btn btn-ghost" style="padding: 0; margin-top: var(--space-12);">← BACK TO BLOG</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap" style="display: flex; justify-content: space-between;">
+        <span>© 2026 AI CONSULTANT</span>
+        <span>TW_SMB_AI_SOLUTIONS</span>
+      </div>
+    </footer>
+
+    <script>
+      const themeToggle = document.getElementById('theme-toggle');
+      const moonIcon = themeToggle.querySelector('.moon');
+      const sunIcon = themeToggle.querySelector('.sun');
+      const htmlElement = document.documentElement;
+
+      // Check for saved theme preference
+      const currentTheme = localStorage.getItem('theme');
+      if (currentTheme === 'dark') {
+        htmlElement.classList.add('theme-dark');
+        moonIcon.style.display = 'none';
+        sunIcon.style.display = 'block';
+      }
+
+      themeToggle.addEventListener('click', () => {
+        htmlElement.classList.toggle('theme-dark');
+        const isDark = htmlElement.classList.contains('theme-dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+
+        moonIcon.style.display = isDark ? 'none' : 'block';
+        sunIcon.style.display = isDark ? 'block' : 'none';
+      });
+    </script>
+      <script defer src="../mobile-nav.js"></script>
+  </body>
+</html>
