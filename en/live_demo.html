@@ -1,22 +1,22 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <script>
       /* Honor saved language preference */
-      (function(){try{if(localStorage.getItem('lang')==='en')location.replace('en/live_demo.html');}catch(e){}})();
+      (function(){try{if(localStorage.getItem('lang')==='zh')location.replace('../live_demo.html');}catch(e){}})();
     </script>
-    <title>Live Demo - AI consultant｜看 AI Agent 實際跑給你看</title>
-    <meta name="description" content="互動式 AI Agent 展示：智慧客服自動分流、詢價單秒變報價、營運儀表板即時監控。先看到上線後的樣子，再決定要不要導入。" />
+    <title>Live Demo - AI consultant｜Watch an AI Agent run for real</title>
+    <meta name="description" content="Interactive AI Agent demos: smart support auto-routing, inquiries turned into quotes in seconds, live operations dashboard monitoring. See what it looks like once it's live, then decide whether to adopt." />
 
     <!-- Favicons -->
-    <link rel="icon" href="favicon.ico" sizes="any" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="icon" href="../favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png" />
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
     <!-- PWA / mobile app -->
-    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="manifest" href="../manifest.webmanifest" />
     <meta name="theme-color" content="#7c3aed" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -25,27 +25,28 @@
     <meta name="apple-mobile-web-app-title" content="AI Consultant" />
 
     <!-- SEO / Social preview -->
-    <link rel="canonical" href="https://brothersupport.github.io/ai_consultant/live_demo.html" />
+    <link rel="canonical" href="https://brothersupport.github.io/ai_consultant/en/live_demo.html" />
     <link rel="alternate" hreflang="zh-Hant" href="https://brothersupport.github.io/ai_consultant/live_demo.html" />
     <link rel="alternate" hreflang="en" href="https://brothersupport.github.io/ai_consultant/en/live_demo.html" />
     <link rel="alternate" hreflang="x-default" href="https://brothersupport.github.io/ai_consultant/live_demo.html" />
     <meta name="robots" content="index,follow" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="AI consultant" />
-    <meta property="og:locale" content="zh_TW" />
-    <meta property="og:title" content="Live Demo｜看 AI Agent 實際跑給你看 - AI consultant" />
-    <meta property="og:description" content="互動式 AI Agent 展示：智慧客服自動分流、詢價單秒變報價、營運儀表板即時監控。先看到上線後的樣子，再決定要不要導入。" />
-    <meta property="og:url" content="https://brothersupport.github.io/ai_consultant/live_demo.html" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="zh_TW" />
+    <meta property="og:title" content="Live Demo｜Watch an AI Agent run for real - AI consultant" />
+    <meta property="og:description" content="Interactive AI Agent demos: smart support auto-routing, inquiries turned into quotes in seconds, live operations dashboard monitoring. See what it looks like once it's live, then decide whether to adopt." />
+    <meta property="og:url" content="https://brothersupport.github.io/ai_consultant/en/live_demo.html" />
     <meta property="og:image" content="https://brothersupport.github.io/ai_consultant/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="AI consultant — 讓 AI Agent 成為企業的數位員工" />
+    <meta property="og:image:alt" content="AI consultant — Turn AI Agents into your company's digital workforce" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Live Demo｜看 AI Agent 實際跑給你看 - AI consultant" />
-    <meta name="twitter:description" content="互動式 AI Agent 展示：智慧客服自動分流、詢價單秒變報價、營運儀表板即時監控。" />
+    <meta name="twitter:title" content="Live Demo｜Watch an AI Agent run for real - AI consultant" />
+    <meta name="twitter:description" content="Interactive AI Agent demos: smart support auto-routing, inquiries turned into quotes in seconds, live operations dashboard monitoring." />
     <meta name="twitter:image" content="https://brothersupport.github.io/ai_consultant/og-image.png" />
 
-    <link rel="stylesheet" href="linear.css">
+    <link rel="stylesheet" href="../linear.css">
     <style>
       /* ---------- demo-page scoped styles ---------- */
       .demo-note {
@@ -222,8 +223,8 @@
             <a href="success_stories.html">STORIES</a>
             <a href="live_demo.html" style="color:var(--text);">LIVE DEMO</a>
             <a href="blog.html">BLOG</a>
-            <a href="index.html#contact" class="btn btn-primary" style="height:38px;padding:8px 18px;font-size:14px;">免費診斷 →</a>
-            <a href="en/live_demo.html" class="lang-toggle" id="lang-toggle" title="English" aria-label="Switch to English" onclick="try{localStorage.setItem('lang','en')}catch(e){}">
+            <a href="index.html#contact" class="btn btn-primary" style="height:38px;padding:8px 18px;font-size:14px;">Free diagnosis →</a>
+            <a href="../live_demo.html" class="lang-toggle" id="lang-toggle" title="中文" aria-label="切換為中文" onclick="try{localStorage.setItem('lang','zh')}catch(e){}">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>
             </a>
             <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
@@ -240,13 +241,13 @@
       <section class="hero" style="padding-bottom:var(--space-12);">
         <div class="wrap">
           <div class="reveal center mx-auto" style="max-width:760px;">
-            <span class="hero-badge"><span class="dot"></span>LIVE DEMO · 互動展示</span>
-            <h1>看 AI Agent<br><span class="gradient-text">實際跑給你看</span></h1>
+            <span class="hero-badge"><span class="dot"></span>LIVE DEMO · INTERACTIVE</span>
+            <h1>Watch an AI Agent<br><span class="gradient-text">run for real</span></h1>
             <p class="lead mx-auto" style="max-width:580px;">
-              與其聽我們講，不如直接看上線後的樣子。下面是三個依真實場景做的<b style="color:var(--text);font-weight:600;">互動式模擬</b>——點一下，讓 Agent 當場跑一遍給你看。
+              Instead of taking our word for it, see what it looks like once it's live. Below are three <b style="color:var(--text);font-weight:600;">interactive simulations</b> built from real-world scenarios — click to let the Agent run through one right in front of you.
             </p>
             <div style="margin-top:var(--space-6);">
-              <span class="demo-note"><span class="pulse"></span>這是模擬展示（mock），數據為示意，實際導入會接上你的系統與真實資料</span>
+              <span class="demo-note"><span class="pulse"></span>This is a simulated demo (mock); the data is illustrative. A real deployment connects to your systems and live data</span>
             </div>
           </div>
         </div>
@@ -258,13 +259,13 @@
           <!-- tabs -->
           <div class="demo-tabs reveal" id="demo-tabs">
             <div class="demo-tab active" data-demo="inbox">
-              <span class="ic">💬</span><span><strong>智慧客服 Agent</strong><small>自動分流・即時回覆</small></span>
+              <span class="ic">💬</span><span><strong>Smart Support Agent</strong><small>Auto-routing · Instant replies</small></span>
             </div>
             <div class="demo-tab" data-demo="quote">
-              <span class="ic">🧾</span><span><strong>報價 Agent</strong><small>詢價單秒變報價</small></span>
+              <span class="ic">🧾</span><span><strong>Quoting Agent</strong><small>Inquiries to quotes in seconds</small></span>
             </div>
             <div class="demo-tab" data-demo="dash">
-              <span class="ic">📊</span><span><strong>營運儀表板</strong><small>即時監控・異常預警</small></span>
+              <span class="ic">📊</span><span><strong>Operations Dashboard</strong><small>Live monitoring · Anomaly alerts</small></span>
             </div>
           </div>
 
@@ -273,7 +274,7 @@
             <div class="app-bar">
               <div class="app-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
               <div class="app-url" id="app-url">app.your-company.ai / agent / customer-service</div>
-              <button class="app-run" id="app-run">▶ 執行 Demo</button>
+              <button class="app-run" id="app-run">▶ Run Demo</button>
             </div>
             <div class="app-body">
 
@@ -282,22 +283,22 @@
                 <div class="inbox">
                   <!-- ticket list -->
                   <div class="col col-list">
-                    <div class="col-head"><span>收件匣</span><span id="inbox-q">4 待處理</span></div>
+                    <div class="col-head"><span>Inbox</span><span id="inbox-q">4 pending</span></div>
                     <div id="ticket-list"></div>
                   </div>
                   <!-- conversation -->
                   <div class="col col-conv">
-                    <div class="col-head"><span id="conv-title">對話</span><span id="conv-ch"></span></div>
+                    <div class="col-head"><span id="conv-title">Conversation</span><span id="conv-ch"></span></div>
                     <div class="chat" id="chat"></div>
                   </div>
                   <!-- agent steps -->
                   <div class="col col-steps">
-                    <div class="col-head"><span>Agent 處理流程</span></div>
+                    <div class="col-head"><span>Agent workflow</span></div>
                     <div id="pipe-steps"></div>
                     <div class="kpi-row">
-                      <div class="k"><div class="kn gradient-text" id="kpi-done">0</div><div class="kl">今日自動處理</div></div>
-                      <div class="k"><div class="kn gradient-text" id="kpi-rate">0%</div><div class="kl">自動解決率</div></div>
-                      <div class="k"><div class="kn gradient-text" id="kpi-time">0s</div><div class="kl">平均回應</div></div>
+                      <div class="k"><div class="kn gradient-text" id="kpi-done">0</div><div class="kl">Handled automatically today</div></div>
+                      <div class="k"><div class="kn gradient-text" id="kpi-rate">0%</div><div class="kl">Auto-resolution rate</div></div>
+                      <div class="k"><div class="kn gradient-text" id="kpi-time">0s</div><div class="kl">Avg. response</div></div>
                     </div>
                   </div>
                 </div>
@@ -307,15 +308,15 @@
               <div class="demo-panel" id="panel-quote">
                 <div class="quote-wrap">
                   <div>
-                    <div class="filechip" id="filechip" style="opacity:.4;">📎 等待輸入… <span style="color:var(--text-dim)">（點「執行 Demo」上傳詢價單）</span></div>
+                    <div class="filechip" id="filechip" style="opacity:.4;">📎 Waiting for input… <span style="color:var(--text-dim)">(click "Run Demo" to upload an inquiry)</span></div>
                     <div class="pipe" id="quote-pipe"></div>
                   </div>
                   <div class="quote-doc" id="quote-doc">
-                    <div class="qd-head"><div class="t">報價單 / QUOTATION</div><div class="s">No. Q-2026-0628 · 自動生成 by AI Agent</div></div>
+                    <div class="qd-head"><div class="t">QUOTATION</div><div class="s">No. Q-2026-0628 · auto-generated by AI Agent</div></div>
                     <div class="qd-body" id="qd-body"></div>
                     <div class="qd-foot">
-                      <button class="btn btn-primary" style="flex:1;height:40px;font-size:13px;">下載 PDF</button>
-                      <button class="btn btn-secondary" style="flex:1;height:40px;font-size:13px;">送主管核可</button>
+                      <button class="btn btn-primary" style="flex:1;height:40px;font-size:13px;">Download PDF</button>
+                      <button class="btn btn-secondary" style="flex:1;height:40px;font-size:13px;">Send for approval</button>
                     </div>
                   </div>
                 </div>
@@ -325,23 +326,23 @@
               <div class="demo-panel" id="panel-dash">
                 <div class="dash dash-stage">
                   <div class="toast" id="dash-toast">
-                    <div class="th">⚠️ 異常偵測</div>
-                    <div>原料 #A-227 庫存低於安全水位，Agent 已自動建立採購單並通知負責人。</div>
+                    <div class="th">⚠️ Anomaly detected</div>
+                    <div>Raw material #A-227 is below the safety stock level. The Agent has automatically created a purchase order and notified the owner.</div>
                   </div>
                   <div class="dash-kpis">
-                    <div class="dcard"><div class="dl">今日自動任務</div><div class="dv gradient-text" data-dto="1284">0</div><div class="dd">▲ 較昨日 +12%</div></div>
-                    <div class="dcard"><div class="dl">節省工時 / 週</div><div class="dv gradient-text" data-dto="156" data-dsuffix=" hr">0</div><div class="dd">▲ 相當於 4 名人力</div></div>
-                    <div class="dcard"><div class="dl">平均處理時間</div><div class="dv gradient-text" data-dto="2" data-dsuffix=".4s">0</div><div class="dd down">▼ 較人工快 18×</div></div>
-                    <div class="dcard"><div class="dl">準確率</div><div class="dv gradient-text" data-dto="99" data-dsuffix=".2%">0</div><div class="dd">▲ 0 次漏單</div></div>
+                    <div class="dcard"><div class="dl">Automated tasks today</div><div class="dv gradient-text" data-dto="1284">0</div><div class="dd">▲ +12% vs. yesterday</div></div>
+                    <div class="dcard"><div class="dl">Hours saved / week</div><div class="dv gradient-text" data-dto="156" data-dsuffix=" hr">0</div><div class="dd">▲ equivalent to 4 staff</div></div>
+                    <div class="dcard"><div class="dl">Avg. handling time</div><div class="dv gradient-text" data-dto="2" data-dsuffix=".4s">0</div><div class="dd down">▼ 18× faster than manual</div></div>
+                    <div class="dcard"><div class="dl">Accuracy</div><div class="dv gradient-text" data-dto="99" data-dsuffix=".2%">0</div><div class="dd">▲ 0 missed orders</div></div>
                   </div>
                   <div class="dash-grid">
                     <div class="chart-card">
-                      <h4>本週自動處理任務量</h4><div class="sub">tasks / day · 即時更新</div>
+                      <h4>Tasks automated this week</h4><div class="sub">tasks / day · live updates</div>
                       <div class="bars" id="dash-bars"></div>
-                      <div class="bars-x"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+                      <div class="bars-x"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
                     </div>
                     <div class="chart-card">
-                      <h4>即時事件流</h4><div class="sub">live agent activity</div>
+                      <h4>Live event stream</h4><div class="sub">live agent activity</div>
                       <div class="feed" id="dash-feed"></div>
                     </div>
                   </div>
@@ -352,9 +353,9 @@
           </div><!-- /app-frame -->
 
           <div class="center" style="margin-top:var(--space-8);">
-            <button class="btn btn-primary btn-lg" id="rerun-btn">▶ 執行 Demo（重新跑一次）</button>
+            <button class="btn btn-primary btn-lg" id="rerun-btn">▶ Run Demo (run it again)</button>
             <p style="margin-top:var(--space-4); font-size:13px; color:var(--text-dim); font-family:var(--mono);">
-              切換上方分頁試不同場景，隨時按「執行 Demo」重跑一次
+              Switch the tabs above to try different scenarios, and hit "Run Demo" anytime to run it again
             </p>
           </div>
         </div>
@@ -364,9 +365,9 @@
       <section class="b-top">
         <div class="wrap">
           <div class="grid-3">
-            <div class="card reveal"><div class="card-icon">🎯</div><h3>看得到的成果</h3><p>不是投影片裡的願景，而是把你的真實場景跑一遍，讓你預先看到上線後長什麼樣。</p></div>
-            <div class="card reveal"><div class="card-icon">🔌</div><h3>接你現有系統</h3><p>展示中的資料是示意；正式導入會串接你的 LINE、Email、ERP 與資料庫，不換系統。</p></div>
-            <div class="card reveal"><div class="card-icon">📈</div><h3>先試點再放大</h3><p>從一個最痛的環節開始 PoC，量到成效（省工時、轉換率）達標，再複製到其他流程。</p></div>
+            <div class="card reveal"><div class="card-icon">🎯</div><h3>Results you can see</h3><p>Not a vision buried in slides — we run your real scenario through, so you can see in advance what it looks like once it's live.</p></div>
+            <div class="card reveal"><div class="card-icon">🔌</div><h3>Connects to your existing systems</h3><p>The data in the demo is illustrative; a real deployment wires into your LINE, Email, ERP and databases — no system swap.</p></div>
+            <div class="card reveal"><div class="card-icon">📈</div><h3>Pilot first, then scale</h3><p>Start a PoC on your most painful step; once the measured impact (hours saved, conversion) hits target, replicate it to other processes.</p></div>
           </div>
         </div>
       </section>
@@ -376,9 +377,9 @@
         <div class="wrap">
           <div class="cta-box reveal">
             <span class="mono-label" style="justify-content:center;">YOUR_TURN</span>
-            <h2 style="margin-top:14px;">想看 AI Agent 跑<br><span class="gradient-text">你的真實流程</span>？</h2>
-            <p class="lead mx-auto" style="max-width:560px; margin-bottom: var(--space-8);">15 分鐘免費診斷，我們會用你的場景做一份客製 Demo，讓你看到實際能省下多少。</p>
-            <a href="https://forms.gle/M1YHzT8V3wErZGNJ6" target="_blank" rel="noreferrer" class="btn btn-primary btn-lg">預約客製 Demo →</a>
+            <h2 style="margin-top:14px;">Want to see an AI Agent run<br><span class="gradient-text">your real process</span>?</h2>
+            <p class="lead mx-auto" style="max-width:560px; margin-bottom: var(--space-8);">In a 15-minute free diagnosis, we'll build a custom demo around your scenario so you can see exactly how much you could save.</p>
+            <a href="https://forms.gle/M1YHzT8V3wErZGNJ6" target="_blank" rel="noreferrer" class="btn btn-primary btn-lg">Book a custom demo →</a>
           </div>
         </div>
       </section>
@@ -437,21 +438,21 @@
          DEMO 1 — Customer service inbox
       ========================================================= */
       const TICKETS = [
-        { from:'林小姐', ch:'LINE', q:'請問我上週三訂的貨大概什麼時候會到？訂單編號 #SO-3391', intent:'物流查詢',
-          reply:'林小姐您好 😊 您的訂單 #SO-3391 已於昨日出貨，目前在轉運中心，預計明天（6/29）下午前送達。需要我幫您開啟到貨通知嗎？' },
-        { from:'王經理', ch:'Email', q:'你們的工業風扇 FX-200 有現貨嗎？我要 50 台，可以給報價嗎？', intent:'詢價',
-          reply:'王經理您好，FX-200 目前現貨 68 台，可滿足 50 台需求。50 台享 8 折，單價 NT$2,240，含稅總計 NT$117,600。報價單已附上，效期 7 天。' },
-        { from:'陳先生', ch:'LINE', q:'我要退貨，東西收到時外箱破損，裡面也刮傷了', intent:'退換貨',
-          reply:'陳先生很抱歉造成不便 🙏 已為您建立退貨單 #RMA-0612，並安排明日宅配到府收件，免運費。換貨新品預計 3 個工作天送達。' },
-        { from:'Sophie', ch:'Web', q:'Do you ship to Singapore? And what payment methods?', intent:'售前諮詢',
+        { from:'Ms. Lin', ch:'LINE', q:'When will the order I placed last Wednesday roughly arrive? Order #SO-3391', intent:'Shipping inquiry',
+          reply:'Hi Ms. Lin 😊 Your order #SO-3391 shipped yesterday and is currently at the transit center, expected to arrive by tomorrow (6/29) afternoon. Would you like me to turn on delivery notifications for you?' },
+        { from:'Mr. Wang', ch:'Email', q:'Do you have the FX-200 industrial fan in stock? I need 50 units — can you give me a quote?', intent:'Quote request',
+          reply:'Hi Mr. Wang, we currently have 68 FX-200 units in stock, enough for your 50. At 50 units you get a 20% discount: NT$2,240 each, NT$117,600 total incl. tax. The quote is attached and valid for 7 days.' },
+        { from:'Mr. Chen', ch:'LINE', q:'I want to return an item — the outer box was damaged on arrival and the contents were scratched too', intent:'Return / exchange',
+          reply:'Mr. Chen, so sorry for the inconvenience 🙏 We\'ve created return ticket #RMA-0612 and scheduled a courier pickup at your door tomorrow, free of charge. A replacement is expected to arrive within 3 business days.' },
+        { from:'Sophie', ch:'Web', q:'Do you ship to Singapore? And what payment methods?', intent:'Pre-sales inquiry',
           reply:'Hi Sophie! Yes, we ship to Singapore (5–7 business days). We accept credit card, PayPal, and bank transfer. Shipping is free for orders over US$300.' },
       ];
       const PIPE = [
-        { i:'🔎', t:'意圖分類', d:'NLU 判斷客戶意圖' },
-        { i:'📚', t:'知識檢索', d:'查 KB / 訂單 / 庫存' },
-        { i:'✍️', t:'生成草稿', d:'撰寫個人化回覆' },
-        { i:'🛡️', t:'風險檢查', d:'政策與語氣審核' },
-        { i:'📤', t:'送出回覆', d:'自動回覆並結案' },
+        { i:'🔎', t:'Intent classification', d:'NLU determines customer intent' },
+        { i:'📚', t:'Knowledge retrieval', d:'Query KB / orders / inventory' },
+        { i:'✍️', t:'Draft response', d:'Compose a personalized reply' },
+        { i:'🛡️', t:'Risk check', d:'Policy and tone review' },
+        { i:'📤', t:'Send reply', d:'Auto-reply and close ticket' },
       ];
       function buildInbox() {
         const list = document.getElementById('ticket-list');
@@ -459,7 +460,7 @@
           <div class="tkt" data-i="${i}">
             <div class="from">${t.from} <span class="ch">${t.ch}</span></div>
             <div class="prev">${t.q}</div>
-            <div class="badge bg-pend">● 待處理</div>
+            <div class="badge bg-pend">● Pending</div>
           </div>`).join('');
         document.getElementById('pipe-steps').innerHTML = PIPE.map(p=>`
           <div class="pstep"><div class="pi">${p.i}</div><div><div class="pt">${p.t}</div><div class="pd">${p.d}</div></div></div>`).join('');
@@ -480,7 +481,7 @@
           tkts[n].scrollIntoView({ block:'nearest', behavior:'smooth' });
           document.getElementById('conv-title').textContent = t.from + ' · ' + t.intent;
           document.getElementById('conv-ch').textContent = t.ch;
-          document.getElementById('inbox-q').textContent = (TICKETS.length - n) + ' 待處理';
+          document.getElementById('inbox-q').textContent = (TICKETS.length - n) + ' pending';
           chat.innerHTML = '';
 
           // customer message
@@ -524,7 +525,7 @@
           // mark resolved + update KPIs
           tkts[n].classList.add('done');
           tkts[n].querySelector('.badge').className = 'badge bg-ok';
-          tkts[n].querySelector('.badge').textContent = '✓ 已自動解決';
+          tkts[n].querySelector('.badge').textContent = '✓ Auto-resolved';
           done++;
           document.getElementById('kpi-done').textContent = (1283 + done);
           document.getElementById('kpi-rate').textContent = Math.round(done/(n+1)*100*0.94) + '%';
@@ -539,17 +540,17 @@
          DEMO 2 — Quote pipeline
       ========================================================= */
       const QPIPE = [
-        { i:'📄', t:'解析詢價文件', log:'OCR 擷取 spec.pdf … 找到 4 個品項、數量與規格' },
-        { i:'🗂️', t:'比對品項庫存', log:'inventory.match() → 4/4 命中，現貨充足 ✓' },
-        { i:'💲', t:'計算報價', log:'套用 VIP 折扣 8 折 + 數量級距，毛利率 31.5%' },
-        { i:'🛡️', t:'毛利與政策檢查', log:'毛利 ≥ 門檻 25% ✓ 無違反定價政策 ✓' },
-        { i:'🧾', t:'生成報價單', log:'產出 Q-2026-0628.pdf，效期 7 天' },
+        { i:'📄', t:'Parse inquiry document', log:'OCR extracting spec.pdf … found 4 items, quantities and specs' },
+        { i:'🗂️', t:'Match items to inventory', log:'inventory.match() → 4/4 hits, ample stock ✓' },
+        { i:'💲', t:'Calculate quote', log:'Applying VIP 20% discount + quantity tiers, margin 31.5%' },
+        { i:'🛡️', t:'Margin & policy check', log:'Margin ≥ 25% threshold ✓ No pricing-policy violation ✓' },
+        { i:'🧾', t:'Generate quote', log:'Produced Q-2026-0628.pdf, valid for 7 days' },
       ];
       const QITEMS = [
-        { n:'工業風扇 FX-200 × 50', v:'112,000' },
-        { n:'防塵濾網 AF-12 × 50', v:'15,000' },
-        { n:'安裝支架 BR-7 × 50', v:'9,500' },
-        { n:'到府安裝服務', v:'8,000' },
+        { n:'FX-200 industrial fan × 50', v:'112,000' },
+        { n:'AF-12 dust filter × 50', v:'15,000' },
+        { n:'BR-7 mounting bracket × 50', v:'9,500' },
+        { n:'On-site installation service', v:'8,000' },
       ];
       function buildQuote() {
         document.getElementById('quote-pipe').innerHTML = QPIPE.map(p=>`
@@ -558,7 +559,7 @@
           </div>`).join('');
         document.getElementById('quote-doc').classList.remove('show');
         document.getElementById('filechip').style.opacity = '.4';
-        document.getElementById('filechip').innerHTML = '📎 等待輸入… <span style="color:var(--text-dim)">（點「執行 Demo」上傳詢價單）</span>';
+        document.getElementById('filechip').innerHTML = '📎 Waiting for input… <span style="color:var(--text-dim)">(click "Run Demo" to upload an inquiry)</span>';
       }
       async function runQuote(token) {
         const nodes = [...document.querySelectorAll('#quote-pipe .pnode')];
@@ -568,7 +569,7 @@
 
         const fc = document.getElementById('filechip');
         fc.style.opacity = '1';
-        fc.innerHTML = '📎 spec_詢價單_王經理.pdf <span style="color:var(--accent-2)">· 已接收</span>';
+        fc.innerHTML = '📎 spec_inquiry_Mr_Wang.pdf <span style="color:var(--accent-2)">· received</span>';
         await sleep(reduce?200:600); if (token !== runToken) return;
 
         for (let i = 0; i < nodes.length; i++) {
@@ -583,7 +584,7 @@
         // reveal quote doc
         const body = document.getElementById('qd-body');
         body.innerHTML = QITEMS.map(q=>`<div class="qd-row"><span class="qn">${q.n}</span><span class="qv">NT$ ${q.v}</span></div>`).join('') +
-          `<div class="qd-total"><span class="ql">含稅總計 (5%)</span><span class="qt gradient-text" id="qd-total-num">NT$ 0</span></div>`;
+          `<div class="qd-total"><span class="ql">Total incl. tax (5%)</span><span class="qt gradient-text" id="qd-total-num">NT$ 0</span></div>`;
         doc.classList.add('show');
         await sleep(reduce?100:300); if (token !== runToken) return;
         const totalEl = document.getElementById('qd-total-num');
@@ -602,11 +603,11 @@
       ========================================================= */
       const BARS = [62, 78, 71, 95, 88, 40, 33];
       const FEED = [
-        { c:'okk', i:'✅', t:'自動回覆客服訊息 #4821（物流查詢）', time:'剛剛' },
-        { c:'okk', i:'🧾', t:'生成報價單 Q-2026-0628 並送主管核可', time:'12 秒前' },
-        { c:'alert', i:'⚠️', t:'偵測原料 #A-227 低於安全庫存 → 自動建立採購單', time:'48 秒前' },
-        { c:'okk', i:'📦', t:'同步 38 筆訂單狀態至 ERP', time:'1 分鐘前' },
-        { c:'okk', i:'📊', t:'產出昨日營運日報並寄送 5 位主管', time:'3 分鐘前' },
+        { c:'okk', i:'✅', t:'Auto-replied to support message #4821 (shipping inquiry)', time:'just now' },
+        { c:'okk', i:'🧾', t:'Generated quote Q-2026-0628 and sent for manager approval', time:'12 sec ago' },
+        { c:'alert', i:'⚠️', t:'Detected raw material #A-227 below safety stock → auto-created purchase order', time:'48 sec ago' },
+        { c:'okk', i:'📦', t:'Synced 38 order statuses to ERP', time:'1 min ago' },
+        { c:'okk', i:'📊', t:'Produced yesterday\'s operations report and emailed it to 5 managers', time:'3 min ago' },
       ];
       function buildDash() {
         document.getElementById('dash-bars').innerHTML = BARS.map(()=>`<div class="bar"></div>`).join('');
@@ -667,11 +668,11 @@
       }
       async function play() {
         const token = ++runToken;
-        runBtn.disabled = true; runBtn.textContent = '● 執行中…';
+        runBtn.disabled = true; runBtn.textContent = '● Running…';
         DEMOS[current].build();
         await sleep(120);
         await DEMOS[current].run(token);
-        if (token === runToken) { runBtn.disabled = false; runBtn.textContent = '↻ 再跑一次'; }
+        if (token === runToken) { runBtn.disabled = false; runBtn.textContent = '↻ Run again'; }
       }
 
       document.querySelectorAll('.demo-tab').forEach(tab=>{
@@ -690,6 +691,6 @@
       }, { threshold: 0.25 });
       stageObs.observe(document.querySelector('.app-frame'));
     </script>
-      <script defer src="mobile-nav.js"></script>
+      <script defer src="../mobile-nav.js"></script>
   </body>
 </html>

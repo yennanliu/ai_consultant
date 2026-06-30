@@ -1,22 +1,22 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <script>
       /* Honor saved language preference */
-      (function(){try{if(localStorage.getItem('lang')==='en')location.replace('en/blog.html');}catch(e){}})();
+      (function(){try{if(localStorage.getItem('lang')==='zh')location.replace('../blog.html');}catch(e){}})();
     </script>
     <title>Blog - AI consultant</title>
-    <meta name="description" content="AI consultant 部落格——agentic AI 導入、流程自動化、私有 AI Agent 部署與資料治理的實戰觀點，專為台灣中小企業而寫。" />
+    <meta name="description" content="The AI consultant blog — hands-on perspectives on agentic AI adoption, process automation, private AI Agent deployment and data governance, written for Taiwan's small and medium businesses." />
 
     <!-- Favicons -->
-    <link rel="icon" href="favicon.ico" sizes="any" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="icon" href="../favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png" />
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
     <!-- PWA / mobile app -->
-    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="manifest" href="../manifest.webmanifest" />
     <meta name="theme-color" content="#7c3aed" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -25,27 +25,28 @@
     <meta name="apple-mobile-web-app-title" content="AI Consultant" />
 
     <!-- SEO / Social preview -->
-    <link rel="canonical" href="https://brothersupport.github.io/ai_consultant/blog.html" />
+    <link rel="canonical" href="https://brothersupport.github.io/ai_consultant/en/blog.html" />
     <link rel="alternate" hreflang="zh-Hant" href="https://brothersupport.github.io/ai_consultant/blog.html" />
     <link rel="alternate" hreflang="en" href="https://brothersupport.github.io/ai_consultant/en/blog.html" />
     <link rel="alternate" hreflang="x-default" href="https://brothersupport.github.io/ai_consultant/blog.html" />
     <meta name="robots" content="index,follow" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="AI consultant" />
-    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="zh_TW" />
     <meta property="og:title" content="Blog - AI consultant" />
-    <meta property="og:description" content="AI consultant 部落格——agentic AI 導入、流程自動化、私有 AI Agent 部署與資料治理的實戰觀點，專為台灣中小企業而寫。" />
-    <meta property="og:url" content="https://brothersupport.github.io/ai_consultant/blog.html" />
+    <meta property="og:description" content="The AI consultant blog — hands-on perspectives on agentic AI adoption, process automation, private AI Agent deployment and data governance, written for Taiwan's small and medium businesses." />
+    <meta property="og:url" content="https://brothersupport.github.io/ai_consultant/en/blog.html" />
     <meta property="og:image" content="https://brothersupport.github.io/ai_consultant/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="AI consultant — 讓 AI Agent 成為企業的數位員工" />
+    <meta property="og:image:alt" content="AI consultant — Turn AI Agents into your company's digital workforce" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Blog - AI consultant" />
-    <meta name="twitter:description" content="AI consultant 部落格——agentic AI 導入、流程自動化、私有 AI Agent 部署與資料治理的實戰觀點，專為台灣中小企業而寫。" />
+    <meta name="twitter:description" content="The AI consultant blog — hands-on perspectives on agentic AI adoption, process automation, private AI Agent deployment and data governance, written for Taiwan's small and medium businesses." />
     <meta name="twitter:image" content="https://brothersupport.github.io/ai_consultant/og-image.png" />
 
-    <link rel="stylesheet" href="linear.css">
+    <link rel="stylesheet" href="../linear.css">
     <style>
       /* Category filter */
       .filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: var(--space-12); }
@@ -87,7 +88,7 @@
             <a href="live_demo.html">LIVE DEMO</a>
             <a href="ai_agent.html">AI AGENT</a>
             <a href="index.html#contact">CONTACT</a>
-            <a href="en/blog.html" class="lang-toggle" id="lang-toggle" title="English" aria-label="Switch to English" onclick="try{localStorage.setItem('lang','en')}catch(e){}">
+            <a href="../blog.html" class="lang-toggle" id="lang-toggle" title="中文" aria-label="切換為中文" onclick="try{localStorage.setItem('lang','zh')}catch(e){}">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>
             </a>
             <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
@@ -105,7 +106,7 @@
           <span class="mono-label">INSIGHTS &amp; UPDATES</span>
           <h1>Blog</h1>
           <p class="lead" style="max-width: 600px;">
-            分享 AI 導入的最新趨勢、實務經驗與業界洞察，幫助企業掌握變革先機。從策略到落地，從 ROI 到資安，這裡是台灣中小企業的 AI 知識庫。
+            The latest trends, hands-on experience and industry insight on AI adoption, helping businesses stay ahead of the curve. From strategy to deployment, from ROI to security — this is the AI knowledge base for Taiwan's small and medium businesses.
           </p>
         </div>
       </section>
@@ -113,17 +114,17 @@
       <section>
         <div class="wrap">
           <!-- Featured -->
-          <a href="asset/ai-trends-2026.html" class="card featured reveal">
+          <a href="../asset/ai-trends-2026.html" class="card featured reveal">
             <div>
               <div class="tagrow">
                 <span class="badge badge-accent">FEATURED</span>
                 <span class="mono-label" style="margin: 0;">AI TRENDS</span>
               </div>
-              <h2>2026 年 AI 趨勢預測</h2>
-              <p>從生成式 AI 的企業化、邊緣運算與私有化部署，到 AI Agent 的規模化落地——這篇報告拆解 2026 年最值得台灣中小企業關注的三大趨勢與切入機會。</p>
+              <h2>2026 AI Trends Forecast</h2>
+              <p>From the enterprise adoption of generative AI, edge computing and private deployment to the at-scale rollout of AI Agents — this report breaks down the three biggest trends and entry opportunities Taiwan's SMBs should watch in 2026.</p>
               <div class="meta">
                 <span class="btn btn-primary" style="height:40px;">READ FEATURED →</span>
-                <span class="post-meta" style="margin:0;">2026-04-27<span class="dotsep"></span>閱讀約 8 分鐘</span>
+                <span class="post-meta" style="margin:0;">2026-04-27<span class="dotsep"></span>About 8 min read</span>
               </div>
             </div>
             <div class="featured-art"><span class="glyph">🛰️</span></div>
@@ -134,117 +135,117 @@
             <span class="mono-label">LATEST_POSTS</span>
           </div>
           <div class="filters reveal" id="filters">
-            <button class="fbtn active" data-cat="all">全部</button>
-            <button class="fbtn" data-cat="trends">趨勢</button>
-            <button class="fbtn" data-cat="strategy">策略</button>
-            <button class="fbtn" data-cat="case">案例</button>
-            <button class="fbtn" data-cat="agent">Agent 系列</button>
-            <button class="fbtn" data-cat="security">安全治理</button>
-            <button class="fbtn" data-cat="data">資料</button>
-            <button class="fbtn" data-cat="tools">工具</button>
+            <button class="fbtn active" data-cat="all">All</button>
+            <button class="fbtn" data-cat="trends">Trends</button>
+            <button class="fbtn" data-cat="strategy">Strategy</button>
+            <button class="fbtn" data-cat="case">Case Studies</button>
+            <button class="fbtn" data-cat="agent">Agent Series</button>
+            <button class="fbtn" data-cat="security">Security &amp; Governance</button>
+            <button class="fbtn" data-cat="data">Data</button>
+            <button class="fbtn" data-cat="tools">Tools</button>
           </div>
 
           <div class="card-grid" id="postgrid">
 
-            <a href="asset/ai-roi-calculation.html" class="card reveal" data-cat="strategy">
+            <a href="../asset/ai-roi-calculation.html" class="card reveal" data-cat="strategy">
               <span class="mono-label">STRATEGY</span>
-              <h3>AI 導入的 ROI 怎麼算？</h3>
-              <div class="post-meta">2026-05-18<span class="dotsep"></span>7 分鐘</div>
-              <p>不需財務背景也能套用的回報評估框架，從省下的工時到隱性效益，估出你的回收期。</p>
+              <h3>How do you calculate the ROI of AI adoption?</h3>
+              <div class="post-meta">2026-05-18<span class="dotsep"></span>7 min</div>
+              <p>A return-on-investment framework anyone can apply, no finance background required — from labor hours saved to hidden benefits, estimate your payback period.</p>
               <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/data-governance-first-step.html" class="card reveal" data-cat="data">
+            <a href="../asset/data-governance-first-step.html" class="card reveal" data-cat="data">
               <span class="mono-label">DATA</span>
-              <h3>別再用 Excel 管資料</h3>
-              <div class="post-meta">2026-05-12<span class="dotsep"></span>6 分鐘</div>
-              <p>AI 成效七成取決於資料品質。用最務實的方式，跨出中小企業資料治理的第一步。</p>
+              <h3>Stop managing your data in Excel</h3>
+              <div class="post-meta">2026-05-12<span class="dotsep"></span>6 min</div>
+              <p>Seventy percent of AI's results come down to data quality. Take the first, most practical step toward data governance for SMBs.</p>
               <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/line-ai-customer-service.html" class="card reveal" data-cat="case">
+            <a href="../asset/line-ai-customer-service.html" class="card reveal" data-cat="case">
               <span class="mono-label">CASE STUDY</span>
-              <h3>LINE × AI Agent 客服實戰</h3>
-              <div class="post-meta">2026-05-08<span class="dotsep"></span>6 分鐘</div>
-              <p>把 LINE 官方帳號變成 24/7 自動戰力，自動回覆 70%，客服更專注在高價值客訴。</p>
+              <h3>LINE × AI Agent customer service in action</h3>
+              <div class="post-meta">2026-05-08<span class="dotsep"></span>6 min</div>
+              <p>Turn your LINE official account into a 24/7 automated force — auto-resolving 70% of cases so support can focus on high-value issues.</p>
               <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/automation-tool-selection.html" class="card reveal" data-cat="tools">
+            <a href="../asset/automation-tool-selection.html" class="card reveal" data-cat="tools">
               <span class="mono-label">TOOLS</span>
-              <h3>n8n、Make 還是自建？</h3>
-              <div class="post-meta">2026-05-05<span class="dotsep"></span>7 分鐘</div>
-              <p>從資料敏感度、變動頻率到成本曲線，三個面向幫你做對自動化工具選型決策。</p>
+              <h3>n8n, Make, or build your own?</h3>
+              <div class="post-meta">2026-05-05<span class="dotsep"></span>7 min</div>
+              <p>From data sensitivity to change frequency to the cost curve, three angles to help you make the right automation tooling decision.</p>
               <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/agent-chat-vs-agent.html" class="card reveal" data-cat="agent">
+            <a href="../asset/agent-chat-vs-agent.html" class="card reveal" data-cat="agent">
               <span class="mono-label">AGENT SERIES #1</span>
               <h3>AI Chat vs AI Agent</h3>
-              <div class="post-meta">2026-05-02<span class="dotsep"></span>5 分鐘</div>
-              <p>從聊天工具到可委派的智能系統，清晰區分兩者本質、應用場景與選型決策框架。</p>
+              <div class="post-meta">2026-05-02<span class="dotsep"></span>5 min</div>
+              <p>From chat tools to delegable intelligent systems — a clear distinction of their essence, use cases and a framework for choosing between them.</p>
               <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/agent-six-layer-architecture.html" class="card reveal" data-cat="agent">
+            <a href="../asset/agent-six-layer-architecture.html" class="card reveal" data-cat="agent">
               <span class="mono-label">AGENT SERIES #2</span>
-              <h3>Agent 六層架構</h3>
-              <div class="post-meta">2026-05-02<span class="dotsep"></span>7 分鐘</div>
-              <p>可靠 Agent 系統的藍圖，從基礎模型層到頂層治理層的分層設計與實施路線。</p>
+              <h3>The six-layer Agent architecture</h3>
+              <div class="post-meta">2026-05-02<span class="dotsep"></span>7 min</div>
+              <p>A blueprint for reliable Agent systems — the layered design and implementation roadmap from the foundation model layer up to the top governance layer.</p>
               <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/agent-core-components.html" class="card reveal" data-cat="agent">
+            <a href="../asset/agent-core-components.html" class="card reveal" data-cat="agent">
               <span class="mono-label">AGENT SERIES #3</span>
-              <h3>Agent 核心元件與實施路線</h3>
-              <div class="post-meta">2026-05-02<span class="dotsep"></span>6 分鐘</div>
-              <p>MCP、Skill、Sandbox、Plugin 四大組件的作用、整合方式與 6 個月落地計畫。</p>
+              <h3>Core Agent components and implementation roadmap</h3>
+              <div class="post-meta">2026-05-02<span class="dotsep"></span>6 min</div>
+              <p>The roles of the four key components — MCP, Skill, Sandbox and Plugin — how they integrate, and a 6-month rollout plan.</p>
               <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/enterprise-private-agent-architecture.html" class="card reveal" data-cat="agent">
+            <a href="../asset/enterprise-private-agent-architecture.html" class="card reveal" data-cat="agent">
               <span class="mono-label">TECHNICAL GUIDE</span>
-              <h3>企業私有 AI Agent 架構設計</h3>
-              <div class="post-meta">2026-05-02<span class="dotsep"></span>9 分鐘</div>
-              <p>深入探討私有 Agent 系統的核心架構層級、關鍵設計決策與實施建議。</p>
+              <h3>Designing enterprise private AI Agent architecture</h3>
+              <div class="post-meta">2026-05-02<span class="dotsep"></span>9 min</div>
+              <p>A deep dive into the core architectural layers of private Agent systems, the key design decisions and implementation recommendations.</p>
               <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/private-agent-deployment-strategy.html" class="card reveal" data-cat="agent">
+            <a href="../asset/private-agent-deployment-strategy.html" class="card reveal" data-cat="agent">
               <span class="mono-label">IMPLEMENTATION</span>
-              <h3>私有 Agent 部署策略與治理</h3>
-              <div class="post-meta">2026-05-02<span class="dotsep"></span>8 分鐘</div>
-              <p>從分階段部署路線圖到治理框架的四大支柱，以及常見陷阱的應對策略。</p>
+              <h3>Private Agent deployment strategy and governance</h3>
+              <div class="post-meta">2026-05-02<span class="dotsep"></span>8 min</div>
+              <p>From a phased deployment roadmap to the four pillars of a governance framework, plus how to handle common pitfalls.</p>
               <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/private-agent-security-compliance.html" class="card reveal" data-cat="security">
+            <a href="../asset/private-agent-security-compliance.html" class="card reveal" data-cat="security">
               <span class="mono-label">SECURITY &amp; GOVERNANCE</span>
-              <h3>私有 Agent 的安全與合規</h3>
-              <div class="post-meta">2026-05-02<span class="dotsep"></span>8 分鐘</div>
-              <p>資料安全、隱私保護、系統可靠性與合規框架的完整分析，建立可信的企業級系統。</p>
+              <h3>Security and compliance for private Agents</h3>
+              <div class="post-meta">2026-05-02<span class="dotsep"></span>8 min</div>
+              <p>A complete analysis of data security, privacy protection, system reliability and compliance frameworks for building trustworthy enterprise-grade systems.</p>
               <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/manufacturing-ai-case-study.html" class="card reveal" data-cat="case">
+            <a href="../asset/manufacturing-ai-case-study.html" class="card reveal" data-cat="case">
               <span class="mono-label">CASE STUDY</span>
-              <h3>製造業 AI 導入實戰</h3>
-              <div class="post-meta">2026-04-20<span class="dotsep"></span>7 分鐘</div>
-              <p>深入剖析紡織廠導入 AI 瑕疵檢測的完整流程，從需求分析到成效驗證的實務分享。</p>
+              <h3>AI adoption in manufacturing in action</h3>
+              <div class="post-meta">2026-04-20<span class="dotsep"></span>7 min</div>
+              <p>A deep look at a textile factory's full AI defect-detection rollout — a hands-on account from requirements analysis to results validation.</p>
               <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
-            <a href="asset/smb-ai-strategy-guide.html" class="card reveal" data-cat="strategy">
+            <a href="../asset/smb-ai-strategy-guide.html" class="card reveal" data-cat="strategy">
               <span class="mono-label">STRATEGY</span>
-              <h3>中小企業 AI 策略指南</h3>
-              <div class="post-meta">2026-04-15<span class="dotsep"></span>6 分鐘</div>
-              <p>為中小企業量身打造的 AI 導入策略框架，涵蓋資源評估、風險管理與階段性實施建議。</p>
+              <h3>The SMB AI strategy guide</h3>
+              <div class="post-meta">2026-04-15<span class="dotsep"></span>6 min</div>
+              <p>An AI adoption strategy framework tailored to SMBs, covering resource assessment, risk management and phased implementation recommendations.</p>
               <span class="btn btn-ghost" style="padding: 0;">READ MORE →</span>
             </a>
 
           </div>
 
-          <p id="noresult" style="display:none; color: var(--text-dim); margin-top: var(--space-8);">此分類暫無文章。</p>
+          <p id="noresult" style="display:none; color: var(--text-dim); margin-top: var(--space-8);">No posts in this category yet.</p>
         </div>
       </section>
     </main>
@@ -299,6 +300,6 @@
       }, { threshold: 0.12 });
       document.querySelectorAll('.reveal').forEach(function (el, i) { el.style.transitionDelay = (i % 4) * 70 + 'ms'; __io.observe(el); });
     </script>
-      <script defer src="mobile-nav.js"></script>
+      <script defer src="../mobile-nav.js"></script>
   </body>
 </html>

@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <script>
+      /* Honor saved language preference */
+      (function(){try{if(localStorage.getItem('lang')==='en')location.replace('en/ai_agent.html');}catch(e){}})();
+    </script>
     <title>AI AGENT | 企業 AI 數位員工 - AI consultant</title>
     <meta name="description" content="讓 AI 成為你的數位員工。前 Google / AWS 資深工程師操刀，無需更換現有系統，最快一週完成流程自動化，先看成效再決定。" />
 
@@ -22,6 +26,9 @@
 
     <!-- SEO / Social preview -->
     <link rel="canonical" href="https://brothersupport.github.io/ai_consultant/ai_agent.html" />
+    <link rel="alternate" hreflang="zh-Hant" href="https://brothersupport.github.io/ai_consultant/ai_agent.html" />
+    <link rel="alternate" hreflang="en" href="https://brothersupport.github.io/ai_consultant/en/ai_agent.html" />
+    <link rel="alternate" hreflang="x-default" href="https://brothersupport.github.io/ai_consultant/ai_agent.html" />
     <meta name="robots" content="index,follow" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="AI consultant" />
@@ -84,6 +91,9 @@
             <a href="live_demo.html">LIVE DEMO</a>
             <a href="ai_agent.html" class="active">AI AGENT</a>
             <a href="#contact" class="btn btn-primary" style="height:38px;padding:8px 18px;font-size:14px;">免費診斷 →</a>
+            <a href="en/ai_agent.html" class="lang-toggle" id="lang-toggle" title="English" aria-label="Switch to English" onclick="try{localStorage.setItem('lang','en')}catch(e){}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>
+            </a>
             <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>

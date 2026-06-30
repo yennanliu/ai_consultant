@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <script>
+      /* Honor saved language preference */
+      (function(){try{if(localStorage.getItem('lang')==='zh')location.replace('../ai_agent.html');}catch(e){}})();
+    </script>
+    <title>AI AGENT | Enterprise AI Digital Workforce - AI consultant</title>
+    <meta name="description" content="Let AI become your digital workforce. Built by former Google / AWS senior engineers — no need to replace your existing systems, process automation live in as little as one week, see the results before you decide." />
+
+    <!-- Favicons -->
+    <link rel="icon" href="../favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png" />
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+    <!-- PWA / mobile app -->
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <meta name="theme-color" content="#7c3aed" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AI Consultant" />
+
+    <!-- SEO / Social preview -->
+    <link rel="canonical" href="https://brothersupport.github.io/ai_consultant/en/ai_agent.html" />
+    <link rel="alternate" hreflang="zh-Hant" href="https://brothersupport.github.io/ai_consultant/ai_agent.html" />
+    <link rel="alternate" hreflang="en" href="https://brothersupport.github.io/ai_consultant/en/ai_agent.html" />
+    <link rel="alternate" hreflang="x-default" href="https://brothersupport.github.io/ai_consultant/ai_agent.html" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="AI consultant" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="zh_TW" />
+    <meta property="og:title" content="AI AGENT | Enterprise AI Digital Workforce - AI consultant" />
+    <meta property="og:description" content="Let AI become your digital workforce. Built by former Google / AWS senior engineers — no need to replace your existing systems, process automation live in as little as one week, see the results before you decide." />
+    <meta property="og:url" content="https://brothersupport.github.io/ai_consultant/en/ai_agent.html" />
+    <meta property="og:image" content="https://brothersupport.github.io/ai_consultant/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="AI consultant — Turn AI Agents into your company's digital workforce" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="AI AGENT | Enterprise AI Digital Workforce - AI consultant" />
+    <meta name="twitter:description" content="Let AI become your digital workforce. Built by former Google / AWS senior engineers — no need to replace your existing systems, process automation live in as little as one week, see the results before you decide." />
+    <meta name="twitter:image" content="https://brothersupport.github.io/ai_consultant/og-image.png" />
+
+    <link rel="stylesheet" href="../linear.css">
+    <style>
+      .viz-box { margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--border); }
+      .eff-bar { height: 8px; background: var(--surface); border-radius: var(--radius-sm); margin-top: var(--space-2); position: relative; overflow: hidden; }
+      .eff-fill { height: 100%; width: 0; border-radius: var(--radius-sm); transition: width 1.4s cubic-bezier(.22,.61,.36,1); }
+
+      .logic-node { width: 46px; height: 46px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; background: var(--bg); flex-shrink: 0; }
+      .logic-arrow { flex-grow: 1; height: 2px; background: var(--border); position: relative; }
+      .logic-arrow .spark { position: absolute; top: -3px; left: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--grad); box-shadow: var(--glow-cyan); animation: travel 2.4s linear infinite; }
+      @keyframes travel { 0% { left: 0; } 100% { left: 100%; } }
+
+      /* Roadmap */
+      .roadmap { display: flex; justify-content: space-between; margin-top: var(--space-12); position: relative; gap: var(--space-2); }
+      .roadmap::before { content: ""; position: absolute; top: 12px; left: 0; right: 0; height: 2px; background: var(--border); z-index: 0; }
+      .roadmap-step { text-align: center; width: 20%; position: relative; z-index: 1; }
+      .step-dot { width: 26px; height: 26px; border: 2px solid var(--border-strong); background: var(--bg); border-radius: 50%; margin: 0 auto var(--space-4); transition: all .3s ease; }
+      .roadmap-step.hot .step-dot { border-color: var(--accent); background: var(--grad); box-shadow: 0 0 16px -2px var(--accent-bright); }
+
+      .pain { display: flex; gap: var(--space-4); align-items: flex-start; padding: var(--space-6); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--bg-alt); }
+      .pain .pico { font-size: 26px; flex-shrink: 0; }
+      .pain h4 { margin: 0 0 6px; }
+      .pain p { margin: 0; font-size: 14px; }
+
+      .price-tag { font-size: 30px; font-weight: 600; margin-bottom: var(--space-2); }
+      .price-tag span { font-size: 14px; font-weight: 400; color: var(--text-dim); }
+      .who { font-size: 13px; color: var(--text-muted); background: var(--surface); border-radius: var(--radius-sm); padding: 8px 12px; margin-bottom: var(--space-6); }
+
+      .quote { border-left: 3px solid var(--accent); padding: var(--space-2) 0 var(--space-2) var(--space-6); }
+      .quote p { font-size: 20px; color: var(--text); line-height: 1.6; font-weight: 500; }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="wrap">
+        <div class="nav">
+          <a href="index.html" class="brand">AI CONSULTANT</a>
+          <nav class="navlinks">
+            <a href="index.html#services">SERVICES</a>
+            <a href="service_mode.html">SERVICE MODES</a>
+            <a href="success_stories.html">SUCCESS STORIES</a>
+            <a href="team.html">TEAM</a>
+            <a href="blog.html">BLOG</a>
+            <a href="live_demo.html">LIVE DEMO</a>
+            <a href="ai_agent.html" class="active">AI AGENT</a>
+            <a href="#contact" class="btn btn-primary" style="height:38px;padding:8px 18px;font-size:14px;">Free diagnosis →</a>
+            <a href="../ai_agent.html" class="lang-toggle" id="lang-toggle" title="中文" aria-label="切換為中文" onclick="try{localStorage.setItem('lang','zh')}catch(e){}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>
+            </a>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero b-bottom">
+            <div class="wrap">
+                <span class="mono-label">2026 ENTERPRISE TRANSFORMATION PLAYBOOK</span>
+                <h1>Can't hire? Can't train?<br>Let an <span class="gradient-text">AI digital worker</span> step in</h1>
+                <p class="lead" style="max-width: 720px; margin-bottom: var(--space-8);">
+                    Labor shortages, veteran staff about to retire, slow quote turnaround, employees buried in repetitive work — these aren't problems that fix themselves if you just hold on a little longer. We use AI Agents to take this work off your hands, <b style="color:var(--text);font-weight:600;">no need to replace your existing systems, live in as little as one week, and you only decide whether to pay once you've seen the results.</b>
+                </p>
+                <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
+                    <a href="#contact" class="btn btn-primary btn-lg">Book a 1.5-hour expert diagnosis →</a>
+                    <a href="#solutions" class="btn btn-secondary btn-lg">See real-world cases first</a>
+                </div>
+                <p class="text-sm" style="margin-top: var(--space-6); color: var(--text-dim);">Built hands-on by former Google / AWS senior engineers · Already serving 40+ Taiwan SMBs</p>
+
+                <!-- Implementation Roadmap -->
+                <div class="roadmap">
+                  <div class="roadmap-step"><div class="step-dot"></div><span class="mono-label" style="margin:0;">DAY 01</span><div class="text-xs">Scenario diagnosis</div></div>
+                  <div class="roadmap-step"><div class="step-dot"></div><span class="mono-label" style="margin:0;">DAY 02-03</span><div class="text-xs">Logic modeling</div></div>
+                  <div class="roadmap-step hot"><div class="step-dot"></div><span class="mono-label" style="margin:0;">DAY 04-05</span><div class="text-xs">System integration</div></div>
+                  <div class="roadmap-step"><div class="step-dot"></div><span class="mono-label" style="margin:0;">DAY 06</span><div class="text-xs">POC validation</div></div>
+                  <div class="roadmap-step"><div class="step-dot"></div><span class="mono-label" style="margin:0;">DAY 07</span><div class="text-xs">Go live</div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pain points -->
+        <section class="b-bottom">
+          <div class="wrap">
+            <span class="mono-label">YOUR_PAIN</span>
+            <h2 class="mb-8">Are you stuck on any of these too?</h2>
+            <div class="grid-3">
+              <div class="pain reveal"><div class="pico">🧓</div><div><h4>Your veteran is about to retire</h4><p>Twenty years of know-how lives in one person's head, no one can pick it up, and every new hire has to be taught from scratch.</p></div></div>
+              <div class="pain reveal"><div class="pico">🕐</div><div><h4>Quotes are always a step behind</h4><p>Customers wait 2 or 3 days for a quote, and the order has long since gone to a competitor.</p></div></div>
+              <div class="pain reveal"><div class="pico">⌨️</div><div><h4>All day keying in orders and data</h4><p>Staff spend their time on customs forms, invoices and Excel — never on the work that truly adds value.</p></div></div>
+              <div class="pain reveal"><div class="pico">🙋</div><div><h4>Support requests never stop</h4><p>Eighty percent are repeat questions, no one replies after hours, and the customer experience is hit or miss.</p></div></div>
+              <div class="pain reveal"><div class="pico">🗂️</div><div><h4>Can't find your own data</h4><p>Contracts, SOPs and reports are scattered across folders and group chats, and finding them takes forever.</p></div></div>
+              <div class="pain reveal"><div class="pico">💸</div><div><h4>Want to adopt AI but afraid of pitfalls</h4><p>You've heard too many stories of spending big and getting only a slide deck — and you don't know where to start.</p></div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Comparison -->
+        <section id="solutions" class="b-bottom">
+            <div class="wrap">
+                <span class="mono-label">BEFORE / AFTER</span>
+                <h2 class="mb-8">Same task — how big is the difference?</h2>
+                <div class="grid-2">
+                    <div class="card reveal" style="border-color: var(--loss);">
+                        <h3 style="color: var(--loss); font-size: 19px; margin-bottom: var(--space-4);">🔴 Traditional manual model</h3>
+                        <ul class="list-clean">
+                            <li>Veteran know-how can't be digitized; new hires struggle to take over</li>
+                            <li>Manual entry of customs forms and invoices — repetitive and error-prone</li>
+                            <li>Quotes take 3 days; customer orders slip away</li>
+                            <li>Data piles up in Excel and PDFs, hard to search</li>
+                        </ul>
+                        <div class="viz-box">
+                          <span class="mono-label" style="color: var(--text-dim);">PROCESS_TIME (manual)</span>
+                          <div class="text-xs mb-1">~72 hours</div>
+                          <div class="eff-bar"><div class="eff-fill" data-w="100%" style="background: var(--loss);"></div></div>
+                        </div>
+                    </div>
+                    <div class="card reveal" style="border-color: var(--gain); background: var(--accent-tint);">
+                        <h3 style="color: var(--gain); font-size: 19px; margin-bottom: var(--space-4);">🟢 AI digital worker</h3>
+                        <ul class="list-clean">
+                            <li style="color: var(--text);">A 24/7 company brain that answers SOP and technical questions anytime</li>
+                            <li style="color: var(--text);">AI reads documents automatically and posts them into the system in seconds</li>
+                            <li style="color: var(--text);">One-click automated quoting, 10× faster response</li>
+                            <li style="color: var(--text);">Private-cloud RAG retrieval — data stays 100% internal</li>
+                        </ul>
+                        <div class="viz-box">
+                          <span class="mono-label">PROCESS_TIME (AI Agent)</span>
+                          <div class="text-xs mb-1" style="color: var(--accent);">~5 minutes</div>
+                          <div class="eff-bar"><div class="eff-fill grad" data-w="5%" style="background: var(--grad);"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROI / value band -->
+        <section class="b-bottom">
+          <div class="wrap">
+            <div class="section-head reveal" style="margin-bottom: var(--space-8);">
+              <span class="mono-label">WHAT_YOU_GET</span>
+              <h2>See the return before you invest</h2>
+              <p class="lead">We only target the most painful, most quantifiable steps, so the impact is visible and measurable.</p>
+            </div>
+            <div class="stat-grid reveal">
+              <div class="stat"><div class="num" data-to="90" data-suffix="%">0</div><div class="lbl">drop in repetitive work hours</div></div>
+              <div class="stat"><div class="num" data-to="10" data-suffix="×">0</div><div class="lbl">faster quoting / response</div></div>
+              <div class="stat"><div class="num" data-to="3" data-suffix=" months">0</div><div class="lbl">typical payback period</div></div>
+              <div class="stat"><div class="num" data-to="1" data-suffix=" week">0</div><div class="lbl">fastest time to go live</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Toolbox -->
+        <section class="b-bottom">
+            <div class="wrap">
+                <span class="mono-label">TOOLBOX</span>
+                <h2 class="mb-4">What an AI digital worker can do for you</h2>
+                <p class="lead mb-12">We don't talk theory — we deliver automation systems that actually run.</p>
+                <div class="grid-3">
+                    <div class="card reveal">
+                        <div class="card-icon">📦</div>
+                        <h3>Trade &amp; customs automation</h3>
+                        <p class="text-sm mb-6">Automatically parses messy document formats, matches HS Codes precisely and posts them into the system — no more manual data entry.</p>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                          <div class="logic-node">PDF</div>
+                          <div class="logic-arrow"><span class="spark"></span></div>
+                          <div class="logic-node" style="border-color: var(--accent); color: var(--accent);">AI</div>
+                          <div class="logic-arrow"><span class="spark"></span></div>
+                          <div class="logic-node">ERP</div>
+                        </div>
+                    </div>
+                    <div class="card reveal">
+                        <div class="card-icon">🧠</div>
+                        <h3>Traditional-industry knowledge brain</h3>
+                        <p class="text-sm mb-6">Turns 20 years of repair records and veteran know-how into an AI assistant you can ask anytime — new hires get up to speed instantly.</p>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                          <div class="logic-node">DOCS</div>
+                          <div class="logic-arrow"><span class="spark"></span></div>
+                          <div class="logic-node" style="border-color: var(--accent); color: var(--accent);">RAG</div>
+                          <div class="logic-arrow"><span class="spark"></span></div>
+                          <div class="logic-node">CHAT</div>
+                        </div>
+                    </div>
+                    <div class="card reveal">
+                        <div class="card-icon">📄</div>
+                        <h3>Professional document processing</h3>
+                        <p class="text-sm mb-6">Auto-compares legal contracts and financial reports with precise Traditional Chinese understanding, so lawyers and accountants focus on judgment.</p>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                          <div class="logic-node">SCAN</div>
+                          <div class="logic-arrow"><span class="spark"></span></div>
+                          <div class="logic-node" style="border-color: var(--accent); color: var(--accent);">LLM</div>
+                          <div class="logic-arrow"><span class="spark"></span></div>
+                          <div class="logic-node">DIFF</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Risk reversal -->
+        <section class="b-bottom">
+          <div class="wrap">
+            <span class="mono-label">NO_RISK</span>
+            <h2 class="mb-8">Why you can start with confidence</h2>
+            <div class="grid-4">
+              <div class="card reveal"><div class="card-icon">🎯</div><h4>See results first</h4><p class="text-sm">Validate value with a POC first; once the numbers hit, you decide whether to scale.</p></div>
+              <div class="card reveal"><div class="card-icon">🔌</div><h4>No system swap</h4><p class="text-sm">Connects into your existing ERP, LINE, forms and tools for a painless launch.</p></div>
+              <div class="card reveal"><div class="card-icon">🔒</div><h4>Data stays internal</h4><p class="text-sm">Private deployment available — sensitive data stays 100% inside your company.</p></div>
+              <div class="card reveal"><div class="card-icon">🤝</div><h4>No long-term lock-in</h4><p class="text-sm">Modular engagement that starts with a single diagnosis — no pressure.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Testimonial -->
+        <section class="b-bottom">
+          <div class="wrap-narrow">
+            <div class="quote reveal">
+              <p>"A customs declaration used to take 15 minutes; now the AI has it in the system in two. What hits home most is that all the little tricks our veteran knew before he retired finally have somewhere to live on."</p>
+              <div class="post-meta" style="display:flex; gap:10px; color: var(--text-dim); font-size:14px; margin-top: var(--space-4);">— Operations Manager, a trading company in central Taiwan</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Pricing -->
+        <section id="pricing" class="b-bottom">
+            <div class="wrap">
+                <span class="mono-label">PRICING</span>
+                <h2 class="mb-4">A transparent, modular way to work together</h2>
+                <p class="lead mb-12">Start with a single diagnosis, and put every dollar of budget where it counts.</p>
+                <div class="grid-3">
+                    <div class="card reveal">
+                        <h4 class="mb-2">AI Process Clinic</h4>
+                        <div class="price-tag" style="color: var(--accent);">NT$ 12,000 <span>/ session</span></div>
+                        <div class="who">Best for: owners still weighing options who want to find the problem first</div>
+                        <ul class="list-clean mb-8">
+                            <li>1.5-hour in-depth conversation and on-site review</li>
+                            <li>Identify the 3 most costly steps</li>
+                            <li>Deliverable: implementation recommendations and an expected-ROI report</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-secondary" style="width: 100%;">Book a diagnosis</a>
+                    </div>
+                    <div class="card reveal" style="border-color: var(--accent); position: relative;">
+                        <div style="position: absolute; top: -12px; right: 16px; background: var(--grad); color: white; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 600;">Fastest results</div>
+                        <h4 class="mb-2">Rapid POC validation</h4>
+                        <div class="price-tag" style="color: var(--accent);">NT$ 60,000 <span>/ from</span></div>
+                        <div class="who">Best for: companies that know their pain points and want fast results</div>
+                        <ul class="list-clean mb-8">
+                            <li>Core functional prototype built in 3-5 days</li>
+                            <li>Painless integration with existing systems (Make / n8n)</li>
+                            <li>Includes 1 hour of staff onboarding training</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-primary" style="width: 100%;">Launch a pilot project</a>
+                    </div>
+                    <div class="card reveal">
+                        <h4 class="mb-2">Virtual CTO partnership</h4>
+                        <div class="price-tag" style="color: var(--accent);">NT$ 8,000 <span>/ hr</span></div>
+                        <div class="who">Best for: teams already live that need ongoing optimization and operations</div>
+                        <ul class="list-clean mb-8">
+                            <li>Fixed monthly hours of in-depth technical support</li>
+                            <li>Long-term system stability, maintenance and model upgrades</li>
+                            <li>Continuous tuning of AI prompt accuracy</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-secondary" style="width: 100%;">Discuss a long-term engagement</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ for owners -->
+        <section class="b-bottom">
+          <div class="wrap-narrow">
+            <span class="mono-label" style="justify-content:center; text-align:center; display:block;">FAQ</span>
+            <h2 class="center mb-12">What owners ask most</h2>
+            <div class="reveal">
+              <details open><summary>Will adoption be expensive and take forever?<span class="chev">+</span></summary><p>No. We start with a single NT$12,000 process clinic to pinpoint the steps most worth doing; a POC starts from NT$60,000 and can go live in as little as a week. Validate the value at low cost first, then decide whether to scale.</p></details>
+              <details><summary>Will AI replace my employees?<span class="chev">+</span></summary><p>Our goal is to free your staff from repetitive, tedious work so they can do higher-value things — serving loyal customers, handling exceptions, building relationships. The AI takes on the parts people don't want to do.</p></details>
+              <details><summary>We're not technical at all — is that okay?<span class="chev">+</span></summary><p>Absolutely. We handle the technical side; you just need to know your business. We communicate in language you understand and provide staff onboarding training.</p></details>
+              <details><summary>Do we need to organize our data before starting?<span class="chev">+</span></summary><p>No. Data inventory and cleanup are part of the adoption process. You just provide your existing systems and files, and we take care of the rest.</p></details>
+              <details><summary>Is our data safe? Could it leak?<span class="chev">+</span></summary><p>We can use private deployment and in-house retrieval, keeping sensitive data 100% inside your company, with access controls and audit logs in place.</p></details>
+              <details><summary>How soon will we see results?<span class="chev">+</span></summary><p>You'll see the first number on real traffic during the POC stage (about 1-2 weeks), with a typical payback period of 3-6 months.</p></details>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contact Form -->
+        <section id="contact">
+            <div class="wrap" style="max-width: 640px;">
+                <div class="card">
+                    <span class="mono-label">GET_STARTED</span>
+                    <h2 style="font-size: 30px; margin-bottom: var(--space-4);">Start your digital upgrade</h2>
+                    <p class="mb-8">Leave us your needs and we'll be in touch within 24 hours to arrange a free initial diagnosis. Click below to fill out the form.</p>
+                    <a href="https://forms.gle/M1YHzT8V3wErZGNJ6" target="_blank" rel="noreferrer" class="btn btn-primary btn-lg" style="width: 100%;">Go to the survey, book a diagnosis →</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); flex-wrap: wrap; gap: var(--space-4);">
+                <span>© 2026 AI CONSULTANT</span>
+                <div style="display: flex; gap: var(--space-6);">
+                    <a href="#" style="color: inherit; text-decoration: none;">LinkedIn</a>
+                    <a href="#" style="color: inherit; text-decoration: none;">Terms of Service</a>
+                    <a href="#" style="color: inherit; text-decoration: none;">Privacy Policy</a>
+                </div>
+            </div>
+            <p style="font-size: 12px; color: var(--text-dim); margin: 0;">Led by Yen-Nan, a former Google / AWS senior engineer.</p>
+        </div>
+    </footer>
+
+    <script>
+      /* Theme toggle (light default) */
+      const themeToggle = document.getElementById('theme-toggle');
+      const moonIcon = themeToggle.querySelector('.moon');
+      const sunIcon = themeToggle.querySelector('.sun');
+      const htmlElement = document.documentElement;
+      if (localStorage.getItem('theme') === 'dark') {
+        htmlElement.classList.add('theme-dark');
+        moonIcon.style.display = 'none'; sunIcon.style.display = 'block';
+      }
+      themeToggle.addEventListener('click', () => {
+        htmlElement.classList.toggle('theme-dark');
+        const isDark = htmlElement.classList.contains('theme-dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        moonIcon.style.display = isDark ? 'none' : 'block';
+        sunIcon.style.display = isDark ? 'block' : 'none';
+      });
+
+      /* Scroll reveal */
+      var __io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); __io.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(function (el, i) { el.style.transitionDelay = (i % 4) * 70 + 'ms'; __io.observe(el); });
+
+      /* Animate efficiency bars */
+      var barObs = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.style.width = e.target.dataset.w; barObs.unobserve(e.target); } });
+      }, { threshold: 0.4 });
+      document.querySelectorAll('.eff-fill[data-w]').forEach(function (el) { barObs.observe(el); });
+
+      /* Count-up stats */
+      var countObs = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          var el = e.target, to = +el.dataset.to, suf = el.dataset.suffix || '';
+          var start = null, dur = 1400;
+          function tick(t) {
+            if (!start) start = t;
+            var p = Math.min((t - start) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(to * eased) + suf;
+            if (p < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+          countObs.unobserve(el);
+        });
+      }, { threshold: 0.5 });
+      document.querySelectorAll('[data-to]').forEach(function (el) { countObs.observe(el); });
+    </script>
+    <script defer src="../mobile-nav.js"></script>
+  </body>
+</html>
